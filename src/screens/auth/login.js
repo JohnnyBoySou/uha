@@ -19,11 +19,11 @@ export default function LoginScreen({ navigation, }) {
     const [password, setpassword] = useState();
 
 
-
     const handleLogin = () => {
         setloading(true)
         setTimeout(() => {
             setloading(false)
+            navigation.navigate('Home')
         }, 3000);
     }
     return (
