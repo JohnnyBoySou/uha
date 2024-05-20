@@ -78,9 +78,10 @@ export const LineD = styled.View`
 `;
 
 export const LineL = styled.View`
-  color: #ffffff30;
+  background-color: #FFFFFF50;
   height: 2px;
   width: 100%;
+  flex-grow: 1;
 `;
 
 export const LabelLI = styled.Text`

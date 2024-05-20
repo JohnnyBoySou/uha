@@ -9,6 +9,7 @@
         "@api/*": ["src/api/*"],
         "@hooks/*": ["src/hooks/*"],
         "@theme/*": ["src/theme/*"],
+        "@imgs/*": ["src/assets/imgs/*"],
         "@env": ["../src/env"]
       }
     }
