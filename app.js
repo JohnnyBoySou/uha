@@ -4,15 +4,18 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components/native';
 import Router from './src/routes/index';
 import dark from './src/theme/dark';
+import light from './src/theme/light';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { View } from 'react-native';
+import { View, useColorScheme } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+
+  const theme = useColorScheme();
 
   useEffect(() => {
     async function prepare() {
@@ -43,7 +46,7 @@ export default function App() {
   }
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <ThemeProvider theme={dark}>
+      <ThemeProvider theme={theme === 'dark' ? dark : light}>
         <StatusBar style="light" />
         <Router />
       </ThemeProvider>

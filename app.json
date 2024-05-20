@@ -3,32 +3,38 @@
     "name": "Uha!",
     "slug": "uha",
     "version": "1.1.0",
+    "scheme": "uha",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "uha",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ECAD01"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#ECAD01"
+      },
+      
+      "package": "com.uha.app"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    
-    "experiments": {
-      "typedRoutes": true
-    }
+    "plugins": [
+      [ "expo-font" ]
+    ]
   }
 }
