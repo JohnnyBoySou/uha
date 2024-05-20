@@ -44,9 +44,11 @@ export default function App() {
   if (!appIsReady) {
     return null;
   }
+
+  //theme === 'dark' ? dark : light // toggle theme
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <ThemeProvider theme={theme === 'dark' ? dark : light}>
+      <ThemeProvider theme={light}>
         <StatusBar style="light" />
         <Router />
       </ThemeProvider>

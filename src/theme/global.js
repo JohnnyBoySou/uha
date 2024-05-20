@@ -29,16 +29,72 @@ export const Button = styled(TouchableRipple).attrs(() => ({
   borderless: true, 
   rippleColor: "#FFFFFF90",
 }))`
-  background: ${({ color }) => color};
-  border-radius: 6px;
-  padding-left: 16px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  align-content: center;
-  flex-direction: row;
-  justify-content: space-between;
-
 `
+
+
+export const ButtonPR = styled(TouchableRipple).attrs(() => ({
+  borderless: true, 
+  rippleColor: "#FFFFFF90",
+}))`
+  background-color: ${props => props.theme.color.primary};
+  border-radius: 100px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+`
+export const ButtonSE = styled(TouchableRipple).attrs(() => ({
+  borderless: true, 
+  rippleColor: "#FFFFFF90",
+}))`
+  border-radius: 100px;
+  text-align: center;
+  padding-vertical: 12px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${props => props.theme.color.secundary};
+`
+
+
+export const ButtonLI = styled(TouchableRipple).attrs(() => ({
+  borderless: true, 
+  rippleColor: "#FFFFFF90",
+}))`
+  border-radius: 100px;
+  text-align: center;
+  align-items: center;
+  padding-vertical: 12px;
+  justify-content: center;
+  background-color: ${props => props.theme.color.light};
+`
+
+
+
+
+
+export const LineD = styled.View`
+  color: #00000030;
+  height: 2px;
+  width: 100%;
+`;
+
+export const LineL = styled.View`
+  color: #ffffff30;
+  height: 2px;
+  width: 100%;
+`;
+
+export const LabelLI = styled.Text`
+  color: ${props => props.theme.color.title};
+  font-size: 18px;
+  font-family: ${props => props.theme.font.bold};
+`;
+
+
+export const LabelSE = styled.Text`
+  color: ${props => props.theme.color.light};
+  font-size: 18px;
+  font-family: ${props => props.theme.font.bold};
+`;
 
 
 export const ButtonLabel = styled.Text`
