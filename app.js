@@ -2,13 +2,13 @@ import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import React, { useCallback, useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components/native';
-import Router from './src/routes/index';
 import dark from './src/theme/dark';
 import light from './src/theme/light';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { View, useColorScheme } from 'react-native';
+import Router from './src/router/index';
 
 SplashScreen.preventAutoHideAsync();
 
