@@ -13,6 +13,7 @@ export default{
 
     title: "#111111",
     label: "#5E5E5E",
+    off: '#f1f1f1',
   },
   size: {
     label: 18,
@@ -29,7 +30,7 @@ export default{
     top: 60,
   },
   margin: {
-    h: 24,
+    h: 28,
     v: 12,
     top: 20,
   },

@@ -6,16 +6,20 @@ import OnboardingScreen from '@screens/onboarding/index';
 import AsyncStatic from '@screens/async';
 import AccountScreen from '@screens/account';
 import LoginScreen from '@screens/auth/login';
+import NotifyScreen from '@screens/notify';
 
 const Stack = createStackNavigator();
 
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Onboarding'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Notify'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
+            <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
+            <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
         </Stack.Navigator>
     </NavigationContainer>
    );

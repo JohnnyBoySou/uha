@@ -73,7 +73,7 @@ export const ButtonLI = styled(TouchableRipple).attrs(() => ({
 
 
 export const LineD = styled.View`
-  color: #00000030;
+  background-color: #00000030;
   height: 2px;
   width: 100%;
 `;
@@ -121,12 +121,24 @@ export const ButtonIcon = styled.View`
 export const Label = styled.Text`
   color: ${props => props.theme.color.label};
   font-size: 18px;
+  line-height: 20px;
   font-family: ${props => props.theme.font.book};
 `;
+
+
+
+export const SubLabel = styled.Text`
+  color: ${props => props.theme.color.title};
+  font-size: 16px;
+  letter-spacing: -.5px;
+  font-family: ${props => props.theme.font.bold};
+`;
+
 
 export const Title = styled.Text`
   color: ${props => props.theme.color.title};
   letter-spacing: -.5px;
+  line-height: 26px;
   font-size: 24px;
   font-family: ${props => props.theme.font.bold};
 `;
