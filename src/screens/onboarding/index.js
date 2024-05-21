@@ -19,7 +19,7 @@ export default function OnboardingScreen({ navigation, }){
                 <LineL style={{ marginVertical: 12, }} />
                 <Label style={{ color: color.secundary+99, fontFamily: font.medium,  }}>Seja bem-vindo! Está pronto para começar? Escolha entre entrar ou se cadastrar para avançar para os próximos passos</Label>
 
-                <ButtonSE style={{ marginTop:24, }} rippleColor="#fff">
+                <ButtonSE onPress={() => {navigation.navigate('Login')}}  style={{ marginTop:24, }} rippleColor="#fff">
                     <LabelSE>ENTRAR</LabelSE>
                 </ButtonSE>
                 <ButtonLI style={{  marginTop: 12, }} rippleColor={color.primary}>
