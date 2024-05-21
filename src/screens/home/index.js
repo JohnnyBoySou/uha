@@ -1,10 +1,11 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { FlatList, ScrollView, View, Animated } from 'react-native';
+import { FlatList, ScrollView, View, Animated, Pressable } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MotiImage,  } from 'moti';
 import { Bell , Search} from 'lucide-react-native';
 import { SlidingDot } from "react-native-animated-pagination-dots";
+import Avatar from '@components/avatar';
 
 
 export default function HomeScreen({navigation, }){
@@ -17,12 +18,10 @@ export default function HomeScreen({navigation, }){
                     <MotiImage source={require('@imgs/logo_black_nobg.png')} style={{ width: 200,  height: 60, }} />
 
                     <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button>
+                        <Button onPress={() => {navigation.navigate('Notify')}} style={{ marginRight: 16, }}>
                             <Bell strokeWidth={2} color="#111" size={32} />
                         </Button>
-                        <Button style={{ marginLeft: 24, }}>
-                            <MotiImage source={require('@imgs/avatar_default.png')} style={{ width: 45, height: 45, }} />
-                        </Button>
+                        <Avatar />
                     </Row>
                 </Row>
                 <Button style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
@@ -34,10 +33,10 @@ export default function HomeScreen({navigation, }){
                 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
+                        <Button onPress={() => {navigation.navigate('Redeem')}}  rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
                             <MotiImage source={require('@imgs/recarga.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
-                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Recarga</Label>
+                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Resgate</Label>
                     </Column>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                         <Button rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
@@ -61,7 +60,37 @@ export default function HomeScreen({navigation, }){
 
                 <Carrousel color={color}/>
 
-                
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: "#fff", paddingVertical: 20, borderTopLeftRadius: 32,  }}>
+                    <Title>Campanhas</Title>
+                </Column>
+
+                <Row style={{ paddingHorizontal: margin.h, backgroundColor: "#fff", paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
+                    <Title>Ofertas relâmpago</Title>
+                    <Pressable>
+                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
+                    </Pressable>
+                </Row>
+
+
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: "#fff", paddingVertical: 20,   }}>
+                    <Title>Estabelecimentos queridinhos</Title>
+                </Column>
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: "#fff", paddingVertical: 20,   }}>
+                    <Title>Doe anônimamente</Title>
+                    <Title>Produtos em oferta</Title>
+                    <Title>Serviços em oferta</Title>
+                    <Title>Gift Card com cashback</Title>
+                    <Title>Categorias</Title>
+                </Column>
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: "#fff", paddingVertical: 20,  borderBottomRightRadius: 32, marginBottom: 20, }}/>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
+                    <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
+                        <Label style={{ fontFamily: font.bold, color: '#111', }}>Central de ajuda</Label>
+                    </Button>
+                    <Button style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
+                        <Label style={{ fontFamily: font.bold, color: color.primary, }}>Fazer doação</Label>
+                    </Button>
+                </Row>
 
             </Scroll>
 

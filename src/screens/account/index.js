@@ -8,15 +8,14 @@ import { ImagePlus, CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
-
     const user = {
         name: 'João Sousa',
         email: 'email@example.com',
         balance: '30,00',
         cashback: '10,00',
     }
-
     const [dark, setdark] = useState(false);
+
     return (
         <Main>
             <Scroll>
@@ -31,7 +30,7 @@ export default function AccountScreen({ navigation, }) {
                 </Row>
                 <Column style={{backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: color.title, }}>Saldo em conta</Label>
-                    <Title style={{ fontSize: 32, fontFamily: font.bold,  }}>R$ {user?.balance}</Title>
+                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, }}>R$ {user?.balance}</Title>
                     <LineD />
                     <Label style={{ color: color.title, marginTop: 12, }}>Saldo em cashback</Label>
                     <Label style={{ color: color.title, }}>R$ {user?.cashback}</Label>
@@ -121,7 +120,6 @@ const Card = ({ item }) => {
         </Column>
     </Row>
 )}
-
 
 const CardRow = ({ item }) => {
 return(
