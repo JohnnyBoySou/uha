@@ -4,6 +4,7 @@ import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubL
 import { ThemeContext } from 'styled-components/native';
 import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Bell } from 'lucide-react-native';
 import  Header   from '@components/header';
+import { MotiImage } from 'moti';
 
 export default function RedeemScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -27,7 +28,7 @@ export default function RedeemScreen({ navigation, }) {
                 <Column style={{width: 42, height: 42 , borderRadius: 100, backgroundColor: color.primary, borderWidth: 4, marginBottom: -24, zIndex: 99, borderColor: "#fff",}} />
                 <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',  borderRadius: 32, padding: 32, width: '80%', }}>
                     <Title style={{ marginVertical: 20, fontSize: 24, }}>Aponte a camera</Title>
-                    <ImagePlus color="#111" size={200} />
+                    <MotiImage source={require('@imgs/qrcode.png')} style={{ width: 300, height: 300, }} />
                 </Column>
                 <Row style={{ marginVertical: 40, }}>
                     <Title style={{ color: "#fff", fontFamily: font.medium, }}>Ou digite o </Title>

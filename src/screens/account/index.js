@@ -3,6 +3,7 @@ import { FlatList, Pressable, ScrollView } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
+import Notify from '@components/notify';
 import Check from '@components/check';
 import { ImagePlus, CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, Bell } from 'lucide-react-native';
 
@@ -21,10 +22,9 @@ export default function AccountScreen({ navigation, }) {
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
                     <Title>Olá, João Sousa</Title>
-                    <Row style={{ justifyContent: 'center', alignItems: 'center',  }}> 
-                        <Button style={{ marginRight: 20, }} onPress={() => {navigation.navigate('Notify')}} >
-                            <Bell strokeWidth={2} color="#111" size={32} />
-                        </Button>
+                    <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                        <Notify />
+                        <Column style={{width:16, }} />
                         <Avatar />
                     </Row>
                 </Row>

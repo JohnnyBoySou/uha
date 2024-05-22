@@ -6,6 +6,7 @@ import { MotiImage,  } from 'moti';
 import { Bell , Search} from 'lucide-react-native';
 import { SlidingDot } from "react-native-animated-pagination-dots";
 import Avatar from '@components/avatar';
+import Notify from '@components/notify';
 
 
 export default function HomeScreen({navigation, }){
@@ -18,9 +19,8 @@ export default function HomeScreen({navigation, }){
                     <MotiImage source={require('@imgs/logo_black_nobg.png')} style={{ width: 200,  height: 60, }} />
 
                     <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('Notify')}} style={{ marginRight: 16, }}>
-                            <Bell strokeWidth={2} color="#111" size={32} />
-                        </Button>
+                        <Notify />
+                        <Column style={{width:16, }} />
                         <Avatar />
                     </Row>
                 </Row>
@@ -45,13 +45,13 @@ export default function HomeScreen({navigation, }){
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
                     </Column>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
+                        <Button onPress={() => {navigation.navigate('BuyService')}} rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
                             <MotiImage source={require('@imgs/patinhas.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Patinhas</Label>
                     </Column>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
+                        <Button onPress={() => {navigation.navigate('BuyServiceGiftCard')}}  rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
                             <MotiImage source={require('@imgs/gift.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Gift Card</Label>

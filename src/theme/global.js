@@ -71,6 +71,21 @@ export const ButtonLI = styled(TouchableRipple).attrs(() => ({
 
 
 
+export const ButtonOut = styled(TouchableRipple).attrs(() => ({
+  borderless: true, 
+  rippleColor: "#FFFFFF90",
+}))`
+  border-radius: 100px;
+  text-align: center;
+  align-items: center;
+  padding-vertical: 12px;
+  padding-horizontal: 20px;
+  justify-content: center;
+  border-width: 2px;
+  border-color: ${props => props.theme.color.light};
+`
+
+
 
 export const LineD = styled.View`
   background-color: #00000030;
@@ -149,6 +164,14 @@ export const AuthorLabel = styled.Text`
   font-family: ${props => props.theme.font.medium};
 `;
 
+
+
+export const Digit = styled.Text`
+  color: ${props => props.theme.color.title};
+  line-height: 36px;
+  font-size: 34px;
+  font-family: ${props => props.theme.font.black};
+`;
 
 
 export const BtCircle = styled(TouchableRipple).attrs(() => ({

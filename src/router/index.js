@@ -9,6 +9,13 @@ import LoginScreen from '@screens/auth/login';
 import NotifyScreen from '@screens/notify';
 import RedeemScreen from '@screens/redeem';
 
+import BuyServiceScreen from '@screens/buyservice';
+import BuyServiceSuccessScreen from '@screens/buyservice/success';
+import BuyServiceErrorScreen from '@screens/buyservice/error';
+import BuyServiceGiftCardScreen from '@screens/buyservice/gift_card';
+
+
+
 const Stack = createStackNavigator();
 
 export default function Router() {
@@ -21,6 +28,10 @@ export default function Router() {
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Redeem" component={RedeemScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyServiceError" component={BuyServiceErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyServiceGiftCard" component={BuyServiceGiftCardScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
         </Stack.Navigator>
     </NavigationContainer>
    );
