@@ -9,12 +9,9 @@ import { TouchableRipple } from 'react-native-paper';
 export default function LoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [pass, setpass] = useState(true);
-
     const [focusEmail, setfocusEmail] = useState(false);
     const [focusPass, setfocusPass] = useState(false);
-
     const [loading, setloading] = useState(false);
-
     const [email, setemail] = useState();
     const [password, setpassword] = useState();
 
@@ -42,7 +39,7 @@ export default function LoginScreen({ navigation, }) {
                     <Column style={{height: 300, backgroundColor: '#2A0305', width: 80, borderBottomLeftRadius: 52, }} />
                 </Row>
                 <Column style={{ marginHorizontal: margin.h, paddingVertical: 22, }}>
-                    <Title style={{ fontSize: 42, color: color.primary, }}>Entrar</Title>
+                    <Title style={{ fontSize: 42, color: color.primary, lineHeight: 52, }}>Entrar</Title>
                     <Label>Digite seus dados de login abaixo para acessar suas Patinhas da Sorte.</Label>
                 </Column>
 

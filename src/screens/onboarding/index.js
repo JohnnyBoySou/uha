@@ -15,7 +15,7 @@ export default function OnboardingScreen({ navigation, }){
 
             <Column style={{ paddingHorizontal: margin.h, width: '100%', position: 'absolute', bottom: 0,  backgroundColor: color.primary, paddingBottom: 50, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
                 <Column style={{ width: 70, height: 8, backgroundColor: color.light+40, marginTop: 12, marginBottom: 30,  borderRadius: 50, alignSelf: 'center',}} />
-                <Title style={{ color: color.secundary, fontFamily: font.bold, fontSize: 52, }}>Olá!</Title>
+                <Title style={{ color: color.secundary, fontFamily: font.bold, fontSize: 52, lineHeight: 56, }}>Olá!</Title>
                 <LineL style={{ marginVertical: 12, }} />
                 <Label style={{ color: color.secundary+99, fontFamily: font.medium,  }}>Seja bem-vindo! Está pronto para começar? Escolha entre entrar ou se cadastrar para avançar para os próximos passos</Label>
 

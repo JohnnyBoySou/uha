@@ -14,6 +14,7 @@ import BuyServiceSuccessScreen from '@screens/buyservice/success';
 import BuyServiceErrorScreen from '@screens/buyservice/error';
 import BuyServiceGiftCardScreen from '@screens/buyservice/gift_card';
 
+import DonateScreen from '@screens/donate';
 
 
 const Stack = createStackNavigator();
@@ -21,7 +22,7 @@ const Stack = createStackNavigator();
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Home'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Donate'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -32,6 +33,8 @@ export default function Router() {
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceError" component={BuyServiceErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceGiftCard" component={BuyServiceGiftCardScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+        
         </Stack.Navigator>
     </NavigationContainer>
    );
