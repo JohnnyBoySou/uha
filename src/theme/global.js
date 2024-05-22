@@ -40,6 +40,7 @@ export const ButtonPR = styled(TouchableRipple).attrs(() => ({
   background-color: ${props => props.theme.color.primary};
   border-radius: 100px;
   text-align: center;
+  padding-vertical: 12px;
   align-items: center;
   justify-content: center;
 `
@@ -50,6 +51,7 @@ export const ButtonSE = styled(TouchableRipple).attrs(() => ({
   border-radius: 100px;
   text-align: center;
   padding-vertical: 12px;
+  padding-horizontal: 20px;
   align-items: center;
   justify-content: center;
   background-color: ${props => props.theme.color.secundary};
@@ -64,6 +66,7 @@ export const ButtonLI = styled(TouchableRipple).attrs(() => ({
   text-align: center;
   align-items: center;
   padding-vertical: 12px;
+  padding-horizontal: 20px;
   justify-content: center;
   background-color: ${props => props.theme.color.light};
 `

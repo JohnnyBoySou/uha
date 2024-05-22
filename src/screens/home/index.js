@@ -39,7 +39,7 @@ export default function HomeScreen({navigation, }){
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Resgate</Label>
                     </Column>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
+                        <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor:"#F6E9C5", padding: 18, borderRadius: 12, }}>
                             <MotiImage source={require('@imgs/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>

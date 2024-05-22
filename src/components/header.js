@@ -13,7 +13,7 @@ const Header = ({ title }) => {
                 <ArrowLeft color={color.secundary}/>
             </Button>
             <Column >
-                <Title style={{ textAlign: 'center', }}>{title}</Title>
+                <Title style={{ textAlign: 'center', lineHeight: 28,}}>{title}</Title>
             </Column>
             <Column style={{ width: 42, height: 42, }}></Column>
         </Row>
