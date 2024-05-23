@@ -23,7 +23,7 @@ export default function NotafiscalScreen({navigation, }){
                     <Label style={{ marginVertical: 8, }}>Selecione a página de cadastro de nota fiscal, abra sua câmera e aponte para o QR Code em sua nota fiscal, simples, rápido e prático.</Label>
 
                     <Button style={{ borderRadius: 8, marginTop: 24, backgroundColor: color.primary, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
-                        <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Cadastrar nota fiscal</Label>
+                        <Label style={{ fontFamily: font.bold, color: "#fff", textAlign: 'center', }}>Cadastrar nota fiscal</Label>
                     </Button>
                     <Button style={{ borderRadius: 8, borderColor: color.primary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                         <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Minhas notas</Label>

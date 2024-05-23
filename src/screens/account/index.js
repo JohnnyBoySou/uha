@@ -41,19 +41,19 @@ export default function AccountScreen({ navigation, }) {
 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Column style={{ padding:42, marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary+30, borderRadius: 12, }}>
+                        <Column style={{ padding:38, marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary+30, borderRadius: 12, }}>
                             <ImagePlus color={color.primary} size={32}/>
                         </Column>
                         <SubLabel>Campanhas</SubLabel>
                     </Column>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Column style={{ padding:42, marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary+30, borderRadius: 12, }}>
+                        <Column style={{ padding:38, marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary+30, borderRadius: 12, }}>
                             <ImagePlus color={color.primary} size={32}/>
                         </Column>
                         <SubLabel>Doações</SubLabel>
                     </Column>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Column style={{ padding:42, marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary+30, borderRadius: 12, }}>
+                        <Column style={{ padding:38, marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary+30, borderRadius: 12, }}>
                             <ImagePlus color={color.primary} size={32}/>
                         </Column>
                         <SubLabel>Favoritos</SubLabel>

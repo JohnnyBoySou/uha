@@ -1,8 +1,8 @@
 export default{
-  background: "#F8F8F8",
+  background: "#FFF2E3",
   color: {
-    primary: "#ECAD01",
-    secundary: "#2A0305",
+    primary: "#FE25BD",
+    secundary: "#5C0D45",
 
     light: '#FFFFFF',
 
@@ -13,7 +13,8 @@ export default{
 
     title: "#111111",
     label: "#5E5E5E",
-    off: '#f1f1f1',
+    off: '#00000020',
+    background: '#FFF2E3',
   },
   size: {
     label: 18,
