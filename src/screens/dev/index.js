@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 export default function DevScreen({navigation, }){
     const { color, font, margin, } = useContext(ThemeContext);
     const routes = ['Home', 'Onboarding', 'Account', 'Login', 'Notify', 'Redeem', 'BuyService', 'BuyServiceSuccess', 'BuyServiceError', 'BuyServiceGiftCard', 'Donate', 'DonateValue', 'Notafiscal', 'NotafiscalSend',
-    'Extract', 'ExtractSingle (in Extract)', 'BuyServiceRifa']
+    'Extract', 'ExtractSingle (in Extract)', 'BuyServiceRifa', 'Share', 'AccountNotify', 'AccountDetails', ]
     
     return (
         <Main>

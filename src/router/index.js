@@ -29,13 +29,14 @@ import ExtractSingleScreen from '@screens/extract/single';
 
 import ShareScreen from '@screens/share';
 import AccountNotifyScreen from '@screens/account/notify';
+import AccountDetailsScreen from '@screens/account/details';
 
 const Stack = createStackNavigator();
 
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='AccountNotify'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Dev'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -57,8 +58,10 @@ export default function Router() {
 
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
             <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.RevealFromBottomAndroid, }}/>
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
 
 

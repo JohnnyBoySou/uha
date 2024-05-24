@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "uhah",
-    "slug": "uhah",
-    "version": "1.0.0",
+    "name": "Uha!",
+    "slug": "uha",
+    "version": "1.4.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FF26BD"
     },
     "ios": {
       "supportsTablet": true
@@ -17,7 +17,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FF26BD"
       },
       "package": "com.engd.uha"
     },
