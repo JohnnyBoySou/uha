@@ -64,7 +64,6 @@ export default function Router() {
             <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
 
-
         </Stack.Navigator>
     </NavigationContainer>
    );

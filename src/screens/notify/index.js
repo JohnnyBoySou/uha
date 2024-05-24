@@ -38,8 +38,6 @@ export default function NotifyScreen({ navigation, }) {
         }, 600);
     }
 
-
-
     const handleItem = (item) => {
         setcache(item)
         setsingle(true)
@@ -50,7 +48,7 @@ export default function NotifyScreen({ navigation, }) {
                 <Header title='Notificações' />
                 <Row style={{ paddingHorizontal: margin.h, }}>
                     <AnimatePresence>
-                        {type != null && <MotiView transition={{duration: 500, }} from={{opacity: 0, translateX: -30,}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary}  style={{ paddingVertical: 10, paddingHorizontal: 20, backgroundColor: "#F6E9C5", marginTop: 12,  borderRadius: 100,}} >
+                        {type != null && <MotiView transition={{duration: 500, }} from={{opacity: 0, translateX: -30,}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary}  style={{ paddingVertical: 10, paddingHorizontal: 20, backgroundColor: color.primary+20, marginTop: 12,  borderRadius: 100,}} >
                                 <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                     <Title style={{ color: color.primary, fontSize: 18, marginRight: 6,}}>{type}</Title>
                                     <X color={color.primary}/>
@@ -94,7 +92,7 @@ export default function NotifyScreen({ navigation, }) {
                         <Button onPress={() => {settype('Movimentações')}}  style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
                             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
                                 <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                    <Column style={{ backgroundColor: "#F6E9C5",padding: 18, borderRadius: 12, marginRight: 20, }}>
+                                    <Column style={{ backgroundColor: color.primary+20,padding: 18, borderRadius: 12, marginRight: 20, }}>
                                         <ArrowLeftRight color={color.secundary} size={38}/>
                                     </Column>
                                     <Column>
