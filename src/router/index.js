@@ -27,14 +27,15 @@ import NotafiscalSendScreen from '@screens/notafiscal/send';
 import ExtractScreen from '@screens/extract';
 import ExtractSingleScreen from '@screens/extract/single';
 
-
+import ShareScreen from '@screens/share';
+import AccountNotifyScreen from '@screens/account/notify';
 
 const Stack = createStackNavigator();
 
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Dev'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='AccountNotify'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -47,7 +48,6 @@ export default function Router() {
             <Stack.Screen name="BuyServiceError" component={BuyServiceErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceGiftCard" component={BuyServiceGiftCardScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceRifa" component={BuyServiceRifaScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-           
 
             <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -57,6 +57,10 @@ export default function Router() {
 
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.RevealFromBottomAndroid, }}/>
+            <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
+
 
         </Stack.Navigator>
     </NavigationContainer>

@@ -1,10 +1,27 @@
 import { Column, Row } from '@theme/global';
-import { Pressable } from 'react-native';
+import { MotiView, useAnimationState } from 'moti';
+import { useContext, useEffect } from 'react';
+import { ThemeContext } from 'styled-components/native';
 
 const Check = ({status}) => {
+    const { color, font, margin } = useContext(ThemeContext);
+    const animationState = useAnimationState({
+        closed: {
+          translateX: 0,
+        },
+        open: {
+          translateX: 20,
+        },
+      })
+
+      useEffect(() => {
+        animationState.transitionTo(status ? 'open' : 'closed')
+      }, [status])
+     
+
     return(
-            <Row style={{ backgroundColor: status ? '#ECAD0150' : "#D9D9D9", justifyContent: status ? 'flex-end' : 'flex-start', width: 50, borderRadius: 100, padding: 6, }}>
-                <Column style={{ width: 18, height: 18, borderRadius: 100, backgroundColor: status ?  '#ECAD01' : '#858585' }} />
+            <Row style={{ backgroundColor: status ? color.primary+30 : "#D9D9D9", width: 50, borderRadius: 100, padding: 6, }}>
+                <MotiView state={animationState} style={{ width: 18, height: 18, borderRadius: 100, backgroundColor: status ?  color.primary+90 : '#858585' }} />
             </Row>
 )}
 export default Check;
