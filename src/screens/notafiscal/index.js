@@ -12,7 +12,7 @@ import Header from '@components/header';
 export default function NotafiscalScreen({navigation, }){
     const { color, font, margin, } = useContext(ThemeContext);
     return (
-        <Main>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
                  <Header title="Cadastrar nota fiscal"/>
                 <Column style={{height: 24, }} />
@@ -25,7 +25,7 @@ export default function NotafiscalScreen({navigation, }){
                     <Button style={{ borderRadius: 8, marginTop: 24, backgroundColor: color.primary, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                         <Label style={{ fontFamily: font.bold, color: "#fff", textAlign: 'center', }}>Cadastrar nota fiscal</Label>
                     </Button>
-                    <Button style={{ borderRadius: 8, borderColor: color.primary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                    <Button style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                         <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Minhas notas</Label>
                     </Button>
 
@@ -35,9 +35,27 @@ export default function NotafiscalScreen({navigation, }){
                     <Label style={{ fontSize: 16, marginTop: 10, }}> - Independente do valor da nota fiscal ela valerá 1 patinha da sorte.</Label>
 
 
-                    <Title style={{ marginVertical: 24, fontSize: 20, }}>Compre a partir de 15 notas fiscais</Title>
+                    <Title style={{ marginTop: 24, fontSize: 20, }}>Compre a partir de 15 notas fiscais</Title>
+                   
                 </Column>
-               
+                <Scroll horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: margin.h, marginBottom: 24, marginTop: 16, }}>
+                        <Column style={{ marginBottom: 12,  }}>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, marginVertical: 16, }}/>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
+                        </Column>
+                        <Column style={{ marginBottom: 12, }}>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, marginVertical: 16, }}/>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
+                        </Column>
+                        <Column style={{ marginBottom: 12, marginRight: 40, }}>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, marginVertical: 16, }}/>
+                            <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
+                        </Column>
+
+                    </Scroll>
 
             </Scroll>
 
@@ -54,7 +72,7 @@ const Carrousel = (  ) => {
         const link = item.img
         return(
             <Button>
-                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24,  marginRight: 12}} />
+                <MotiImage   style={{ width: 320, height: 170, borderRadius: 24,  marginRight: 12, backgroundColor:"#FFF2E3",}} />
             </Button>
         )
     }

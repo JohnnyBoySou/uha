@@ -92,7 +92,7 @@ export default function NotifyScreen({ navigation, }) {
                         <Button onPress={() => {settype('Movimentações')}}  style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
                             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
                                 <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                    <Column style={{ backgroundColor: color.primary+20,padding: 18, borderRadius: 12, marginRight: 20, }}>
+                                    <Column style={{ backgroundColor:'#FFE0F6',padding: 18, borderRadius: 12, marginRight: 20, }}>
                                         <ArrowLeftRight color={color.secundary} size={38}/>
                                     </Column>
                                     <Column>

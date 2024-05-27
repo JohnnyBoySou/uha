@@ -89,7 +89,7 @@ export default function BuyServiceRifaScreen({ navigation, }) {
             </Column>
 
                 
-            <BottomSheet ref={sheetRifa} snapPoints={[200, 400]}   style={{ backgroundColor: color.background, borderRadius: 24, }} handleStyle={{backgroundColor: color.background, borderRadius: 24,}} handleIndicatorStyle={{backgroundColor: color.secundary+40, width: 80, height: 6, borderRadius: 100,}}>
+            <BottomSheet ref={sheetRifa} snapPoints={[100, 200]}   style={{ backgroundColor: color.background, borderRadius: 24, }} handleStyle={{backgroundColor: color.background, borderRadius: 24,}} handleIndicatorStyle={{backgroundColor: color.secundary+40, width: 80, height: 6, borderRadius: 100,}}>
                 <BottomSheetView style={{ paddingHorizontal: margin.h, backgroundColor: color.background, flex: 1, }}>
                  
                     <Title style={{ textAlign: 'center', marginVertical: 20, }}>Deseja comprar {value} fichas</Title>

@@ -30,9 +30,9 @@ export default function DonateValueScreen({ navigation, }) {
 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 32,  }}>
                     <Title style={{ fontSize: 20, lineHeight: 24,  }}>Pagar com</Title>
-                    <Button onPress={() => {settype(null)}} style={{ flexDirection: 'row', alignItems: 'center', }}>
-                        <X size={32} color={color.red}/>
-                    </Button>
+                   {type != null && <Button onPress={() => {settype(null)}} style={{ flexDirection: 'row', alignItems: 'center', }}>
+                        <CircleX size={32} color={color.red}/>
+                    </Button>}
                 </Row>
 
 
@@ -43,7 +43,7 @@ export default function DonateValueScreen({ navigation, }) {
 
                 <Button onPress={() => {settype('pix')}}  style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginTop: 12, paddingBottom: 12, }}>
                     <Row>
-                        <Column style={{ padding: 28, backgroundColor: color.primary+40, borderRadius: 12, }}>
+                        <Column style={{ padding: 28, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
                             <ImagePlus size={24} color={color.secundary}/>
                         </Column>
                         <Column style={{ justifyContent: 'center', marginHorizontal: 20,  }}>
@@ -55,7 +55,7 @@ export default function DonateValueScreen({ navigation, }) {
 
                 <Button style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginTop: 12, paddingBottom: 12, }}>
                     <Row>
-                        <Column style={{ padding: 28, backgroundColor: color.primary+40, borderRadius: 12, }}>
+                        <Column style={{ padding: 28, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
                             <ImagePlus size={24} color={color.secundary}/>
                         </Column>
                         <Column style={{ justifyContent: 'center', marginHorizontal: 20,  }}>
@@ -67,7 +67,7 @@ export default function DonateValueScreen({ navigation, }) {
 
                 <Button style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginTop: 12, paddingBottom: 12, }}>
                     <Row>
-                        <Column style={{ padding: 28, backgroundColor: color.primary+40, borderRadius: 12, }}>
+                        <Column style={{ padding: 28, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
                             <ImagePlus size={24} color={color.secundary}/>
                         </Column>
                         <Column style={{ justifyContent: 'center', marginHorizontal: 20,  }}>
@@ -79,7 +79,7 @@ export default function DonateValueScreen({ navigation, }) {
 
                 <Button style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginTop: 12, paddingBottom: 12, }}>
                     <Row>
-                        <Column style={{ padding: 28, backgroundColor: color.primary+40, borderRadius: 12, }}>
+                        <Column style={{ padding: 28, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
                             <ImagePlus size={24} color={color.secundary}/>
                         </Column>
                         <Column style={{ justifyContent: 'center', marginHorizontal: 20,  }}>
@@ -96,7 +96,7 @@ export default function DonateValueScreen({ navigation, }) {
                     <MotiView from={{opacity: 0,}} animate={{opacity: 1,}}>
                     <Button onPress={() => {settype('pix')}}  style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginTop: 12, paddingBottom: 12, }}>
                         <Row>
-                            <Column style={{ padding: 28, backgroundColor: color.primary+40, borderRadius: 12, }}>
+                            <Column style={{ padding: 28, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
                                 <ImagePlus size={24} color={color.secundary}/>
                             </Column>
                             <Column style={{ justifyContent: 'center', marginHorizontal: 20,  }}>
@@ -136,7 +136,7 @@ const ContextChose = ({item, navigation}) => {
 
             <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center',     }}>
                 <ButtonPR style={{ paddingHorizontal: 24, }}  onPress={() => {navigation.navigate('BuyServiceSuccess')}} >
-                    <LabelLI>Transferir</LabelLI> 
+                    <LabelLI style={{ color: '#fff', }}>Transferir</LabelLI> 
                 </ButtonPR>
                 <Column style={{width: 24, }} />
                 <ButtonSE onPress={() => {navigation.navigate('BuyServiceError')}} >

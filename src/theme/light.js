@@ -15,6 +15,7 @@ export default{
     label: "#5E5E5E",
     off: '#00000020',
     background: '#FFF2E3',
+    text: '#FFF2E3',
   },
   size: {
     label: 18,
