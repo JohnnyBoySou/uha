@@ -17,6 +17,7 @@ import BuyServiceErrorScreen from '@screens/buyservice/error';
 import BuyServiceSuccessHideScreen from '@screens/buyservice/success_hide';
 import BuyServiceGiftCardScreen from '@screens/buyservice/gift_card';
 import BuyServiceRifaScreen from '@screens/buyservice/rifa';
+import BuyServiceReceiveGiftScreen from '@screens/buyservice/receive_gift';
 
 import DonateScreen from '@screens/donate';
 import DonateValueScreen from '@screens/donate/value';
@@ -64,6 +65,7 @@ export default function Router() {
             <Stack.Screen name="BuyServiceGiftCard" component={BuyServiceGiftCardScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceRifa" component={BuyServiceRifaScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceSuccessHide" component={BuyServiceSuccessHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyServiceReceiveGift" component={BuyServiceReceiveGiftScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>

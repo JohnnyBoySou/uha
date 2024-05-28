@@ -1,8 +1,9 @@
-import React, { useContext, useState, } from 'react';
-import { FlatList, Pressable, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useContext, useState, useRef} from 'react';
+import { FlatList, Pressable, ScrollView, ActivityIndicator, TextInput } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonLI, LabelLI , ButtonOut, Digit } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Delete, X } from 'lucide-react-native';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
 export default function BuyServiceScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -36,6 +37,10 @@ export default function BuyServiceScreen({ navigation, }) {
         }, 3500);
     }
 
+
+    const bottomEnviar = useRef(null);
+    const [codigo, setcodigo] = useState();
+
     return (
         <Main style={{ backgroundColor: '#fff' }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
@@ -62,12 +67,12 @@ export default function BuyServiceScreen({ navigation, }) {
                : <Title style={{ fontSize: 50, lineHeight: 54, marginVertical: 12, fontFamily: font.black, }}>{value}</Title>}
                
                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Label>Patinhas disponíveis: </Label>
+                <Label>UhaCoins disponíveis: </Label>
                     <Button onPress={() => {setvalue(`${values.total}`)}} style={{ borderRadius: 100, }}>
                         <Label style={{ fontFamily: font.bold, color: color.title, backgroundColor: color.primary+20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{values.total}</Label>
                     </Button>
                </Row>
-                <Button style={{ backgroundColor: color.background, paddingVertical: 12, paddingHorizontal: 24, borderRadius: 8, marginVertical: 32, }}>
+                <Button onPress={() => {bottomEnviar.current?.expand()}}  style={{ backgroundColor: color.background, paddingVertical: 12, paddingHorizontal: 24, borderRadius: 8, marginVertical: 32, }}>
                     <Title style={{ fontSize: 18, }}>Digite o código manual</Title>
                 </Button>
             </Column>
@@ -84,6 +89,24 @@ export default function BuyServiceScreen({ navigation, }) {
                     <LabelLI style={{ color: "#fff" }}>QR Code</LabelLI>
                   </ButtonOut>
                 </Row>
+
+                <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]}>
+                <BottomSheetView style={{ marginHorizontal: margin.h, }}>
+                    <Title style={{ textAlign: 'center', marginVertical: 12,}}>Digite o código</Title>
+                   <Column style={{ width: 300, alignSelf: 'center', }}>
+                    <TextInput value={codigo} onChangeText={e => setcodigo(e)} textBreakStrategy='highQuality' lineBreakStrategyIOS='standard' 
+                        style={{ borderWidth: 2, width: 300, height: 100, alignSelf: 'center', borderColor: "#111", borderRadius: 12, paddingHorizontal: 12, marginVertical: 12, fontFamily: font.medium, fontSize: 18,  }} numberOfLines={3} multiline
+                        placeholder='12345678909876543212345678909876543211234'
+                        maxLength={44}
+                        />
+                    <Label style={{ marginTop: -40, marginBottom: 24, marginRight: 10, alignSelf: 'flex-end',  fontSize: 16,  fontFamily: font.bold, color: "#111", }}>{value.length}/44</Label>
+                    </Column>
+                    <Label style={{ textAlign: 'center',  }}>Sequência de 44 números</Label>
+                <ButtonOut onPress={() => {bottomEnviar.current?.close()}}  style={{ borderColor: color.secundary, marginVertical: 24, marginHorizontal: 32, }}>
+                    <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Verificar</Label>
+                </ButtonOut>
+                 </BottomSheetView>
+            </BottomSheet>
         </Main>
     )
 }

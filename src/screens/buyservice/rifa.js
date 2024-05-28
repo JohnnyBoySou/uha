@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
-import { FlatList, Pressable, ScrollView, ActivityIndicator } from 'react-native';
+import { FlatList, Pressable, ScrollView, ActivityIndicator, TextInput } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonLI, LabelLI , ButtonOut, Digit } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, Minus, Plus, X } from 'lucide-react-native';
@@ -52,7 +52,8 @@ export default function BuyServiceRifaScreen({ navigation, }) {
     const handleTotalValue = () => {
         setvalue(values.total / 15)
     }
-
+    const bottomEnviar = useRef(null);
+    const [codigo, setcodigo] = useState();
     const uhacoins = value * 15;
     return (
         <Main style={{ backgroundColor: color.secundary, }}>
@@ -118,6 +119,24 @@ export default function BuyServiceRifaScreen({ navigation, }) {
                   </Row>
 
                 </BottomSheetView>
+            </BottomSheet>
+
+            <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]}>
+                <BottomSheetView style={{ marginHorizontal: margin.h, }}>
+                    <Title style={{ textAlign: 'center', marginVertical: 12,}}>Digite o código</Title>
+                   <Column style={{ width: 300, alignSelf: 'center', }}>
+                    <TextInput value={codigo} onChangeText={e => setcodigo(e)} textBreakStrategy='highQuality' lineBreakStrategyIOS='standard' 
+                        style={{ borderWidth: 2, width: 300, height: 100, alignSelf: 'center', borderColor: "#111", borderRadius: 12, paddingHorizontal: 12, marginVertical: 12, fontFamily: font.medium, fontSize: 18,  }} numberOfLines={3} multiline
+                        placeholder='12345678909876543212345678909876543211234'
+                        maxLength={44}
+                        />
+                    <Label style={{ marginTop: -40, marginBottom: 24, marginRight: 10, alignSelf: 'flex-end',  fontSize: 16,  fontFamily: font.bold, color: "#111", }}>{value.length}/44</Label>
+                    </Column>
+                    <Label style={{ textAlign: 'center',  }}>Sequência de 44 números</Label>
+                <ButtonOut onPress={() => {bottomEnviar.current?.close()}}  style={{ borderColor: color.secundary, marginVertical: 24, marginHorizontal: 32, }}>
+                    <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Verificar</Label>
+                </ButtonOut>
+                 </BottomSheetView>
             </BottomSheet>
         </Main>
     )

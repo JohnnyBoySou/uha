@@ -9,7 +9,7 @@ export default function DevScreen({navigation, }){
     'Extract', 'ExtractSingle (in Extract)', 'BuyServiceRifa', 'Share', 'AccountNotify', 'AccountDetails', ]
     
 
-    const buyservice =[ 'BuyService', 'BuyServiceSuccess', 'BuyServiceError', 'BuyServiceGiftCard', 'BuyServiceRifa', 'BuyServiceSuccessHide']
+    const buyservice =[ 'BuyService', 'BuyServiceSuccess', 'BuyServiceError', 'BuyServiceGiftCard', 'BuyServiceRifa', 'BuyServiceSuccessHide', 'BuyServiceReceiveGift']
     const donate = ['Donate', 'DonateValue', 'DonateHide', 'DonateValueHide']
     const notafiscal = ['Notafiscal', 'NotafiscalSend', 'NotafiscalSuccess', 'NotafiscalError']
     const extract = ['Extract','Single (In Extract)' ]
