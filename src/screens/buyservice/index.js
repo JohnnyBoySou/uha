@@ -90,8 +90,8 @@ export default function BuyServiceScreen({ navigation, }) {
                   </ButtonOut>
                 </Row>
 
-                <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]}>
-                <BottomSheetView style={{ marginHorizontal: margin.h, }}>
+                <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]} backgroundStyle={{backgroundColor:color.background, }} style={{ backgroundColor: color.background, borderRadius: 24, overflow: 'hidden' }} >
+                <BottomSheetView style={{ paddingHorizontal: margin.h, backgroundColor: color.background, }}>
                     <Title style={{ textAlign: 'center', marginVertical: 12,}}>Digite o código</Title>
                    <Column style={{ width: 300, alignSelf: 'center', }}>
                     <TextInput value={codigo} onChangeText={e => setcodigo(e)} textBreakStrategy='highQuality' lineBreakStrategyIOS='standard' 

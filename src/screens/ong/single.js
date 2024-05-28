@@ -22,7 +22,7 @@ export default function ONGSingleScreen({ navigation, route }) {
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Title style={{ marginBottom: 12, }}>Quem somos</Title>
                 
-                   {showDesc ? <Label>{item?.about}</Label> : <Label>{item?.about.slice(0, 200)}...</Label>}
+                   {showDesc ? <Label>{item?.about}</Label> : <Label>{item?.about?.slice(0, 200)}...</Label>}
                 
                     <Button onPress={() => {setshowDesc(!showDesc)}} style={{ alignSelf: 'flex-start', marginVertical: 12, backgroundColor:'#FFE0F6', paddingVertical: 8, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24, borderRadius: 100,  }}>
                         <LabelLI style={{ color: color.primary,  }}>{showDesc ? 'Mostrar menos' : 'Ver mais'}</LabelLI>

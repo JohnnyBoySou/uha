@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Delete, X } from 'lucide-react-native';
 import Header from '@components/header';
 
-export default function DonateHideScreen({ navigation, }) {
+export default function DonateHideScreen({ navigation,  }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [value, setvalue] = useState('30');
     const [loading, setloading] = useState(false);
@@ -42,7 +42,7 @@ export default function DonateHideScreen({ navigation, }) {
     const handleFinish = () => {
         setloading(true);
         setTimeout(() => {
-            navigation.navigate('BuyServiceSuccess');
+            navigation.navigate('DonateValueHide', { value: value,  });
             setloading(false)
         }, 3500);
     }
@@ -61,7 +61,7 @@ export default function DonateHideScreen({ navigation, }) {
                 <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean}/>              
 
                 <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center',  paddingTop: 60,   }}>
-                <ButtonPR style={{ paddingHorizontal: 24, flexGrow: 1, }} disabled={loading} onPress={() => {navigation.navigate('BuyServiceSuccess')}} >
+                <ButtonPR style={{ paddingHorizontal: 24, flexGrow: 1, }} disabled={loading} onPress={handleFinish} >
                         <>
                         {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI style={{ color: color.background, }}>Gerar QR Code</LabelLI>  }
                         </>

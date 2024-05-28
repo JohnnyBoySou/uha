@@ -11,9 +11,10 @@ import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 
 
-export default function DonateValueHideScreen({ navigation, }) {
+export default function DonateValueHideScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const [value, setvalue] = useState(30);
+    const value = route.params?.value;
+
     const [loading, setloading] = useState(false);
     const [visible, setVisible] = useState(false);
     const data = { pix: 'chavepix09876543456789087' }

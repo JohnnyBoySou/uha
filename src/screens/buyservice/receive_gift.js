@@ -18,8 +18,13 @@ export default function BuyServiceReceiveGiftScreen({ navigation, }) {
         await Clipboard.setStringAsync(`${value}`);
     };
 
+
+
+
     return (
         <Main style={{  }}>
+            <Scroll>
+
             <Header title="Gift Card"/>
 
             <Title style={{ fontSize: 52, lineHeight: 56,  textAlign: 'center', marginTop: 40,}}>Parabéns!</Title>
@@ -55,6 +60,7 @@ export default function BuyServiceReceiveGiftScreen({ navigation, }) {
                 </ButtonPR>
 
             </Column>
+            </Scroll>
 
             <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]}>
                 <BottomSheetView style={{ marginHorizontal: margin.h, }}>
@@ -76,3 +82,4 @@ export default function BuyServiceReceiveGiftScreen({ navigation, }) {
         </Main>
     )
 }
+

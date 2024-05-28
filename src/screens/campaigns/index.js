@@ -10,13 +10,12 @@ export default function CampaignsScreen({ navigation, }) {
     const [user, setUser] = useState({id: '0987654321234567890', index: 11 + 1, winner: true,})
     const list = [1, 2, 3, 4, 5]
     return (
-        <Main>
+        <Main style={{ paddingTop: 0,  }}>
             <Scroll>
-               
-                <Column style={{ paddingHorizontal: 52, paddingVertical: 20, backgroundColor: color.secundary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32,}}>
+                <Column style={{ paddingHorizontal: 52, paddingTop: 40,  backgroundColor: color.secundary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32,}}>
                     <Title style={{ fontSize: 24, lineHeight: 24, color: color.text, marginTop: 32, }}>Campanhas do momento</Title>
                     <Label style={{ color: color.text, marginTop: 10, }}>Participe das novas campanhas todos os meses e concorra a diversos prêmios em produtos, serviços e bônus relâmpago!</Label>
-                    <MotiImage style={{ flexGrow: 1, borderRadius: 24, backgroundColor: '#303030', height: 180, marginVertical: 24, }} from={{opacity: 0, translateY: -20,}} animate={{opacity: 1, translateY: 0,}}/>
+                    <MotiImage style={{ flexGrow: 1, borderRadius: 24, backgroundColor: '#f7f7f7', height: 180, marginTop: 24, }} from={{opacity: 0, translateY: -20,}} animate={{opacity: 1, translateY: 0,}}/>
                 </Column>
 
                 <Title style={{ marginHorizontal: margin.h, marginTop: 32,  }}>Ofertas selecionadas</Title>
@@ -29,7 +28,7 @@ export default function CampaignsScreen({ navigation, }) {
                     ListFooterComponent={<Column style={{ width: margin.h, }}/>}
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index}) => <MotiImage style={{ width: 280, height: 140, borderRadius: 24, marginRight: 12, backgroundColor: "#303030", }}/>}
+                    renderItem={({ item, index}) => <MotiImage style={{ width: 280, height: 140, borderRadius: 24, marginRight: 12, backgroundColor: "#f7f7f7", }}/>}
                 />
 
 
@@ -42,8 +41,8 @@ export default function CampaignsScreen({ navigation, }) {
                         <LabelLI>Saiba mais</LabelLI>
                     </ButtonOut>
 
-                    <MotiImage style={{ width: '100%', alignSelf: 'center', height: 180, borderRadius: 32,  backgroundColor: "#303030",  }} />
-                    <MotiImage style={{ width: '100%', alignSelf: 'center', height: 180, borderRadius: 32, marginTop: 18, backgroundColor: "#303030",  }} />
+                    <MotiImage style={{ width: '100%', alignSelf: 'center', height: 180, borderRadius: 32,  backgroundColor: "#f7f7f7",  }} />
+                    <MotiImage style={{ width: '100%', alignSelf: 'center', height: 180, borderRadius: 32, marginTop: 18, backgroundColor: "#f7f7f7",  }} />
 
 
                     <Title style={{  marginTop: 32, textAlign: 'center',    }}>São mais de</Title> 
@@ -72,15 +71,15 @@ export default function CampaignsScreen({ navigation, }) {
                
                     <Row style={{ marginVertical: 20, alignSelf: 'center', alignItems: 'center',  }}>
                         <Column>
-                            <MotiImage style={{ width: 180, height: 180, backgroundColor: "#303030", borderRadius: 24,}}/>
-                            <MotiImage style={{ width: 180, height: 100, backgroundColor: "#303030", borderRadius: 24, marginTop: 20,}}/>
+                            <MotiImage style={{ width: 180, height: 180, backgroundColor: "#f7f7f7", borderRadius: 24,}}/>
+                            <MotiImage style={{ width: 180, height: 100, backgroundColor: "#f7f7f7", borderRadius: 24, marginTop: 20,}}/>
                         </Column>
                         <Column style={{ marginLeft: 20, }}>
-                            <MotiImage style={{ width: 180, height: 298, backgroundColor: "#303030", borderRadius: 24,}}/>
+                            <MotiImage style={{ width: 180, height: 298, backgroundColor: "#f7f7f7", borderRadius: 24,}}/>
                         </Column>
                     </Row>
 
-                    <MotiImage style={{ width: 374, alignSelf: 'center', height: 180, borderRadius: 24,   backgroundColor: "#303030",  }} />
+                    <MotiImage style={{ width: 374, alignSelf: 'center', height: 180, borderRadius: 24,   backgroundColor: "#f7f7f7",  }} />
 
                 </Column>
 

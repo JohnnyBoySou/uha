@@ -5,12 +5,13 @@ import { ThemeProvider } from 'styled-components/native';
 import dark from './src/theme/dark';
 import light from './src/theme/light';
 import { StatusBar } from 'expo-status-bar';
-import * as SplashScreen from 'expo-splash-screen';
+import { preventAutoHideAsync, hideAsync} from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { View, useColorScheme } from 'react-native';
 import Router from './src/router/index';
+import AsyncStaticScreen from '@screens/async';
 
-SplashScreen.preventAutoHideAsync();
+preventAutoHideAsync();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -37,7 +38,7 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
-      await SplashScreen.hideAsync();
+      await hideAsync();
     }
   }, [appIsReady]);
 

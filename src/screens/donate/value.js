@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef } from 'react';
 import { FlatList, Pressable, ScrollView, ActivityIndicator } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonLI, LabelLI, ButtonOut, Digit, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ImagePlus, CircleCheck, CheckCircle, Info, ScrollText, Moon, CircleX, LogOut, Delete, X } from 'lucide-react-native';
+import { ImagePlus, CircleCheck, CheckCircle, Info, ScrollText, Moon, CircleX, LogOut, Delete, Clipboard as Clip } from 'lucide-react-native';
 import Header from '@components/header';
 import { AnimatePresence, MotiImage, MotiView } from 'moti';
 import * as Clipboard from 'expo-clipboard';
@@ -130,7 +130,7 @@ export default function DonateValueScreen({ navigation, }) {
 
             >
                 <BottomSheetScrollView>
-                    <ONGS />
+                    <ONGS navigation={navigation}/>
                 </BottomSheetScrollView>
             </BottomSheet>
 
@@ -188,19 +188,25 @@ const listOngs = [
         id: 1,
         name: 'ONG 1',
         desc: 'Descrição da ONG 1',
+        about: 'Fundado em fevereiro de 2015, a partir da união de um grupo de pessoas em prol do propósito de cuidar bem e adotar bem cada animal, o Instituto Caramelo atua principalmente no resgate de animais feridos ou em situação de risco, recuperação e adoção. Mantemos um abrigo com cerca de 300 animais, entre cães e gatos, todos resgatados das ruas, onde eles são protegidos, tratados, alimentados e aguardam pela chance de serem adotados.'
+
     },
     {
         id: 2,
         name: 'ONG 2',
         desc: 'Descrição da ONG 2',
+        about: 'Fundado em fevereiro de 2015, a partir da união de um grupo de pessoas em prol do propósito de cuidar bem e adotar bem cada animal, o Instituto Caramelo atua principalmente no resgate de animais feridos ou em situação de risco, recuperação e adoção. Mantemos um abrigo com cerca de 300 animais, entre cães e gatos, todos resgatados das ruas, onde eles são protegidos, tratados, alimentados e aguardam pela chance de serem adotados.'
+
     },
     {
         id: 3,
         name: 'ONG 3',
         desc: 'Descrição da ONG 3',
+        about: 'Fundado em fevereiro de 2015, a partir da união de um grupo de pessoas em prol do propósito de cuidar bem e adotar bem cada animal, o Instituto Caramelo atua principalmente no resgate de animais feridos ou em situação de risco, recuperação e adoção. Mantemos um abrigo com cerca de 300 animais, entre cães e gatos, todos resgatados das ruas, onde eles são protegidos, tratados, alimentados e aguardam pela chance de serem adotados.'
+
     },
 ]
-const ONGS = () => {
+const ONGS = ({navigation}) => {
     const { color, font, margin } = useContext(ThemeContext);
     const [type, settype] = useState(false);
     return (
@@ -218,7 +224,7 @@ const ONGS = () => {
                 data={listOngs}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                    <Column key={item.id} style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginBottom: 12, paddingBottom: 12, }}>
+                    <Button onPress={() => {navigation.navigate('ONGSingle', {item: item,})}} key={item.id} style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginBottom: 12, paddingBottom: 12, }}>
                         <Row style={{  alignItems: 'center',  }}>
                             <MotiImage style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: '#FFE0F6' }}/>
                             <Column style={{ marginLeft: 20, }}>
@@ -226,7 +232,7 @@ const ONGS = () => {
                                 <Label>{item?.desc}</Label>
                             </Column>
                         </Row>
-                    </Column>
+                    </Button>
                 )}
             />
         </Column>

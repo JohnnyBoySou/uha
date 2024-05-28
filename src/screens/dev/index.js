@@ -10,12 +10,13 @@ export default function DevScreen({navigation, }){
     
 
     const buyservice =[ 'BuyService', 'BuyServiceSuccess', 'BuyServiceError', 'BuyServiceGiftCard', 'BuyServiceRifa', 'BuyServiceSuccessHide', 'BuyServiceReceiveGift']
-    const donate = ['Donate', 'DonateValue', 'DonateHide', 'DonateValueHide']
+    const donate = ['Donate', 'DonateValue', 'DonateHide', 'DonateValueHide', 'DonateSuccessHide']
     const notafiscal = ['Notafiscal', 'NotafiscalSend', 'NotafiscalSuccess', 'NotafiscalError']
     const extract = ['Extract','Single (In Extract)' ]
     const account = ['AccountNotify', 'AccountDetails', 'AccountAccessInfo', 'Account']
     const campaigns = ['Campaigns', 'CampaignsRifas', 'CampaignsGiftCard']
-    const others = ['Home', 'Onboarding', 'Login', 'Notify', 'Redeem', 'Share',]
+    const others = ['Home', 'Onboarding', 'Login', 'Notify', 'Redeem', 'Share','AsyncStatic',]
+    const favorites = ['Favorites', ]
 
     const [cache, setcache] = useState(buyservice);
     const [route, setroute] = useState('buyservice');
@@ -47,6 +48,10 @@ export default function DevScreen({navigation, }){
         {
         name: 'others',
         paths: others,
+        },
+        {
+        name: 'favorites',
+        paths: favorites,
         }
     ]
 
