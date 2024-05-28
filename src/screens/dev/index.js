@@ -10,7 +10,7 @@ export default function DevScreen({navigation, }){
     
 
     const buyservice =[ 'BuyService', 'BuyServiceSuccess', 'BuyServiceError', 'BuyServiceGiftCard', 'BuyServiceRifa', 'BuyServiceSuccessHide']
-    const donate = ['Donate', 'DonateValue']
+    const donate = ['Donate', 'DonateValue', 'DonateHide', 'DonateValueHide']
     const notafiscal = ['Notafiscal', 'NotafiscalSend', 'NotafiscalSuccess', 'NotafiscalError']
     const extract = ['Extract','Single (In Extract)' ]
     const account = ['AccountNotify', 'AccountDetails', 'AccountAccessInfo', 'Account']
@@ -60,10 +60,9 @@ export default function DevScreen({navigation, }){
                             numColumns={2}
                             data={paths}
                             keyExtractor={(path) => path.name}
-                            columnWrapperStyle={{ justifyContent: 'space-between', }}
                             renderItem={
                                 ( {item : path} ) => (
-                                <Button onPress={() => {setcache(path?.paths);setroute(path?.name)}}  style={{ width: 200, margin: 6,  backgroundColor: route === path?.name ? color.primary : color.background,  borderRadius: 32, justifyContent: 'center', alignItems: 'center', paddingVertical: 10, }}>
+                                <Button onPress={() => {setcache(path?.paths);setroute(path?.name)}}  style={{ paddingVertical: 12,paddingHorizontal: 24, margin: 6,  backgroundColor: route === path?.name ? color.primary : color.background,  borderRadius: 32, justifyContent: 'center', alignItems: 'center', paddingVertical: 10, }}>
                                     <Title style={{ fontSize: 18,  color: route === path?.name ? "#fff" : color.primary, }}>{path?.name} </Title>
                                 </Button>)}
                         />

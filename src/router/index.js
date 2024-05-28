@@ -20,6 +20,8 @@ import BuyServiceRifaScreen from '@screens/buyservice/rifa';
 
 import DonateScreen from '@screens/donate';
 import DonateValueScreen from '@screens/donate/value';
+import DonateHideScreen from '@screens/donate/hide';
+import DonateValueHideScreen from '@screens/donate/value_hide';
 
 import NotafiscalScreen from '@screens/notafiscal';
 import NotafiscalSendScreen from '@screens/notafiscal/send';
@@ -38,6 +40,7 @@ import CampaignsRifasScreen from '@screens/campaigns/rifa';
 import CampaignsScreen from '@screens/campaigns';
 import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
 
+import ONGSingleScreen from '@screens/ong/single';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +67,8 @@ export default function Router() {
 
             <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="DonateHide" component={DonateHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -81,6 +86,7 @@ export default function Router() {
             <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             
+            <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
         </Stack.Navigator>
     </NavigationContainer>

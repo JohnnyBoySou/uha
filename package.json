@@ -37,7 +37,9 @@
     "react-native-screens": "3.31.1",
     "react-native-svg": "^15.3.0",
     "react-native-web": "~0.19.10",
-    "styled-components": "*"
+    "styled-components": "*",
+    "expo-clipboard": "~6.0.3",
+    "lottie-react-native": "6.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0"

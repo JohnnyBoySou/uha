@@ -37,7 +37,7 @@ export default function BuyServiceScreen({ navigation, }) {
     }
 
     return (
-        <Main style={{ }}>
+        <Main style={{ backgroundColor: '#fff' }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
                 <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
                     <ArrowLeft color={color.secundary}/>
@@ -51,7 +51,7 @@ export default function BuyServiceScreen({ navigation, }) {
 
             <Column style={{ marginHorizontal: margin.h, marginVertical: 20, }}>
                 <Label>Campanha</Label>
-                <Title style={{ fontSize: 32, lineHeight: 38, }}>Patinhas da sorte</Title>
+                <Title style={{ fontSize: 32, lineHeight: 38, }}>UhaCoins</Title>
             </Column>
 
             <Column style={{ justifyContent: 'center', alignItems: 'center',   }}>
@@ -67,20 +67,20 @@ export default function BuyServiceScreen({ navigation, }) {
                         <Label style={{ fontFamily: font.bold, color: color.title, backgroundColor: color.primary+20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{values.total}</Label>
                     </Button>
                </Row>
-                <Button style={{ backgroundColor: "#fff", paddingVertical: 12, paddingHorizontal: 24, borderRadius: 8, marginVertical: 32, }}>
+                <Button style={{ backgroundColor: color.background, paddingVertical: 12, paddingHorizontal: 24, borderRadius: 8, marginVertical: 32, }}>
                     <Title style={{ fontSize: 18, }}>Digite o código manual</Title>
                 </Button>
             </Column>
             <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean}/>              
 
             <Row style={{ position: 'absolute', bottom: 0, backgroundColor: color.primary,  padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, width: '100%', justifyContent: 'center', alignItems: 'center',   }}>
-                  <ButtonLI onPress={handleFinish}  style={{ paddingHorizontal: 24, }} disabled={loading}>
+                  <ButtonLI onPress={handleFinish}  style={{ paddingHorizontal: 24, backgroundColor: color.background, }} disabled={loading}>
                         <>
                         {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI>Transferir</LabelLI>  }
                         </>
                   </ButtonLI>
                   <Column style={{width: 24, }} />
-                  <ButtonOut onPress={() => {navigation.navigate('BuyServiceError')}} >
+                  <ButtonOut onPress={() => {navigation.navigate('BuyServiceError')}} style={{ marginVertical: 2, paddingVertical: 10, }}>
                     <LabelLI style={{ color: "#fff" }}>QR Code</LabelLI>
                   </ButtonOut>
                 </Row>

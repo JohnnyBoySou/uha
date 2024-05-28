@@ -87,9 +87,21 @@ export default function BuyServiceRifaScreen({ navigation, }) {
                </Row>
                <Label style={{ color: '#fff', marginTop: 100, }}>1 ficha = 15 UhaCoins</Label>
             </Column>
+            <Row style={{ position: 'absolute', bottom: 0, backgroundColor: "#fff",  padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, width: '100%',    }}>
+            <ButtonLI onPress={handleFinish}  disabled={loading} style={{ backgroundColor: color.primary, paddingHorizontal: 24, flexGrow: 1, }}>
+                        <>
+                        {loading ? <ActivityIndicator color={color.light} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI style={{ color: '#fff', }}>Transferir</LabelLI>  }
+                        </>
+                  </ButtonLI>
+                  <Column style={{width: 24, }} />
+                  <ButtonOut style={{ flexGrow: 1, borderColor: color.primary, }} onPress={() => {navigation.navigate('BuyServiceError')}} >
+                    <LabelLI style={{ color: color.primary, }}>QR Code</LabelLI>
+                  </ButtonOut>
+                </Row>
+
 
                 
-            <BottomSheet ref={sheetRifa} snapPoints={[100, 200]}   style={{ backgroundColor: color.background, borderRadius: 24, }} handleStyle={{backgroundColor: color.background, borderRadius: 24,}} handleIndicatorStyle={{backgroundColor: color.secundary+40, width: 80, height: 6, borderRadius: 100,}}>
+            <BottomSheet ref={sheetRifa} snapPoints={[0.5, 200]}   style={{ backgroundColor: color.background, borderRadius: 24, }} handleStyle={{backgroundColor: color.background, borderRadius: 24,}} handleIndicatorStyle={{backgroundColor: color.secundary+40, width: 80, height: 6, borderRadius: 100,}}>
                 <BottomSheetView style={{ paddingHorizontal: margin.h, backgroundColor: color.background, flex: 1, }}>
                  
                     <Title style={{ textAlign: 'center', marginVertical: 20, }}>Deseja comprar {value} fichas</Title>
