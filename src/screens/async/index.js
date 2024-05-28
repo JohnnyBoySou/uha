@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Main, Scroll, Column, Label, Title, Row } from '@theme/global';
+import React, { useEffect } from 'react';
+import { Main, Row } from '@theme/global';
 import { MotiImage } from 'moti';
 export default function AsyncStaticScreen({ navigation, }) {
     useEffect(() => {
