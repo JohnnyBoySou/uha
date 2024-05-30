@@ -3,7 +3,7 @@ import { FlatList, ScrollView, View, Animated, Pressable } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MotiImage,  } from 'moti';
-import { Bell , Search} from 'lucide-react-native';
+import { Bike, Bone , Brush, Hospital, Search, Shirt} from 'lucide-react-native';
 import { SlidingDot } from "react-native-animated-pagination-dots";
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
@@ -30,21 +30,21 @@ export default function HomeScreen({navigation, }){
     const ofertas = [
         {
             id: 1,
-            img: 'https://s3-alpha-sig.figma.com/img/4c66/0867/6c84334565a589145097476dc01670cb?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IfUJfPsjJcQ5slRuOudFAmk-9ylSTuHlN8yFtfVyukVUp~62v5Pigic1FN~UXcUsjaF3uBrbL~FOhKnUjgSnEMQ3O0wbhQCSzOKlLAUdXhzvjo-AbuEhd4ArufjPFLIWfKiIO0Um~Y0DgBpQjCQtirFeG9a2fGsrGG6~VhGk9tEm-YEzbSWyyPhdfLK1xzcj28f4ig7jb8E6mFsJmIvJ6B6C1kobwxFpYbGzVOzcsSIk6qwfp0dpTkYRSgihThIFFwWIqT1XEbvOTx2BJ2s9qd6PZ8Y2BbkjWMjw~ya18culyoEW8J2sTvAPr7r7rH7ErOOJ8kgw16oA6BUIb43xrQ__',
+            img: require('@imgs/amazon.png'),
             title: 'Amazon',
             label: 'A partir de 40 UhaCoins',
             color: '#',
         },
         {
             id: 2,
-            img: 'https://s3-alpha-sig.figma.com/img/683a/c80e/c9779a5a76b8d506a2530eb53b15946a?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=AZW8DbGmjQhp-7TknKs1VqolzwZV5basJQ4pKuOPMfTarDDnhY5GKDzu9obl61L6SbJOJhXVf4o~GNFwfMCjkoaoehXKhvzTKjxLMZeDnb-OEsfGS96BYkKmkTORdhNDFilvNw52K1K3lJuETLVymEoWdb3VRG57i1sbO-WsvlJYSczVeVsEyXRAMSHWaR1FFgmphZLNuqoP1P3hhCbSdSLpYARwwPapIxt4bNvi7DX2VOLl2PwGpN7tNRYMy~1gtO6walGeSB5C~I8P1Ry89ceUDXwu3adniKbQgXfyhrYyCJy-0-LHvVGNNLtncVX8KfdCtkvZdP19yVkg2xBlmw__',
+            img: require('@imgs/petiko.png'),
             title: 'Petiko',
             label: 'A partir de 40 UhaCoins',
             color: '#',
         },
         {
             id: 3,
-            img: 'https://s3-alpha-sig.figma.com/img/bff7/7c8b/4316eb39bec33a2159778f1a0a432b4c?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=oinykAGdXGlxaw2hTL4RoJacXL24i-7Q7-zObgl8MGNnTj6XtlXLGort8YWxx44KJZPlYdXO-ejztyKAXMJ6KbXhf14t4wCiRGdtxUGn8VDgJDwbLbuBCnf0tRNPsuJirdu3y4benVJ4hYcc4qLCtOUVodRKa0q2ltaMZL15rKf~g3ef2xDy7SSlDuBna~LvOTbKHSWco9lxVmQkfSsbFmd43PvUn9aK1lkJB~fSDvrhYzstYByP~wG2OzLcXV~hVsOAfmAd6lsfR59rT6EL0zPVsJB~AEh~hUbFY3PPHHHmeBeCY8JLUcLXKt~EUImo94O8rRfF0eLbBZZmYL4hMw__',
+            img: require('@imgs/cobasi.png'),
             title: 'Cobasi',
             label: 'A partir de 40 UhaCoins',
             color: '#',
@@ -56,13 +56,13 @@ export default function HomeScreen({navigation, }){
             id: 1,
             title: 'Petlove',
             label: 'Produtos para pets',
-            img: 'https://s3-alpha-sig.figma.com/img/a196/95c7/a0392246afa51ad99465778e4944981b?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iGWRFym2RE5NskPEesbnCHdHjatERaoKAylAceVJWYB4mfKACXjyo-pUHb3L4a6B93YZ7qlNiLCztZ8U6bhQRunB~gzYWTMSLlci41r-sH7ShTL2kFUui3BHbrRRtRZkO0L-oGFf0XUDBRIBsVfN~r7U0NcpP9rmCK5lH27udZLWN0tAW-JOvdNMXjhOaloPr53fvqyO8mwtpUIH~RAxrhVb95G2J~NQO6Ost9MEZYq3-qJENcXXtuido8xmx-fuqfNl900e3j2O0UoXNnNEvbrf7owS0asOiU5cCueaFlIfb6F9mHi8m9m0ypXnwIgvDNGLicD0Z3xF3ErWqmaLrg__',
+            img: require('@imgs/petlove.png')
         },
         {
             id: 2,
             title: 'Petz',
             label: 'Produtos para pets',
-            img: 'https://s3-alpha-sig.figma.com/img/aad2/2bcf/05aaad067e4c51be08492dfe129ff979?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=qOjXeBvpe0RD-hgWWSL4mIhMEGUDNg3TB~O-AQHxwHjngcGTIEF~LmnmntyvYHyjDsCWh8OF7MueJpS27MuxM818Z~tFqJh-uepsLkXMXbmU-Pi1njX6-wdUBBqiZIlL2wrkoHa9f~zugrXYVIfgHb9a05rkgEirBnKqYWlpfSb~353HTSmVHKRhtVhQw-ZBgZuqxIRX1LrnzHR05xdSlxRWgb20SMbm9V2pW3s-UCMQQqhuE7IYIuWDRS5DUwV~cFMTb7v0-R2wdBkmAk~d7T35dk-xP9U~IDSjyY9sesiq4O~APT~sucV9i6TFfA~aAEtEwP~Aw5-cz7IJaQchHQ__',
+            img: require('@imgs/petz.png')
         }
     ]
 
@@ -155,9 +155,9 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{  borderRadius: 24,  marginRight: 12, }}>
+                                <Button style={{   marginRight: 12, }}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                        <MotiImage source={{uri: item.img}} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
                                             <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
                                     </Column>
@@ -178,9 +178,9 @@ export default function HomeScreen({navigation, }){
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         renderItem={({item}) => (
-                            <Button style={{  borderRadius: 24,  marginRight: 12, }}>
+                            <Button style={{    marginRight: 12, }}>
                                 <Column>
-                                    <MotiImage source={{uri: item.img}} style={{ width: 200, height: 60, borderRadius: 6, objectFit: 'cover',  }} />
+                                    <MotiImage source={item.img} style={{ width: 200, height: 60, objectFit: 'cover', borderRadius: 8, }} />
                                     <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item.title}</Title>
                                     <Label style={{ textAlign: 'center',  color: color.title, fontFamily: font.medium, fontSize: 14, marginBottom: 12, }}>{item.label}</Label>
                                 </Column>
@@ -190,17 +190,81 @@ export default function HomeScreen({navigation, }){
                     />
                             
 
-                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20,   }}>
-                    <Title>Doe anônimamente</Title>
-                    <Title>Produtos em oferta</Title>
-                    <Title>Serviços em oferta</Title>
-                    <Title>Gift Card com cashback</Title>
+                <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
+                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Doe anônimamente</Title>
+                    <Carrousel />
+                </Column>
+                <Column style={{ backgroundColor: color.background, marginTop: -30,  }}>
+                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Produtos em oferta</Title>
+                    <FlatList 
+                            data={ofertas}
+                            ListFooterComponent={<Column style={{ width: 24 }} />}
+                            ListHeaderComponent={<Column style={{ width: 24 }} />}
+                            showsHorizontalScrollIndicator={false}
+                            horizontal
+                            renderItem={({item}) => (
+                                <Button style={{   marginRight: 12, }}>
+                                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
+                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
+                                    </Column>
+                                </Button>
+                            )}
+                            keyExtractor={item => item.id}
+                        />
+                </Column>
+                <Column style={{ backgroundColor: color.background, paddingTop: 10,  }}>
+                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Serviços em oferta</Title>
+                    <FlatList 
+                            data={ofertas}
+                            ListFooterComponent={<Column style={{ width: 24 }} />}
+                            ListHeaderComponent={<Column style={{ width: 24 }} />}
+                            showsHorizontalScrollIndicator={false}
+                            horizontal
+                            renderItem={({item}) => (
+                                <Button style={{   marginRight: 12, }}>
+                                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
+                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
+                                    </Column>
+                                </Button>
+                            )}
+                            keyExtractor={item => item.id}
+                        />
+                </Column>
+                
+                <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
+                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Gift Card com cashback</Title>
+                    <Carrousel />
+                </Column>
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, marginTop: -20,  }}>
                     <Title>Categorias</Title>
+                    <FlatList 
+                        data={categories}
+                        ListFooterComponent={<Column style={{ width: 24 }} />}
+                        ListHeaderComponent={<Column style={{ width: 24 }} />}
+                        keyExtractor={item => item.id}
+                        style={{ marginVertical: margin.v, }}
+                        renderItem={({item}) => (
+                            <Button style={{ marginBottom: 12, borderBottomWidth: 1, borderColor: color.off, paddingBottom: 12,}}>
+                                <Row style={{  alignItems: 'center',  }}>
+                                    <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center',  }}>
+                                        {item.icon}
+                                    </Column>
+                                    <Column style={{ justifyContent: 'center', }}>
+                                        <Title style={{ fontSize: 20, lineHeight: 20,  }}>{item.title}</Title>
+                                        <Label style={{  marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 16, }}>{item.desc}</Label>
+                                    </Column>
+                                </Row>
+                            </Button>
+                        )}
+                    />
                 </Column>
 
-                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20,  borderBottomRightRadius: 32,   }}/>
                 
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background,}}>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100,}}>
                         <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
                             <Label style={{ fontFamily: font.bold, color: '#111', }}>Central de ajuda</Label>
                         </Button>
@@ -214,6 +278,39 @@ export default function HomeScreen({navigation, }){
         </Main>
     )
     }
+
+const categories = [
+    {
+        id: 1, 
+        title: 'Serviços Pet',
+        desc: '30 estabelecimentos parceiros',
+        icon: <Bone size={28} color="#FFF2E3"/>,
+    },
+    {
+        id: 2, 
+        title: 'Vestuário',
+        desc: '43 estabelecimentos parceiros',
+        icon: <Shirt size={28} color="#FFF2E3"/>,
+    },
+    {
+        id: 3, 
+        title: 'Esportivo',
+        desc: '15 estabelecimentos parceiros',
+        icon: <Bike size={28} color="#FFF2E3"/>,
+    },
+    {
+        id: 4, 
+        title: 'Farmácia',
+        desc: '27 estabelecimentos parceiros',
+        icon: <Hospital size={28} color="#FFF2E3"/>,
+    },
+    {
+        id: 5, 
+        title: 'Cuidados estéticos',
+        desc: '29 estabelecimentos parceiros',
+        icon: <Brush size={28} color="#FFF2E3"/>,
+    },
+]
 
 
 const Carrousel = (  ) => {
