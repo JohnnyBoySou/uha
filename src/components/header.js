@@ -4,13 +4,13 @@ import { Button, Column, Row, Title } from '@theme/global';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from 'styled-components/native';
 
-const Header = ({ title }) => {
+const Header = ({ title, rose }) => {
     const { color, font, margin } = React.useContext(ThemeContext);   
     const navigation = useNavigation();
     return(
         <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
-            <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
-                <ArrowLeft color={color.secundary}/>
+            <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: rose ? '#EFBBE0' :  "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
+                <ArrowLeft color={rose ? '#FFF2E3': color.secundary}/>
             </Button>
             <Column >
                 <Title style={{ textAlign: 'center', lineHeight: 28,}}>{title}</Title>

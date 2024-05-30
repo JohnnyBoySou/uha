@@ -10,8 +10,8 @@ export default function ShareScreen({ navigation, }) {
 
 
     return (
-        <Main style={{   }}>
-            <Scroll>
+        <Main >
+            <Scroll style={{ paddingBottom: 30,  }}>
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Label>Campanha</Label>
                     <Title>Indique e ganhe</Title>

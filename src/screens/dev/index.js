@@ -14,8 +14,8 @@ export default function DevScreen({navigation, }){
     const notafiscal = ['Notafiscal', 'NotafiscalSend', 'NotafiscalSuccess', 'NotafiscalError']
     const extract = ['Extract','Single (In Extract)' ]
     const account = ['AccountNotify', 'AccountDetails', 'AccountAccessInfo', 'Account']
-    const campaigns = ['Campaigns', 'CampaignsRifas', 'CampaignsGiftCard']
-    const others = ['Home', 'Onboarding', 'Login', 'Notify', 'Redeem', 'Share','AsyncStatic',]
+    const campaigns = ['Campaigns', 'CampaignsRifas', 'CampaignsGiftCard', 'CampaignsProgress']
+    const others = ['Home', 'Onboarding', 'Login', 'Notify', 'Redeem', 'Share','AsyncStatic', 'Recibo']
     const favorites = ['Favorites', ]
 
     const [cache, setcache] = useState(buyservice);

@@ -3,10 +3,10 @@ import {  TouchableRipple } from 'react-native-paper';
 
 export const Main = styled.SafeAreaView`
   flex: 1;
-  padding-top: 30px;
   background: ${props => props.theme.background};
 `
 export const Scroll = styled.ScrollView`
+  padding-top: 30px;
   flex: 1;
 `
 
@@ -41,6 +41,7 @@ export const ButtonPR = styled(TouchableRipple).attrs(() => ({
   border-radius: 100px;
   text-align: center;
   padding-vertical: 12px;
+  padding-horizontal: 20px;
   align-items: center;
   justify-content: center;
 `
@@ -105,6 +106,13 @@ export const LineL = styled.View`
 
 export const LabelLI = styled.Text`
   color: ${props => props.theme.color.title};
+  font-size: 18px;
+  font-family: ${props => props.theme.font.bold};
+`;
+
+
+export const LabelPR = styled.Text`
+  color: ${props => props.theme.color.light};
   font-size: 18px;
   font-family: ${props => props.theme.font.bold};
 `;

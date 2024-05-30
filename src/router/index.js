@@ -9,6 +9,7 @@ import NotifyScreen from '@screens/notify';
 import RedeemScreen from '@screens/redeem';
 import ShareScreen from '@screens/share';
 import AsyncStaticScreen from '@screens/async';
+import ReciboScreen from '@screens/recibo';
 
 import DevScreen from '@screens/dev';
 
@@ -42,6 +43,7 @@ import AccountAccessInfoScreen from '@screens/account/access';
 import CampaignsRifasScreen from '@screens/campaigns/rifa';
 import CampaignsScreen from '@screens/campaigns';
 import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
+import CampaignsProgressScreen from '@screens/campaigns/progress';
 
 import ONGSingleScreen from '@screens/ong/single';
 
@@ -52,7 +54,7 @@ const Stack = createStackNavigator();
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='AsyncStatic'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Favorites'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -62,7 +64,7 @@ export default function Router() {
             <Stack.Screen name="Dev" component={DevScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="AsyncStatic" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
-           
+            <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -94,6 +96,7 @@ export default function Router() {
             <Stack.Screen name="CampaignsRifas" component={CampaignsRifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="CampaignsProgress" component={CampaignsProgressScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 

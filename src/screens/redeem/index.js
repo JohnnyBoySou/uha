@@ -12,6 +12,8 @@ export default function RedeemScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: color.primary,  }}>
+            <Scroll>
+
             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
                 <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
                     <ArrowLeft color={color.secundary}/>
@@ -35,6 +37,8 @@ export default function RedeemScreen({ navigation, }) {
                     <Title style={{ color: "#fff", fontFamily: font.bold, }}>código manual</Title>
                 </Row>
             </Column>
+            </Scroll>
+
         </Main>
     )
 }
