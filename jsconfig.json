@@ -10,6 +10,7 @@
         "@hooks/*": ["src/hooks/*"],
         "@theme/*": ["src/theme/*"],
         "@imgs/*": ["src/assets/imgs/*"],
+        "@icons/*": ["src/assets/icones/*"],
         "@lottie/*": ["src/assets/lottie/*"],
         "@svg/*": ["src/assets/svg/*"],
         "@env": ["../src/env"]

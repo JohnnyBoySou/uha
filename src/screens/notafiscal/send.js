@@ -17,6 +17,8 @@ export default function NotafiscalSendScreen({ navigation, }) {
 
     return (
         <Main style={{  }}>
+            <Scroll>
+
             <Header title="Enviar nota fiscal"/>
 
             <Label style={{  alignSelf: 'center', textAlign: 'center', marginTop: 100, marginBottom: 30,}}>Aponte sua camerâ para o {'\n'}QR Code da nota fiscal</Label>
@@ -40,6 +42,7 @@ export default function NotafiscalSendScreen({ navigation, }) {
 
                 <Label>Sequência de 44 números</Label>
             </Column>
+            </Scroll>
 
             <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]}>
                 <BottomSheetView style={{ marginHorizontal: margin.h, }}>

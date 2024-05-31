@@ -9,7 +9,7 @@ import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 
 
-export default function HomeScreen({navigation, }){
+export default function UhaCoinsScreen({navigation, }){
     const { color, font, margin, } = useContext(ThemeContext);
 
     const campanhas = [
@@ -50,7 +50,6 @@ export default function HomeScreen({navigation, }){
             color: '#',
         },
     ]
-
     const estabelecimentos = [
         {
             id: 1,
@@ -66,6 +65,7 @@ export default function HomeScreen({navigation, }){
         }
     ]
 
+
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Scroll>
@@ -78,6 +78,7 @@ export default function HomeScreen({navigation, }){
                         <Avatar />
                     </Row>
                 </Row>
+
                 <Button style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
                         <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
@@ -86,37 +87,33 @@ export default function HomeScreen({navigation, }){
                 </Button>
                 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
-                    
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor:  color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                        <Button onPress={() => {navigation.navigate('Redeem')}}  rippleColor={color.secundary} style={{ backgroundColor:  color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <MotiImage source={require('@imgs/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                        </Button>
+                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fisl</Label>
+                    </Column>
+                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                        <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <MotiImage source={require('@imgs/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
                     </Column>
-                    
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                        <Button onPress={() => {navigation.navigate('BuyService')}} rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <MotiImage source={require('@imgs/patinhas.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
-                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Pontos</Label>
+                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Patinhas</Label>
                     </Column>
-                    
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('CampaignsGiftCard')}} rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/gift.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                        <Button onPress={() => {navigation.navigate('BuyServiceGiftCard')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <MotiImage source={require('@imgs/gift.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Gift Card</Label>
                     </Column>
-
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('BuyServiceGiftCard')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/rank.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
-                        </Button>
-                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Ranking</Label>
-                    </Column>
                 </Row>
 
-                <Carrousel color={color} type="home"/>
+                <Carrousel color={color}/>
 
                 <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32,  }}>
                     <Title style={{ marginTop: 8, }}>Campanhas</Title>
@@ -190,13 +187,12 @@ export default function HomeScreen({navigation, }){
                                 </Column>
                             </Button>
                         )}
-                        keyExtractor={item => item.id}
-                    />
+                        keyExtractor={item => item.id} />
                             
 
                 <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Doe anônimamente</Title>
-                    <Carrousel type="doe"/>
+                    <Carrousel />
                 </Column>
                 <Column style={{ backgroundColor: color.background, marginTop: -30,  }}>
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Produtos em oferta</Title>
@@ -241,7 +237,7 @@ export default function HomeScreen({navigation, }){
                 
                 <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Gift Card com cashback</Title>
-                    <Carrousel type="gift"/>
+                    <Carrousel />
                 </Column>
                 <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, marginTop: -20,  }}>
                     <Title>Categorias</Title>
@@ -266,7 +262,6 @@ export default function HomeScreen({navigation, }){
                         )}
                     />
                 </Column>
-
                 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100,}}>
                         <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
@@ -317,7 +312,7 @@ const categories = [
 ]
 
 
-const Carrousel = ({ type }) => {
+const Carrousel = (  ) => {
     const flat = useRef();
     const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -329,45 +324,26 @@ const Carrousel = ({ type }) => {
             </Button>
         )
     }
-
-
-    const data = type == 'gift' ? gift : type == 'doe' ? doe : type == 'home' ? home : home
-
-    const home = [
-        {id: 1, title: '1', img: require('@imgs/carrousel1.png')},
-        {id: 2, title: '2', img: require('@imgs/carrousel2.png') },
-        {id: 3, title: '3', img: require('@imgs/carrousel3.png') },
-    ]
-    const gift = [
-        {id: 1, title: '1', img: require('@imgs/gift1.png')},
-        {id: 2, title: '2', img: require('@imgs/gift2.png') },
-        {id: 3, title: '2', img: require('@imgs/gift2.png') },
-    ]
-    const doe = [
-        {id: 1, title: '1', img: require('@imgs/doe1.png')},
-        {id: 2, title: '2', img: require('@imgs/doe2.png') },
-        {id: 3, title: '2', img: require('@imgs/doe2.png') },
+    const data = [
+        {id: 1, title: '1', img: require('@imgs/scroll1.png')},
+        {id: 2, title: '2', img: require('@imgs/scroll2.png') },
+        {id: 3, title: '3', img: require('@imgs/scroll3.png') },
     ]
 
     const [scrollPosition, setScrollPosition] = useState(0);
-    
-   /*  useEffect(() => {
+    useEffect(() => {
         const scrollInterval = setInterval(() => {
           setScrollPosition((prevPosition) => {
-            const newPosition = (prevPosition + 320) % (320 * data?.length);
+            const newPosition = (prevPosition + 320) % (320 * data.length);
             flat.current?.scrollToOffset({ offset: newPosition, animated: true });
             return newPosition;
           });
         }, 4000);
     
         return () => clearInterval(scrollInterval);
-      }, [data?.length]);
-*/
-
-
+      }, [data.length]);
 
     return(
-
         <Column>
         
     <FlatList 
@@ -380,7 +356,7 @@ const Carrousel = ({ type }) => {
         ref={flat}
         decelerationRate={'fast'}
         scrollEventThrottle={16}
-        data={ type == 'gift' ? gift : type == 'doe' ? doe : type == 'home' ? home : home}
+        data={data}
         renderItem={render}
         keyExtractor={item => item.id}
         horizontal
@@ -388,7 +364,7 @@ const Carrousel = ({ type }) => {
         ListFooterComponent={<View style={{ width: 34 }} />}
         style={{ paddingHorizontal: 24, marginBottom: 56,}}
         snapToAlignment='center'
-        snapToOffsets={[0, 300, 640]}
+        snapToOffsets={[320, 640]}
         
         />
       

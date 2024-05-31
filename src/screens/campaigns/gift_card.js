@@ -9,7 +9,6 @@ export default function CampaignsGiftCardScreen({ navigation, }) {
     return (
         <Main>
             <Scroll>
-               
                <Header title='Gift Card'/>
                 <Column style={{ paddingHorizontal: 28, }}>
                     <MotiImage style={{ flexGrow: 1, borderRadius: 24, backgroundColor: '#303030', height: 280, marginVertical: 24, }} from={{opacity: 0, translateY: -20,}} animate={{opacity: 1, translateY: 0,}}/>
@@ -36,11 +35,9 @@ export default function CampaignsGiftCardScreen({ navigation, }) {
                     <Title style={{ marginTop: 32, marginBottom: 8, }}>Qual o prazo do meu Gift Card?</Title>
                     <Label>Você pode utilizar seu Gift Card até 6 meses após a data de compra registrada.</Label>
 
-
                     <ButtonOut style={{ borderColor: '#000', paddingVertical: 12, marginTop: 24, marginBottom: 40, }}>
                         <LabelLI style={{  }}>Conhecer estabelecimentos parceiros</LabelLI>
                     </ButtonOut>
-                   
                 </Column>
             </Scroll>
         </Main>
