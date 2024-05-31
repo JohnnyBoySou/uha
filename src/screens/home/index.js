@@ -78,7 +78,7 @@ export default function HomeScreen({navigation, }){
                         <Avatar />
                     </Row>
                 </Row>
-                <Button style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                <Button onPress={() => {navigation.navigate('Search')}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
                         <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
                         <Search strokeWidth={2} color="#11111190"/>
@@ -95,7 +95,7 @@ export default function HomeScreen({navigation, }){
                     </Column>
                     
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                        <Button onPress={() => {navigation.navigate('CampaignsUhaCoins')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
                             <MotiImage source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Pontos</Label>
@@ -388,7 +388,7 @@ const Carrousel = ({ type }) => {
         ListFooterComponent={<View style={{ width: 34 }} />}
         style={{ paddingHorizontal: 24, marginBottom: 56,}}
         snapToAlignment='center'
-        snapToOffsets={[0, 300, 640]}
+        snapToOffsets={[0, 300, 600]}
         
         />
       

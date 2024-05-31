@@ -19,9 +19,9 @@ export default function AccountNotifyScreen({ navigation, }) {
     const [whatsapp, setwhatsapp] = useState();
 
     return (
-        <Main style={{ marginTop: -10, }}>
-                <Header title='Notificações' />
+        <Main style={{  }}>
                 <Scroll>
+                    <Header title='Notificações' />
                     <Column style={{ paddingHorizontal: margin.h, }}>
                         <Title style={{ marginTop: 30, marginBottom: 30,}}>Escolha quais deseja receber</Title>
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>

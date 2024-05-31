@@ -110,6 +110,9 @@ export const LabelLI = styled.Text`
   font-family: ${props => props.theme.font.bold};
 `;
 
+export const U = styled.Text`
+  text-decoration: underline;
+`;
 
 export const LabelPR = styled.Text`
   color: ${props => props.theme.color.light};

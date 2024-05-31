@@ -1,15 +1,15 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { FlatList, ScrollView, View, Animated, Pressable } from 'react-native';
-import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
+import { Main, Scroll, Row, Column, Title, Label, Button, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MotiImage,  } from 'moti';
-import { Bike, Bone , Brush, Hospital, Search, Shirt} from 'lucide-react-native';
+import { MotiImage, MotiView,  } from 'moti';
+import { Bike, Bone , Brush, Hospital, Search, Shirt, Filter } from 'lucide-react-native';
 import { SlidingDot } from "react-native-animated-pagination-dots";
 import Avatar from '@components/avatar';
-import Notify from '@components/notify';
+import Header from '@components/header';
 
 
-export default function UhaCoinsScreen({navigation, }){
+export default function CampaignsUhaCoinsScreen({navigation, }){
     const { color, font, margin, } = useContext(ThemeContext);
 
     const campanhas = [
@@ -65,59 +65,20 @@ export default function UhaCoinsScreen({navigation, }){
         }
     ]
 
-
+    const bts = ['Estabelecimentos', 'Serviços', 'Produtos',]
+    const [page, setpage] = useState('Estabelecimentos');
+    const [type, settype] = useState();
+    
     return (
-        <Main style={{ backgroundColor: "#fff" }}>
+        <Main style={{  }}>
             <Scroll>
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h }}>
-                    <MotiImage source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40,  objectFit: 'contain', }} />
+                <Header />
+                <Column style={{ marginHorizontal: margin.h, marginVertical: 20, }}>
+                    <Label style={{ }}>Campanha</Label>
+                    <Title style={{ fontSize: 32, lineHeight: 38, }}>UhaCoins</Title>
+                </Column>
 
-                    <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Notify />
-                        <Column style={{width:16, }} />
-                        <Avatar />
-                    </Row>
-                </Row>
-
-                <Button style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
-                        <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
-                        <Search strokeWidth={2} color="#11111190"/>
-                    </Row>
-                </Button>
-                
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('Redeem')}}  rippleColor={color.secundary} style={{ backgroundColor:  color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@imgs/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
-                        </Button>
-                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fisl</Label>
-                    </Column>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@imgs/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
-                        </Button>
-                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
-                    </Column>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('BuyService')}} rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@imgs/patinhas.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
-                        </Button>
-                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Patinhas</Label>
-                    </Column>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('BuyServiceGiftCard')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@imgs/gift.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
-                        </Button>
-                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Gift Card</Label>
-                    </Column>
-                </Row>
-
-                <Carrousel color={color}/>
-
-                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32,  }}>
-                    <Title style={{ marginTop: 8, }}>Campanhas</Title>
-
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 0, borderTopLeftRadius: 32,  }}>
                     <FlatList
                         style={{ marginVertical: 12, marginHorizontal: - margin.h, }}
                         data={campanhas}
@@ -141,13 +102,39 @@ export default function UhaCoinsScreen({navigation, }){
 
                 </Column>
 
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop:20,  marginHorizontal: margin.h,}}>
+                    <Button>
+                        <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                            <Filter color={color.label} size={18} />
+                            <SubLabel style={{ color: color.label, }}>Filtro</SubLabel>
+                        </Row>
+                    </Button>
+                    <Button onPress={() => settype('Pesquisar')} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
+                            <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                            <Label>Pesquisar</Label>
+                            <Search color={color.label} size={18} style={{ marginLeft: 8, }}/>
+                            </Row>
+                        </Button>
+                </Row>
+
+                <ScrollView  horizontal style={{  paddingHorizontal: margin.h, marginTop: 10,}} showsHorizontalScrollIndicator={false}>
+                {bts.map((bt, i) => (
+                    <MotiView from={{opacity: 0,}} animate={{opacity: 1,}}  key={i}> 
+                    <Button onPress={() => {setpage(bt)}}  style={{ backgroundColor: bt===page?color.primary:'transparent', padding: 8, paddingHorizontal: 12, borderRadius: 100, }}>
+                        <Label style={{ color: bt===page?"#fff":color.title, fontFamily: font.bold, fontSize: 16,}}>{bt}</Label>
+                    </Button>
+                    </MotiView>
+                ))}
+                </ScrollView>
+
+            {page == 'Estabelecimentos' && 
+            <MotiView from={{opacity: 0, translateY: 30}} animate={{opacity: 1, translateY: 0}} transition={{type:'timing'}}>
                 <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
-                    <Title>Ofertas relâmpago</Title>
+                    <Title>Estabelecimentos gerais</Title>
                     <Pressable>
                         <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
                     </Pressable>
                 </Row>
-                
                 <Column style={{ backgroundColor: color.background, }}>
                         <FlatList 
                             data={ofertas}
@@ -168,34 +155,41 @@ export default function UhaCoinsScreen({navigation, }){
                         />
                 </Column>
 
-                <Column style={{ paddingHorizontal: margin.h,  paddingVertical: 20, backgroundColor: color.background,   }}>
-                    <Title>Estabelecimentos queridinhos</Title>
-                </Column>
+                <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
+                    <Title>Com ofertas relâmpago</Title>
+                    <Pressable>
+                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
+                    </Pressable>
+                </Row>
 
-                <FlatList style={{ backgroundColor: color.background, }}
-                        data={estabelecimentos}
-                        ListFooterComponent={<Column style={{ width: 24 }} />}
-                        ListHeaderComponent={<Column style={{ width: 24 }} />}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        renderItem={({item}) => (
-                            <Button style={{    marginRight: 12, }}>
-                                <Column>
-                                    <MotiImage source={item.img} style={{ width: 200, height: 60, objectFit: 'cover', borderRadius: 8, }} />
-                                    <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item.title}</Title>
-                                    <Label style={{ textAlign: 'center',  color: color.title, fontFamily: font.medium, fontSize: 14, marginBottom: 12, }}>{item.label}</Label>
-                                </Column>
-                            </Button>
-                        )}
-                        keyExtractor={item => item.id} />
+                <Column style={{ backgroundColor: color.background, }}>
+                        <FlatList 
+                            data={ofertas}
+                            ListFooterComponent={<Column style={{ width: 24 }} />}
+                            ListHeaderComponent={<Column style={{ width: 24 }} />}
+                            showsHorizontalScrollIndicator={false}
+                            horizontal
+                            renderItem={({item}) => (
+                                <Button style={{   marginRight: 12, }}>
+                                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
+                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
+                                    </Column>
+                                </Button>
+                            )}
+                            keyExtractor={item => item.id}
+                        />
+                </Column>
                             
 
-                <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Doe anônimamente</Title>
-                    <Carrousel />
-                </Column>
                 <Column style={{ backgroundColor: color.background, marginTop: -30,  }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Produtos em oferta</Title>
+                    <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
+                        <Title>Casa e decoração</Title>
+                        <Pressable>
+                            <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
+                        </Pressable>
+                    </Row>
                     <FlatList 
                             data={ofertas}
                             ListFooterComponent={<Column style={{ width: 24 }} />}
@@ -214,33 +208,10 @@ export default function UhaCoinsScreen({navigation, }){
                             keyExtractor={item => item.id}
                         />
                 </Column>
-                <Column style={{ backgroundColor: color.background, paddingTop: 10,  }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Serviços em oferta</Title>
-                    <FlatList 
-                            data={ofertas}
-                            ListFooterComponent={<Column style={{ width: 24 }} />}
-                            ListHeaderComponent={<Column style={{ width: 24 }} />}
-                            showsHorizontalScrollIndicator={false}
-                            horizontal
-                            renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}>
-                                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
-                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
-                                    </Column>
-                                </Button>
-                            )}
-                            keyExtractor={item => item.id}
-                        />
-                </Column>
+            </MotiView>}
                 
-                <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Gift Card com cashback</Title>
-                    <Carrousel />
-                </Column>
-                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, marginTop: -20,  }}>
-                    <Title>Categorias</Title>
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, marginTop: 20, marginBottom: 20, }}>
+                    <Title>Lojas em destaque hoje</Title>
                     <FlatList 
                         data={categories}
                         ListFooterComponent={<Column style={{ width: 24 }} />}
@@ -262,16 +233,7 @@ export default function UhaCoinsScreen({navigation, }){
                         )}
                     />
                 </Column>
-                
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100,}}>
-                        <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
-                            <Label style={{ fontFamily: font.bold, color: '#111', }}>Central de ajuda</Label>
-                        </Button>
-                        <Button style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
-                            <Label style={{ fontFamily: font.bold, color: color.primary, }}>Fazer doação</Label>
-                        </Button>
-                </Row>
-
+               
             </Scroll>
 
         </Main>
@@ -281,34 +243,29 @@ export default function UhaCoinsScreen({navigation, }){
 const categories = [
     {
         id: 1, 
-        title: 'Serviços Pet',
-        desc: '30 estabelecimentos parceiros',
+        title: 'Starbucks',
+        desc: 'Compre apartir de 50 UhaCoins',
         icon: <Bone size={28} color="#FFF2E3"/>,
     },
     {
         id: 2, 
-        title: 'Vestuário',
-        desc: '43 estabelecimentos parceiros',
+        title: 'MC Donalds',
+        desc: 'Compre apartir de 50 UhaCoins',
         icon: <Shirt size={28} color="#FFF2E3"/>,
     },
     {
         id: 3, 
-        title: 'Esportivo',
-        desc: '15 estabelecimentos parceiros',
+        title: 'Lego',
+        desc: 'Compre apartir de 50 UhaCoins',
         icon: <Bike size={28} color="#FFF2E3"/>,
     },
     {
         id: 4, 
-        title: 'Farmácia',
-        desc: '27 estabelecimentos parceiros',
+        title: 'Posto Ipiranga',
+        desc: 'Compre apartir de 50 UhaCoins',
         icon: <Hospital size={28} color="#FFF2E3"/>,
     },
-    {
-        id: 5, 
-        title: 'Cuidados estéticos',
-        desc: '29 estabelecimentos parceiros',
-        icon: <Brush size={28} color="#FFF2E3"/>,
-    },
+   
 ]
 
 

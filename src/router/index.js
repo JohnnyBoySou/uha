@@ -10,6 +10,7 @@ import RedeemScreen from '@screens/redeem';
 import ShareScreen from '@screens/share';
 import AsyncStaticScreen from '@screens/async';
 import ReciboScreen from '@screens/recibo';
+import SearchScreen from '@screens/search';
 
 import DevScreen from '@screens/dev';
 
@@ -44,6 +45,7 @@ import CampaignsRifasScreen from '@screens/campaigns/rifa';
 import CampaignsScreen from '@screens/campaigns';
 import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
 import CampaignsProgressScreen from '@screens/campaigns/progress';
+import CampaignsUhaCoinsScreen from '@screens/campaigns/uhacoins';
 
 import ONGSingleScreen from '@screens/ong/single';
 
@@ -54,7 +56,7 @@ const Stack = createStackNavigator();
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Dev'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Home'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -66,6 +68,8 @@ export default function Router() {
             <Stack.Screen name="AsyncStatic" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Search" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
 
             <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -97,6 +101,7 @@ export default function Router() {
             <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsProgress" component={CampaignsProgressScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="CampaignsUhaCoins" component={CampaignsUhaCoinsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
@@ -106,13 +111,13 @@ export default function Router() {
   }
   /**
    Transitions:
-    ModalSlideFromBottomIOS
-    SlideFromRightIOS
-    ModalPresentationIOS
-    FadeFromBottomAndroid 
-    RevealFromBottomAndroid
-    ScaleFromCenterAndroid 
-    DefaultTransition 
-    ModalTransition
+      ModalSlideFromBottomIOS
+      SlideFromRightIOS
+      ModalPresentationIOS
+      FadeFromBottomAndroid 
+      RevealFromBottomAndroid
+      ScaleFromCenterAndroid 
+      DefaultTransition 
+      ModalTransition
 
   */
