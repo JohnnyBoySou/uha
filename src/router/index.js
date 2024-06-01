@@ -71,7 +71,6 @@ export default function Router() {
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Search" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-
             <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
