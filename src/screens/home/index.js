@@ -317,7 +317,7 @@ const categories = [
 ]
 
 
-const Carrousel = ({ type }) => {
+export const Carrousel = ({ type }) => {
     const flat = useRef();
     const scrollX = useRef(new Animated.Value(0)).current;
 

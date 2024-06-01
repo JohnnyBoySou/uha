@@ -3,7 +3,6 @@ import { FlatList, ScrollView } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
-
 import { ArrowLeft, ArrowRight, TriangleAlert, Mail, ArrowLeftRight, X, ImagePlus } from 'lucide-react-native';
 import { MotiView, AnimatePresence } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
@@ -45,6 +44,8 @@ export default function NotifyScreen({ navigation, }) {
     
     return (
         <Main style={{ marginTop: -10, }}>
+            <Scroll>
+
                 <Header title='Notificações' />
                 <Row style={{ paddingHorizontal: margin.h, }}>
                     <AnimatePresence>
@@ -124,7 +125,6 @@ export default function NotifyScreen({ navigation, }) {
                     </MotiView>}
                 </AnimatePresence>
                 </>}
-
                 <AnimatePresence>
 
             {single && <MotiView from={{opacity: 0, translateX: 20}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, translateX: 20}}>
@@ -142,6 +142,7 @@ export default function NotifyScreen({ navigation, }) {
                         </Column>
                     </MotiView>}
                 </AnimatePresence>
+                </Scroll>
 
 
         </Main>
