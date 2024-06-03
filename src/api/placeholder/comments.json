@@ -1,0 +1,31 @@
+[
+    {
+        "user": {
+            "name": "Nome do usuário",
+            "avatar": "url"
+        },
+        "rate": 4,
+        "message": "Comentário do usuário",
+        "date": "10/10/2024",
+        "imgs": [
+            "url1", "url2", "url3"
+        ]
+    },
+    {
+        "user": {
+            "name": "Nome do usuário",
+            "avatar": "url"
+        },
+        "rate": 3,
+        "message": "Comentário do usuário",
+        "date": "10/10/2024",
+        "imgs": [
+            "url1", "url2", "url3"
+        ]
+    }
+]
+
+
+//url: base_url + 'api/comments/id=1',
+//method: 'GET',
+//headers: { 'Content-Type': 'application/json }

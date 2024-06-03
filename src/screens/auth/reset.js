@@ -6,7 +6,7 @@ import { MotiImage } from 'moti';
 import { AtSign, KeyRound, Eye, EyeOff, LogIn} from 'lucide-react-native'
 import { TouchableRipple } from 'react-native-paper';
 
-export default function AuthLoginScreen({ navigation, }) {
+export default function AuthResetScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [pass, setpass] = useState(true);
     const [focusEmail, setfocusEmail] = useState(false);

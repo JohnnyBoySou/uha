@@ -4,7 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import HomeScreen from '@screens/home';
 import OnboardingScreen from '@screens/onboarding/index';
-import LoginScreen from '@screens/auth/login';
+
+import AuthLoginScreen from '@screens/auth/login';
+import AuthRegisterScreen from '@screens/auth/register';
+import AuthResetScreen from '@screens/auth/reset';
+
 import NotifyScreen from '@screens/notify';
 import RedeemScreen from '@screens/redeem';
 import ShareScreen from '@screens/share';
@@ -48,11 +52,15 @@ import CampaignsProgressScreen from '@screens/campaigns/progress';
 import CampaignsUhaCoinsScreen from '@screens/campaigns/uhacoins';
 
 import ONGSingleScreen from '@screens/ong/single';
-
 import FavoritesScreen from '@screens/favorites';
 
 import ShopScreen from '@screens/shop';
 import ShopSingleScreen from '@screens/shop/single';
+import ShopProductSingleScreen from '@screens/shop/product_single';
+
+
+
+//fazer
 import RankingScreen from '@screens/ranking';
 
 const Stack = createStackNavigator();
@@ -63,7 +71,6 @@ export default function Router() {
         <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Home'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
-            <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Redeem" component={RedeemScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -74,7 +81,12 @@ export default function Router() {
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Search" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
+            <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
+            <Stack.Screen name="AuthRegister" component={AuthRegisterScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
+            <Stack.Screen name="AuthReset" component={AuthResetScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
+
             <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="ShopProductSingle" component={ShopProductSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

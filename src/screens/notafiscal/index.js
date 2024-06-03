@@ -72,14 +72,14 @@ const Carrousel = (  ) => {
         const link = item.img
         return(
             <Button>
-                <MotiImage   style={{ width: 320, height: 170, borderRadius: 24,  marginRight: 12, backgroundColor:"#FFF2E3",}} />
+                <MotiImage source={link}  style={{ width: 320, height: 170, borderRadius: 24,  marginRight: 12, backgroundColor:"#FFF2E3",}} />
             </Button>
         )
     }
     const data = [
-        {id: 1, title: '1', img: require('@imgs/scroll1.png')},
-        {id: 2, title: '2', img: require('@imgs/scroll2.png') },
-        {id: 3, title: '3', img: require('@imgs/scroll3.png') },
+        {id: 1, title: '1', img: require('@imgs/nota1.png')},
+        {id: 2, title: '2', img: require('@imgs/nota2.png') },
+        {id: 3, title: '3', img: require('@imgs/nota3.png') },
     ]
 
     const [scrollPosition, setScrollPosition] = useState(0);

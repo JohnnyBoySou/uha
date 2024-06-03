@@ -160,7 +160,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }} onPress={() => {navigation.navigate('ShopSingle', {item: item})}}>
+                                <Button style={{   marginRight: 12, }} onPress={() => {navigation.navigate('ShopProductSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
@@ -208,7 +208,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopSingle', {item: item})}}>
+                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopProductSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
@@ -228,7 +228,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopSingle', {item: item})}}>
+                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopProductSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
@@ -389,7 +389,7 @@ export const Carrousel = ({ type }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         ListFooterComponent={<View style={{ width: 34 }} />}
-        style={{ paddingHorizontal: 24, marginBottom: 56,}}
+        style={{ paddingHorizontal: 24, marginBottom: 32,}}
         snapToAlignment='center'
         snapToOffsets={[0, 300, 600]}
         

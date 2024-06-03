@@ -4,21 +4,24 @@
         "name": "Descricao do servico",
         "old_value": 60,
         "value": 40,
-        "img": "url"
+        "img": "url",
+        "porcentage": "50%"
     },
     {
         "uid": "123456",
         "name": "Descricao do servico",
         "old_value": 50,
         "value": 35,
-        "img": "url"
+        "img": "url",
+        "porcentage": "30%"
     },
     {
         "uid": "1234567",
         "name": "Descricao do servico",
         "old_value": 40,
         "value": 25,
-        "img": "url"
+        "img": "url",
+        "porcentage": "90%"
     }
 ]
 

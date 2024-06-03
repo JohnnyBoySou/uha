@@ -2,7 +2,7 @@
     {
         "uid": "12345",
         "name": "Descricao do servico",
-        "desc": "",
+        "desc": "Breve descrição sobre os serviços ou produtos que a loja vende lorem ipsum",
         "categories": [
             {
                 "id": "12345",
@@ -13,7 +13,7 @@
                 "name": "Categoria 2"
             }
         ],
-        "rate": 4.5,
+        "rate": 4,
         "old_value": 60,
         "value": 40,
         "imgs": ["url", "url", "url"],
