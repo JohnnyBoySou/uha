@@ -46,7 +46,7 @@ export default function DonateScreen({ navigation, }) {
     }
 
     return (
-        <Main style={{  }}>
+        <Main style={{ paddingTop: 30, }}>
             <Header title="Fazer doação"/>
 
             <Column style={{ backgroundColor: color.primary, marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 24, marginBottom: -70, zIndex: 99, }}>
@@ -65,7 +65,7 @@ export default function DonateScreen({ navigation, }) {
                 <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean}/>              
 
                 <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center',     }}>
-                <ButtonLI style={{ paddingHorizontal: 24, }} disabled={loading} onPress={() => {navigation.navigate('BuyServiceSuccess')}} >
+                <ButtonLI style={{ paddingHorizontal: 24, }} disabled={loading} onPress={() => {navigation.navigate('DonateValue', {value: value})}} >
                         <>
                         {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI>Transferir</LabelLI>  }
                         </>

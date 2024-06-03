@@ -1,0 +1,39 @@
+[
+        {
+            "uid": "1234fe",
+            "name": "Nome do servico",
+            "desc": "Descricao do servico",
+            "cover_img": "url",
+            "value": 120,
+            "categories": [
+                {
+                    "id": "12345",
+                    "name": "Categoria 1"
+                },
+                {
+                    "id": "12345",
+                    "name": "Categoria 2"
+                }
+            ],
+            "videos": [
+                {
+                    "url": "...",
+                    "title": "Vídeo 1"
+                },
+                {
+                    "url": "...",
+                    "title": "Vídeo 2"
+                }
+            ],
+            "imgs": [
+                    {
+                        "url": "...",
+                        "title": "Imagem 1"
+                    },
+                    {
+                        "url": "...",
+                        "title": "Imagem 2"
+                    }
+                ]
+            }
+]

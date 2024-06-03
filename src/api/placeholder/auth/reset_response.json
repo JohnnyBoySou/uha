@@ -1,0 +1,13 @@
+[
+    {
+        "email": "user@email.com",
+        "token": "se exister",
+        "changePassword": "(true / status 200)"
+    }
+]
+
+
+
+//url: base_url + 'api/auth/resetpassword',
+//method: 'POST',
+//headers: { 'Content-Type': 'application/json }

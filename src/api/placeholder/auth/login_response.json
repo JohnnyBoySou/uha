@@ -1,0 +1,14 @@
+[
+        {
+            "email": "user@email.com",
+            "name": "name lastname",
+            "token": "token",
+            "avatar": "url",
+            "points": 100,
+            "cashback": 10
+        }
+]
+
+//url: base_url + 'api/auth/',
+//method: 'POST',
+//headers: { 'Content-Type': 'application/json }

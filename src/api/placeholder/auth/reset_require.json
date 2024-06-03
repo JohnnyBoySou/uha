@@ -1,0 +1,21 @@
+[
+    {
+        "email": "user@email.com",
+        "token": "se exister"
+    }
+]
+
+//step 2
+[
+    {
+        "email": "user@email.com",
+        "token": "se existir",
+        "code": "codigo verificacao",
+        "newpassword": "nova senha"
+    }
+]
+
+
+//url: base_url + 'api/auth/resetpassword',
+//method: 'POST',
+//headers: { 'Content-Type': 'application/json }

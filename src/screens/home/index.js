@@ -7,6 +7,7 @@ import { Bike, Bone , Brush, Hospital, Search, Shirt} from 'lucide-react-native'
 import { SlidingDot } from "react-native-animated-pagination-dots";
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function HomeScreen({navigation, }){
@@ -109,7 +110,7 @@ export default function HomeScreen({navigation, }){
                     </Column>
 
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('BuyServiceGiftCard')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                        <Button onPress={() => {navigation.navigate('Ranking')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
                             <MotiImage source={require('@icons/rank.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Ranking</Label>
@@ -129,7 +130,7 @@ export default function HomeScreen({navigation, }){
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         renderItem={({item}) => (
-                            <Button style={{ backgroundColor: "#fff", borderRadius: 24,  marginRight: 12, }}>
+                            <Button style={{ backgroundColor: "#fff", borderRadius: 24,  marginRight: 12, }} onPress={() => {navigation.navigate('Shop')}}>
                                 <Column>
                                     <MotiImage source={{uri: item.img}} style={{ width: 300, height: 400, borderRadius: 24,  }} />
                                     <Column style={{ backgroundColor: '#fff', marginHorizontal: 24, padding: 12, borderRadius: 24, position: 'absolute', bottom: 20, }}>
@@ -159,7 +160,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}>
+                                <Button style={{   marginRight: 12, }} onPress={() => {navigation.navigate('ShopSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
@@ -182,7 +183,7 @@ export default function HomeScreen({navigation, }){
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         renderItem={({item}) => (
-                            <Button style={{    marginRight: 12, }}>
+                            <Button style={{marginRight: 12, }} onPress={() => {navigation.navigate('ShopSingle', {item: item})}} >
                                 <Column>
                                     <MotiImage source={item.img} style={{ width: 200, height: 60, objectFit: 'cover', borderRadius: 8, }} />
                                     <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item.title}</Title>
@@ -207,7 +208,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}>
+                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
@@ -227,7 +228,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}>
+                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
@@ -239,7 +240,7 @@ export default function HomeScreen({navigation, }){
                         />
                 </Column>
                 
-                <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
+                <Column style={{ backgroundColor: color.background, paddingTop: 20, }} >
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Gift Card com cashback</Title>
                     <Carrousel type="gift"/>
                 </Column>
@@ -252,7 +253,7 @@ export default function HomeScreen({navigation, }){
                         keyExtractor={item => item.id}
                         style={{ marginVertical: margin.v, }}
                         renderItem={({item}) => (
-                            <Button style={{ marginBottom: 12, borderBottomWidth: 1, borderColor: color.off, paddingBottom: 12,}}>
+                            <Button style={{ marginBottom: 12, borderBottomWidth: 1, borderColor: color.off, paddingBottom: 12,}}  onPress={() => {navigation.navigate('Shop', {type: item.title})}}>
                                 <Row style={{  alignItems: 'center',  }}>
                                     <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center',  }}>
                                         {item.icon}
@@ -272,7 +273,7 @@ export default function HomeScreen({navigation, }){
                         <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
                             <Label style={{ fontFamily: font.bold, color: '#111', }}>Central de ajuda</Label>
                         </Button>
-                        <Button style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
+                        <Button  onPress={() => {navigation.navigate('Donate',)}} style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
                             <Label style={{ fontFamily: font.bold, color: color.primary, }}>Fazer doação</Label>
                         </Button>
                 </Row>
@@ -319,12 +320,14 @@ const categories = [
 
 export const Carrousel = ({ type }) => {
     const flat = useRef();
+    const navigation = useNavigation();
     const scrollX = useRef(new Animated.Value(0)).current;
+    const route = type === 'doe' ? 'DonateHide' : type === 'gift' ? 'BuyServiceGiftCard' : 'ShopSingle'
 
     const render = ({item}) => {
         const link = item.img
         return(
-            <Button>
+            <Button onPress={() => {navigation.navigate(route)}}  >
                 <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24,  marginRight: 12}} />
             </Button>
         )

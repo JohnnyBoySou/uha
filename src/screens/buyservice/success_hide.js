@@ -12,7 +12,7 @@ export default function BuyServiceSuccessHideScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
    
     return (
-        <Main style={{ backgroundColor: "#fff", }}>
+        <Main style={{ backgroundColor: "#fff", paddingTop: 30, }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
                 <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#ffffff80", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
                     <ArrowLeft color={color.secundary}/>

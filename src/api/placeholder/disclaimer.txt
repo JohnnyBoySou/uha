@@ -1,0 +1,14 @@
+Modificações gerais a serem discutivéis: 
+ - Páginação com Offset de 20 itens com página
+ - Auth com Google.  
+ - Parametros enviados no body ao invés do URL.
+ - Sanitização no front & back.
+ - Imagens de uso geral armazenadas no app.
+
+[route]
+[id]
+
+//url: base_url + 'api/[route]/page=1',
+//url_single: base_url + 'api/[route]/id=[id]',
+//headers: { 'Content-Type': 'application/json }
+//Deixar ativado o CORs

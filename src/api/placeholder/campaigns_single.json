@@ -1,0 +1,35 @@
+[
+    {
+            "uid": "1234fe",
+            "name": "Rifas da Sorte",
+            "cover_img": "url...",
+            "desc": {
+                "about": "Foram mais de 135 animais resgatados do canil onde sofriam maus tratos, todos devem receber cuidados adequados. Responsável pelo canil segue liberada.",
+                "how" : "Ajude os animais do canil fazendo doações ou comprando uma rifa solidária. Você pode comprar quantos números quiser até a data 10/10/2024, o sorteio será realizado no dia 12/10/2024. Acompanhe seus números na página de histórico de doações - rifas. Boa sorte e gratidão!", 
+                "who": "A ONG recebeu uma denúncia de que oscachorros eram espancados. Os cães estavam amontoados em um canil certificado que funcionava em uma casa de alto padrão. Sem banho, tinham fezes grudadas nos pelos. Foram encontrados 9 corpos de filhotes no lixo. Os animais foram levados todos para a ONG.",
+                "videos": [
+                        {
+                            "url": "...",
+                            "title": "Vídeo 1"
+                        },
+                        {
+                            "url": "...",
+                            "title": "Vídeo 2"
+                        }
+                    ],
+                "imgs": [
+                        {
+                            "url": "...",
+                            "title": "Imagem 1"
+                        },
+                        {
+                            "url": "...",
+                            "title": "Imagem 2"
+                        }
+                    ]
+            }
+        }
+]
+//url: base_url + 'api/campaigns/id',
+//method: 'GET',
+//headers: { 'Content-Type': 'application/json }

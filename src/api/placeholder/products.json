@@ -1,0 +1,31 @@
+[
+    {
+        "uid": "12345",
+        "name": "Nike tênis",
+        "value": 40,
+        "img": "url"
+    },
+    {
+        "uid": "123456",
+        "name": "Listerine",
+        "value": 20,
+        "img": "url"
+    },
+    {
+        "uid": "1234567",
+        "name": "Carmed",
+        "value": 40,
+        "img": "url"
+    },
+    {
+        "uid": "12345678",
+        "name": "Dorflex",
+        "value": 30,
+        "img": "url"
+    }
+]
+
+
+//url: base_url + 'api/products/page=1',
+//method: 'GET',
+//headers: { 'Content-Type': 'application/json }

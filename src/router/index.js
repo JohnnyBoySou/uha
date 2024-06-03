@@ -52,13 +52,15 @@ import ONGSingleScreen from '@screens/ong/single';
 import FavoritesScreen from '@screens/favorites';
 
 import ShopScreen from '@screens/shop';
+import ShopSingleScreen from '@screens/shop/single';
+import RankingScreen from '@screens/ranking';
 
 const Stack = createStackNavigator();
 
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Dev'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Home'>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -71,7 +73,11 @@ export default function Router() {
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Search" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
             <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            
+            <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>

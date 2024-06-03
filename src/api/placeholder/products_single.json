@@ -1,0 +1,24 @@
+[
+    {
+        "uid": "12345",
+        "name": "Descricao do servico",
+        "desc": "",
+        "categories": [
+            {
+                "id": "12345",
+                "name": "Categoria 1"
+            },
+            {
+                "id": "12345",
+                "name": "Categoria 2"
+            }
+        ],
+        "rate": 4.5,
+        "old_value": 60,
+        "value": 40,
+        "imgs": ["url", "url", "url"],
+        "share_id": "9876543456789",
+        "comments_id": "9876543456789",
+        "recomendations_id": ["12345", "12345", "12345"]
+    }
+]

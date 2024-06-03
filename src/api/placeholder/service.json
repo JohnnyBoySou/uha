@@ -1,0 +1,23 @@
+[
+        {
+            "uid": "1234fe",
+            "name": "Nome do servico",
+            "desc": "Descricao do servico",
+            "img": "url"
+        },
+        {
+            "uid": "12345de",
+            "name": "Nome do servico",
+            "desc": "Descricao do servico",
+            "img": "url"
+        },
+        {
+            "uid": "12345de",
+            "name": "Nome do servico",
+            "desc": "Descricao do servico",
+            "img": "url"
+        }
+]
+//url: base_url + 'api/service/page=1',
+//method: 'GET',
+//headers: { 'Content-Type': 'application/json }

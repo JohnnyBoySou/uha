@@ -56,7 +56,7 @@ export default function BuyServiceRifaScreen({ navigation, }) {
     const [codigo, setcodigo] = useState();
     const uhacoins = value * 15;
     return (
-        <Main style={{ backgroundColor: color.secundary, }}>
+        <Main style={{ backgroundColor: color.secundary,  paddingTop: 30,}}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
                 <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#ffffff20", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
                     <ArrowLeft color="#fff"/>

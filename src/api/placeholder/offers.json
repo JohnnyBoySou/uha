@@ -1,0 +1,24 @@
+[
+    {
+        "uid": "12345",
+        "name": "Descricao do servico",
+        "old_value": 60,
+        "value": 40,
+        "img": "url"
+    },
+    {
+        "uid": "123456",
+        "name": "Descricao do servico",
+        "old_value": 50,
+        "value": 35,
+        "img": "url"
+    },
+    {
+        "uid": "1234567",
+        "name": "Descricao do servico",
+        "old_value": 40,
+        "value": 25,
+        "img": "url"
+    }
+]
+

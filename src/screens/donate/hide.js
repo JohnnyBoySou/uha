@@ -48,18 +48,14 @@ export default function DonateHideScreen({ navigation,  }) {
     }
 
     return (
-        <Main style={{  }}>
+        <Main style={{ paddingTop: 30, }}>
             <Header title="Fazer doação anonima"/>
-
             <Column style={{ backgroundColor: color.primary, marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 24, marginBottom: -70, zIndex: 99, }}>
                 <Title style={{ fontSize: 24, color:  color.background, lineHeight: 28, }}>R$</Title>
                 <Title style={{ fontSize: 52, color: color.background, lineHeight: 56, }}>{value},00</Title>
             </Column>
-
             <Column style={{  flexGrow: 1, alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 180, }}>
-               
                 <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean}/>              
-
                 <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center',  paddingTop: 60,   }}>
                 <ButtonPR style={{ paddingHorizontal: 24, flexGrow: 1, }} disabled={loading} onPress={handleFinish} >
                         <>
