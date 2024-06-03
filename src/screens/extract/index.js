@@ -224,10 +224,9 @@ export default function ExtractScreen({ navigation, }) {
     }, [page]);
 
     return (
-        <Main>
+        <Main style={{ backgroundColor: '#fff', }}>
         <Scroll>
 
-            <Header title="Movimentações" />
            
             <Column style={{backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                 <Label style={{  color: "#fff", }}>Saldo em UhaCoins</Label>

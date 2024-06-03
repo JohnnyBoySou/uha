@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets, } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute } from '@react-navigation/native';
 
 import HomeScreen from '@screens/home';
 import OnboardingScreen from '@screens/onboarding/index';
@@ -59,16 +60,24 @@ import ShopSingleScreen from '@screens/shop/single';
 import ShopProductSingleScreen from '@screens/shop/product_single';
 
 
-
 //fazer
 import RankingScreen from '@screens/ranking';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+//ICONS
+import Octicons from '@expo/vector-icons/Octicons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+
 
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Home'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Tabs'>
+            <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
@@ -129,6 +138,89 @@ export default function Router() {
     </NavigationContainer>
    );
   }
+
+function Tabs (){
+    const route = useRoute();
+    const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home'
+      return (
+          <Tab.Navigator initialRouteName="Home" 
+              screenOptions={{
+                headerShown: false,
+                backBehavior: 'none',
+                tabBarActiveTintColor: '#FF26BD',
+                tabBarInactiveTintColor: '#5C0D4580',
+                tabBarStyle: {
+                  backgroundColor: '#FFF8F1',
+                  borderTopWidth:0,
+                  height: 68,
+                  paddingBottom: 12,
+                  paddingTop: 10,
+                  position: 'absolute',
+                  bottom: 10,
+                  borderRadius: 12,
+                  elevation: 0,
+                  left: 15, right: 15,
+                  
+                },
+              }}
+              
+              
+              >
+              <Tab.Screen name="Home" component={HomeScreen} options={{
+              backBehavior: 'initialRoute',
+              tabBarLabel: 'Início',
+              tabBarLabelStyle: {
+                fontFamily: routeName === 'Home' ? 'Font_Bold' : 'Font_Book',
+              },
+              tabBarIcon: ({ color, size }) => (
+                <Octicons name="home" size={routeName === 'Home' ? size+3 : size} color={color} />
+              ),
+          }}/>
+             
+              <Tab.Screen name="Notafiscal" component={NotafiscalScreen}  options={{
+              tabBarLabel: 'Nota Fiscal',
+              tabBarLabelStyle: {
+                fontFamily: routeName === 'Search' ? 'Font_Bold' : 'Font_Book',
+              },
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="note-edit-outline" size={routeName === 'Notafiscal' ? size+3 : size} color={color}/>
+              ),
+          }}/>
+              <Tab.Screen name="Search" component={SearchScreen}  options={{
+              tabBarLabel: 'Buscar',
+              tabBarLabelStyle: {
+                fontFamily: routeName === 'Search' ? 'Font_Bold' : 'Font_Book',
+              },
+              tabBarIcon: ({ color, size }) => (
+                <Octicons name="search" size={routeName === 'Seach' ? size+3 : size} color={color} />
+              ),
+          }}/>
+          
+           <Tab.Screen name="Extract" component={ExtractScreen}  
+              options={{
+              tabBarLabel: 'Histórico',
+              tabBarLabelStyle: {
+                fontFamily: routeName === 'Extract' ? 'Font_Bold' : 'Font_Book',
+              },
+              tabBarIcon: ({ color, size }) => (
+                <Octicons name="clock" size={routeName === 'Extract' ? size+3 : size} color={color} />
+              ),
+          }}/>
+           <Tab.Screen name="Account" component={AccountScreen}  
+              options={{
+              tabBarLabel: 'Conta',
+              tabBarLabelStyle: {
+                fontFamily: routeName === 'Account' ? 'Font_Bold' : 'Font_Book',
+              },
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome6 name="user" size={routeName === 'Account' ? size+3 : size} color={color} />
+              ),
+          }}/>
+          </Tab.Navigator>
+      )
+  }
+  
+
   /**
    Transitions:
       ModalSlideFromBottomIOS

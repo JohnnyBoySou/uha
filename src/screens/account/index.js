@@ -22,7 +22,7 @@ export default function AccountScreen({ navigation, }) {
 
     const [dark, setdark] = useState(false);
     return (
-        <Main>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
                     <Title>Olá, {user.name}</Title>
