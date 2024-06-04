@@ -70,7 +70,7 @@ export default function HomeScreen({navigation, }){
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Scroll>
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h }}>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h , paddingTop: 10,}}>
                     <MotiImage source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40,  objectFit: 'contain', }} />
 
                     <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
@@ -254,7 +254,7 @@ export default function HomeScreen({navigation, }){
                         keyExtractor={item => item.id}
                         style={{ marginVertical: margin.v, }}
                         renderItem={({item}) => (
-                            <Button style={{ marginBottom: 12, borderBottomWidth: 1, borderColor: color.off, paddingBottom: 12,}}  onPress={() => {navigation.navigate('Shop', {type: item.title})}}>
+                            <Button style={{  borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6,}}  onPress={() => {navigation.navigate('Shop', {type: item.title})}}>
                                 <Row style={{  alignItems: 'center',  }}>
                                     <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center',  }}>
                                         {item.icon}

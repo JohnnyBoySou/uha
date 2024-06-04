@@ -148,6 +148,7 @@ function Tabs (){
                 tabBarStyle: {
                   backgroundColor: '#FFF',
                   borderWidth: 2,
+                  borderTopWidth: 2,
                   borderColor: '#F0F0F0',
                   height: 68,
                   paddingBottom: 12,
@@ -157,7 +158,6 @@ function Tabs (){
                   borderRadius: 16,
                   elevation: 0,
                   left: 15, right: 15,
-                  
                 },
               }}
               

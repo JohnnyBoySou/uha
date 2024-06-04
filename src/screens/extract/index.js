@@ -3,7 +3,6 @@ import { FlatList, ScrollView } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, LineL } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { CircleCheck, Info, CircleX, AlarmClock, Plus, Car } from 'lucide-react-native';
-import  Header   from '@components/header';
 import { AnimatePresence, MotiView, useAnimationState } from 'moti';
 import { useNavigation } from '@react-navigation/native';
 import doacoes from '@data/doacoes';
@@ -172,7 +171,7 @@ export default function ExtractScreen({ navigation, route}) {
                 </MotiView>
             )}
             
-            <Column style={{height: 50, }} />
+            <Column style={{height: 100, }} />
         </Scroll>
     </Main>
     )

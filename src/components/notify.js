@@ -6,9 +6,9 @@ const Notify = ({ url }) => {
     const navigation = useNavigation();
     return(     
         <Column style={{ position: 'relative' }}>
-        <MotiView from={{opacity: 0, scale: .5, }} animate={{opacity: 1, scale: 1,}} transition={{delay: 400,}} style={{ width: 12, height: 12, backgroundColor: '#FF26BD', borderRadius: 100, position: 'absolute', top: 5, right: 6, zIndex: 99, borderWidth: 2, borderColor: "#fff", }}/>
-        <Button onPress={() => {navigation.navigate('Notify')}} style={{ width: 35, height: 36, }}>
-            <EvilIcons name="bell" size={32} color="#111" />
+        <MotiView from={{opacity: 0, scale: .5, }} animate={{opacity: 1, scale: 1,}} transition={{delay: 400,}} style={{ width: 12, height: 12, backgroundColor: '#FF26BD', borderRadius: 100, position: 'absolute', top: 10, right: 5, zIndex: 99, borderWidth: 2, borderColor: "#fff", }}/>
+        <Button onPress={() => {navigation.navigate('Notify')}} style={{ width: 36, height: 36, marginTop: 8, }}>
+            <EvilIcons name="bell" size={35} color="#111" />
         </Button>
         </Column>
         )}

@@ -18,14 +18,12 @@ export default function NotafiscalSendScreen({ navigation, }) {
     return (
         <Main style={{  }}>
             <Scroll>
-
             <Header title="Enviar nota fiscal"/>
-
             <Label style={{  alignSelf: 'center', textAlign: 'center', marginTop: 100, marginBottom: 30,}}>Aponte sua camerâ para o {'\n'}QR Code da nota fiscal</Label>
 
             <Column style={{ justifyContent: 'center', alignItems: 'center',  marginHorizontal: margin.h,}}>
                 <Column style={{ borderRadius: 32, padding: 32, backgroundColor:"#fff", borderWidth: 2, borderColor: color.primary, }}>
-                    <MotiImage source={require('@imgs/qrcode.png')} style={{ width: 300, height: 300,  }} />
+                    <MotiImage source={require('@imgs/qrcode.png')} style={{ width: 200, height: 200,  }} />
                 </Column>
 
 

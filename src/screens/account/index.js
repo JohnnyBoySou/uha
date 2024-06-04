@@ -24,7 +24,7 @@ export default function AccountScreen({ navigation, }) {
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <Title>Olá, {user.name}</Title>
                     <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                         <Notify />
