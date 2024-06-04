@@ -20,15 +20,13 @@ export default function ShopScreen({ navigation, route }) {
                         <Title style={{ textAlign: 'center', fontSize: 26, lineHeight: 28, }}>Estabelecimentos parceiros </Title>
                         <Label style={{ textAlign: 'center', marginVertical: 6, fontSize: 16, }}>Encontre seus serviços e produtos {'\n'}favoritos e troque-os por pontos! </Label>
                     </Column>
-                    <Button onPress={() => {navigation.navigate('Search')}}  style={{ borderRadius: 30,  marginBottom: 30, opacity: .7, borderWidth: 2, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                    <Button onPress={() => {navigation.navigate('SearchModal')}}  style={{ borderRadius: 30,  marginBottom: 30, opacity: .7, borderWidth: 2, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
                             <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
                             <Search strokeWidth={2} color="#11111190"/>
                         </Row>
                     </Button>
                     <Carrousel />
-
-
 
                     <Title style={{ marginHorizontal: margin.h, }}>Promos incríveis</Title>
                     <Promos />

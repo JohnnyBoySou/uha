@@ -59,8 +59,6 @@ import ShopScreen from '@screens/shop';
 import ShopSingleScreen from '@screens/shop/single';
 import ShopProductSingleScreen from '@screens/shop/product_single';
 
-
-//fazer
 import RankingScreen from '@screens/ranking';
 
 const Stack = createStackNavigator();
@@ -71,12 +69,10 @@ import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-
-
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Tabs'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='AsyncStatic'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>

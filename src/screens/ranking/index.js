@@ -6,6 +6,7 @@ import Header from '@components/header';
 import { ArrowLeft, UserRoundSearch } from 'lucide-react-native';
 import { MotiImage, MotiView, AnimatePresence } from 'moti';
 import BottomSheet, { } from '@gorhom/bottom-sheet'
+import Avatar from '@components/avatar';
 
 export default function RankingScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -44,20 +45,33 @@ export default function RankingScreen({ navigation, }) {
                         <Column style={{ width: 42, height: 42, }} />
                     </Row>
 
-                    <Row style={{ justifyContent: 'center', alignItems: 'flex-end', marginHorizontal: margin.h, }}>
+                    <Row style={{ justifyContent: 'center', alignItems: 'flex-end', marginHorizontal: margin.h, marginTop: 40,}}>
                         <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',  borderRadius: 12,  flexGrow: 1, paddingVertical: 10,}}>
-                            <MotiImage source={{uri: topRank[1].avatar}} style={{ width: 62, height: 62, borderRadius: 100, marginTop: -20, alignSelf:'center', borderWidth: 2, borderColor: '#fff',     }}/>
+                            <MotiImage source={{uri: topRank[1].avatar}} style={{ width: 62, height: 62, marginBottom: 12, borderRadius: 100, marginTop: -40, alignSelf:'center', borderWidth: 2, borderColor: '#fff',     }}/>
                             <Title style={{ fontSize: 24, color: color.secundary, }}>{topRank[1]?.position}</Title>
-                            <Title style={{ fontSize: 16, }}>{topRank[1]?.username}</Title>
-                            <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height:2, backgroundColor: color.off, }} />
-                            <Label style={{ color: color.primary, fontSize: 14, }}>pontos</Label>
+                            <Title style={{ fontSize: 14, }}>@{topRank[1]?.username}</Title>
+                            <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height: 1, backgroundColor: color.off, }} />
+                            <Label style={{ color: color.primary, fontSize: 12, }}>pontos</Label>
                             <SubLabel>{topRank[1].points}</SubLabel>
                         </Column>
-                        <Column style={{ backgroundColor: '#fff', marginHorizontal: 15, borderRadius: 12, height: 194, flexGrow: 1, justifyContent: 'center', alignItems: 'center',  }}>
-                            <MotiImage source={{uri: topRank[1].avatar}} style={{ width: 62, height: 62, borderRadius: 100, marginTop: -110, alignSelf:'center', borderWidth: 2, borderColor: '#fff',     }}/>
+                        <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',  borderRadius: 12,  flexGrow: 1, paddingVertical: 10, marginHorizontal: 12,}}>
+                            <MotiImage source={{uri: topRank[0].avatar}} style={{ width: 62, height: 62, marginBottom: 12, borderRadius: 100, marginTop: -40, alignSelf:'center', borderWidth: 2, borderColor: '#fff',     }}/>
+                            <MotiImage source={require('@icons/top.png')} style={{ width: 22, height: 30, objectFit: 'contain', marginTop: -25, marginBottom: 10,}}/>
+                            <Title style={{ fontSize: 24, color: color.primary, }}>{topRank[0]?.position}</Title>
+                            <Title style={{ fontSize: 14, }}>@{topRank[0]?.username}</Title>
+                            <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height: 1, backgroundColor: color.off, }} />
+                            <Label style={{ color: color.primary, fontSize: 12, }}>pontos</Label>
+                            <SubLabel>{topRank[0].points}</SubLabel>
+
+                            <SubLabel style={{ color: color.primary, fontSize: 14, textAlign: 'center', }}>Campeão {'\n'}de doações</SubLabel>
                         </Column>
-                        <Column style={{ backgroundColor: '#fff', borderRadius: 12, height: 124, flexGrow: 1, }}>
-                            <MotiImage source={{uri: topRank[1].avatar}} style={{ width: 62, height: 62, borderRadius: 100, marginTop: -50, alignSelf:'center', borderWidth: 2, borderColor: '#fff',     }}/>
+                        <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',  borderRadius: 12,  flexGrow: 1, paddingVertical: 10,}}>
+                            <MotiImage source={{uri: topRank[2].avatar}} style={{ width: 62, height: 62, marginBottom: 12, borderRadius: 100, marginTop: -40, alignSelf:'center', borderWidth: 2, borderColor: '#fff',     }}/>
+                            <Title style={{ fontSize: 24, color: color.secundary, }}>{topRank[2]?.position}</Title>
+                            <Title style={{ fontSize: 14, }}>@{topRank[2]?.username}</Title>
+                            <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height: 1, backgroundColor: color.off, }} />
+                            <Label style={{ color: color.primary, fontSize: 12, }}>pontos</Label>
+                            <SubLabel>{topRank[2].points}</SubLabel>
                         </Column>
                     </Row>
                     <Column style={{ width: 72, height: 8, backgroundColor: '#ffffff80', borderRadius: 100, alignSelf: 'center', marginTop: 24, marginBottom: -18, }} />
@@ -66,7 +80,7 @@ export default function RankingScreen({ navigation, }) {
 
                 <Row style={{ marginHorizontal: margin.h, backgroundColor: '#EDF9FF', padding: 18, borderRadius: 12, marginVertical: 18, justifyContent: 'space-between', alignItems: 'center', }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <MotiImage style={{ width: 46, height: 46, backgroundColor: color.off, borderRadius: 100, borderWidth:2, borderColor: '#fff', }} />
+                        <Avatar />
                         <SubLabel style={{ fontSize: 14, }}>Você</SubLabel>
                     </Column>
                     
@@ -152,19 +166,19 @@ const MyRankItem = ({ item }) => {
 
 const topRank = [
     {
-        points: '117.932',
+        points: '178.287',
         position: 1,
         username: 'ameixa',
         avatar: 'https://images.pexels.com/photos/6869554/pexels-photo-6869554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     },
     {
-        points: '117.932',
+        points: '135.232',
         position: 2,
         username: 'bigodudo',
         avatar: 'https://images.pexels.com/photos/11364134/pexels-photo-11364134.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     },
     {
-        points: '117.932',
+        points: '128.437',
         position: 3,
         username: 'dinossauro',
         avatar: 'https://images.pexels.com/photos/127028/pexels-photo-127028.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
@@ -213,19 +227,19 @@ const listRank = [
 
 const myRank = [
     {
-        points: '117.932',
+        points: '118.100',
         position: 11,
-        username: 'ameixa',
+        username: 'jerivaldo',
     },
     {
         points: '117.932',
         position: 12,
         current: true,
-        username: 'bigodudo',
+        username: 'ana_silva',
     },
     {
-        points: '117.932',
+        points: '112.320',
         position: 13,
-        username: 'dinossauro',
+        username: 'compilador',
     },
 ]

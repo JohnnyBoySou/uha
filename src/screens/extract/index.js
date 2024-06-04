@@ -1,15 +1,15 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { FlatList, ScrollView } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, LineL } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { CircleCheck, Info, CircleX, AlarmClock, Plus } from 'lucide-react-native';
+import { CircleCheck, Info, CircleX, AlarmClock, Plus, Car } from 'lucide-react-native';
 import  Header   from '@components/header';
-import { AnimatePresence, MotiView } from 'moti';
+import { AnimatePresence, MotiView, useAnimationState } from 'moti';
 import { useNavigation } from '@react-navigation/native';
 import doacoes from '@data/doacoes';
 import extrato from '@data/extrato';
 import coins from '@data/coins';
-import cashback from '@data/cashback';
+import moedas from '@data/moedas';
 import rifas from '@data/rifas';
 import user from '@data/user';
 
@@ -21,25 +21,51 @@ export default function ExtractScreen({ navigation, route}) {
     const [dateSelect, setdateSelect] = useState('Hoje');
     const scrollTags = useRef(null);
 
-    const bts = ['Extrato', 'Doações', 'UhaCoins', 'Rifas', 'Cashback']
+    const bts = ['Extrato', 'Doações', 'Pontos', 'Rifas', 'Moedas']
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     useEffect(() => {
         const selectType = () => {
+            if(page === 'Extrato') Card.transitionTo('open');
             if(type?.lenght > 0) {
                 setpage(type)
             }
+            
         }
 
         const handleScroll = () => {
-            if(page === 'Cashback' || page === 'Rifas') {scrollTags.current.scrollToEnd({ animated: true });}
+            if(page === 'Moedas' || page === 'Rifas') {scrollTags.current.scrollToEnd({ animated: true });}
             else if(page === 'Extrato' || page === 'Doações' ) {scrollTags.current.scrollTo({ x: 0, y: 0, animated: true });}
         }
         handleScroll()
         selectType()
+        
     }, [page]);
-
+    
     const [actionButton, setactionButton] = useState(false);
+    const Card = useAnimationState({
+        open: {
+          opacity: 0,
+          height: 10,
+          scale: 0.1,
+          marginBottom: -50,
+        },
+        close: {
+            opacity: 1,
+            height: 240,
+            scale: 1,
+            marginBottom: 0,
+        },
+      });
+
+    const handleCard = (pag) => {
+        if(pag === 'Extrato'){
+            Card.transitionTo('open'); 
+        }
+        else{
+            Card.transitionTo('close');
+        }   
+    }
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -50,30 +76,28 @@ export default function ExtractScreen({ navigation, route}) {
                 </MotiView>
             }
         </AnimatePresence>
-        <Scroll onScroll={(event) => {
-                const scrolling = event.nativeEvent.contentOffset.y;
-                if (scrolling > 20) {
-                    setactionButton(true);
-                } else {
-                    setactionButton(false);
-                } }}> 
-
-           
-            <Column style={{backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
-                <Label style={{  color: "#fff", }}>Saldo em UhaCoins</Label>
+        <Scroll onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true);  } else {  setactionButton(false);  } }}> 
+            <MotiView state={Card}   transition={{ duration: 800, type: 'timing', }} 
+                /**
+                 * opacity: { duration: 200, type: 'timing' }, 
+                height: { duration: 800, type: 'timing' }, 
+                scale: { duration: 700, type: 'timing' }
+                 */
+                style={{backgroundColor: color.primary, paddingHorizontal: 28, paddingVertical: 20, borderRadius: 24, marginHorizontal: margin.h, marginTop: 20,   }}>
+                <Label style={{  color: "#fff", }}>Saldo em pontos</Label>
                 <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: "#fff", }}>{user?.balance}</Title>
-                <LineD />
-                <Label style={{ color: "#fff", marginTop: 12, marginBottom: 4, }}>Saldo em cashback</Label>
-                <Label style={{color: "#fff", }}>R$ {user?.cashback},00</Label>
-                <ButtonSE style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 32,}} onPress={() => {}} >
-                    <LabelSE >Resgatar</LabelSE>
+                <LineL />
+                <Label style={{ color: "#fff", marginTop: 12, marginBottom: 4, }}>Saldo em moedas resgatadas</Label>
+                <Label style={{color: "#fff", }}>R$ {user?.moedas},00</Label>
+                <ButtonSE style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 26,}} onPress={() => {}} >
+                    <LabelSE>Utilizar pontos</LabelSE>
                 </ButtonSE>
-            </Column>
+            </MotiView>
 
-            <ScrollView ref={scrollTags} horizontal style={{  paddingHorizontal: margin.h, }} showsHorizontalScrollIndicator={false}>
+            <ScrollView ref={scrollTags} horizontal style={{  paddingHorizontal: margin.h, marginTop: 20,}} showsHorizontalScrollIndicator={false}>
                 {bts.map((bt, i) => (
                     <MotiView from={{opacity: 0,}} animate={{opacity: 1,}}  key={i}> 
-                    <Button onPress={() => {setpage(bt)}}  style={{ backgroundColor: bt===page?color.primary:'transparent', padding: 8, paddingHorizontal: 12, borderRadius: 100, }}>
+                    <Button onPress={() => {setpage(bt); handleCard(bt);}}  style={{ backgroundColor: bt===page?color.primary:'transparent', padding: 8, paddingHorizontal: 12, borderRadius: 100, }}>
                         <Label style={{ color: bt===page?"#fff":color.title, fontFamily: font.bold, fontSize: 16,}}>{bt}</Label>
                     </Button>
                     </MotiView>
@@ -126,7 +150,7 @@ export default function ExtractScreen({ navigation, route}) {
             )}
             
 
-            {page === 'UhaCoins' && (
+            {page === 'Pontos' && (
                 <MotiView from={{opacity: 0, translateY: -20, }} animate={{opacity: 1, translateY: 0,}} transition={{type: 'timing'}}>
                 <FlatList
                     style={{ marginTop: 12, marginHorizontal: margin.h,}}
@@ -137,22 +161,22 @@ export default function ExtractScreen({ navigation, route}) {
                 </MotiView>
             )}
 
-            {page === 'Cashback' && (
+            {page === 'Moedas' && (
                 <MotiView from={{opacity: 0, translateY: -20, }} animate={{opacity: 1, translateY: 0,}} transition={{type: 'timing'}}>
                 <FlatList
                     style={{ marginTop: 12, marginHorizontal: margin.h,}}
-                    data={cashback}
+                    data={moedas}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => <CardUhacoins item={item} />}
                 />
                 </MotiView>
             )}
-
+            
+            <Column style={{height: 50, }} />
         </Scroll>
     </Main>
     )
 }
-
 
 
 const CardExtrato = ({item}) => {
@@ -181,8 +205,6 @@ return(
     </Button>
 
 )}
-
-
 
 const CardUhacoins = ({item}) => {
     const navigation = useNavigation();

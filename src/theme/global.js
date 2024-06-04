@@ -101,7 +101,6 @@ export const LineL = styled.View`
   background-color: #FFFFFF50;
   height: 2px;
   width: 100%;
-  flex-grow: 1;
 `;
 
 export const LabelLI = styled.Text`

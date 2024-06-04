@@ -1,12 +1,13 @@
 import React, { useContext, useState, } from 'react';
 import { FlatList, Pressable, ScrollView } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, LineL } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Check from '@components/check';
 import { ImagePlus, CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, Bell } from 'lucide-react-native';
-import { MotiView } from 'moti';
+import { MotiImage, MotiView } from 'moti';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -15,7 +16,6 @@ export default function AccountScreen({ navigation, }) {
     const user = {
         name: 'Ana Silva',
         email: 'email@example.com',
-        balance: '30,00',
         cashback: '10,00',
         points: 500,
     }
@@ -35,33 +35,39 @@ export default function AccountScreen({ navigation, }) {
                 <MotiView from={{opacity: 0, translateX: 20}} animate={{opacity: 1, translateX: 0,}} delay={200} style={{backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: "#fff", }}>Pontos em conta</Label>
                     <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46 , color: "#fff", }}>{user?.points}</Title>
-                    <LineD />
-                    <Label style={{ color: "#fff", marginTop: 12, }}>Saldo em cashback</Label>
+                    <LineL />
+                    <Label style={{ color: "#fff", marginTop: 12, }}>Saldo em moedas resgatadas</Label>
                     <Label style={{ color: "#fff", }}>R$ {user?.cashback}</Label>
-                    <ButtonSE style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 32,}} onPress={() => {}} >
+                    <ButtonSE onPress={() => {navigation.navigate('Shop')}}  style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 32,}}  >
                         <LabelSE style={{ color: color.background, }}>Utilizar pontos</LabelSE>
                     </ButtonSE>
                 </MotiView>
 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Column style={{ padding:38, marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                            <ImagePlus color={color.primary} size={32}/>
+                    <Button onPress={() => {navigation.navigate('Ranking')}} style={{  flexGrow: 1, }}>
+                    <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
+                            <MotiImage source={require('@icons/rank.png')} style={{ width: 42, objectFit: 'contain', height: 40, }}/>
                         </Column>
                         <SubLabel>Ranking</SubLabel>
                     </Column>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Column style={{ padding:38, marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor:"#FFE0F6", borderRadius: 12, }}>
-                            <ImagePlus color={color.primary} size={32}/>
+                    </Button>
+                    <Button onPress={() => {navigation.navigate('Extract')}} style={{  flexGrow: 1, }}>
+                    <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20,  }}>
+                        <Column style={{ padding: 20, paddingVertical: 30,  width: '100%', marginBottom: 8,  justifyContent: 'center', alignItems: 'center', backgroundColor:"#FFE0F6", borderRadius: 12, }}>
+                            <MotiImage source={require('@icons/pontos.png')} style={{ width: 42, objectFit: 'contain', height: 40, }}/>
                         </Column>
                         <SubLabel>Doações</SubLabel>
                     </Column>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Column style={{ padding:38, marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                            <ImagePlus color={color.primary} size={32}/>
+                    </Button>
+                    <Button onPress={() => {navigation.navigate('Favorites')}} style={{  flexGrow: 1, }}>
+                    <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1,   }}>
+                        <Column style={{ padding: 20, paddingVertical: 30,  width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
+                        <MotiImage source={require('@icons/heart.png')} style={{ width: 42, objectFit: 'contain', height: 40, }}/>
                         </Column>
                         <SubLabel>Favoritos</SubLabel>
                     </Column>
+                    </Button>
                 </Row>
 
 
@@ -100,7 +106,7 @@ export default function AccountScreen({ navigation, }) {
                         </Pressable>
                     </Row>
                 </Column>
-
+                <Column style={{ height: 120, width: 1,}}/>
             </Scroll>
         </Main>
     )
@@ -108,8 +114,9 @@ export default function AccountScreen({ navigation, }) {
 
 const Card = ({ item }) => {
     const { color, font, margin } = useContext(ThemeContext);
-
+    const navigation = useNavigation();
     return(
+        <Button onPress={() => {navigation.navigate(item.screen)}} >
     <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: "#00000012", alignItems: 'center', paddingBottom: 12,  }}>
         <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6", }}>
             <ImagePlus color={color.primary} size={32}/>    
@@ -123,6 +130,7 @@ const Card = ({ item }) => {
             <Label style={{ fontSize: 14, }}>{item?.description}</Label>
         </Column>
     </Row>
+        </Button>
 )}
 
 const CardRow = ({ item }) => {
@@ -139,48 +147,56 @@ const Configs = [
         description: 'Edite seu avatar e infos',
         icon: 'user',
         check: false,
+        screen: 'AccountDetails'    
     },
     {
         title: 'Notificações',
         description: 'Configure como desejar',
         icon: 'bell',
         check: true,
+        screen: 'AccountNotify'
     },
     {
-        title: 'Patinhas da sorte',
+        title: 'Pontos',
         description: 'Desfrute de serviços parceiros',
         icon: 'lock',
         check: null,
+        screen: 'CampaignsUhaCoins'
     },
     {
         title: 'Rifas',
         description: 'Concorra a premios diversos',
         icon: 'file-text',
         check: null,
+        screen: 'CampaignsProgress'
     },
     {
-        title: 'Histórico de Patinhas',
+        title: 'Histórico de Pontos',
         description: 'Acompanhe as movimentações',
         icon: 'log-out',
         check: true,
+        screen: 'Extract',
     },
     {
         title: 'Histórico de Rifas',
         description: 'Acompanhe ganhos e gastos',
         icon: 'log-out',
         check: true,
+        screen: 'Extract',
     },
     {
         title: 'Estabelecimentos',
         description: 'Descubra nossos parceiros',
         icon: 'log-out',
         check: null,
+        screen: 'Shop'
     },
     {
         title: 'Indique e ganhe',
         description: 'Participe da campanha',
         icon: 'log-out',
         check: null,
+        screen: 'Share'
     },
 ]
 

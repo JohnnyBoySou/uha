@@ -20,18 +20,16 @@ export default function AccountDetailsScreen({ navigation, }) {
 
     const [language, setlanguage] = useState('pt-br');
     return (
-        <Main style={{ marginTop: -10, }}>
-                <Header title='Dados cadastrais' />
+        <Main>
                 <Scroll>
-                    <Column style={{ paddingHorizontal: margin.h, }}>
-                        
+                    <Header title='Dados cadastrais' />
+                    <Column style={{ paddingHorizontal: margin.h, marginTop: 20, }}>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20,  }}>
-                            <MotiImage style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={{ uri: 'https://s3-alpha-sig.figma.com/img/6dd6/3168/89801df8310fbde47e5e05c3465ccfa0?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bg9FhHm-B5yEOyUm7KBmI4b7d8wnipYb5WTidu4V189e6tnfyZSNhWo3b22NGwMgnLFARq1cbIn9tBYPa0EVVF8XZrsG8kkpjVs6I3rExdigLWB5ta7IRxUqn2Ef3~-ktm5exbzYcgtW5KfbiNoh2Gnc1ztfE~0v9r~RWlHJCXwVNBaDKONMvGHQ460b2OuR4PtxLiaeU72OS9Vl8INpy2QPM2XDUDAjGObfXQhqd2VoQRkkfe53RLnojpO2IHq5-ZaIJOj4NebIIG~3VMECcSSZBNJ8knSLHuDDGBtJcKdlWDpGbQ05TSicioRZdIdzw~FrvQAv3lF9VDnnPJ60HQ__' }}/>
+                            <MotiImage style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={require('@icons/avatar.png')}/>
                             <Pressable>
                                 <SubLabel style={{ color: color.primary, marginTop: 12, }}>Editar foto de perfil</SubLabel>
                             </Pressable>
                         </Column>
-
                        <Column style={{ marginBottom: 20, }}>
                             <Row style={{ marginBottom: 8,  justifyContent: 'space-between', alignItems: 'center',  }}>
                                     <Title style={{ fontSize: 20, }}>Nome completo</Title>

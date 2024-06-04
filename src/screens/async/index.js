@@ -4,13 +4,12 @@ import { MotiImage } from 'moti';
 export default function AsyncStaticScreen({ navigation, }) {
     useEffect(() => {
         setTimeout(() => {
-            navigation.replace('Dev')
+            navigation.replace('Onboarding')
         }, 2200)
     }, [])
     return (
         <Main style={{ backgroundColor: "#FE25BD", flex: 1, justifyContent: 'center', alignItems: 'center', }}>
             <Row>
-               
                 <MotiImage source={require('@imgs/u.png')} style={{ width: 100, objectFit: 'contain' }} 
                     transition={{duration: 600, type: 'timing',  delay: 200,}}
                     from={{opacity: 0, transform: [{translateY: -300}, {scale: 0.5}, { rotate: '180deg' }]}} 
