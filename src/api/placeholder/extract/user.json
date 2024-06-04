@@ -1,0 +1,14 @@
+[
+    {
+        "email": "email@example.com",
+        "token": "token",
+        "points": 550,
+        "cashback": 100
+    }
+]
+
+
+//url: base_url + "api/extract/user",
+//token no body
+//method: "GET",
+//headers: { "Content-Type": "application/json }

@@ -37,3 +37,7 @@
                 ]
             }
 ]
+
+//url: base_url + 'api/service/id',
+//method: 'GET',
+//headers: { 'Content-Type': 'application/json }

@@ -16,16 +16,14 @@
             "name": "Nome do usuário",
             "avatar": "url"
         },
-        "rate": 3,
+        "rate": 5,
         "message": "Comentário do usuário",
         "date": "10/10/2024",
-        "imgs": [
-            "url1", "url2", "url3"
-        ]
+        "imgs": []
     }
 ]
 
-
-//url: base_url + 'api/comments/id=1',
+//const productOrService = 'product';
+//url: base_url + 'api/comments/productOrService/id_comment/,
 //method: 'GET',
 //headers: { 'Content-Type': 'application/json }

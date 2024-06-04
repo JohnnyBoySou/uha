@@ -1,7 +1,8 @@
 Modificações gerais a serem discutivéis: 
- - Páginação com Offset de 20 itens com página
- - Auth com Google.  
- - Parametros enviados no body ao invés do URL.
+ - Páginação com Offset de 20 itens por página
+ - Auth com Google, Facebook.  
+ - Parametros sensiveis enviados no body ao invés do URL.
+ - Ids gerais utilizar no URL. 
  - Sanitização no front & back.
  - Imagens de uso geral armazenadas no app.
 

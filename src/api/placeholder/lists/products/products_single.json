@@ -22,3 +22,9 @@
         "recomendations_id": ["12345", "12345", "12345"]
     }
 ]
+
+
+
+//url: base_url + 'api/products/id',
+//method: 'GET',
+//headers: { 'Content-Type': 'application/json }

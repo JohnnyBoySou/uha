@@ -25,3 +25,7 @@
     }
 ]
 
+
+//url: base_url + 'api/products/offers',
+//method: 'GET',
+//headers: { 'Content-Type': 'application/json }
