@@ -11,8 +11,8 @@ export default function CampaignsGiftCardScreen({ navigation, }) {
             <Scroll>
                <Header title='Gift Card'/>
                 <Column style={{ paddingHorizontal: 28, }}>
-                    <MotiImage style={{ flexGrow: 1, borderRadius: 24, backgroundColor: '#303030', height: 280, marginVertical: 24, }} from={{opacity: 0, translateY: -20,}} animate={{opacity: 1, translateY: 0,}}/>
-                    <Column style={{ backgroundColor: color.primary, borderRadius: 100, paddingVertical: 24, paddingHorizontal: 30, justifyContent: 'center', alignItems: 'center',  marginTop: -80, zIndex: 99, }}>
+                    <MotiImage source={require('@imgs/gift_card.png')} style={{ borderRadius: 24, width: '100%', height: 280, marginVertical: 24, }} from={{opacity: 0, translateY: -20,}} animate={{opacity: 1, translateY: 0,}}/>
+                    <Column style={{ backgroundColor: color.primary, borderRadius: 100, paddingVertical: 24, paddingHorizontal: 30, justifyContent: 'center', alignItems: 'center',  marginTop: -60, zIndex: 99, }}>
                         <Title style={{ color: "#fff", }}>Presenteie alguém especial!</Title>
                         <Label style={{ color: "#fff", fontSize: 16, marginTop: 6, }}>Troque pontos por um ato de compaixão</Label>
                     </Column>
@@ -22,7 +22,7 @@ export default function CampaignsGiftCardScreen({ navigation, }) {
                    
                     <Title style={{ marginTop: 24, marginBottom: 8, }}>Por que um Gift Card?</Title>
                     <Label>Presentes são um ato de amor, doações também, compartilhem de uma mesma paixão! A cada x Gift Card utilizados você recebe x pontos. Um presente de nós, para você. </Label>
-                    <ButtonPR style={{ borderColor: '#000', paddingVertical: 12, marginTop: 24,  }}>
+                    <ButtonPR onPress={() => {navigation.navigate('BuyServiceGiftCard')}}  style={{ borderColor: '#000', paddingVertical: 12, marginTop: 24,  }}>
                         <LabelLI style={{ color: '#fff', }}>Presentear com Gift Card</LabelLI>
                     </ButtonPR>
 
@@ -35,7 +35,7 @@ export default function CampaignsGiftCardScreen({ navigation, }) {
                     <Title style={{ marginTop: 32, marginBottom: 8, }}>Qual o prazo do meu Gift Card?</Title>
                     <Label>Você pode utilizar seu Gift Card até 6 meses após a data de compra registrada.</Label>
 
-                    <ButtonOut style={{ borderColor: '#000', paddingVertical: 12, marginTop: 24, marginBottom: 40, }}>
+                    <ButtonOut onPress={() => {navigation.navigate('Shop')}}  style={{ borderColor: '#000', paddingVertical: 12, marginTop: 24, marginBottom: 40, }}>
                         <LabelLI style={{  }}>Conhecer estabelecimentos parceiros</LabelLI>
                     </ButtonOut>
                 </Column>

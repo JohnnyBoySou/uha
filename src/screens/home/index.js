@@ -18,13 +18,13 @@ export default function HomeScreen({navigation, }){
             id: 1,
             title: 'Troque UhaCoins por serviços ou produtos',
             label: 'Acumule UhaCoins através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
-            img: 'https://s3-alpha-sig.figma.com/img/5434/cab6/b4252e09af75aa2c6a770207a05e73e2?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pEjGmMV~nMRsGN1ifAc1Q5BpNd1MolpTMMu9QsZzk9isEd8yRQP5Uoka0tcU2JMWbLCbHe891vrGUTmKPUh7mJOL1L-bus0bw6HpX-rfPuo64cnHlZlw1XVduEzeCaTu4err0pkDu4f8lp-ESa0rDz6aAk9MSBm0Frq~sIM~IBWzmBPhDohbq04YnYFNB~IydaDcyR1yhP0~TuWkFquEfTdVx76VwgJv00cyG8BAU7Jm-K2TEOT8G1ghSp4vxUjyJw2y3QbCApbJTAEinlO2t5dwZIrZPtrrBxP7mbf6~hnac1ykdbWmEGaWD4UqkY3TBqdlRXvBHZba4zcaIdNjmg__',
+            img: require('@imgs/dog1.png'),
         },
         {
             id: 2,
             title: 'Troque UhaCoins por serviços ou produtos',
             label: 'Acumule UhaCoins através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
-            img: 'https://s3-alpha-sig.figma.com/img/cd97/5f11/248b1d913a7ba72e095ee6c4be8f8b89?Expires=1717372800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=oeFbAPQO5QRtjZ~UqFLXaaxFL7aIs0ztuihHJuYRHddCTiXTLkcQ5F0c-MIl79Czc0N-jQM6YwelJ1GimC7zSWDdgSF3XQg0RLF4-IRiHqsSEl-ikLJXM8fsMCgGc6kIHvviNDtT4P21S5gBBl94A23q0osyduNe-3Cfsb6~f-BG4fVqm4CFNmn~Lom-nzOkUGm3MuFts5~ZyWMfRql26o6q8-a9cfrh2E72lnAr3McTV1~OKa~F35sXJeGbE9BMNPL5S4jae1aJjAt2S6iFcJgXnO7DVt8H-ofet~PCbWRTy~URVUwH0wq-GBcDKghxe3QZ9jZkhBCdugljKFOWkw__',
+            img: require('@imgs/dog2.png'),
         },
          
     ]
@@ -79,7 +79,7 @@ export default function HomeScreen({navigation, }){
                         <Avatar />
                     </Row>
                 </Row>
-                <Button onPress={() => {navigation.navigate('Search')}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                <Button onPress={() => {navigation.navigate('SearchModal')}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
                         <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
                         <Search strokeWidth={2} color="#11111190"/>
@@ -132,10 +132,11 @@ export default function HomeScreen({navigation, }){
                         renderItem={({item}) => (
                             <Button style={{ backgroundColor: "#fff", borderRadius: 24,  marginRight: 12, }} onPress={() => {navigation.navigate('Shop')}}>
                                 <Column>
-                                    <MotiImage source={{uri: item.img}} style={{ width: 300, height: 400, borderRadius: 24,  }} />
+                                    <MotiImage source={ item?.img } style={{ width: 300, height: 400, borderRadius: 24,  }} />
                                     <Column style={{ backgroundColor: '#fff', marginHorizontal: 24, padding: 12, borderRadius: 24, position: 'absolute', bottom: 20, }}>
                                         <Title style={{ textAlign: 'center', marginTop: 6, }}>{item.title}</Title>
                                         <Label style={{ textAlign: 'center', marginTop: 12, color: color.title, fontFamily: font.medium, fontSize: 16, marginBottom: 12, }}>{item.label}</Label>
+                                        <Title style={{ backgroundColor: color.primary, borderRadius: 100, fontSize: 12, paddingVertical: 4, paddingHorizontal: 12, textAlign: 'center', alignSelf: 'center', color: '#fff', }}>Ver estabelecimentos parceiros</Title>
                                     </Column>
                                 </Column>
                             </Button>
@@ -160,7 +161,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }} onPress={() => {navigation.navigate('ShopProductSingle', {item: item})}}>
+                                <Button style={{   marginRight: 12, }} onPress={() => {navigation.navigate('ShopSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
@@ -277,7 +278,7 @@ export default function HomeScreen({navigation, }){
                             <Label style={{ fontFamily: font.bold, color: color.primary, }}>Fazer doação</Label>
                         </Button>
                 </Row>
-
+                <Column style={{ height: 50, }} />
             </Scroll>
 
         </Main>
@@ -322,7 +323,7 @@ export const Carrousel = ({ type }) => {
     const flat = useRef();
     const navigation = useNavigation();
     const scrollX = useRef(new Animated.Value(0)).current;
-    const route = type === 'doe' ? 'DonateHide' : type === 'gift' ? 'BuyServiceGiftCard' : 'ShopSingle'
+    const route = type === 'doe' ? 'DonateHide' : type === 'gift' ? 'CampaignsGiftCard' : 'ShopSingle'
 
     const render = ({item}) => {
         const link = item.img

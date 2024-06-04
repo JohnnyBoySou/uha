@@ -2,230 +2,61 @@ import React, { useContext, useState, useRef, useEffect } from 'react';
 import { FlatList, ScrollView } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { CircleCheck, Info, CircleX, AlarmClock } from 'lucide-react-native';
+import { CircleCheck, Info, CircleX, AlarmClock, Plus } from 'lucide-react-native';
 import  Header   from '@components/header';
-import { MotiView } from 'moti';
+import { AnimatePresence, MotiView } from 'moti';
 import { useNavigation } from '@react-navigation/native';
+import doacoes from '@data/doacoes';
+import extrato from '@data/extrato';
+import coins from '@data/coins';
+import cashback from '@data/cashback';
+import rifas from '@data/rifas';
+import user from '@data/user';
 
-export default function ExtractScreen({ navigation, }) {
+export default function ExtractScreen({ navigation, route}) {
     const { color, font, margin } = useContext(ThemeContext);
-   
-    const user = {balance: 550, cashback: 100,}
-    const [page, setpage] = useState('Extrato');
+    let type = route.params?.type;
+
+    const [page, setpage] = useState(type ? type : 'Extrato');
     const [dateSelect, setdateSelect] = useState('Hoje');
     const scrollTags = useRef(null);
 
     const bts = ['Extrato', 'Doações', 'UhaCoins', 'Rifas', 'Cashback']
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
-    const doacoes = [
-        {
-            value: 35,
-            type: 'Doação',
-            date: '10/10/2024',
-            status: 'Pagamento em análise',
-        },
-        {
-            value: 50,
-            type: 'Doação',
-            date: '12/08/2024',
-            status: 'Pagamento confirmado',
-        },
-        {
-            value: 100,
-            type: 'Doação',
-            date: '05/05/2024',
-            status: 'Pagamento negado',
-        },
-    ]
-
-    const rifas = [
-        {
-            value: 35,
-            type: 'Campanha xxxxxxx',
-            date: '10/10/2024',
-            status: 'Pagamento em análise',
-        },
-        {
-            value: 50,
-            type: 'Campanha xxxxxxx',
-            date: '12/08/2024',
-            status: 'Pagamento confirmado',
-        },
-        {
-            value: 100,
-            type: 'Campanha xxxxxxx',
-            date: '05/05/2024',
-            status: 'Pagamento negado',
-        },
-        {
-            value: 35,
-            type: 'Campanha xxxxxxx',
-            date: '05/05/2024',
-            status: 'Campanha expirada',
-        },
-    ]
-
-    const extrato = [
-        {
-            value: 5,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback confirmado',
-            icon: 'check',
-            id: '9876543234567898765434567899876543',
-        },
-        {
-            value: 100,
-            type: 'Rifa',
-            date: '10/10/2024',
-            status: 'Transferência pronta para resgate',
-            icon: 'check',
-            id: '9876543234567898765434567899876543',
-        },
-        {
-            value: 10,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback em análise',
-            icon: 'await',
-            id: '9876543234567898765434567899876543',
-        },
-        {
-            value: 50,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback negado',
-            icon: 'uncheck',
-            id: '9876543234567898765434567899876543',
-        },
-        {
-            value: 300,
-            type: 'UhaCoins',
-            date: '10/10/2024',
-            status: 'Transferência bem sucedida',
-            icon: 'check',
-            id: '9876543234567898765434567899876543',
-        },
-        {
-            value: 10,
-            type: 'Rifa',
-            date: '10/10/2024',
-            status: 'Pagamento confirmado',
-            icon: 'check',
-            id: '9876543234567898765434567899876543',
-        },
-        {
-            value: 5,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback expirado',
-            icon: 'dimiss',
-            id: '9876543234567898765434567899876543',
-        },
-    ]
-
-    const coins = [
-        {
-            value: 1,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback em análise',
-            icon: 'await',
-        },
-        {
-            value: 1,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback confirmado',
-            icon: 'check',
-        },
-        {
-            value: 1,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback negado',
-            icon: 'uncheck',
-        },
-        {
-            value: 30,
-            type: 'Doação',
-            date: '10/10/2024',
-            status: 'Cashback confirmado',
-            icon: 'check',
-        },
-        {
-            value: 300,
-            type: 'Doação',
-            date: '10/10/2024',
-            status: 'Transferência bem sucedida',
-            icon: 'check',
-        },
-        {
-            value: -300,
-            type: 'UhaCoins',
-            date: '10/10/2024',
-            status: 'Cashback confirmado',
-            icon: 'check',
-        },
-        {
-            value: 300,
-            type: 'Doação',	
-            date: '10/10/2024',
-            status: 'Transferência bem sucedida',
-            icon: 'check',
-        },
-        {
-            value: 45,
-            type: 'Doação',	
-            date: '10/10/2024',
-            status: 'Cashback expirado',
-            icon: 'dimiss',
-        },
-    ]
-
-    const cashback = [
-        {
-            value: 1,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback em análise',
-            icon: 'await',
-        },
-        {
-            value: 95,
-            type: 'Doação',
-            date: '10/10/2024',
-            status: 'Cashback confirmado',
-            icon: 'check',
-        },
-        {
-            value: 1,
-            type: 'Nota fiscal',
-            date: '10/10/2024',
-            status: 'Cashback negado',
-            icon: 'uncheck',
-        },
-        {
-            value: 30,
-            type: 'Doação',
-            date: '10/10/2024',
-            status: 'Cashback expirado',
-            icon: 'dimiss',
-        },
-    ]
-
     useEffect(() => {
+        const selectType = () => {
+            if(type?.lenght > 0) {
+                setpage(type)
+            }
+        }
+
         const handleScroll = () => {
             if(page === 'Cashback' || page === 'Rifas') {scrollTags.current.scrollToEnd({ animated: true });}
             else if(page === 'Extrato' || page === 'Doações' ) {scrollTags.current.scrollTo({ x: 0, y: 0, animated: true });}
         }
         handleScroll()
+        selectType()
     }, [page]);
+
+    const [actionButton, setactionButton] = useState(false);
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-        <Scroll>
+        <AnimatePresence>
+            {actionButton &&
+                <MotiView from={{opacity: 0, scale: .6, rotate: '32deg', }} animate={{opacity: 1, rotate: '0deg', scale: 1,}} transition={{type: 'timing'}} exit={{opacity: 0, rotate: '32deg', scale: .7,}} style={{ position: 'absolute', bottom: 100,  right: 30, zIndex: 99, }}>
+                    <Button onPress={() => {navigation.navigate('NotafiscalSend')}}  style={{  width: 52, height: 52, borderRadius: 100, backgroundColor: color.primary,  justifyContent: 'center', alignItems: 'center',  }}><Plus size={32} color="#fff" /></Button>
+                </MotiView>
+            }
+        </AnimatePresence>
+        <Scroll onScroll={(event) => {
+                const scrolling = event.nativeEvent.contentOffset.y;
+                if (scrolling > 20) {
+                    setactionButton(true);
+                } else {
+                    setactionButton(false);
+                } }}> 
 
            
             <Column style={{backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>

@@ -1,0 +1,60 @@
+const extrato = [
+    {
+        value: 5,
+        type: 'Nota fiscal',
+        date: '10/10/2024',
+        status: 'Cashback confirmado',
+        icon: 'check',
+        id: '9876543234567898765434567899876543',
+    },
+    {
+        value: 100,
+        type: 'Rifa',
+        date: '10/10/2024',
+        status: 'Transferência pronta para resgate',
+        icon: 'check',
+        id: '9876543234567898765434567899876543',
+    },
+    {
+        value: 10,
+        type: 'Nota fiscal',
+        date: '10/10/2024',
+        status: 'Cashback em análise',
+        icon: 'await',
+        id: '9876543234567898765434567899876543',
+    },
+    {
+        value: 50,
+        type: 'Nota fiscal',
+        date: '10/10/2024',
+        status: 'Cashback negado',
+        icon: 'uncheck',
+        id: '9876543234567898765434567899876543',
+    },
+    {
+        value: 300,
+        type: 'UhaCoins',
+        date: '10/10/2024',
+        status: 'Transferência bem sucedida',
+        icon: 'check',
+        id: '9876543234567898765434567899876543',
+    },
+    {
+        value: 10,
+        type: 'Rifa',
+        date: '10/10/2024',
+        status: 'Pagamento confirmado',
+        icon: 'check',
+        id: '9876543234567898765434567899876543',
+    },
+    {
+        value: 5,
+        type: 'Nota fiscal',
+        date: '10/10/2024',
+        status: 'Cashback expirado',
+        icon: 'dimiss',
+        id: '9876543234567898765434567899876543',
+    },
+]
+
+export default extrato;

@@ -88,7 +88,7 @@ export default function Router() {
             <Stack.Screen name="AsyncStatic" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Search" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthRegister" component={AuthRegisterScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -150,14 +150,15 @@ function Tabs (){
                 tabBarActiveTintColor: '#FF26BD',
                 tabBarInactiveTintColor: '#5C0D4580',
                 tabBarStyle: {
-                  backgroundColor: '#FFF8F1',
-                  borderTopWidth:0,
+                  backgroundColor: '#FFF',
+                  borderWidth: 2,
+                  borderColor: '#F0F0F0',
                   height: 68,
                   paddingBottom: 12,
                   paddingTop: 10,
                   position: 'absolute',
                   bottom: 10,
-                  borderRadius: 12,
+                  borderRadius: 16,
                   elevation: 0,
                   left: 15, right: 15,
                   
@@ -180,13 +181,14 @@ function Tabs (){
               <Tab.Screen name="Notafiscal" component={NotafiscalScreen}  options={{
               tabBarLabel: 'Nota Fiscal',
               tabBarLabelStyle: {
-                fontFamily: routeName === 'Search' ? 'Font_Bold' : 'Font_Book',
+                fontFamily: routeName === 'Notafiscal' ? 'Font_Bold' : 'Font_Book',
               },
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="note-edit-outline" size={routeName === 'Notafiscal' ? size+3 : size} color={color}/>
               ),
           }}/>
-              <Tab.Screen name="Search" component={SearchScreen}  options={{
+             
+             <Tab.Screen name="Search" component={SearchScreen}  options={{
               tabBarLabel: 'Buscar',
               tabBarLabelStyle: {
                 fontFamily: routeName === 'Search' ? 'Font_Bold' : 'Font_Book',
@@ -201,6 +203,7 @@ function Tabs (){
               tabBarLabel: 'Histórico',
               tabBarLabelStyle: {
                 fontFamily: routeName === 'Extract' ? 'Font_Bold' : 'Font_Book',
+                lineHeight: 10,
               },
               tabBarIcon: ({ color, size }) => (
                 <Octicons name="clock" size={routeName === 'Extract' ? size+3 : size} color={color} />
@@ -231,5 +234,8 @@ function Tabs (){
       ScaleFromCenterAndroid 
       DefaultTransition 
       ModalTransition
+
+
+
 
   */

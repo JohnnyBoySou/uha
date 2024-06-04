@@ -36,7 +36,7 @@ export default function NotafiscalSendScreen({ navigation, }) {
                 </Button>
                     </Row>
 
-                <Button  style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, width: '100%', marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                <Button onPress={() => {navigation.navigate('Extract', { type: 'Cashback'})}}  style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, width: '100%', marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                     <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Minhas notas</Label>
                 </Button>
 
