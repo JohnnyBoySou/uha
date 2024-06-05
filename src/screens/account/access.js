@@ -1,10 +1,11 @@
 import React, { useContext, } from 'react';
-import { Button, FlatList } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row } from '@theme/global';
+import { FlatList } from 'react-native';
+import { Main, Scroll, Column, Label, Title, Row ,  Button,} from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MessagesSquare, Info, ScrollText } from 'lucide-react-native';
 import Header from './../../components/header';
 import { MotiImage } from 'moti';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AccountAccessInfoScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -27,18 +28,18 @@ export default function AccountAccessInfoScreen({ navigation, }) {
 
 const Card = ({ item }) => {
     const { color, font, margin } = useContext(ThemeContext);
-
+    const navigation = useNavigation()
     return(
-        <Button onPress={() => {navigation.navigate(item.screen)}} style={{ padding: 8, paddingHorizontal: 6, borderRadius: 100, margin: 8, }}>
-        <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: color.off, alignItems: 'center', paddingBottom: 12,  }}>
-            <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6",  }}>
-                <MotiImage from={{ opacity: 0 }} animate={{ opacity: 1 }} delay={1000} source={item.img} style={{ width: 32, height: 32, objectFit: 'contain' }}/>
-            </Column>
-            <Column style={{ marginHorizontal: 20, }}>
-                <Title style={{ fontSize: 18, marginRight: 6, }}>{item?.title}</Title>
-                <Label style={{ fontSize: 14, }}>{item?.description}</Label>
-            </Column>
-        </Row>
+        <Button onPress={() => {navigation.navigate(item.screen)}} style={{  borderRadius: 12,  }}>
+    <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: color.off, alignItems: 'center', paddingBottom: 12,  }}>
+        <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6",  }}>
+            <MotiImage from={{ opacity: 0 }} animate={{ opacity: 1 }} delay={1000} source={item.img} style={{ width: 32, height: 32, objectFit: 'contain' }}/>
+        </Column>
+        <Column style={{ marginHorizontal: 20, }}>
+            <Title style={{ fontSize: 18, marginRight: 6, }}>{item?.title}</Title>
+            <Label style={{ fontSize: 14, }}>{item?.description}</Label>
+        </Column>
+    </Row>
     </Button>
 )}
 

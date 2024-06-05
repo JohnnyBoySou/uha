@@ -20,12 +20,12 @@ export default function AccountNotifyScreen({ navigation, }) {
 
     return (
         <Main style={{  }}>
-                <Scroll>
+                <Scroll style={{ paddingTop: 20, }}>
                     <Header title='Notificações' />
                     <Column style={{ paddingHorizontal: margin.h, }}>
                         <Title style={{ marginTop: 30, marginBottom: 30,}}>Escolha quais deseja receber</Title>
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Column style={{ width: 300, }}>
+                            <Column style={{ width: 250, }}>
                                 <Title style={{ fontSize: 20, }}>Promocionais</Title>
                                 <Label style={{ fontSize: 16, }}>Receba descontos, alertas de novas campanhas e encerramentos</Label>
                             </Column>
@@ -35,7 +35,7 @@ export default function AccountNotifyScreen({ navigation, }) {
                         </Row>
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Column style={{ width: 300, }}>
+                            <Column style={{ width: 250, }}>
                                 <Title style={{ fontSize: 20, }}>Alertas</Title>
                                 <Label style={{ fontSize: 16, }}>Receba alertas exclusivos de ofertas relâmpago e campanhas promocionais</Label>
                             </Column>
@@ -45,7 +45,7 @@ export default function AccountNotifyScreen({ navigation, }) {
                         </Row>
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Column style={{ width: 300, }}>
+                            <Column style={{ width: 250, }}>
                                 <Title style={{ fontSize: 20, }}>Aplicativo</Title>
                                 <Label style={{ fontSize: 16, }}>Receba as notificações do aplicativo e fique por dentro de cada processo</Label>
                             </Column>
@@ -55,7 +55,7 @@ export default function AccountNotifyScreen({ navigation, }) {
                         </Row>
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Column style={{ width: 300, }}>
+                            <Column style={{ width: 250, }}>
                                 <Title style={{ fontSize: 20, }}>E-mail</Title>
                                 <Label style={{ fontSize: 16, }}>Receba nossos e-mails promocionais e novidades em primeira mão</Label>
                             </Column>
@@ -65,7 +65,7 @@ export default function AccountNotifyScreen({ navigation, }) {
                         </Row>
                     
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Column style={{ width: 300, }}>
+                            <Column style={{ width: 250, }}>
                                 <Title style={{ fontSize: 20, }}>SMS</Title>
                                 <Label style={{ fontSize: 16, }}>Receba atualizações, promoções e novidades em seu SMS</Label>
                             </Column>
@@ -75,7 +75,7 @@ export default function AccountNotifyScreen({ navigation, }) {
                         </Row>
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Column style={{ width: 300, }}>
+                            <Column style={{ width: 250, }}>
                                 <Title style={{ fontSize: 20, }}>WhatsApp</Title>
                                 <Label style={{ fontSize: 16, }}>Receba atualizações, promoções e novidades em seu WhatsApp</Label>
                             </Column>

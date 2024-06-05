@@ -119,7 +119,7 @@ const Card = ({ item }) => {
         <Button onPress={() => {navigation.navigate(item.screen)}} >
     <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: "#00000012", alignItems: 'center', paddingBottom: 12,  }}>
         <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6", }}>
-            <ImagePlus color={color.primary} size={32}/>    
+           <MotiImage source={item.img} style={{ width: 28, height: 28, objectFit: 'contain' }}/>
         </Column>
         <Column style={{ marginHorizontal: 20, }}>
             <Row style={{  alignItems: 'center',  }}>
@@ -134,11 +134,14 @@ const Card = ({ item }) => {
 )}
 
 const CardRow = ({ item }) => {
+    const navigation = useNavigation();
 return(
+    <Button onPress={() => {navigation.navigate(item?.screen)}} >
     <Row style={{  alignItems: 'center',  marginVertical: 8,}}>
         {item.icon}
         <Title style={{ fontSize: 18, marginLeft: 12, }}>{item.title}</Title>
     </Row>
+    </Button>
 )}
 
 const Configs = [
@@ -147,28 +150,32 @@ const Configs = [
         description: 'Edite seu avatar e infos',
         icon: 'user',
         check: false,
-        screen: 'AccountDetails'    
+        screen: 'AccountDetails',    
+        img: require('@icons/ic1.png'),
     },
     {
         title: 'Notificações',
         description: 'Configure como desejar',
         icon: 'bell',
         check: true,
-        screen: 'AccountNotify'
+        screen: 'AccountNotify',    
+        img: require('@icons/ic2.png'),
     },
     {
         title: 'Pontos',
         description: 'Desfrute de serviços parceiros',
         icon: 'lock',
         check: null,
-        screen: 'CampaignsPontos'
+        screen: 'CampaignsPontos',    
+        img: require('@icons/ic3.png'),
     },
     {
         title: 'Rifas',
         description: 'Concorra a premios diversos',
         icon: 'file-text',
         check: null,
-        screen: 'CampaignsProgress'
+        screen: 'CampaignsProgress',    
+        img: require('@icons/ic4.png'),
     },
     {
         title: 'Histórico de Pontos',
@@ -176,6 +183,7 @@ const Configs = [
         icon: 'log-out',
         check: true,
         screen: 'Extract',
+        img: require('@icons/ic5.png'),
     },
     {
         title: 'Histórico de Rifas',
@@ -183,38 +191,45 @@ const Configs = [
         icon: 'log-out',
         check: true,
         screen: 'Extract',
+        img: require('@icons/ic5.png'),
     },
     {
         title: 'Estabelecimentos',
         description: 'Descubra nossos parceiros',
         icon: 'log-out',
         check: null,
-        screen: 'Shop'
+        screen: 'Shop',
+        img: require('@icons/ic6.png'),
     },
     {
         title: 'Indique e ganhe',
         description: 'Participe da campanha',
         icon: 'log-out',
         check: null,
-        screen: 'Share'
+        screen: 'Share',
+        img: require('@icons/ic7.png'),
     },
 ]
 
 const Links = [
     {
         title: 'Central de ajuda',
-        icon: <Info size={24} color="#111"/>
+        icon: <Info size={24} color="#111"/>,
+        screen: 'AccountFAQ',
     },
     {
         title: 'Feedback e sugestões',
         icon: <MessagesSquare size={24} color="#111"/>,
+        screen: 'Questions',
     },
     {
         title: 'Acesso à informação',
-        icon: <Info size={24} color="#111"/>
+        icon: <Info size={24} color="#111"/>,
+        screen: 'AccountAccess',
     },
     {
         title: 'Termos e condições',
-        icon: <ScrollText size={24} color="#111"/>
+        icon: <ScrollText size={24} color="#111"/>,
+        screen: 'AccountTerms',
     },
 ]

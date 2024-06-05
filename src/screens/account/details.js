@@ -21,7 +21,7 @@ export default function AccountDetailsScreen({ navigation, }) {
     const [language, setlanguage] = useState('pt-br');
     return (
         <Main>
-                <Scroll>
+                <Scroll style={{ paddingTop: 20, }}>
                     <Header title='Dados cadastrais' />
                     <Column style={{ paddingHorizontal: margin.h, marginTop: 20, }}>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20,  }}>

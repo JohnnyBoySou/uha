@@ -8,14 +8,12 @@ import { useNavigation } from '@react-navigation/native';
 import { CircleCheck, CircleX, AlarmClock } from 'lucide-react-native';
 
 export default function CampaignsProgressScreen({ navigation, }) {
-    const { color, font, margin, } = useContext(ThemeContext);
-
+    const { margin, } = useContext(ThemeContext);
     return (
         <Main >
-            <Scroll>
-
+            <Scroll style={{ paddingTop: 20, }}>
                 <Header rose />
-                <Column style={{ marginHorizontal: margin.h, marginVertical: 20, }}>
+                <Column style={{ marginHorizontal: margin.h, marginBottom: 20, marginTop: 10, }}>
                     <Label>Campanha</Label>
                     <Title style={{ fontSize: 32, lineHeight: 38, }}>Rifas da sorte</Title>
                     <Title style={{ marginTop: 20, }}>Seus pedidos</Title>

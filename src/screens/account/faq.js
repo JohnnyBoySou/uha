@@ -28,11 +28,11 @@ export default function AccountFAQScreen({ navigation, }) {
                             renderItem={({ item }) => <Card item={item} />}
                         />
                 <Row style={{ justifyContent: 'center', alignItems: 'center', marginTop:20, }}>
-                    <ButtonOut style={{ borderColor: "#111", }}>
+                    <ButtonOut onPress={() => {navigation.navigate('Questions')}} style={{ borderColor: "#111", }}>
                         <LabelLI style={{ fontSize: 16, }}>Registrar dúvida</LabelLI>
                     </ButtonOut>
                     <Column style={{width: 12, }} />
-                    <ButtonOut style={{ borderColor: color.primary, }}>
+                    <ButtonOut onPress={() => {navigation.navigate('Questions')}}  style={{ borderColor: color.primary, }}>
                         <LabelLI style={{ fontSize: 16, color: color.primary, }}>Registrar feedback</LabelLI>
                     </ButtonOut>
                 </Row>

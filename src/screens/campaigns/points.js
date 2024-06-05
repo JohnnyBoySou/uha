@@ -56,7 +56,7 @@ export default function CampaignsPontosScreen({navigation, }){
     
     return (
         <Main style={{  }}>
-            <Scroll>
+            <Scroll style={{ paddingTop: 20, }}>
                 <Header />
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 20, }}>
                     <Label style={{ }}>Campanha</Label>
