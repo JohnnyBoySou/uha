@@ -270,11 +270,11 @@ export default function HomeScreen({navigation, }){
                 </Column>
 
                 
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100,}}>
-                        <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100, paddingTop: 10,}}>
+                        <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
                             <Label style={{ fontFamily: font.bold, color: '#111', }}>Central de ajuda</Label>
                         </Button>
-                        <Button  onPress={() => {navigation.navigate('Donate',)}} style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 20, paddingVertical: 12, borderRadius: 100, }}>
+                        <Button  onPress={() => {navigation.navigate('Donate',)}} style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
                             <Label style={{ fontFamily: font.bold, color: color.primary, }}>Fazer doação</Label>
                         </Button>
                 </Row>

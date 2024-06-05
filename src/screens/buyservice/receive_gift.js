@@ -49,13 +49,13 @@ export default function BuyServiceReceiveGiftScreen({ navigation, }) {
                 </Button>
                     </Row>
 
-                <Button  style={{ borderRadius: 108, borderColor: color.secundary, borderWidth: 2, width: '100%', paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                <Button onPress={() => {navigation.navigate('Shop')}}   style={{ borderRadius: 108, borderColor: color.secundary, borderWidth: 2, width: '100%', paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                     <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Conhecer estabelecimentos parceiros</Label>
                 </Button>
-                <Button  style={{ borderRadius: 108, borderColor: color.secundary, borderWidth: 2, width: '100%',  paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                <Button onPress={() => {navigation.navigate('CampaignsGiftCard')}}  style={{ borderRadius: 108, borderColor: color.secundary, borderWidth: 2, width: '100%',  paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                     <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Saber mais sobre meu Gift Card</Label>
                 </Button>
-                <ButtonPR style={{ width: '100%',  paddingVertical: 16, marginVertical: 6,}}>
+                <ButtonPR onPress={() => {navigation.navigate('Donate')}} style={{ width: '100%',  paddingVertical: 16, marginVertical: 6,}}>
                     <Label style={{ color: "#fff", fontFamily: font.bold, }}>Fazer uma doação para a instutuição</Label>
                 </ButtonPR>
 

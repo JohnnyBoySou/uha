@@ -40,7 +40,7 @@ export default function AuthResetScreen({ navigation, }) {
                 </Row>
                 <Column style={{ marginHorizontal: margin.h, paddingVertical: 22, }}>
                     <Title style={{ fontSize: 42, color: color.primary, lineHeight: 52, }}>Entrar</Title>
-                    <Label>Digite seus dados de login abaixo para acessar suas Patinhas da Sorte.</Label>
+                    <Label>Digite seus dados de login abaixo para acessar suas Pontos.</Label>
                 </Column>
 
                 <Column style={{ marginHorizontal: margin.h, paddingVertical: 12, }}>

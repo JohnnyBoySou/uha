@@ -6,7 +6,7 @@ export const Main = styled.SafeAreaView`
   background: ${props => props.theme.background};
 `
 export const Scroll = styled.ScrollView`
-  padding-top: 30px;
+  padding-top: 40px;
   flex: 1;
 `
 
@@ -82,8 +82,8 @@ export const ButtonOut = styled(TouchableRipple).attrs(() => ({
   border-radius: 100px;
   text-align: center;
   align-items: center;
-  padding-vertical: 12px;
-  padding-horizontal: 20px;
+  padding-vertical: 8px;
+  padding-horizontal: 16px;
   justify-content: center;
   border-width: 2px;
   border-color: ${props => props.theme.color.light};

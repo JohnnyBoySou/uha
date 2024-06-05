@@ -1,11 +1,10 @@
-import React, { useContext, useState, } from 'react';
-import { FlatList, Pressable, ScrollView } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button } from '@theme/global';
+import React, { useContext, } from 'react';
+import { Button, FlatList } from 'react-native';
+import { Main, Scroll, Column, Label, Title, Row } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import Avatar from '@components/avatar';
-import Notify from '@components/notify';
-import Check from '@components/check';
-import { ImagePlus, CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, Bell } from 'lucide-react-native';
+import { MessagesSquare, Info, ScrollText } from 'lucide-react-native';
+import Header from './../../components/header';
+import { MotiImage } from 'moti';
 
 export default function AccountAccessInfoScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -13,9 +12,14 @@ export default function AccountAccessInfoScreen({ navigation, }) {
     return (
         <Main>
             <Scroll>
-             
-              
-
+            <Header title="Acesso à informação"/>
+            <FlatList
+                        style={{ marginTop: 24, marginHorizontal: margin.h, }}
+                        data={Configs}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item }) => <Card item={item} />}
+                    />
+                   <Title style={{ textAlign: 'center', fontSize: 18, marginVertical: 12, }}>Você também pode nos encontrar em: </Title>
             </Scroll>
         </Main>
     )
@@ -25,78 +29,70 @@ const Card = ({ item }) => {
     const { color, font, margin } = useContext(ThemeContext);
 
     return(
-    <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: color.off, alignItems: 'center', paddingBottom: 12,  }}>
-        <Column style={{ padding: 18, borderRadius: 12, backgroundColor: color.off, }}>
-            <ImagePlus color={color.primary} size={32}/>    
-        </Column>
-        <Column style={{ marginHorizontal: 20, }}>
-            <Row style={{  alignItems: 'center',  }}>
+        <Button onPress={() => {navigation.navigate(item.screen)}} style={{ padding: 8, paddingHorizontal: 6, borderRadius: 100, margin: 8, }}>
+        <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: color.off, alignItems: 'center', paddingBottom: 12,  }}>
+            <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6",  }}>
+                <MotiImage from={{ opacity: 0 }} animate={{ opacity: 1 }} delay={1000} source={item.img} style={{ width: 32, height: 32, objectFit: 'contain' }}/>
+            </Column>
+            <Column style={{ marginHorizontal: 20, }}>
                 <Title style={{ fontSize: 18, marginRight: 6, }}>{item?.title}</Title>
-                {item.check && <CircleCheck color={color.primary} size={18}/> }
-                {item.check == false && <CircleX color={color.red} size={18}/> }
-            </Row>
-            <Label style={{ fontSize: 14, }}>{item?.description}</Label>
-        </Column>
-    </Row>
+                <Label style={{ fontSize: 14, }}>{item?.description}</Label>
+            </Column>
+        </Row>
+    </Button>
 )}
 
-const CardRow = ({ item }) => {
-return(
-    <Row style={{  alignItems: 'center',  marginVertical: 8,}}>
-        {item.icon}
-        <Title style={{ fontSize: 18, marginLeft: 12, }}>{item.title}</Title>
-    </Row>
-)}
 
 const Configs = [
     {
-        title: 'Dados cadastrais',
-        description: 'Edite seu avatar e infos',
+        title: 'Dúvidas frequentes',
+        description: 'Acesse as dúvidas comuns',
         icon: 'user',
-        check: false,
+        check: null,
+        img: require("@icons/ac1.png"),
+        screen:'AccountFAQ'
     },
     {
-        title: 'Notificações',
-        description: 'Configure como desejar',
+        title: 'Sobre nós',
+        description: 'Descubra a UHA!',
         icon: 'bell',
-        check: true,
+        check: null,
+        img: require("@icons/ac2.png")
+
     },
     {
-        title: 'Patinhas da sorte',
-        description: 'Desfrute de serviços parceiros',
+        title: 'Campanhas',
+        description: 'Participe e ganhe prêmios',
         icon: 'lock',
         check: null,
+        img: require("@icons/ac3.png")
+
     },
     {
-        title: 'Rifas',
-        description: 'Concorra a premios diversos',
+        title: 'Faça parte',
+        description: 'Faça uma doação',
         icon: 'file-text',
         check: null,
+        img: require("@icons/ac4.png")
+
     },
     {
-        title: 'Histórico de Patinhas',
-        description: 'Acompanhe as movimentações',
-        icon: 'log-out',
-        check: true,
-    },
-    {
-        title: 'Histórico de Rifas',
-        description: 'Acompanhe ganhos e gastos',
-        icon: 'log-out',
-        check: true,
-    },
-    {
-        title: 'Estabelecimentos',
-        description: 'Descubra nossos parceiros',
+        title: 'Feedback e sugestões',
+        description: 'Nos ajude a melhorar',
         icon: 'log-out',
         check: null,
+        img: require("@icons/ac5.png")
+
     },
     {
-        title: 'Indique e ganhe',
-        description: 'Participe da campanha',
+        title: 'Central de ajuda',
+        description: '24 horas para te ajudar',
         icon: 'log-out',
         check: null,
+        img: require("@icons/ac6.png")
+
     },
+    
 ]
 
 const Links = [

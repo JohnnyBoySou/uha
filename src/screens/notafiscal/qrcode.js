@@ -7,10 +7,10 @@ import { MotiImage } from 'moti';
 import Header from '@components/header';
 
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { ButtonOut } from './../../theme/global';
+import { ButtonOut } from '../../theme/global';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 
-export default function NotafiscalSendScreen({ navigation, }) {
+export default function QRCodeScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
     const bottomEnviar = useRef(null);
     const [value, setvalue] = useState('');

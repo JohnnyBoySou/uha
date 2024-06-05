@@ -1,8 +1,8 @@
 import React, { useContext, useState, useRef} from 'react';
-import { FlatList, Pressable, ScrollView, ActivityIndicator , TextInput} from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonLI, LabelLI , ButtonOut, Digit } from '@theme/global';
+import { Pressable, ActivityIndicator , TextInput} from 'react-native';
+import { Main, Column, Label, Title, Row, Button, ButtonLI, LabelLI , ButtonOut, Digit } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Delete, X } from 'lucide-react-native';
+import { ArrowLeft, Info, Delete } from 'lucide-react-native';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
 export default function BuyServiceGiftCardScreen({ navigation, }) {
@@ -32,7 +32,7 @@ export default function BuyServiceGiftCardScreen({ navigation, }) {
     const handleFinish = () => {
         setloading(true);
         setTimeout(() => {
-            navigation.navigate('BuyServiceSuccess');
+            navigation.navigate('BuyServiceGiftSuccess');
             setloading(false)
         }, 3500);
     }
@@ -115,35 +115,35 @@ const Keyboard = ({handleClick, handleDelete, handleClean}) => {
     return(
         <Column>
             <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Button onPress={() => {handleClick('1')}} style={{ width: 64, height: 64,  color: "#fff", justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('1')}} style={{ width: 64, height: 64,  color: "#fff", justifyContent: 'center', alignItems: 'center', borderRadius: 12,  }}> 
                     <Digit style={{  color: "#fff", }}>1</Digit>
                 </Button>
-                <Button onPress={() => {handleClick('2')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('2')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', borderRadius: 12, alignItems: 'center',  }}> 
                     <Digit style={{  color: "#fff", }}>2</Digit>
                 </Button>
-                <Button onPress={() => {handleClick('3')}} style={{ width: 64, height: 64, color: "#fff",  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('3')}} style={{ width: 64, height: 64, color: "#fff",  justifyContent: 'center', alignItems: 'center', borderRadius: 12,  }}> 
                     <Digit style={{  color: "#fff", }}>3</Digit>
                 </Button>
             </Row>
             <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Button onPress={() => {handleClick('4')}} style={{ width: 64, height: 64,  color: "#fff",  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('4')}} style={{ width: 64, height: 64,  color: "#fff",  justifyContent: 'center', alignItems: 'center', borderRadius: 12,  }}> 
                     <Digit style={{  color: "#fff", }}>4</Digit>
                 </Button>
-                <Button onPress={() => {handleClick('5')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('5')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', borderRadius: 12, alignItems: 'center',  }}> 
                     <Digit style={{  color: "#fff", }}>5</Digit>
                 </Button>
-                <Button onPress={() => {handleClick('6')}} style={{ width: 64, height: 64,  color: "#fff", justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('6')}} style={{ width: 64, height: 64,  color: "#fff", justifyContent: 'center', alignItems: 'center', borderRadius: 12, }}> 
                     <Digit style={{  color: "#fff", }}>6</Digit>
                 </Button>
             </Row>
             <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Button onPress={() => {handleClick('7')}} style={{ width: 64, height: 64,  color: "#fff",  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('7')}} style={{ width: 64, height: 64,  color: "#fff",  justifyContent: 'center', alignItems: 'center',borderRadius: 12,  }}> 
                     <Digit style={{  color: "#fff", }}>7</Digit>
                 </Button>
-                <Button onPress={() => {handleClick('8')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('8')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', borderRadius: 12, alignItems: 'center',  }}> 
                     <Digit style={{  color: "#fff", }}>8</Digit>
                 </Button>
-                <Button onPress={() => {handleClick('9')}} style={{ width: 64, height: 64,  color: "#fff",  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('9')}} style={{ width: 64, height: 64,  color: "#fff",  justifyContent: 'center', alignItems: 'center',borderRadius: 12,  }}> 
                     <Digit style={{  color: "#fff", }}>9</Digit>
                 </Button>
             </Row>
@@ -151,10 +151,10 @@ const Keyboard = ({handleClick, handleDelete, handleClean}) => {
                 <Button   style={{ width: 64, height: 64,  justifyContent: 'center', alignItems: 'center',  }}> 
                    <Column style={{ }} />
                 </Button>
-                <Button onPress={() => {handleClick('0')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {handleClick('0')}} style={{ width: 64, height: 64, borderRadius: 12,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', alignItems: 'center',  }}> 
                     <Digit style={{  color: "#fff", }}>0</Digit>
                 </Button>
-                <Pressable onPress={() => {handleDelete()}} onLongPress={() => {handleClean()}} style={{ width: 64, height: 64,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Pressable onPress={() => {handleDelete()}} onLongPress={() => {handleClean()}} style={{ width: 64, height: 64, borderRadius: 12,  justifyContent: 'center', alignItems: 'center',  }}> 
                     <Delete color="#ffffff99" size={32} />
                 </Pressable>
             </Row>

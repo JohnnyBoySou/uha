@@ -21,8 +21,12 @@ import DevScreen from '@screens/dev';
 
 import BuyServiceScreen from '@screens/buyservice';
 import BuyServiceSuccessScreen from '@screens/buyservice/success';
+import BuyServiceGiftSuccessScreen from '@screens/buyservice/success_gift';
 import BuyServiceErrorScreen from '@screens/buyservice/error';
 import BuyServiceSuccessHideScreen from '@screens/buyservice/success_hide';
+
+
+
 import BuyServiceGiftCardScreen from '@screens/buyservice/gift_card';
 import BuyServiceRifaScreen from '@screens/buyservice/rifa';
 import BuyServiceReceiveGiftScreen from '@screens/buyservice/receive_gift';
@@ -45,12 +49,14 @@ import AccountScreen from '@screens/account';
 import AccountNotifyScreen from '@screens/account/notify';
 import AccountDetailsScreen from '@screens/account/details';
 import AccountAccessInfoScreen from '@screens/account/access';
+import AccountFAQScreen from '@screens/account/faq';
+import AccountTermsScreen from '@screens/account/terms';
 
 import CampaignsRifasScreen from '@screens/campaigns/rifa';
 import CampaignsScreen from '@screens/campaigns';
 import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
 import CampaignsProgressScreen from '@screens/campaigns/progress';
-import CampaignsPontosScreen from '@screens/campaigns/Pontos';
+import CampaignsPontosScreen from '@screens/campaigns/points';
 
 import ONGSingleScreen from '@screens/ong/single';
 import FavoritesScreen from '@screens/favorites';
@@ -58,6 +64,9 @@ import FavoritesScreen from '@screens/favorites';
 import ShopScreen from '@screens/shop';
 import ShopSingleScreen from '@screens/shop/single';
 import ShopProductSingleScreen from '@screens/shop/product_single';
+
+import QuestionsScreen from '@screens/questions';
+import QuestionListScreen from '@screens/questions/list';
 
 import RankingScreen from '@screens/ranking';
 
@@ -72,20 +81,19 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='BuyServiceGiftCard'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
-            <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Redeem" component={RedeemScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Dev" component={DevScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
-            <Stack.Screen name="AsyncStatic" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
+            <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthRegister" component={AuthRegisterScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthReset" component={AuthResetScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -96,9 +104,12 @@ export default function Router() {
             
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
-            <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyServiceGiftSuccess" component={BuyServiceGiftSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceError" component={BuyServiceErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
+            <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceGiftCard" component={BuyServiceGiftCardScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceRifa" component={BuyServiceRifaScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceSuccessHide" component={BuyServiceSuccessHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -118,9 +129,13 @@ export default function Router() {
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
+            <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="AccountAccessInfo" component={AccountAccessInfoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="AccountTerms" component={AccountTermsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
 
             <Stack.Screen name="CampaignsRifas" component={CampaignsRifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -129,6 +144,9 @@ export default function Router() {
             <Stack.Screen name="CampaignsPontos" component={CampaignsPontosScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
+            <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
         </Stack.Navigator>
     </NavigationContainer>

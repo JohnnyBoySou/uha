@@ -32,13 +32,13 @@ export default function NotafiscalScreen({navigation, }){
                     <Title style={{ marginBottom: 12, fontSize: 20, }}>Regras de validação de notas</Title>
 
                     <Label style={{ fontSize: 16, }}> - Não existe de limite de notas fiscais, você pode cadastrar quantas quiser no tempo quiser.</Label>
-                    <Label style={{ fontSize: 16, marginTop: 10, }}> - Independente do valor da nota fiscal ela valerá 1 patinha da sorte.</Label>
+                    <Label style={{ fontSize: 16, marginTop: 10, }}> - Independente do valor da nota fiscal ela valerá 1 ponto.</Label>
 
 
-                    <Title style={{ marginTop: 24, fontSize: 20, }}>Compre a partir de 15 notas fiscais</Title>
+                    <Title style={{ marginTop: 24, fontSize: 20, marginBottom: -12,}}>Compre a partir de 15 notas fiscais</Title>
                    
                 </Column>
-                <Scroll horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: margin.h, marginBottom: 24, marginTop: 16, }}>
+                <Scroll horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: margin.h, marginBottom: 24,}}>
                         <Column style={{ marginBottom: 12,  }}>
                             <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
                             <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, marginVertical: 16, }}/>
@@ -56,7 +56,7 @@ export default function NotafiscalScreen({navigation, }){
                         </Column>
 
                     </Scroll>
-
+                <Column style={{height: 100, }} />
             </Scroll>
 
         </Main>

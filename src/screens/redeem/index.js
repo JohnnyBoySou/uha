@@ -26,7 +26,7 @@ export default function RedeemScreen({ navigation, }) {
             </Row>
 
             <Column style={{ justifyContent: 'center', alignItems: 'center',   flex: 1, }}>
-                <Title style={{ textAlign: 'center', color: "#fff", marginBottom: 50, }}>QR Code Patinhas da Sorte</Title>
+                <Title style={{ textAlign: 'center', color: "#fff", marginBottom: 50, }}>QR Code Pontos</Title>
                 <Column style={{width: 42, height: 42 , borderRadius: 100, backgroundColor: color.primary, borderWidth: 4, marginBottom: -24, zIndex: 99, borderColor: "#fff",}} />
                 <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',  borderRadius: 32, padding: 32, width: '80%', }}>
                     <Title style={{ marginVertical: 20, fontSize: 24, }}>Aponte a camera</Title>

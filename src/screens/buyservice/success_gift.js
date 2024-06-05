@@ -6,13 +6,12 @@ import SucessAnim from '@anim/sucess';
 
 
 
-export default function BuyServiceSuccessScreen({ navigation, route}) {
+export default function BuyServiceGiftSuccessScreen({ navigation, route}) {
     const { color, font, margin } = useContext(ThemeContext);
     const type = route.params?.type
     return (
-        <Main style={{ backgroundColor: color.green+20, paddingTop: 30,}}>
+        <Main style={{ backgroundColor: color.green+20, paddingTop: 20,}}>
            
-           <Scroll>
            <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
                 <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#ffffff80", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
                     <ArrowLeft color={color.secundary}/>
@@ -25,20 +24,19 @@ export default function BuyServiceSuccessScreen({ navigation, route}) {
 
             <Column style={{ marginHorizontal: margin.h, marginVertical: 20, justifyContent: 'center', alignItems: 'center', flex: 1,}}>
                 <SucessAnim />
-                <Title style={{ fontSize: 32, lineHeight: 34, textAlign: 'center', marginVertical: 24, }}>Pontos {'\n'}trocados com {'\n'}sucesso!</Title>
-                <Label style={{ textAlign: 'center',   }}>Desfrute de serviços em estabelecimentos parceiros acumulando mais pontos!</Label>
+                <Title style={{ fontSize: 32, lineHeight: 34, textAlign: 'center', marginVertical: 12, }}>Pontos {'\n'}trocados com {'\n'}sucesso!</Title>
+                <Label style={{ textAlign: 'center',   }}>Desfrute de serviços em estabelecimentos parceiros {'\n'}acumulando mais pontos!</Label>
             </Column>
 
             <Row style={{  padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32,  justifyContent: 'center', alignItems: 'center',   }}>
                   <ButtonOut style={{ paddingHorizontal: 24, borderColor: color.primary, }}>
-                    <Label style={{ color: color.primary, fontFamily: font.bold, }}>Fazer doação</Label>
+                    <Label style={{ color: color.primary, fontFamily: font.bold, }}>Enviar</Label>
                   </ButtonOut>
                   <Column style={{width: 24, }} />
-                  <ButtonOut style={{ paddingHorizontal: 24, borderColor: "#111", }}>
-                    <Label style={{ color: "#111", fontFamily: font.bold, }}>Exportar recibo</Label>
+                  <ButtonOut onPress={() => {navigation.navigate('BuyServiceReceiveGift')}}  style={{ paddingHorizontal: 24, borderColor: "#111", }}>
+                    <Label style={{ color: "#111", fontFamily: font.bold, }}>Visualizar</Label>
                   </ButtonOut>
                 </Row>
-           </Scroll>
         </Main>
     )
 }
