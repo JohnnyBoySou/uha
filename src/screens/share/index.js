@@ -28,10 +28,10 @@ export default function ShareScreen({ navigation, }) {
 
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Title  style={{ marginTop: 24, marginBottom: 8, }}>Conheça a campanha</Title>
-                    <Label style={{ fontSize: 16, }}>A cada 5 amigos que se cadastrarem e doarem  você recebe 50 UhaCoins e seu amigo 30 para usar no serviço ou produto que quiser </Label>
+                    <Label style={{ fontSize: 16, }}>A cada 5 amigos que se cadastrarem e doarem  você recebe 50 Pontos e seu amigo 30 para usar no serviço ou produto que quiser </Label>
 
                     <Title style={{ marginTop: 24, marginBottom: 8, }}>Como participar</Title>
-                    <Label style={{ fontSize: 16, }}>Envie o link abaixo para 5 amigos ou mais, eles baixam o aplicativo, utilizam seu código pessoal  no cadastro e realizam uma doação, assim que a doação for confirmada você recebe 50 UhaCoins e seu amigo 30 UhaCoins bônus acrescentadas ao valor da doação!</Label>
+                    <Label style={{ fontSize: 16, }}>Envie o link abaixo para 5 amigos ou mais, eles baixam o aplicativo, utilizam seu código pessoal  no cadastro e realizam uma doação, assim que a doação for confirmada você recebe 50 Pontos e seu amigo 30 Pontos bônus acrescentadas ao valor da doação!</Label>
 
                     <Title style={{ marginTop: 24, marginBottom: 8, }}>Link de indicação</Title>
                     <Label style={{ paddingVertical: 12, marginBottom: 18, marginTop: 12, paddingHorizontal: 24, borderWidth: 2, borderColor: '#000', borderStyle: 'dashed', color: '#000', fontFamily: font.bold, borderRadius: 12, textAlign: 'center', }}>institutocarameloappnotafiscal...</Label>
@@ -41,11 +41,11 @@ export default function ShareScreen({ navigation, }) {
                     </Row>
 
                     <Column style={{ backgroundColor: color.secundary, paddingHorizontal: 24, paddingVertical: 24, borderRadius: 24, marginVertical: 12, }}>
-                        <Label style={{ color: color.background, fontSize: 14, }}>Suas UhaCoins recebidas na campanha</Label>
+                        <Label style={{ color: color.background, fontSize: 14, }}>Suas Pontos recebidas na campanha</Label>
                         <Title style={{ color: color.background, marginTop: 12, }}>500</Title>
                         <LineL style={{ marginVertical: 12, height: 4, }}/>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Label style={{ color: color.background, fontSize: 14,}}>UhaCoins que seus amigos receberam</Label>
+                            <Label style={{ color: color.background, fontSize: 14,}}>Pontos que seus amigos receberam</Label>
                             <Title style={{ color: color.background, }}>300</Title>
                         </Row>
                     </Column>

@@ -52,7 +52,7 @@ export default function ReciboScreen({ navigation, }) {
                 <Column style={{  marginVertical: margin.v, }}>
                     <Title style={{ fontSize: 24, fontFamily: font.bold, lineHeight: 26, marginBottom: 6, }}>Detalhes da doação</Title>
                     <LabelTx>Campanha: {item?.campaign.name}</LabelTx>
-                    <LabelTx>UhaCoins recebidas: {item?.coins}</LabelTx>
+                    <LabelTx>Pontos recebidas: {item?.coins}</LabelTx>
                     <LabelTx>Período: {item?.campaign.date}</LabelTx>
                     <LabelTx>Número do recibo: {item?.recibo_uid}</LabelTx>
                 </Column>

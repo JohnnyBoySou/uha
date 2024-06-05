@@ -38,7 +38,7 @@ const coins = [
     },
     {
         value: -300,
-        type: 'UhaCoins',
+        type: 'Pontos',
         date: '10/10/2024',
         status: 'Cashback confirmado',
         icon: 'check',

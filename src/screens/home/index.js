@@ -16,14 +16,14 @@ export default function HomeScreen({navigation, }){
     const campanhas = [
         {
             id: 1,
-            title: 'Troque UhaCoins por serviços ou produtos',
-            label: 'Acumule UhaCoins através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
+            title: 'Troque Pontos por serviços ou produtos',
+            label: 'Acumule Pontos através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
             img: require('@imgs/dog1.png'),
         },
         {
             id: 2,
-            title: 'Troque UhaCoins por serviços ou produtos',
-            label: 'Acumule UhaCoins através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
+            title: 'Troque Pontos por serviços ou produtos',
+            label: 'Acumule Pontos através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
             img: require('@imgs/dog2.png'),
         },
          
@@ -33,21 +33,21 @@ export default function HomeScreen({navigation, }){
             id: 1,
             img: require('@imgs/amazon.png'),
             title: 'Amazon',
-            label: 'A partir de 40 UhaCoins',
+            label: 'A partir de 40 Pontos',
             color: '#',
         },
         {
             id: 2,
             img: require('@imgs/petiko.png'),
             title: 'Petiko',
-            label: 'A partir de 40 UhaCoins',
+            label: 'A partir de 40 Pontos',
             color: '#',
         },
         {
             id: 3,
             img: require('@imgs/cobasi.png'),
             title: 'Cobasi',
-            label: 'A partir de 40 UhaCoins',
+            label: 'A partir de 40 Pontos',
             color: '#',
         },
     ]
@@ -96,7 +96,7 @@ export default function HomeScreen({navigation, }){
                     </Column>
                     
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                        <Button onPress={() => {navigation.navigate('CampaignsUhaCoins')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                        <Button onPress={() => {navigation.navigate('CampaignsPontos')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
                             <MotiImage source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                         </Button>
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Pontos</Label>

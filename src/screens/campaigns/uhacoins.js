@@ -8,7 +8,7 @@ import { SlidingDot } from "react-native-animated-pagination-dots";
 import Header from '@components/header';
 import campanhas from '@data/campanhas';
 
-export default function CampaignsUhaCoinsScreen({navigation, }){
+export default function CampaignsPontosScreen({navigation, }){
     const { color, font, margin, } = useContext(ThemeContext);
 
    
@@ -17,21 +17,21 @@ export default function CampaignsUhaCoinsScreen({navigation, }){
             id: 1,
             img: require('@imgs/amazon.png'),
             title: 'Amazon',
-            label: 'A partir de 40 UhaCoins',
+            label: 'A partir de 40 Pontos',
             color: '#',
         },
         {
             id: 2,
             img: require('@imgs/petiko.png'),
             title: 'Petiko',
-            label: 'A partir de 40 UhaCoins',
+            label: 'A partir de 40 Pontos',
             color: '#',
         },
         {
             id: 3,
             img: require('@imgs/cobasi.png'),
             title: 'Cobasi',
-            label: 'A partir de 40 UhaCoins',
+            label: 'A partir de 40 Pontos',
             color: '#',
         },
     ]
@@ -60,7 +60,7 @@ export default function CampaignsUhaCoinsScreen({navigation, }){
                 <Header />
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 20, }}>
                     <Label style={{ }}>Campanha</Label>
-                    <Title style={{ fontSize: 32, lineHeight: 38, }}>UhaCoins</Title>
+                    <Title style={{ fontSize: 32, lineHeight: 38, }}>Pontos</Title>
                 </Column>
 
                 <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 0, borderTopLeftRadius: 32,  }}>
@@ -230,25 +230,25 @@ const categories = [
     {
         id: 1, 
         title: 'Starbucks',
-        desc: 'Compre apartir de 50 UhaCoins',
+        desc: 'Compre apartir de 50 Pontos',
         icon: <Bone size={28} color="#FFF2E3"/>,
     },
     {
         id: 2, 
         title: 'MC Donalds',
-        desc: 'Compre apartir de 50 UhaCoins',
+        desc: 'Compre apartir de 50 Pontos',
         icon: <Shirt size={28} color="#FFF2E3"/>,
     },
     {
         id: 3, 
         title: 'Lego',
-        desc: 'Compre apartir de 50 UhaCoins',
+        desc: 'Compre apartir de 50 Pontos',
         icon: <Bike size={28} color="#FFF2E3"/>,
     },
     {
         id: 4, 
         title: 'Posto Ipiranga',
-        desc: 'Compre apartir de 50 UhaCoins',
+        desc: 'Compre apartir de 50 Pontos',
         icon: <Hospital size={28} color="#FFF2E3"/>,
     },
    

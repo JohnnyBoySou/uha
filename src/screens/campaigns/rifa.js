@@ -46,7 +46,7 @@ export default function CampaignsRifasScreen({ navigation, }) {
                         <Label>12:00</Label>
                     </Row>
                     <Row style={{  alignItems: 'center',  }}>
-                        <SubLabel>Valor em UhaCoins: </SubLabel> 
+                        <SubLabel>Valor em Pontos: </SubLabel> 
                         <Label>225</Label>
                     </Row>
                     <Row style={{  alignItems: 'center',  }}>

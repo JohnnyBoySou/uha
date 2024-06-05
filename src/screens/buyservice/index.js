@@ -56,7 +56,7 @@ export default function BuyServiceScreen({ navigation, }) {
 
             <Column style={{ marginHorizontal: margin.h, marginVertical: 20, }}>
                 <Label>Campanha</Label>
-                <Title style={{ fontSize: 32, lineHeight: 38, }}>UhaCoins</Title>
+                <Title style={{ fontSize: 32, lineHeight: 38, }}>Pontos</Title>
             </Column>
 
             <Column style={{ justifyContent: 'center', alignItems: 'center',   }}>
@@ -67,7 +67,7 @@ export default function BuyServiceScreen({ navigation, }) {
                : <Title style={{ fontSize: 50, lineHeight: 54, marginVertical: 12, fontFamily: font.black, }}>{value}</Title>}
                
                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Label>UhaCoins disponíveis: </Label>
+                <Label>Pontos disponíveis: </Label>
                     <Button onPress={() => {setvalue(`${values.total}`)}} style={{ borderRadius: 100, }}>
                         <Label style={{ fontFamily: font.bold, color: color.title, backgroundColor: color.primary+20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{values.total}</Label>
                     </Button>

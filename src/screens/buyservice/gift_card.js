@@ -66,7 +66,7 @@ export default function BuyServiceGiftCardScreen({ navigation, }) {
                : <Title style={{ fontSize: 50, lineHeight: 54, marginVertical: 12, fontFamily: font.black,  color: '#fff',}}>{value}</Title>}
                
                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Label style={{ color: '#fff', }}>UhaCoins disponíveis: </Label>
+                <Label style={{ color: '#fff', }}>Pontos disponíveis: </Label>
                     <Button onPress={() => {setvalue(`${values.total}`)}} style={{ borderRadius: 100, }} >
                         <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary+20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{values.total}</Label>
                     </Button>

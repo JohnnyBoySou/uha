@@ -155,7 +155,7 @@ export default function ExtractScreen({ navigation, route}) {
                     style={{ marginTop: 12, marginHorizontal: margin.h,}}
                     data={coins}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <CardUhacoins item={item} />}
+                    renderItem={({ item }) => <CardPontos item={item} />}
                 />
                 </MotiView>
             )}
@@ -166,7 +166,7 @@ export default function ExtractScreen({ navigation, route}) {
                     style={{ marginTop: 12, marginHorizontal: margin.h,}}
                     data={moedas}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <CardUhacoins item={item} />}
+                    renderItem={({ item }) => <CardPontos item={item} />}
                 />
                 </MotiView>
             )}
@@ -205,7 +205,7 @@ return(
 
 )}
 
-const CardUhacoins = ({item}) => {
+const CardPontos = ({item}) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext);	
     const cl = item?.icon === 'check' ? color.blue : item?.icon === 'await' ? color.primary : item?.icon === 'uncheck' ? color.red : '#000'

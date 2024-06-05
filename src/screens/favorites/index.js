@@ -161,33 +161,33 @@ export default function FavoritesScreen({ navigation, }) {
 const produtos = [
     {
         name: 'Natura',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/natura.png'),
     },
     {
         name: 'Americanas',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/americanas.png'),
     },
     {
         name: 'Oboticário',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/oboticario.png'),
     },
     {
         name: 'Casas Bahia',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/casas_bahia.png'),
     },
     {
         name: 'Amazon',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/amazon.png'),
     },
     
     {
         name: 'Petiko',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/petiko.png'),
     },
    
@@ -195,54 +195,54 @@ const produtos = [
 const servicos = [
     {
         name: 'Amazon',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/amazon.png'),
     },
     {
         name: 'Petiko',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/petiko.png'),
     },
     {
         name: 'Cobasi',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/cobasi.png'),
     },
     {
         name: 'Magalu',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/magalu.png'),
     }, 
     {
         name: 'Casas Bahia',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/casas_bahia.png'),
     },
 ]
 const estabelecimentos = [
     {
         name: 'Natura',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/natura.png'),
     },
     {
         name: 'Magalu',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/magalu.png'),
     },
     {
         name: 'Casas Bahia',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/casas_bahia.png'),
     },
     {
         name: 'Oboticário',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/oboticario.png'),
     },
     {
         name: 'Amazon',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/amazon.png'),
     },
 ]

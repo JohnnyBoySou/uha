@@ -54,7 +54,7 @@ export default function BuyServiceRifaScreen({ navigation, }) {
     }
     const bottomEnviar = useRef(null);
     const [codigo, setcodigo] = useState();
-    const uhacoins = value * 15;
+    const Pontos = value * 15;
     return (
         <Main style={{ backgroundColor: color.secundary,  paddingTop: 30,}}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
@@ -79,14 +79,14 @@ export default function BuyServiceRifaScreen({ navigation, }) {
 
                 <Keyboard handleClick={handleClick} handleAdd={handleAdd} handleRemove={handleRemove} value={value}/>              
 
-               <Label style={{ color: '#fff', }}>Total em UhaCoins: {uhacoins}</Label>
+               <Label style={{ color: '#fff', }}>Total em Pontos: {Pontos}</Label>
                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Label style={{ color: '#fff', }}>UhaCoins disponíveis: </Label>
+                <Label style={{ color: '#fff', }}>Pontos disponíveis: </Label>
                     <Button onPress={handleTotalValue} style={{ borderRadius: 100, }} >
                         <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary+40, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{values.total}</Label>
                     </Button>
                </Row>
-               <Label style={{ color: '#fff', marginTop: 100, }}>1 ficha = 15 UhaCoins</Label>
+               <Label style={{ color: '#fff', marginTop: 100, }}>1 ficha = 15 Pontos</Label>
             </Column>
             <Row style={{ position: 'absolute', bottom: 0, backgroundColor: "#fff",  padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, width: '100%',    }}>
             <ButtonLI onPress={handleFinish}  disabled={loading} style={{ backgroundColor: color.primary, paddingHorizontal: 24, flexGrow: 1, }}>

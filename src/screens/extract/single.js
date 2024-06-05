@@ -33,7 +33,7 @@ export default function ExtractSingleScreen({ navigation, route }) {
             type: 'Nota fiscal',
             date: '09/10/2024',
             status: 'Cashback confirmado',
-            label: 'Você recebeu suas UhaCoins',
+            label: 'Você recebeu suas Pontos',
             icon: 'check',
         },
     ]

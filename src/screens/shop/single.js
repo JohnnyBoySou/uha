@@ -129,36 +129,36 @@ const Rate = ({ rate }) => {
 const produtos = [
     {
         name: 'Natura',
-        desc: 'A partir de 40 UhaCoins',
+        desc: 'A partir de 40 Pontos',
         product: 'Eudora',
         img: require('@imgs/natura.png'),
     },
     {
         name: 'Americanas',
-        desc: 'A partir de 40 UhaCoins',
+        desc: 'A partir de 40 Pontos',
         product: '23ed',
         img: require('@imgs/americanas.png'),
     },
     {
         name: 'Oboticário',
         product: '23e5',
-        desc: 'A partir de 40 UhaCoins',
+        desc: 'A partir de 40 Pontos',
         img: require('@imgs/oboticario.png'),
     },
     {
         name: 'Casas Bahia',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/casas_bahia.png'),
     },
     {
         name: 'Amazon',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/amazon.png'),
     },
     
     {
         name: 'Petiko',
-        desc: 'a partir de 40 UhaCoins',
+        desc: 'a partir de 40 Pontos',
         img: require('@imgs/petiko.png'),
     },
    

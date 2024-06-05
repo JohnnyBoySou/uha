@@ -161,7 +161,7 @@ const Configs = [
         description: 'Desfrute de serviços parceiros',
         icon: 'lock',
         check: null,
-        screen: 'CampaignsUhaCoins'
+        screen: 'CampaignsPontos'
     },
     {
         title: 'Rifas',

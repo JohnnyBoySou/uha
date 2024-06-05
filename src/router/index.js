@@ -50,7 +50,7 @@ import CampaignsRifasScreen from '@screens/campaigns/rifa';
 import CampaignsScreen from '@screens/campaigns';
 import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
 import CampaignsProgressScreen from '@screens/campaigns/progress';
-import CampaignsUhaCoinsScreen from '@screens/campaigns/uhacoins';
+import CampaignsPontosScreen from '@screens/campaigns/Pontos';
 
 import ONGSingleScreen from '@screens/ong/single';
 import FavoritesScreen from '@screens/favorites';
@@ -72,7 +72,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='AsyncStatic'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='BuyServiceGiftCard'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -126,7 +126,7 @@ export default function Router() {
             <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsProgress" component={CampaignsProgressScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-            <Stack.Screen name="CampaignsUhaCoins" component={CampaignsUhaCoinsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="CampaignsPontos" component={CampaignsPontosScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
