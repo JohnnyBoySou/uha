@@ -4,7 +4,7 @@ import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import { ArrowLeft, ArrowRight, TriangleAlert, Mail, ArrowLeftRight, X, ImagePlus } from 'lucide-react-native';
-import { MotiView, AnimatePresence } from 'moti';
+import { MotiView, AnimatePresence, MotiImage } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
 
 export default function NotifyScreen({ navigation, }) {
@@ -49,7 +49,7 @@ export default function NotifyScreen({ navigation, }) {
                 <Header title='Notificações' />
                 <Row style={{ paddingHorizontal: margin.h, }}>
                     <AnimatePresence>
-                        {type != null && <MotiView transition={{duration: 500, }} from={{opacity: 0, translateX: -30,}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary}  style={{ paddingVertical: 10, paddingHorizontal: 20, backgroundColor: color.primary+20, marginTop: 12,  borderRadius: 100,}} >
+                        {type != null && <MotiView transition={{duration: 500, }} from={{opacity: 0, translateX: -30,}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary}  style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary+20, marginTop: 12,  borderRadius: 8,}} >
                                 <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                     <Title style={{ color: color.primary, fontSize: 18, marginRight: 6,}}>{type}</Title>
                                     <X color={color.primary}/>
@@ -99,6 +99,21 @@ export default function NotifyScreen({ navigation, }) {
                                     <Column>
                                         <Title style={{ fontSize: 20, }}>Movimentações</Title>
                                         <Label style={{ fontSize: 16, }}>Acompanhe suas transações</Label>
+                                    </Column>
+                                </Row>
+
+                                <ArrowRight size={24} color={color.title} />
+                            </Row>
+                        </Button>
+                        <Button onPress={() => {settype('Rifas')}}  style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
+                                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                                    <Column style={{ backgroundColor:'#fff',padding: 18, borderRadius: 12, marginRight: 20, }}>
+                                        <MotiImage source={require('@icons/ac7.png')} style={{ width:32, height: 32, objectFit: 'contain' }}/>
+                                    </Column>
+                                    <Column>
+                                        <Title style={{ fontSize: 20, }}>Números da sorte</Title>
+                                        <Label style={{ fontSize: 16, }}>Acompanhe suas rifas</Label>
                                     </Column>
                                 </Row>
 

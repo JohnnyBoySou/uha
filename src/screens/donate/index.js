@@ -65,7 +65,7 @@ export default function DonateScreen({ navigation, }) {
                 <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean}/>              
 
                 <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center',     }}>
-                <ButtonLI style={{ paddingHorizontal: 24, }} disabled={loading} onPress={() => {navigation.navigate('DonateValue', {value: value})}} >
+                <ButtonLI style={{ paddingHorizontal: 24, }} disabled={loading} onPress={() => {navigation.navigate('DonateValue', {valor: value})}} >
                         <>
                         {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI>Transferir</LabelLI>  }
                         </>

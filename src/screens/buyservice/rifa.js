@@ -42,16 +42,26 @@ export default function BuyServiceRifaScreen({ navigation, }) {
     }
 
     const handleFinish = () => {
+        if(value.length == 0){
+            return 
+        }
+        else if(value > values.total){
+            return
+        }
+        else if(value == '0'){
+            return
+        }
+        else{
         setloading(true);
         setTimeout(() => {
-            navigation.navigate('BuyServiceSuccess');
+            navigation.navigate('BuyServiceRifaSuccess');
             setloading(false)
-        }, 3500);
+        }, 3500);}
     }
 
     const handleTotalValue = () => {
-        setvalue(values.total / 15)
-    }
+            setvalue(values.total / 15)
+        }
     const bottomEnviar = useRef(null);
     const [codigo, setcodigo] = useState();
     const Pontos = value * 15;
@@ -77,12 +87,12 @@ export default function BuyServiceRifaScreen({ navigation, }) {
                 <Label style={{ textAlign: 'center',  color: '#fff', }}>Quantidade de fichas</Label>
 
 
-                <Keyboard handleClick={handleClick} handleAdd={handleAdd} handleRemove={handleRemove} value={value}/>              
+                <Keyboard handleClick={handleClick} handleAdd={handleAdd} handleRemove={handleRemove} value={value} disabled={loading}/>              
 
                <Label style={{ color: '#fff', }}>Total em Pontos: {Pontos}</Label>
                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                 <Label style={{ color: '#fff', }}>Pontos disponíveis: </Label>
-                    <Button onPress={handleTotalValue} style={{ borderRadius: 100, }} >
+                    <Button disabled={loading} onPress={handleTotalValue} style={{ borderRadius: 100, }} >
                         <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary+40, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{values.total}</Label>
                     </Button>
                </Row>
@@ -95,7 +105,7 @@ export default function BuyServiceRifaScreen({ navigation, }) {
                         </>
                   </ButtonLI>
                   <Column style={{width: 24, }} />
-                  <ButtonOut style={{ flexGrow: 1, borderColor: color.primary, }} onPress={() => {navigation.navigate('BuyServiceError')}} >
+                  <ButtonOut style={{ flexGrow: 1, borderColor: color.primary, }}  disabled={loading} onPress={() => {navigation.navigate('BuyServiceError')}} >
                     <LabelLI style={{ color: color.primary, }}>QR Code</LabelLI>
                   </ButtonOut>
                 </Row>
@@ -143,18 +153,18 @@ export default function BuyServiceRifaScreen({ navigation, }) {
 }
 
 
-const Keyboard = ({handleRemove, handleAdd, handleClean, value}) => {
+const Keyboard = ({handleRemove, handleAdd, handleClean, value, disabled}) => {
     const { color, font, margin } = useContext(ThemeContext);
     return(
         <Column>
             <Row style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 24,  }}>
-                <Button onPress={handleRemove}   style={{ width: 64, height: 64,  color: "#fff", borderRadius: 12,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={handleRemove}  disabled={disabled}  style={{ width: 64, height: 64,  color: "#fff", borderRadius: 12,  justifyContent: 'center', alignItems: 'center',  }}> 
                     <Minus  color="#ffffff" size={32} />
                 </Button>
-                <Button onPress={() => {}}  style={{ width: 64, height: 64, borderRadius: 12,  color: "#fff", marginHorizontal: 20,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={() => {}} disabled={disabled} style={{ width: 64, height: 64, borderRadius: 12,  color: "#fff", marginHorizontal: 20,  justifyContent: 'center', alignItems: 'center',  }}> 
                     <Digit style={{  color: "#fff", fontSize: 42, lineHeight: 48, }}>{value}</Digit>
                 </Button>
-                <Button onPress={handleAdd} style={{ width: 64, height: 64,  color: "#fff", borderRadius: 12,   justifyContent: 'center', alignItems: 'center',  }}> 
+                <Button onPress={handleAdd} disabled={disabled} style={{ width: 64, height: 64,  color: "#fff", borderRadius: 12,   justifyContent: 'center', alignItems: 'center',  }}> 
                     <Plus color="#ffffff" size={32}/>
                 </Button>
             </Row>

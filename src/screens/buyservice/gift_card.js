@@ -11,7 +11,12 @@ export default function BuyServiceGiftCardScreen({ navigation, }) {
     const [loading, setloading] = useState(false);
 
     const handleClick = (digit) => {
-        if(value + digit <= values.total){
+        if(digit === '0' && value === '0'){
+            return
+        }else if(value === '0' && digit !== '0'){
+            setvalue(digit);
+        }
+        else if(value + digit <= values.total){
             setvalue(value + digit);
         }else {
             return
@@ -30,11 +35,22 @@ export default function BuyServiceGiftCardScreen({ navigation, }) {
     }
 
     const handleFinish = () => {
-        setloading(true);
-        setTimeout(() => {
-            navigation.navigate('BuyServiceGiftSuccess');
-            setloading(false)
-        }, 3500);
+        if(value.length == 0){
+            return 
+        }
+        else if(value > values.total){
+            return
+        }
+        else if(value == '0'){
+            return
+        }
+        else{
+            setloading(true);
+            setTimeout(() => {
+                navigation.navigate('BuyServiceGiftSuccess');
+                setloading(false)
+            }, 1400);
+        }
     }
     
     const bottomEnviar = useRef(null);
@@ -88,20 +104,20 @@ export default function BuyServiceGiftCardScreen({ navigation, }) {
                     <LabelLI style={{ color: "#fff" }}>QR Code</LabelLI>
                   </ButtonOut>
                 </Row>
-                <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]}>
+                <BottomSheet ref={bottomEnviar} snapPoints={[1, 340]} backgroundStyle={{}}>
                 <BottomSheetView style={{ marginHorizontal: margin.h, }}>
                     <Title style={{ textAlign: 'center', marginVertical: 12,}}>Digite o código</Title>
                    <Column style={{ width: 300, alignSelf: 'center', }}>
                     <TextInput value={codigo} onChangeText={e => setcodigo(e)} textBreakStrategy='highQuality' lineBreakStrategyIOS='standard' 
-                        style={{ borderWidth: 2, width: 300, height: 100, alignSelf: 'center', borderColor: "#111", borderRadius: 12, paddingHorizontal: 12, marginVertical: 12, fontFamily: font.medium, fontSize: 18,  }} numberOfLines={3} multiline
-                        placeholder='12345678909876543212345678909876543211234'
+                        style={{ borderWidth: 2, width: 300, height: 100, alignSelf: 'center', borderColor: codigo.length == 44 ? color.green : "#111", borderRadius: 12, paddingHorizontal: 12, marginVertical: 12, fontFamily: font.medium, fontSize: 18,  }} numberOfLines={3} multiline
+                        placeholder='12345678909876543212345678909876543211234' 
                         maxLength={44}
                         />
-                    <Label style={{ marginTop: -40, marginBottom: 24, marginRight: 10, alignSelf: 'flex-end',  fontSize: 16,  fontFamily: font.bold, color: "#111", }}>{value.length}/44</Label>
+                    <Label style={{ marginTop: -40, marginBottom: 24, marginRight: 10, alignSelf: 'flex-end',  fontSize: 16,  fontFamily: font.bold, color: "#111", }}>{codigo?.length}/44</Label>
                     </Column>
                     <Label style={{ textAlign: 'center',  }}>Sequência de 44 números</Label>
-                <ButtonOut onPress={() => {bottomEnviar.current?.close()}}  style={{ borderColor: color.secundary, marginVertical: 24, marginHorizontal: 32, }}>
-                    <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Verificar</Label>
+                <ButtonOut onPress={() => {bottomEnviar.current?.close()}}  style={{ borderColor: codigo.length == 44 ? color.green : color.secundary, marginVertical: 24, marginHorizontal: 32,  }}>
+                    <Label style={{ color: codigo.length == 44 ? color.green : color.secundary, fontFamily: font.bold, }}>Verificar</Label>
                 </ButtonOut>
                  </BottomSheetView>
             </BottomSheet>

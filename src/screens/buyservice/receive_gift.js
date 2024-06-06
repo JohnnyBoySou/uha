@@ -23,7 +23,7 @@ export default function BuyServiceReceiveGiftScreen({ navigation, }) {
 
     return (
         <Main style={{  }}>
-            <Scroll>
+            <Scroll style={{ paddingTop: 20, }}>
 
             <Header title="Gift Card"/>
 
@@ -37,27 +37,27 @@ export default function BuyServiceReceiveGiftScreen({ navigation, }) {
 
 
             <Column style={{ justifyContent: 'center', alignItems: 'center',  marginHorizontal: margin.h,}}>
-                <Column style={{ borderRadius: 32, padding: 32, backgroundColor:"#fff", borderWidth: 2, borderColor: color.primary, }}>
-                    <MotiImage source={require('@imgs/qrcode.png')} style={{ width: 250, height: 250,  }} />
+                <Column style={{ borderRadius: 24, padding: 24, backgroundColor:"#fff", borderWidth: 2, borderColor: color.primary, }}>
+                    <MotiImage source={require('@imgs/qrcode.png')} style={{ width: 220, height: 220,  }} />
                 </Column>
 
 
                     <Row style={{ marginVertical: 20, }}>
-                        <Title style={{ color: "#111", fontFamily: font.medium, }}>Ou digite </Title>
+                        <Title style={{ color: "#111", fontFamily: font.medium, fontSize: 18, }}>Ou digite </Title>
                 <Button onPress={() => {bottomEnviar.current?.expand()}} >
-                        <Title style={{ color: color.primary, fontFamily: font.bold, textDecorationStyle: 'underline',textDecorationLine: 'underline', textDecorationColor: color.primary, }}>a chave manual</Title>
+                        <Title style={{ color: color.primary, fontFamily: font.bold,  fontSize: 18, textDecorationStyle: 'underline',textDecorationLine: 'underline', textDecorationColor: color.primary, }}>a chave manual</Title>
                 </Button>
                     </Row>
 
                 <Button onPress={() => {navigation.navigate('Shop')}}   style={{ borderRadius: 108, borderColor: color.secundary, borderWidth: 2, width: '100%', paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
-                    <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Conhecer estabelecimentos parceiros</Label>
+                    <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center',  fontSize: 16, }}>Conhecer estabelecimentos parceiros</Label>
                 </Button>
                 <Button onPress={() => {navigation.navigate('CampaignsGiftCard')}}  style={{ borderRadius: 108, borderColor: color.secundary, borderWidth: 2, width: '100%',  paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
-                    <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Saber mais sobre meu Gift Card</Label>
+                    <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center',  fontSize: 16, }}>Saber mais sobre meu Gift Card</Label>
                 </Button>
-                <ButtonPR onPress={() => {navigation.navigate('Donate')}} style={{ width: '100%',  paddingVertical: 16, marginVertical: 6,}}>
-                    <Label style={{ color: "#fff", fontFamily: font.bold, }}>Fazer uma doação para a instutuição</Label>
-                </ButtonPR>
+                <ButtonPR onPress={() => {navigation.navigate('Donate')}} style={{ width: '100%',  paddingVertical: 16, marginVertical: 6, }}>
+                    <Label style={{ color: "#fff", fontFamily: font.bold,  fontSize: 16, textAlign: 'center', }}>Fazer uma doação para a instituição</Label>
+                </ButtonPR> 
 
             </Column>
             </Scroll>

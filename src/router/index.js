@@ -23,8 +23,9 @@ import BuyServiceScreen from '@screens/buyservice';
 import BuyServiceSuccessScreen from '@screens/buyservice/success';
 import BuyServiceGiftSuccessScreen from '@screens/buyservice/success_gift';
 import BuyServiceErrorScreen from '@screens/buyservice/error';
+import BuyServiceGiftErrorScreen from '@screens/buyservice/error_gift';
 import BuyServiceSuccessHideScreen from '@screens/buyservice/success_hide';
-
+import BuyServiceRifaSuccessScreen from '@screens/buyservice/success_rifa';
 
 
 import BuyServiceGiftCardScreen from '@screens/buyservice/gift_card';
@@ -36,6 +37,8 @@ import DonateValueScreen from '@screens/donate/value';
 import DonateHideScreen from '@screens/donate/hide';
 import DonateValueHideScreen from '@screens/donate/value_hide';
 import DonateSuccessHideScreen from '@screens/donate/success_hide';
+
+import PayBoletoScreen from '@screens/donate/pay_boleto';
 
 import NotafiscalScreen from '@screens/notafiscal';
 import NotafiscalSendScreen from '@screens/notafiscal/send';
@@ -57,6 +60,7 @@ import CampaignsScreen from '@screens/campaigns';
 import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
 import CampaignsProgressScreen from '@screens/campaigns/progress';
 import CampaignsPontosScreen from '@screens/campaigns/points';
+import CampaignsSingleScreen from '@screens/campaigns/single';
 
 import ONGSingleScreen from '@screens/ong/single';
 import FavoritesScreen from '@screens/favorites';
@@ -81,7 +85,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='CampaignsSingle'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -108,6 +112,8 @@ export default function Router() {
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceGiftSuccess" component={BuyServiceGiftSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceError" component={BuyServiceErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyServiceGiftError" component={BuyServiceGiftErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="BuyServiceRifaSuccess" component={BuyServiceRifaSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceGiftCard" component={BuyServiceGiftCardScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -120,6 +126,9 @@ export default function Router() {
             <Stack.Screen name="DonateHide" component={DonateHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateSuccessHide" component={DonateSuccessHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="PayBoleto" component={PayBoletoScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            
+
 
             <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -142,7 +151,9 @@ export default function Router() {
             <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsProgress" component={CampaignsProgressScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="CampaignsPontos" component={CampaignsPontosScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            
+            <Stack.Screen name="CampaignsSingle" component={CampaignsSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
+
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

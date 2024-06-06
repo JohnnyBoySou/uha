@@ -79,7 +79,7 @@ export default function HomeScreen({navigation, }){
                         <Avatar />
                     </Row>
                 </Row>
-                <Button onPress={() => {navigation.navigate('SearchModal')}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                <Button onPress={() => {navigation.navigate('SearchModal', {type: 'ONG'})}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
                         <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
                         <Search strokeWidth={2} color="#11111190"/>

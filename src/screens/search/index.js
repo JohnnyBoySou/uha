@@ -1,15 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, U } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from './../../components/header';
 import { TextInput, FlatList } from 'react-native';
-import { MotiImage } from 'moti';
-import { Search, CircleHelp } from 'lucide-react-native';
+import { Search, CircleHelp, X } from 'lucide-react-native';
+import { MotiView, AnimatePresence, MotiImage } from 'moti';
 
-export default function SearchScreen({ navigation, }) {
+export default function SearchScreen({ navigation, route}) {
     const { color, font, margin } = useContext(ThemeContext);
     const [query, setquery] = useState('');
     const [focus, setfocus] = useState();
+    const [type, settype] = useState();
+    const value = route.params?.type;
+    useEffect(() => {
+        if(value != null){
+            settype('ONGs');
+        }
+    }, [value])
+    
+    const handleClean = () => {
+        settype(null)
+    }
+    
     return (
         <Main style={{ backgroundColor: "#fff", }}>
             <Scroll>
@@ -30,8 +42,19 @@ export default function SearchScreen({ navigation, }) {
                     </Row>
                     <Row style={{ alignItems: 'center',  marginTop: -15, marginBottom: 20,}}>
                         <CircleHelp color={color.label} size={16}/>
-                        <Label style={{ fontSize: 14, marginLeft: 4, }}>Busque por <U>estabelecimentos</U>, <U>serviços</U> ou <U>produtos</U></Label>
+                        <Label style={{ fontSize: 14, marginLeft: 4, }}>Busque por <U>estabelecimentos</U>, <U>serviços</U> ou <U>produtos</U>.</Label>
                     </Row>
+
+                        <Row>
+                    <AnimatePresence>
+                        {type != null && <MotiView transition={{duration: 300, }} from={{opacity: 0, translateX: -30,}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary}  style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary+20, marginTop: -4, marginBottom: 14,  borderRadius: 8,}} >
+                                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                                    <Title style={{ color: color.primary, fontSize: 18, marginRight: 6,}}>{type}</Title>
+                                    <X color={color.primary}/>
+                                </Row>
+                            </Button></MotiView>}
+                    </AnimatePresence>
+                        </Row>
 
                     <Title>Recentes</Title>
                     <FlatList 
