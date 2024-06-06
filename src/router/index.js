@@ -61,6 +61,7 @@ import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
 import CampaignsProgressScreen from '@screens/campaigns/progress';
 import CampaignsPontosScreen from '@screens/campaigns/points';
 import CampaignsSingleScreen from '@screens/campaigns/single';
+import CampaignsSingleFinishScreen from '@screens/campaigns/finish';
 
 import ONGSingleScreen from '@screens/ong/single';
 import FavoritesScreen from '@screens/favorites';
@@ -85,7 +86,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='CampaignsSingle'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Favorites'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -152,7 +153,7 @@ export default function Router() {
             <Stack.Screen name="CampaignsProgress" component={CampaignsProgressScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="CampaignsPontos" component={CampaignsPontosScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsSingle" component={CampaignsSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
+            <Stack.Screen name="CampaignsSingleFinish" component={CampaignsSingleFinishScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 

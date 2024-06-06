@@ -4,24 +4,21 @@ import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft, Info , Infinity } from 'lucide-react-native';
 import { MotiImage } from 'moti';
 import { FlatList } from 'react-native';
+import Header from '@components/header';
 export default function CampaignsSingleScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [user, setUser] = useState({id: '0987654321234567890', index: 11 + 1, winner: true,})
-    const list = [{img: require("@imgs/camp1.png")}, {img: require("@imgs/camp2.png")}]
+    const list = [{img: require("@imgs/current.png")}, {img: require("@imgs/current.png")}]
     return (
         <Main >
-            <Scroll style={{ paddingTop: 0,  }}>
-                <Column style={{ paddingHorizontal:42, paddingTop: 30,  backgroundColor: color.secundary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32,}}>
-                <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
-                <ArrowLeft color={color.secundary}/>
-            </Button>
-                  
-                    <Title style={{ fontSize: 24, lineHeight: 24, color: color.text, marginTop: 32, }}>Campanhas do momento</Title>
-                    <Label style={{ color: color.text, marginTop: 10, }}>Participe das novas campanhas todos os meses e concorra a diversos prêmios em produtos, serviços e bônus relâmpago!</Label>
-                    <MotiImage source={require('@imgs/campaigns.png')} style={{borderRadius: 24, height: 190, marginHorizontal: - margin.h, marginTop: -24, alignSelf: 'center', objectFit:'contain' }} from={{opacity: 0, }} animate={{opacity: 1, }}/>
-                </Column>
+            <Scroll style={{ paddingTop: 20,  }}>
+                <Header />  
 
-                <Title style={{ marginHorizontal: margin.h, marginTop: 32,  }}>Ofertas selecionadas</Title>
+                <Column style={{ marginHorizontal: margin.h, }}>
+                    <SubLabel style={{  marginTop: 12, fontFamily: 'Font_Medium' }}>Campanha em andamento</SubLabel>
+                    <Title style={{ marginTop: 6,  }}>Canil Rio Grande da Serra</Title>
+                    <Label style={{ fontSize: 12, marginBottom: 10,  }}>Data 10/10/2024 até 01/12/2024</Label>
+                </Column>
 
                 <FlatList
                     style={{ marginTop: 12, }}
@@ -38,94 +35,56 @@ export default function CampaignsSingleScreen({ navigation, }) {
 
                 <Column style={{ marginHorizontal: margin.h, }}>
                    
-                    <Title style={{ marginTop: 32, marginBottom: 8, }}>Indique e ganhe até 1000 pontos</Title>
-                    <Label>Bônus extra para você e seus amigos ao realizar a primeira doação ou cadastrar 20 notas fiscais</Label>
-                    <ButtonOut onPress={() => {navigation.navigate('Share')}} style={{ borderColor: '#000', alignSelf: 'flex-start', paddingVertical: 5, opacity:0.5, marginTop: 12, marginBottom: 40, }}>
-                        <LabelLI>Saiba mais</LabelLI>
-                    </ButtonOut>
-
-                    <Button onPress={() => {navigation.navigate('DonateHide')}} > 
-                        <MotiImage source={require("@imgs/doe1.png")} style={{ width: '100%', alignSelf: 'center', height: 180, borderRadius: 32,  backgroundColor: "#f7f7f7",  }} />
+                    <Title style={{ marginTop: 32, marginBottom: 8, fontSize: 22, }}>Conheça a campanha</Title>
+                    <Label style={{ fontSize: 16, lineHeight: 18, }}>Foram mais de 135 animais resgatados do canil onde sofriam maus tratos, todos devem receber cuidados adequados. Responsável pelo canil segue liberada.</Label>
+                    
+                    <Title style={{ marginTop: 32, marginBottom: 8, fontSize: 22, }}>Como participar</Title>
+                    <Label style={{ fontSize: 15, lineHeight: 18, }}>Ajude os animais do canil fazendo doações ou comprando uma rifa solidária. Você pode comprar quantos números quiser até a data 10/10/2024, o sorteio será realizado no dia 12/10/2024.
+Acompanhe seus números na página de histórico de doações - rifas. Boa sorte e gratidão!</Label>
+                    
+                    
+                    <Button onPress={() => {navigation.navigate('BuyServiceRifa')}} style={{ borderRadius: 8, marginTop: 24, backgroundColor: color.primary, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                        <Label style={{ fontFamily: font.bold, color: "#fff", textAlign: 'center', }}>Comprar números</Label>
                     </Button>
-                    <Button onPress={() => {navigation.navigate('DonateHide')}} > 
-                        <MotiImage source={require("@imgs/doe2.png")} style={{ width: '100%', alignSelf: 'center', height: 180, borderRadius: 32, marginTop: 18, backgroundColor: "#f7f7f7",  }} />
+                    <Button onPress={() => {navigation.navigate('CampaignsProgress', { type: 'Cashback'})}}  style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                        <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Acompanhar número</Label>
                     </Button>
 
 
-                    <Title style={{  marginTop: 32, textAlign: 'center',    }}>São mais de</Title> 
-                   <Row style={{ justifyContent: 'center', marginTop: 20,  }}>
-                    <Column style={{ backgroundColor: color.primary, borderRadius: 16, padding: 12, justifyContent: 'center',  marginRight: 10, }}>
-                        <Title style={{ color: '#fff', fontSize: 26, lineHeight: 28,}}>30</Title>
-                        <Label style={{ color: '#fff', fontSize: 12, lineHeight: 14, }}>Lojas {'\n'}parceiras</Label>
-                    </Column>
-                    <Column style={{ backgroundColor: color.primary, borderRadius: 16, padding: 12, justifyContent: 'center', marginRight: 10,  }}>
-                        <Title style={{ color: '#fff', fontSize: 26, lineHeight: 28,}}>170</Title>
-                        <Label style={{ color: '#fff', fontSize: 12, lineHeight: 14,}}>Serviços {'\n'}disponíveis</Label>
-                    </Column>
-                    <Column style={{ backgroundColor: color.primary, borderRadius: 16, padding: 12, justifyContent: 'center', marginRight: 10,  }}>
-                        <Title style={{ color: '#fff', fontSize: 26, lineHeight: 28,}}>12 mil</Title>
-                        <Label style={{ color: '#fff', fontSize: 12, lineHeight: 14,}}>Bichinos sendo {'\n'}ajudados por dia</Label>
-                    </Column>
-                    <Column style={{ backgroundColor: color.primary, borderRadius: 16, padding: 12, justifyContent: 'center',  alignItems: 'center',   }}>
-                        <Infinity size={42} color="#fff" style={{ textAlign: 'center' }} />
-                        <Label style={{ color: '#fff', fontSize: 12, }}>Gratidão</Label>
-                    </Column>
-                   </Row>
+                 
 
-                <Column style={{ marginVertical: margin.v+20, }}>
-                    <Title style={{ marginBottom: 8, }}>Concorra à prêmios incríveis</Title>
-                    <Label>Todos os meses diversos serviços, produtos e vales são sorteados pelas rifas e você pode ser o ganhador desse mês!</Label>
-               
+                <Column style={{  }}>
+                    <Title style={{ marginBottom: 8, fontSize: 22, }}>Quem essa campanha beneficia?</Title>
+                    <Label style={{ fontSize: 16, lineHeight: 18, }}>A ONG recebeu uma denúncia de que oscachorros eram espancados. Os cães estavam amontoados em um canil certificado que funcionava em uma casa de alto padrão. Sem banho, tinham fezes grudadas nos pelos. Foram encontrados 9 corpos de filhotes no lixo. Os animais foram levados todos para a ONG.</Label>
+
+                    <MotiImage source={require('@imgs/video.png')}  style={{ objectFit: 'contain', alignSelf: 'center', marginVertical: 12, }}/>
+
+
+                    <Title style={{ fontSize: 16, backgroundColor: color.secundary, color: "#fff", paddingVertical: 8, marginBottom: 12, paddingHorizontal: 16, borderRadius: 100, alignSelf: 'flex-start',  }}>Canil Rio Grande da Serra</Title>
+                    <SubLabel>“Me faltam palavras para descrever todo o horror que presenciei”</SubLabel>
                     <Row style={{ marginVertical: 20, alignSelf: 'center', alignItems: 'center',  }}>
                         <Column>
-                            <MotiImage source={require('@imgs/prod1.png')} style={{ width: 180, height: 180, backgroundColor: "#f7f7f7", borderRadius: 16,}}/>
-                            <MotiImage source={require('@imgs/prod3.png')} style={{ width: 180, height: 100, backgroundColor: "#f7f7f7", borderRadius: 16, marginTop: 20,}}/>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, }}>
+                                <MotiImage source={require('@imgs/canil1.png')} style={{   objectFit: 'contain',  }}/>
+                                <MotiImage source={require('@imgs/canil2.png')} style={{  objectFit: 'contain',  }}/>
+                            </Row>
+                            <MotiImage source={require('@imgs/canil5.png')} style={{  objectFit: 'contain',  }}/>
                         </Column>
-                        <Column style={{ marginLeft: 20, }}>
-                            <MotiImage source={require('@imgs/prod2.png')} style={{ width: 180, height: 298, backgroundColor: "#f7f7f7", borderRadius: 16,}}/>
+                        <Column style={{ marginLeft: 12, }}>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, }}>
+                                <MotiImage source={require('@imgs/canil3.png')} style={{  objectFit: 'contain',  }}/>
+                                <MotiImage source={require('@imgs/canil4.png')} style={{  objectFit: 'contain',  }}/>
+                            </Row>
+                            <MotiImage source={require('@imgs/canil6.png')} style={{ objectFit: 'contain', }}/>
                         </Column>
                     </Row>
 
-                    <MotiImage source={require('@imgs/prod4.png')} style={{ width: 374, alignSelf: 'center', height: 180, borderRadius: 18,   backgroundColor: "#f7f7f7",  }} />
 
                 </Column>
 
-                <Column style={{ marginVertical: margin.v, }}>
-                    <Title style={{ marginBottom: 8, }}>Ganhe mais pontos</Title>
-                    <Label>Faça doações ou cadastre notas fiscais para receber pontos e trocá-los por serviços ou produtos nos estabelecimentos parceiros</Label>
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 12, }}>
-                        <ButtonOut onPress={() => {navigation.navigate('NotafiscalSend')}}  style={{ borderColor: '#000', paddingVertical: 6, flexGrow: 1,}}>
-                            <LabelLI>Nota fiscal</LabelLI>
-                        </ButtonOut>
-                        <Column style={{width: 12, }} />
-                        <ButtonPR onPress={() => {navigation.navigate('Donate')}} style={{ flexGrow: 2,  paddingVertical: 8, }}>
-                            <LabelLI style={{ color: '#fff', }}>Doação</LabelLI>
-                        </ButtonPR>
-                    </Row>
-                </Column>
+                  
 
 
-                <FlatList
-                        style={{ marginVertical: 12, marginHorizontal: - margin.h, }}
-                        data={campanhas}
-                        ListFooterComponent={<Column style={{ width: 24 }} />}
-                        ListHeaderComponent={<Column style={{ width: 24 }} />}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        renderItem={({item}) => (
-                            <Button key={item.id} style={{ backgroundColor: "#fff", borderRadius: 24,  marginRight: 12, }} onPress={() => {navigation.navigate('Shop')}}>
-                                <Column>
-                                    <MotiImage source={ item?.img } style={{ width: 300, height: 400, borderRadius: 24,  }} />
-                                    <Column style={{ backgroundColor: '#fff', marginHorizontal: 24, padding: 12, borderRadius: 24, position: 'absolute', bottom: 20, }}>
-                                        <Title style={{ textAlign: 'center', marginTop: 6, }}>{item.title}</Title>
-                                        <Label style={{ textAlign: 'center', marginTop: 12, color: color.title, fontFamily: font.medium, fontSize: 16, marginBottom: 12, }}>{item.label}</Label>
-                                        <Title style={{ backgroundColor: color.primary, borderRadius: 100, fontSize: 12, paddingVertical: 4, paddingHorizontal: 12, textAlign: 'center', alignSelf: 'center', color: '#fff', }}>Ver estabelecimentos parceiros</Title>
-                                    </Column>
-                                </Column>
-                            </Button>
-                        )}
-                        keyExtractor={item => item.id}
-                    />            
                     <Column style={{ height: 50, }} />
                 </Column>
             </Scroll>
@@ -138,13 +97,13 @@ const campanhas = [
         id: 1,
         title: 'Troque Pontos por serviços ou produtos',
         label: 'Acumule Pontos através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
-        img: require('@imgs/dog1.png'),
+        img: require('@imgs/current.png'),
     },
     {
         id: 2,
         title: 'Troque Pontos por serviços ou produtos',
         label: 'Acumule Pontos através de doações em dinheiro ou notas fiscais e troque por produtos ou serviços em estabelecimentos parceiros do Instituto Caramelo',
-        img: require('@imgs/dog2.png'),
+        img: require('@imgs/current.png'),
     },
      
 ]
