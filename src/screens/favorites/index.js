@@ -4,6 +4,7 @@ import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@them
 import { ThemeContext } from 'styled-components/native';
 import { Search } from 'lucide-react-native';
 import { AnimatePresence, MotiImage, MotiView } from 'moti';
+import Octicons from '@expo/vector-icons/Octicons';
 
 export default function FavoritesScreen({ navigation, }) {
     const { color, font, margin} = useContext(ThemeContext);
@@ -22,6 +23,8 @@ export default function FavoritesScreen({ navigation, }) {
                         </Button>
                     </Row>
                 <AnimatePresence>
+
+                <Empty />
 
                 {type == 'all' &&
                 <MotiView from={{opacity: 0, translateY: -50}} animate={{opacity:1, translateY: 0,}}>
@@ -156,6 +159,18 @@ export default function FavoritesScreen({ navigation, }) {
         </Main>
     )
 }
+
+const Empty = () => {
+    const {color, margin } = useContext(ThemeContext);
+    return(
+    <Column>
+
+        <Octicons name="heart" size={32} color={color.primary} style={{ textAlign: 'center', marginTop: 50, marginBottom: 20,}} />
+        <Title style={{ fontSize: 22, textAlign: 'center' }}>Ops, parece que você {'\n'}ainda não favoritou nada..</Title>
+        <Label style={{ textAlign: 'center', fontSize: 16, marginTop: 10, marginHorizontal: margin.h, }}>Clique nos corações ao lado direito para favoritar os estabelecimentos, serviços e produtos que mais gostar!</Label>
+    </Column>
+)}
+
 
 
 const produtos = [

@@ -7,6 +7,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { Search } from 'lucide-react-native';
 import Header from '@components/header';
 import { Carrousel } from '../home';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ShopScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -309,6 +310,7 @@ const services = [
 
 const Promos = () => {
     const { color } = useContext(ThemeContext);
+    const navigation = useNavigation();
     return(
         <Scroll horizontal showsHorizontalScrollIndicator={false} pagingEnabled style={{ marginTop: -15, }}>
                         <FlatList 

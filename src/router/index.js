@@ -86,7 +86,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Favorites'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -109,7 +109,6 @@ export default function Router() {
             
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
-
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceGiftSuccess" component={BuyServiceGiftSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceError" component={BuyServiceErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -128,8 +127,6 @@ export default function Router() {
             <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateSuccessHide" component={DonateSuccessHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="PayBoleto" component={PayBoletoScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-            
-
 
             <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -146,7 +143,6 @@ export default function Router() {
             <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="AccountTerms" component={AccountTermsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
-
             <Stack.Screen name="CampaignsRifas" component={CampaignsRifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -156,7 +152,6 @@ export default function Router() {
             <Stack.Screen name="CampaignsSingleFinish" component={CampaignsSingleFinishScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
