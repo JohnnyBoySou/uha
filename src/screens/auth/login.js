@@ -15,7 +15,6 @@ export default function AuthLoginScreen({ navigation, }) {
     const [email, setemail] = useState();
     const [password, setpassword] = useState();
 
-
     const handleLogin = () => {
         setloading(true)
         setTimeout(() => {
@@ -23,6 +22,15 @@ export default function AuthLoginScreen({ navigation, }) {
             navigation.navigate('Home')
         }, 3000);
     }
+
+    const handleFacebook = () => {
+    }
+    const handleGoogle = () => {
+    }
+    const handleAppleID = () => {
+    }
+
+
     return (
         <Main>
             <Scroll>
@@ -65,6 +73,35 @@ export default function AuthLoginScreen({ navigation, }) {
 
                             keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow:1,  }} placeholder='SENHA' secureTextEntry={pass} placeholderTextColor={color.secundary}/>
                     </Row>
+
+                    <Label style={{ color: color.light, fontFamily: font.medium,  textAlign: 'center', marginTop: 30,  }}>Fazer login com</Label>
+                <Row style={{ justifyContent: 'center', alignItems: 'center', marginVertical:  24,}}>
+                    <Button onPress={handleFacebook} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6, }} >
+                        <Column>
+                            <Column style={{ backgroundColor: color.background, padding: 18, borderRadius: 12, }}>
+                                <MotiImage source={require('@icons/facebook.png')} style={{ width: 28, height: 28,  }} />
+                            </Column>
+                            <Label style={{ fontSize: 14, color: "#fff", textAlign:'center', fontFamily: 'Font_Medium',  marginTop: 10,  }}>Facebook</Label>
+                        </Column>
+                    </Button>                    
+                    <Button onPress={handleGoogle} style={{ justifyContent: 'center', marginHorizontal: 20, alignItems: 'center', borderRadius: 6, }} >
+                        <Column>
+                            <Column style={{ backgroundColor: color.background, padding: 18, borderRadius: 12, }}>
+                                <MotiImage source={require('@icons/google.png')} style={{ width: 28, height: 28,  }} />
+                            </Column>
+                            <Label style={{ fontSize: 14, color: "#fff", textAlign:'center', fontFamily: 'Font_Medium',  marginTop: 10, }}>Google</Label>
+                        </Column>
+                    </Button>                    
+                    <Button onPress={handleAppleID} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6,}} >
+                        <Column>
+                            <Column style={{ backgroundColor: color.background, padding: 18, borderRadius: 12, }}>
+                                <MotiImage source={require('@icons/apple.png')} style={{ width: 28, height: 28,  }} />
+                            </Column>
+                            <Label style={{ fontSize: 14, color: "#fff", textAlign:'center', fontFamily: 'Font_Medium',  marginTop: 10, }}>Apple ID</Label>
+                        </Column>
+                    </Button>                    
+                </Row>
+
                     <Row style={{ justifyContent: 'space-between', marginTop: 12,  alignItems: 'center',  }}>
                        
                         <Pressable style={{ alignSelf: 'center',   }}>
