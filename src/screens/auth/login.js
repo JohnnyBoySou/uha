@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, TextInput } from 'react-native';
 import { Main, Column, Title, Row, Label, Scroll, Button, ButtonPR, LabelPR, U, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MotiImage } from 'moti';
+import { MotiImage, MotiView } from 'moti';
 import { AtSign, KeyRound, Eye, EyeOff, LogIn, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser} from 'lucide-react-native'
 import { TouchableRipple } from 'react-native-paper';
 import CheckBox from '@components/checkbox';
@@ -69,9 +69,9 @@ export default function AuthLoginScreen({ navigation, }) {
                 </Column>
 
                 <Column style={{ paddingHorizontal: margin.h,  paddingVertical: 12, backgroundColor: "#fff", borderTopLeftRadius: 24, borderTopRightRadius: 24, position: 'absolute', bottom: 0, left: 0, right: 0,}}>
-                
+
                 {type == 'Entrar' &&
-                    <Column >
+                    <MotiView from={{translateX: -20, opacity: 0, }} animate={{translateX: 0 , opacity: 1,}} transition={{type: 'timing'}}>
                     <Column style={{width: 80, height: 8, borderRadius: 100, backgroundColor: "#EFDCC5", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />   
                     <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
                         <Button onPress={() => {settype('Entrar')}}  style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type  === 'Entrar' ?  '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
@@ -115,7 +115,7 @@ export default function AuthLoginScreen({ navigation, }) {
                             <CheckBox status={remember} />
                             <Label style={{  fontFamily: font.bold, fontSize: 14, marginLeft: 6,  }}>Manter conectado</Label>
                         </Pressable>
-                        <Pressable style={{ alignSelf: 'center',   }}>
+                        <Pressable onPress={() => {settype('ForgetPassword')}}  style={{ alignSelf: 'center',   }}>
                             <Label style={{ color: color.secundary, fontFamily: font.bold, fontSize: 14, textDecorationStyle: 'solid', textDecorationLine: "underline",  }}>Esqueci minha senha</Label>
                         </Pressable>
                     </Row>
@@ -165,11 +165,10 @@ export default function AuthLoginScreen({ navigation, }) {
                     </Button>                    
                 </Row>
 
-                </Column>}
-                
+                </MotiView>}
 
                 {type == 'Registrar' &&
-                    <Column >
+                    <MotiView from={{translateX: 20, opacity: 0, }} animate={{translateX: 0 , opacity: 1,}} transition={{type: 'timing'}}>
                     <Column style={{width: 80, height: 8, borderRadius: 100, backgroundColor: "#EFDCC5", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />   
                     <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
                         <Button onPress={() => {settype('Entrar')}}  style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type  === 'Entrar' ?  '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
@@ -271,16 +270,28 @@ export default function AuthLoginScreen({ navigation, }) {
                         </Row>
                     </ButtonPR>
 
-
                     <Label style={{  fontFamily: font.medium, fontSize: 16,  textAlign: 'center', marginHorizontal: 6, marginBottom: 30, }}>Ao registrar-se você concorda com os <U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
-
-                </Column>}
-
-
-
+                    </MotiView>}
+                {type == 'ForgetPassword' && <ForgetPassword /> }
                 </Column>
-
-
         </Main>
     )
 }
+
+
+const ForgetPassword = () => {
+    const { color, font, margin, } = useContext(ThemeContext);
+    const [type, settype] = useState();
+return(
+    <Column>
+         <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
+                        <Button onPress={() => {settype('Entrar')}}  style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type  === 'Entrar' ?  '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
+                            <Label style={{ color: type === 'Entrar' ? color.secundary : color.label, fontFamily: font.bold, textAlign: 'center', }}>Entrar</Label>
+                        </Button>
+                        <Column style={{width: 12, }} />
+                        <Button onPress={() => {settype('Registrar')}}  style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type  === 'Registrar' ?  '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
+                            <Label style={{ color: type === 'Registrar' ? color.secundary : color.label, fontFamily: font.bold, textAlign: 'center', }}>Registrar</Label>
+                        </Button>
+                    </Row>
+    </Column>
+    )}

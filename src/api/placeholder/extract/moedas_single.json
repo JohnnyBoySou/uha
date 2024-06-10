@@ -1,0 +1,36 @@
+[
+    {
+        "id": 1,
+        "value": 1,
+        "type": "Nota fiscal",
+        "date": "10/10/2024",
+        "status": "Moedas em análise",
+        "icon": "await",
+        "road": [{
+            "step": 1,
+            "date": "08/10/2024",
+            "status": "Nota fiscal enviada",
+            "label": "Aguardando análise",
+            "icon": "check"
+        },
+        {
+            "step": 2,
+            "date": "09/10/2024",
+            "status": "Cashback identificado",
+            "label": "Nota fiscal válida",
+            "icon": "check"
+        },
+        {
+            "step": 3,
+            "date": "09/10/2024",
+            "status": "Cashback confirmado",
+            "label": "Você recebeu suas Pontos",
+            "icon": "check"
+        }
+        ]
+    }
+]
+//url: base_url + "api/extract/moedas?id=1",
+//token no body
+//method: "GET",
+//headers: { "Content-Type": "application/json }

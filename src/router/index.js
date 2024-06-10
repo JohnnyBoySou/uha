@@ -37,6 +37,7 @@ import DonateValueScreen from '@screens/donate/value';
 import DonateHideScreen from '@screens/donate/hide';
 import DonateValueHideScreen from '@screens/donate/value_hide';
 import DonateSuccessHideScreen from '@screens/donate/success_hide';
+import DonateCertificadoScreen from '@screens/donate/certificado';
 
 import PayBoletoScreen from '@screens/donate/pay_boleto';
 
@@ -47,6 +48,7 @@ import NotafiscalErrorScreen from '@screens/notafiscal/error';
 
 import ExtractScreen from '@screens/extract';
 import ExtractSingleScreen from '@screens/extract/single';
+import ExtractSingleMoedasScreen from '@screens/extract/single_moedas';
 
 import AccountScreen from '@screens/account';
 import AccountNotifyScreen from '@screens/account/notify';
@@ -72,6 +74,8 @@ import ShopProductSingleScreen from '@screens/shop/product_single';
 
 import QuestionsScreen from '@screens/questions';
 import QuestionListScreen from '@screens/questions/list';
+import QuestionsChatScreen from '@screens/questions/chat';
+import QuestionsChatStatusScreen from '@screens/questions/chat_status';
 
 import RankingScreen from '@screens/ranking';
 
@@ -126,6 +130,8 @@ export default function Router() {
             <Stack.Screen name="DonateHide" component={DonateHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateSuccessHide" component={DonateSuccessHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="DonateCertificado" component={DonateCertificadoScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
             <Stack.Screen name="PayBoleto" component={PayBoletoScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -135,6 +141,7 @@ export default function Router() {
 
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="ExtractSingleMoedas" component={ExtractSingleMoedasScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -154,7 +161,8 @@ export default function Router() {
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
+            <Stack.Screen name="QuestionsChat" component={QuestionsChatScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="QuestionsChatStatus" component={QuestionsChatStatusScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
         </Stack.Navigator>
     </NavigationContainer>
    );

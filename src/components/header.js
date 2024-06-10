@@ -9,7 +9,7 @@ const Header = ({ title, rose }) => {
     const navigation = useNavigation();
     return(
         <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
-            <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: rose ? '#EFBBE0' :  "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
+            <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: rose ? '#EFBBE0' :  "#fff", width: 42, height: 28, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
                 <ArrowLeft color={rose ? '#FFF2E3': color.secundary}/>
             </Button>
             <Column >

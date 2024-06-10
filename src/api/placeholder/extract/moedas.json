@@ -1,34 +1,39 @@
 [
     {
+        "id": 2,
         "value": 1,
         "type": "Nota fiscal",
         "date": "10/10/2024",
-        "status": "Cashback em análise",
-        "icon": "await",
+        "status": "Moedas em análise",
+        "icon": "await"
     },
     {
+        "id": 3,
         "value": 95,
         "type": "Doação",
         "date": "10/10/2024",
-        "status": "Cashback confirmado",
-        "icon": "check",
+        "status": "Moedas confirmado",
+        "icon": "check"
     },
     {
+        "id": 4,
         "value": 1,
         "type": "Nota fiscal",
         "date": "10/10/2024",
-        "status": "Cashback negado",
-        "icon": "uncheck",
+        "status": "Moedas negado",
+        "icon": "uncheck"
     },
     {
+        "id": 5,
         "value": 30,
         "type": "Doação",
         "date": "10/10/2024",
-        "status": "Cashback expirado",
-        "icon": "dimiss",
-    },
+        "status": "Moedas expirado",
+        "icon": "dimiss"
+    }
 ]
-//url: base_url + "api/extract/cashback?page=1",
+
+//url: base_url + "api/extract/moedas?page=1",
 //token no body
 //method: "GET",
 //headers: { "Content-Type": "application/json }

@@ -166,7 +166,7 @@ export default function ExtractScreen({ navigation, route}) {
                     style={{ marginTop: 12, marginHorizontal: margin.h,}}
                     data={moedas}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <CardPontos item={item} />}
+                    renderItem={({ item }) => <CardMoedas item={item} />}
                 />
                 </MotiView>
             )}
@@ -212,6 +212,31 @@ const CardPontos = ({item}) => {
     const icon = item?.icon === 'check' ? <CircleCheck color={color.blue} size={24} /> : item?.icon === 'await' ? <Info color={color.primary} size={24} /> : item?.icon === 'uncheck' ? <CircleX color={color.red} size={24} /> : item?.icon === 'dimiss' ? <AlarmClock color="#000" size={24}/> : null;
 return(
     <Button onPress={() => {navigation.navigate('ExtractSingle', { item : item})}} > 
+    <Row style={{ marginBottom: 32, justifyContent: 'space-between', alignItems: 'center',  }}>
+        <Column style={{ borderLeftWidth: 2, borderLeftColor: cl, paddingLeft: 20,}}>
+                <Title style={{ fontSize: 28, lineHeight: 28, textDecoration: item?.type === 'dimiss' ? 'underline' : 'none', 
+                textDecorationLine: item?.icon === 'dimiss' ? "line-through" : "none",
+                textDecorationStyle: item?.icon === 'dimiss' ? "solid" : "none",
+                textDecorationColor: item?.icon === 'dimiss' ? "#000": 'transparent',
+                
+                }}>{item?.value}</Title>
+                <Label style={{ fontSize: 16,  marginVertical: 4, }}>{item?.type}</Label>
+                <SubLabel style={{ color: cl, }}>{item?.status}</SubLabel>
+        </Column>
+        <Column style={{  alignItems: 'flex-end',  }}>
+             {icon}
+            <SubLabel style={{ marginTop: 12, }}>{item?.date}</SubLabel>
+        </Column>
+    </Row></Button>
+)}
+
+const CardMoedas = ({item}) => {
+    const navigation = useNavigation();
+    const { color, font, margin } = useContext(ThemeContext);	
+    const cl = item?.icon === 'check' ? color.blue : item?.icon === 'await' ? color.primary : item?.icon === 'uncheck' ? color.red : '#000'
+    const icon = item?.icon === 'check' ? <CircleCheck color={color.blue} size={24} /> : item?.icon === 'await' ? <Info color={color.primary} size={24} /> : item?.icon === 'uncheck' ? <CircleX color={color.red} size={24} /> : item?.icon === 'dimiss' ? <AlarmClock color="#000" size={24}/> : null;
+return(
+    <Button onPress={() => {navigation.navigate('ExtractSingleMoedas', { item : item})}} > 
     <Row style={{ marginBottom: 32, justifyContent: 'space-between', alignItems: 'center',  }}>
         <Column style={{ borderLeftWidth: 2, borderLeftColor: cl, paddingLeft: 20,}}>
                 <Title style={{ fontSize: 28, lineHeight: 28, textDecoration: item?.type === 'dimiss' ? 'underline' : 'none', 
