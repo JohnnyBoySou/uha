@@ -52,11 +52,11 @@ export default function OnboardingScreen({ navigation, }) {
                     style={{ position: 'absolute', top: -60, left: 0, right: 0, }}
                     onScroll={handleScroll}
                     showsHorizontalScrollIndicator={false}
-                    scrollEventThrottle={16}
+                    scrollEventThrottle={64}
                 >
-                    <MotiImage source={require('@imgs/wall1.png')} style={{ height: 1.1 * height, width: width, objectFit: 'cover' }} />
-                    <MotiImage source={require('@imgs/wall2.png')} style={{ height: 1.1 * height, width: width, objectFit: 'cover' }} />
-                    <MotiImage source={require('@imgs/wall3.png')} style={{ height: 1.1 * height, width: width, objectFit: 'cover' }} />
+                    <MotiImage source={require('@imgs/wall1.png')} style={{ height: 1.2 * height, width: width, objectFit: 'cover' }} />
+                    <MotiImage source={require('@imgs/wall2.png')} style={{ height: 1.2 * height, width: width, objectFit: 'cover' }} />
+                    <MotiImage source={require('@imgs/wall3.png')} style={{ height: 1.2 * height, width: width, objectFit: 'cover' }} />
                 </ScrollView>
 
 
