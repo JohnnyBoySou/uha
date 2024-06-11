@@ -17,7 +17,7 @@ const { width, height } = Dimensions.get('window');
 export default function NotafiscalSendScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
     const bottomEnviar = useRef(null);
-    const [value, setvalue] = useState('23311');
+    const [value, setvalue] = useState(null);
 
 
     const itm = {

@@ -2,8 +2,8 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { FlatList, ScrollView, View, Animated, Pressable } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MotiImage,  } from 'moti';
-import { Bike, Bone , Brush, Hospital, Search, Shirt} from 'lucide-react-native';
+import { AnimatePresence, MotiImage, MotiView, useAnimationState,  } from 'moti';
+import { Bike, Bone, Brush, Hospital, Minus, Plus, Search, Shirt, BadgeInfo } from 'lucide-react-native';
 import { SlidingDot } from "react-native-animated-pagination-dots";
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
@@ -67,11 +67,24 @@ export default function HomeScreen({navigation, }){
         }
     ]
 
+
+
+
+    const [showMenu, setShowMenu] = useState(false);
+    const menu = useAnimationState({
+        open: {  height: 260, },
+        close: {  height: 120,},
+    })
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu)
+        showMenu ? menu.transitionTo('close') : menu.transitionTo('open')
+    }
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h , paddingTop: 10,}}>
-                    <MotiImage source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40,  objectFit: 'contain', }} />
+                    <MotiImage delay={300} from={{opacity: 0, translateX: -40, scale: 0, }} animate={{opacity: 1,  translateX: 0, scale: 1,}} transition={{type: 'spring'}} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40,  objectFit: 'contain', }} />
 
                     <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                         <Notify />
@@ -79,14 +92,56 @@ export default function HomeScreen({navigation, }){
                         <Avatar />
                     </Row>
                 </Row>
+                <MotiView from={{opacity: 0, translateY: 20, }} animate={{opacity: 1,  translateY: 0,}} transition={{type: 'timing'}}>
                 <Button onPress={() => {navigation.navigate('SearchModal', {type: 'ONG'})}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
                         <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
                         <Search strokeWidth={2} color="#11111190"/>
                     </Row>
                 </Button>
-                
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
+                </MotiView>
+
+                <MotiView state={menu} transition={{type: 'timing', duration: 500,}}>
+
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
+                    
+                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                        <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor:  color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <MotiImage source={require('@icons/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                        </Button>
+                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
+                    </Column>
+                    
+                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                        <Button onPress={() => {navigation.navigate('CampaignsPontos')}}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <MotiImage source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                        </Button>
+                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Pontos</Label>
+                    </Column>
+                    
+                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                        <Button onPress={() => {navigation.navigate('CampaignsGiftCard')}} rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <MotiImage source={require('@icons/gift.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                        </Button>
+                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Gift Card</Label>
+                    </Column>
+
+                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                        <Button onPress={toggleMenu}  rippleColor={color.secundary} style={{ backgroundColor: color.primary+20, padding: 18, borderRadius: 12, }}>
+                            <Row>
+                            {showMenu ? <Minus size={32} color={color.primary} /> : <Plus size={32} color={color.primary} />}
+                            </Row> 
+                        </Button>
+                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>{showMenu ? 'Menos' : 'Mais'}</Label>
+                    </Column>
+                    </Row>
+
+
+                <AnimatePresence>
+
+                {showMenu && 
+                <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0,}} exit={{opacity: 0, translateY: 20,}} transition={{type: 'timing', duration: 300,}}>
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
                     
                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                         <Button onPress={() => {navigation.navigate('Notafiscal')}}  rippleColor={color.secundary} style={{ backgroundColor:  color.primary+20, padding: 18, borderRadius: 12, }}>
@@ -116,6 +171,13 @@ export default function HomeScreen({navigation, }){
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Ranking</Label>
                     </Column>
                 </Row>
+                </MotiView>
+                }
+                </AnimatePresence>
+
+                </MotiView>
+
+
 
                 <Carrousel color={color} type="home"/>
 
@@ -200,7 +262,7 @@ export default function HomeScreen({navigation, }){
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Doe anônimamente</Title>
                     <Carrousel type="doe"/>
                 </Column>
-                <Column style={{ backgroundColor: color.background, marginTop: -30,  }}>
+                <Column style={{ backgroundColor: color.background, marginTop: -10,  }}>
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Produtos em oferta</Title>
                     <FlatList 
                             data={ofertas}
@@ -245,14 +307,14 @@ export default function HomeScreen({navigation, }){
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Gift Card com cashback</Title>
                     <Carrousel type="gift"/>
                 </Column>
-                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, marginTop: -20,  }}>
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, marginTop: 0,  }}>
                     <Title>Categorias</Title>
                     <FlatList 
                         data={categories}
                         ListFooterComponent={<Column style={{ width: 24 }} />}
                         ListHeaderComponent={<Column style={{ width: 24 }} />}
                         keyExtractor={item => item.id}
-                        style={{ marginVertical: margin.v, }}
+                        style={{ marginVertical: margin.v, marginTop: 0, }}
                         renderItem={({item}) => (
                             <Button style={{  borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6,}}  onPress={() => {navigation.navigate('Shop', {type: item.title})}}>
                                 <Row style={{  alignItems: 'center',  }}>

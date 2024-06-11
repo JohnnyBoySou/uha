@@ -57,7 +57,7 @@ export default function AuthLoginScreen({ navigation, }) {
         setloading(true)
         setTimeout(() => {
             setloading(false)
-            navigation.replace('Home')
+            navigation.replace('Tabs')
         }, 2000);
     }
 
