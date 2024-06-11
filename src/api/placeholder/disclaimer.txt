@@ -9,7 +9,8 @@ Modificações gerais a serem discutivéis:
 [route]
 [id]
 
-//url: base_url + 'api/[route]/page=1',
-//url_single: base_url + 'api/[route]/id=[id]',
+//url: base_url + 'api/[route]/?page=1',
+//url_single: base_url + 'api/[route]/[id]',
 //headers: { 'Content-Type': 'application/json }
+//get
 //Deixar ativado o CORs

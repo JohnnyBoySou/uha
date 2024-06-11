@@ -58,9 +58,10 @@ export default function DonateValueHideScreen({ navigation, route }) {
 
                             <Row style={{ padding: 32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', }}>
                                 <ButtonPR style={{ paddingHorizontal: 24, }} onPress={() => { navigation.navigate('BuyServiceSuccess') }} >
-                                    <LabelLI style={{ color: '#fff', }}>Fazer doação</LabelLI>
+                                    <LabelLI  style={{ color: '#fff', }}>Fazer doação</LabelLI>
                                 </ButtonPR>
                             </Row>
+                            
                         </Column>
                     </MotiView>
 

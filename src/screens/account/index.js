@@ -1,11 +1,11 @@
 import React, { useContext, useState, } from 'react';
-import { FlatList, Pressable, ScrollView } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, LineL } from '@theme/global';
+import { FlatList, Pressable } from 'react-native';
+import { Main, Scroll, Column, Label, Title, Row, ButtonSE, LabelSE, SubLabel, Button, LineL } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Check from '@components/check';
-import { ImagePlus, CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, Bell } from 'lucide-react-native';
+import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,6 +24,7 @@ export default function AccountScreen({ navigation, }) {
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
+                
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <Title>Olá, {user.name}</Title>
                     <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
@@ -32,6 +33,7 @@ export default function AccountScreen({ navigation, }) {
                         <Avatar />
                     </Row>
                 </Row>
+
                 <MotiView from={{opacity: 0, translateX: 20}} animate={{opacity: 1, translateX: 0,}} delay={200} style={{backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: "#fff", }}>Pontos em conta</Label>
                     <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46 , color: "#fff", }}>{user?.points}</Title>

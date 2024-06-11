@@ -88,7 +88,7 @@ export default function ExtractScreen({ navigation, route}) {
                 <LineL />
                 <Label style={{ color: "#fff", marginTop: 12, marginBottom: 4, }}>Saldo em moedas resgatadas</Label>
                 <Label style={{color: "#fff", }}>R$ {user?.moedas},00</Label>
-                <ButtonSE style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 26,}} onPress={() => {}} >
+                <ButtonSE onPress={() => {navigation.navigate('Shop')}}  style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 26,}} >
                     <LabelSE>Utilizar pontos</LabelSE>
                 </ButtonSE>
             </MotiView>
