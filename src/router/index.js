@@ -45,6 +45,7 @@ import NotafiscalScreen from '@screens/notafiscal';
 import NotafiscalSendScreen from '@screens/notafiscal/send';
 import NotafiscalSuccessScreen from '@screens/notafiscal/success';
 import NotafiscalErrorScreen from '@screens/notafiscal/error';
+import NotafiscalONGS from '@screens/notafiscal/ongs';
 
 import ExtractScreen from '@screens/extract';
 import ExtractSingleScreen from '@screens/extract/single';
@@ -138,6 +139,8 @@ export default function Router() {
             <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
 
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>

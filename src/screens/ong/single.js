@@ -10,30 +10,31 @@ export default function ONGSingleScreen({ navigation, route }) {
      
     const [showDesc, setshowDesc] = useState(false);
     return (
-        <Main>
-            <Scroll>
+            <Scroll style={{ paddingTop: 15, }}>
                 <Header title="Detalhes" />
                 
                 <Column style={{ justifyContent: 'center', alignItems: 'center',  marginVertical: 24,  }}>
-                    <MotiImage from={{opacity: 0, scale: 0.6,}} animate={{opacity: 1, scale: 1,}} style={{ width: 200, height: 200, borderRadius: 12, backgroundColor: '#FFE0F6', marginBottom: 30,}}/>
+                    <MotiImage source={{uri: item.img}} from={{opacity: 0, scale: 0.6,}} animate={{opacity: 1, scale: 1,}} style={{ width: 200, height: 200, borderRadius: 12, backgroundColor: '#FFE0F6', marginBottom: 30,}}/>
                     <Title>{item?.name}</Title>
-                    <Label>{item?.desc}</Label>
-                </Column> 
+                    <Label style={{ marginTop: 6, }}>{item?.desc}</Label>
+                </Column>  
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Title style={{ marginBottom: 12, }}>Quem somos</Title>
                 
-                   {showDesc ? <Label>{item?.about}</Label> : <Label>{item?.about?.slice(0, 200)}...</Label>}
+                   {showDesc ? <Label style={{ fontSize: 16, }}>{item?.about}</Label> : <Label style={{ fontSize: 16, }}>{item?.about?.slice(0, 200)}...</Label>}
                 
                     <Button onPress={() => {setshowDesc(!showDesc)}} style={{ alignSelf: 'flex-start', marginVertical: 12, backgroundColor:'#FFE0F6', paddingVertical: 8, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24, borderRadius: 100,  }}>
-                        <LabelLI style={{ color: color.primary,  }}>{showDesc ? 'Mostrar menos' : 'Ver mais'}</LabelLI>
+                        <LabelLI style={{ color: color.primary, fontSize: 15,  }}>{showDesc ? 'Mostrar menos' : 'Ver mais'}</LabelLI>
                     </Button>
 
+                </Column>
+            </Scroll>
+    )
+}
+
+/**
+ * 
                     <ButtonPR style={{borderRadius: 100, }} onPress={() => {navigation.goBack()}} >
                         <LabelLI style={{ color: '#fff', }}>Escolher ONG</LabelLI>
                     </ButtonPR>
-                </Column>
-            </Scroll>
-
-        </Main>
-    )
-}
+ */

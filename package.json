@@ -41,7 +41,8 @@
     "react-native-svg": "^15.2.0",
     "react-native-web": "~0.19.10",
     "styled-components": "*",
-    "expo-camera": "~15.0.10"
+    "expo-camera": "~15.0.10",
+    "expo-haptics": "~13.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0"

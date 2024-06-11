@@ -2,11 +2,13 @@ import React, { useContext, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, TextInput } from 'react-native';
 import { Main, Column, Title, Row, Label, Scroll, Button, ButtonPR, LabelPR, U, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MotiImage, MotiView } from 'moti';
-import { AtSign, KeyRound, Eye, EyeOff, LogIn, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser } from 'lucide-react-native'
+import { AnimatePresence, MotiImage, MotiView } from 'moti';
+import { AtSign, KeyRound, Eye, EyeOff, LogIn, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser, Check, X } from 'lucide-react-native'
 import { TouchableRipple } from 'react-native-paper';
 import CheckBox from '@components/checkbox';
 import { useNavigation } from '@react-navigation/native';
+import Octicons from '@expo/vector-icons/Octicons';
+import BottomSheet  from '@gorhom/bottom-sheet'
 
 
 export default function AuthLoginScreen({ navigation, }) {
@@ -22,19 +24,41 @@ export default function AuthLoginScreen({ navigation, }) {
 
     const [loading, setloading] = useState(false);
 
-    const [email, setemail] = useState();
-    const [password, setpassword] = useState();
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
     const [whatsapp, setwhatsapp] = useState();
     const [cpf, setcpf] = useState();
     const [cep, setcep] = useState();
-    const [name, setname] = useState();
+    const [name, setname] = useState(); 
+    const [passwordRepeat, setpasswordRepeat] = useState();
+
+    const repeat = useRef()
+    const passStrong = useRef()
+
+    const checkPasswordStrength = (password) => {
+        const criteria = {
+            length: password?.length >= 8,
+            upperCase: /[A-Z]/.test(password),
+            lowerCase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+        };
+        return criteria;
+    };
+
+    const passwordCriteria = checkPasswordStrength(password);
+    const porcentagePassword = Object.values(passwordCriteria).filter((e) => e).length / Object.values(passwordCriteria).length * 100;
+    const messagePassword = porcentagePassword < 50 ? 'Fraca' : porcentagePassword < 80 ? 'Razoável' : 'Forte';
+    const colorPassword = porcentagePassword < 50 ? color.red : porcentagePassword < 80 ? '#f5ad42': color.green;
 
     const handleLogin = () => {
+        if(email?.length < 5 ) return alert('Preencha o campo de e-mail')
+        else if(password?.length < 8) return alert('Preencha o campo de senha')
+        
         setloading(true)
         setTimeout(() => {
             setloading(false)
-            navigation.navigate('Home')
-        }, 3000);
+            navigation.replace('Home')
+        }, 2000);
     }
 
     const handleRegister = () => {
@@ -56,6 +80,10 @@ export default function AuthLoginScreen({ navigation, }) {
 
     const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Seja bem-vindo ao nosso aplicativo, esperamos que tenha uma ótima experiência.' } : { title: 'Escolha uma nova senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
 
+    const handleExit = (value) => {
+        settype(value)
+    }
+
     return (
         <Main style={{ backgroundColor: color.secundary, paddingTop: 40, }}>
 
@@ -67,15 +95,15 @@ export default function AuthLoginScreen({ navigation, }) {
             </Row>
 
             <Column style={{ marginHorizontal: margin.h, paddingVertical: 22, }}>
-                <Title style={{ fontSize: 28, color: "#fff", lineHeight: 52, }}>Seja bem-vindo!</Title>
-                <Label style={{ color: "#fff", }}>Está pronto para começar? Escolha entre entrar ou se registrar para avançar para os próximos passos.</Label>
+                <Title style={{ fontSize: 28, color: "#fff", lineHeight: 52, }}>{message?.title}</Title>
+                <Label style={{ color: "#fff", }}>{message?.message}</Label>
             </Column>
 
             <Column style={{ paddingHorizontal: margin.h, paddingVertical: 12, backgroundColor: "#fff", borderTopLeftRadius: 24, borderTopRightRadius: 24, position: 'absolute', bottom: 0, left: 0, right: 0, }}>
-
+                <Pressable onPress={() => {navigation.goBack()}}  style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#EFDCC5", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
+                      
                 {type == 'Entrar' &&
                     <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
-                        <Column style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#EFDCC5", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
                         <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
                             <Button onPress={() => { settype('Entrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Entrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
                                 <Label style={{ color: type === 'Entrar' ? color.secundary : color.label, fontFamily: font.bold, textAlign: 'center', }}>Entrar</Label>
@@ -95,7 +123,7 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onBlur={() => setfocusEmail(false)}
                                 onChangeText={(e) => setemail(e)}
                                 value={email}
-                                keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='E-mail' placeholderTextColor="#11111190" />
+                                keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='E-mail' placeholderTextColor="#11111190" />
                         </Row>
                         <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusPass ? color.primary : color.off }}>
                             <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, borderColor: focusPass ? color.secundary : "#ffffff50", }}>
@@ -106,9 +134,9 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onBlur={() => setfocusPass(false)}
                                 onChangeText={(e) => setpassword(e)}
                                 value={password}
-                                keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='Senha' secureTextEntry={pass} placeholderTextColor="11111140" />
+                                keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='Senha' secureTextEntry={pass} placeholderTextColor="11111140" />
 
-                            <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 40, flexDirection: 'row', }}>
+                            <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 40, flexDirection: 'row', position: 'absolute', top: 8, right: 0, }}>
                                 {pass ? <Eye size={20} color={color.primary} /> : <EyeOff size={20} color={color.primary} />}
                             </Pressable>
                         </Row>
@@ -172,7 +200,6 @@ export default function AuthLoginScreen({ navigation, }) {
 
                 {type == 'Registrar' &&
                     <MotiView from={{ translateX: 20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
-                        <Column style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#EFDCC5", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
                         <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
                             <Button onPress={() => { settype('Entrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Entrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
                                 <Label style={{ color: type === 'Entrar' ? color.secundary : color.label, fontFamily: font.bold, textAlign: 'center', }}>Entrar</Label>
@@ -192,7 +219,7 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onBlur={() => setfocusName(false)}
                                 onChangeText={(e) => setname(e)}
                                 value={name}
-                                style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='Nome completo' placeholderTextColor="#11111190" />
+                                style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='Nome completo' placeholderTextColor="#11111190" />
                         </Row>
 
 
@@ -204,7 +231,7 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onFocus={() => setfocusCPF(true)}
                                 onBlur={() => setfocusCPF(false)}
                                 onChangeText={(e) => setfocusCPF(e)}
-                                style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='CPF' placeholderTextColor="#11111190" />
+                                style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='CPF' placeholderTextColor="#11111190" />
                         </Row>
                         <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusWhatsapp ? color.primary : color.off, }}>
                             <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -215,7 +242,7 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onBlur={() => setfocusWhatsapp(false)}
                                 value={whatsapp}
                                 onChangeText={(e) => setfocusWhatsapp(e)}
-                                keyboardType='tel' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='WhatsApp' placeholderTextColor="#11111190" />
+                                keyboardType='tel' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='WhatsApp' placeholderTextColor="#11111190" />
                         </Row>
                         <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCEP ? color.primary : color.off, }}>
                             <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -226,7 +253,7 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onBlur={() => setfocusCEP(false)}
                                 value={cep}
                                 onChangeText={(e) => setfocusCEP(e)}
-                                keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='CEP (Código Postal)' placeholderTextColor="#11111190" />
+                                keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='CEP (Código Postal)' placeholderTextColor="#11111190" />
                         </Row>
                         <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
                             <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -237,7 +264,7 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onBlur={() => setfocusEmail(false)}
                                 value={email}
                                 onChangeText={(e) => setemail(e)}
-                                keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='E-mail' placeholderTextColor="#11111190" />
+                                keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='E-mail' placeholderTextColor="#11111190" />
                         </Row>
                         <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusPass ? color.primary : color.off }}>
                             <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, borderColor: focusPass ? color.secundary : "#ffffff50", }}>
@@ -248,22 +275,32 @@ export default function AuthLoginScreen({ navigation, }) {
                                 onBlur={() => setfocusPass(false)}
                                 value={password}
                                 onChangeText={(e) => setpassword(e)}
-                                keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='Senha (8 digitos)' secureTextEntry={pass} placeholderTextColor="11111140" />
+                                keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, width: '78%', }} placeholder='Senha (8 digitos)' secureTextEntry={pass} placeholderTextColor="11111140" />
 
-                            <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 40, flexDirection: 'row', }}>
+                            <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 40, flexDirection: 'row', position: 'absolute', right: 0, top: 10, }}>
                                 {pass ? <Eye size={20} color={color.primary} /> : <EyeOff size={20} color={color.primary} />}
                             </Pressable>
                         </Row>
 
-                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 8, marginBottom: 20, }}>
+
+                    <AnimatePresence>
+                    {password?.length >= 1 &&
+                    <MotiView from={{opacity: 0, translateX: -20,}} animate={{ opacity: 1, translateX: 0,}} exit={{opacity: 0, translateX: -20,}} transition={{ type: 'timing', duration: 200,}}>
+                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 8, marginBottom: -10, }}>
                             <Column style={{ backgroundColor: color.off, height: 10, borderRadius: 30, width: 100, }}>
-                                <Column style={{ width: '50%', height: 10, borderRadius: 100, backgroundColor: "#00A3FF", }} />
+                                <Column style={{ width: porcentagePassword, height: 10, borderRadius: 100, backgroundColor: colorPassword, }} />
                             </Column>
-                            <SubLabel style={{ color: "#00A3FF" }}>Razoável</SubLabel>
+                            <Button onPress={() => {passStrong.current.expand()}} >
+                                <U>
+                                <SubLabel style={{ color: colorPassword }}>{messagePassword}</SubLabel>
+                                </U>
+                            </Button>
                         </Row>
+                    </MotiView>
+                    }
+                    </AnimatePresence>
 
-
-                        <Pressable style={{ alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} onPress={() => { setremember(!remember) }} >
+                        <Pressable style={{ alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20, }} onPress={() => { setremember(!remember) }} >
                             <CheckBox status={remember} />
                             <Label style={{ fontFamily: font.bold, fontSize: 14, marginLeft: 6, }}>Permito se contatado por WhatsApp</Label>
                         </Pressable>
@@ -281,14 +318,37 @@ export default function AuthLoginScreen({ navigation, }) {
                         <Label style={{ fontFamily: font.medium, fontSize: 16, textAlign: 'center', marginHorizontal: 6, marginBottom: 30, }}>Ao registrar-se você concorda com os <U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
                     </MotiView>}
 
-                {type == 'ForgetPassword' && <ForgetPassword />}
+                {type == 'ForgetPassword' && <ForgetPassword handleExit={handleExit}/>}
             </Column>
+
+            <BottomSheet ref={passStrong} snapPoints={[0.1, 200]}>
+                <Column style={{ marginHorizontal: margin.h, marginVertical: margin.v, }}>
+                <SubLabel style={{ color: color.secundary, fontSize: 18, }}>Requisitos para a senha</SubLabel>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.length ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Mínimo de 8 caracteres</Label>
+                    </Row>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.upperCase ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Uma letra MAIÚSCULA.</Label>
+                    </Row>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.lowerCase ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Uma letra minúscula.</Label>
+                    </Row>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.number ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Um número.</Label>
+                    </Row>
+
+                </Column>
+            </BottomSheet>
         </Main>
     )
 }
 
 
-const ForgetPassword = () => {
+const ForgetPassword = ({handleExit}) => {
     const { color, font, margin, } = useContext(ThemeContext);
     const navigation = useNavigation()
     const [type, settype] = useState('Redefinir');
@@ -315,8 +375,7 @@ const ForgetPassword = () => {
 
                 settype('Nova senha')
             }, 2000);
-        }
-        console.log(digit1, digit2, digit3, digit4)
+        } 
     }
 
 
@@ -344,10 +403,36 @@ const ForgetPassword = () => {
 
     const repeat = useRef()
 
+
+    const checkPasswordStrength = (password) => {
+        const criteria = {
+            length: password?.length >= 8,
+            upperCase: /[A-Z]/.test(password),
+            lowerCase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            repeat: password == passwordRepeat
+        };
+        return criteria;
+    };
+
+    const passwordCriteria = checkPasswordStrength(password);
+
+    const handleNewPassword = () => {
+        if (passwordCriteria?.length && passwordCriteria?.upperCase && passwordCriteria?.lowerCase && passwordCriteria?.number && passwordCriteria?.repeat) {
+            setloading(true)
+            setTimeout(() => {
+                setloading(false)
+                //chamada api
+                handleExit('Entrar')
+               // navigation.navigate('Home')
+            }, 2000);
+        }
+    }
+
     return (
         <MotiView from={{ translateY: 20, opacity: 0 }} animate={{ translateY: 0, opacity: 1, }} transition={{ type: 'timing' }}>
             <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
-                <Button onPress={() => { navigation.goBack() }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Redefinir' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
+                <Button onPress={() => { handleExit('Entrar') }} disabled={type === 'Nova senha'} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Redefinir' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
                     <Label style={{ color: type === 'Redefinir' ? color.secundary : color.label, fontFamily: font.bold, textAlign: 'center', }}>Redefinir senha</Label>
                 </Button>
                 <Column style={{ width: 12, }} />
@@ -361,7 +446,7 @@ const ForgetPassword = () => {
 
                 {step == 1 && <Column>
                     <Column style={{ marginTop: 24, }}>
-                        <Title style={{ marginBottom: 6, }}>Preencha seu e-mail</Title>
+                        <Title style={{ marginBottom: 6, color: color.secundary,}}>Preencha seu e-mail</Title>
                         <Label>Vamos te enviar um e-mail com o código de verificação para redefinir sua senha.</Label>
                     </Column>
 
@@ -374,7 +459,8 @@ const ForgetPassword = () => {
                             onBlur={() => setfocusEmail(false)}
                             value={email}
                             onChangeText={(e) => setemail(e)}
-                            keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='E-mail' placeholderTextColor="#11111190" />
+                            onSubmitEditing={handleSend}
+                            keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='E-mail' placeholderTextColor="#11111190" />
                     </Row>
                     <ButtonPR disabled={loading} onPress={handleSend} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
                         <Row>
@@ -385,7 +471,7 @@ const ForgetPassword = () => {
 
                 {step == 2 && <Column>
                     <Column style={{ marginTop: 24, }}>
-                        <Title>Código de verificação</Title>
+                        <Title style={{ color: color.secundary, marginBottom: 8, }}>Código de verificação</Title>
                         <Label>Confira seu e-mail e copie o código enviado.</Label>
                     </Column>
 
@@ -396,7 +482,8 @@ const ForgetPassword = () => {
                             value={digit1}
                             onSubmitEditing={() => { fc2.current?.focus() }}
                             ref={fc1}
-                            onChangeText={(e) => setdigit1(e)}
+                            selectionColor='transparent'
+                            onChangeText={(e) => {setdigit1(e); if(e.length === 1) fc2.current?.focus()}}
                             keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus1 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
                         <TextInput
                             onFocus={() => setfocus2(true)}
@@ -404,7 +491,9 @@ const ForgetPassword = () => {
                             value={digit2}
                             ref={fc2}
                             onSubmitEditing={() => { fc3.current?.focus() }}
-                            onChangeText={(e) => setdigit2(e)}
+                            underlineColorAndroid='transparent'
+                            selectionColor='transparent'
+                            onChangeText={(e) => {setdigit2(e); if(e.length === 1) fc3.current?.focus()}}
                             keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus2 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
                         <TextInput
                             onFocus={() => setfocus3(true)}
@@ -412,13 +501,15 @@ const ForgetPassword = () => {
                             value={digit3}
                             onSubmitEditing={() => { fc4.current?.focus() }}
                             ref={fc3}
-                            onChangeText={(e) => setdigit3(e)}
+                            selectionColor='transparent'
+                            onChangeText={(e) => {setdigit3(e); if(e.length === 1) fc4.current?.focus()}}
                             keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus3 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
                         <TextInput
                             onFocus={() => setfocus4(true)}
                             onBlur={() => setfocus4(false)}
                             value={digit4}
                             ref={fc4}
+                            selectionColor='transparent'
                             onSubmitEditing={handleVerify}
                             onChangeText={(e) => setdigit4(e)}
                             keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus4 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
@@ -434,7 +525,7 @@ const ForgetPassword = () => {
 
             {type == 'Nova senha' && <Column>
                 <Column style={{ marginTop: 24, }}>
-                        <Title style={{ marginBottom: 6, }}>Crie uma nova senha</Title>
+                        <Title style={{ marginBottom: 6, color: color.secundary, }}>Crie uma nova senha</Title>
                     </Column>
 
                 <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusPass ? color.primary : color.off }}>
@@ -447,9 +538,9 @@ const ForgetPassword = () => {
                         value={password}
                         onChangeText={(e) => setpassword(e)}
                         onSubmitEditing={() => { repeat.current?.focus() }}
-                        keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='Nova senha' secureTextEntry={pass} placeholderTextColor="11111140" />
+                        keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='Nova senha' secureTextEntry={pass} placeholderTextColor="11111140" />
 
-                    <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 40, flexDirection: 'row', }}>
+                    <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 40, flexDirection: 'row', position: 'absolute', top: 8, right: 0, }}>
                         {pass ? <Eye size={20} color={color.primary} /> : <EyeOff size={20} color={color.primary} />}
                     </Pressable>
                 </Row>
@@ -463,18 +554,38 @@ const ForgetPassword = () => {
                         value={passwordRepeat}
                         ref={repeat}
                         onChangeText={(e) => setpasswordRepeat(e)}
-                        keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16, flexGrow: 1, }} placeholder='Repita sua senha' secureTextEntry={pass} placeholderTextColor="11111140" />
+                        keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, paddingHorizontal: 16,  width: '78%', }} placeholder='Repita sua senha' secureTextEntry={pass} placeholderTextColor="11111140" />
 
                 </Row>
 
-                <SubLabel>Requisitos para nova senha</SubLabel>
-
-
-                <Row>
-                    
-                </Row>
+                <SubLabel style={{ color: color.secundary, fontSize: 18, }}>Requisitos para nova senha</SubLabel>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.length ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Mínimo de 8 caracteres</Label>
+                    </Row>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.upperCase ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Uma letra MAIÚSCULA.</Label>
+                    </Row>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.lowerCase ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Uma letra minúscula.</Label>
+                    </Row>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.number ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Um número.</Label>
+                    </Row>
+                    <Row style={{ marginTop: 8, }}>
+                        {passwordCriteria?.repeat ? <Octicons name="check-circle-fill" size={18} color={color.green} /> :  <Octicons name="x-circle-fill" size={18} color={color.red} />}
+                        <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111',}}>Repita a senha.</Label>
+                    </Row>
+                     
+                <ButtonPR disabled={loading} onPress={handleNewPassword} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
+                        <Row>
+                            {loading ? <ActivityIndicator animating={loading} color="#fff" size={27} /> : <LabelPR>Definir nova senha</LabelPR>}
+                        </Row>
+                    </ButtonPR>
             </Column>
-
             }
         </MotiView>
     )

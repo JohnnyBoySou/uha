@@ -1,10 +1,12 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
-import { ScrollView, Dimensions } from 'react-native';
+import {Animated,  ScrollView, Dimensions } from 'react-native';
 import { Main, Column, Row, Title, Label, ButtonPR, ButtonSE, LabelSE, ButtonLI, LabelLI, Scroll, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ImagePlus } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
 const { height, width } = Dimensions.get('window');
+import { ExpandingDot } from "react-native-animated-pagination-dots";
+
 
 export default function OnboardingScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -13,35 +15,41 @@ export default function OnboardingScreen({ navigation, }) {
     const xOffset = useRef(0);
     const scrollViewRef = useRef(null);
     const pages = [1, 2, 3];
-  
+
     const handleScroll = (event) => {
         xOffset.current = event.nativeEvent.contentOffset.x;
         const pageIndex = Math.floor(event.nativeEvent.contentOffset.x / width);
         setPageIndex(pageIndex);
-      };
-    
+    };
+
+    const scrollX = React.useRef(new Animated.Value(0)).current;
+
+
+
+
     return (
         <Main>
             <Column style={{ flex: 1, }}>
-                <Row style={{ position: 'absolute', top: 30, left: 0, right: 20, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
+                <Row style={{ position: 'absolute', top: 30, left: 0, right: 10, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
                     <MotiImage source={require('@imgs/logo.png')} style={{ objectFit: 'contain', width: 100, }} />
-                    <Row style={{}}>
-                        {pages.map((_, index) => (
-                            <MotiView
-                                key={index}
-                                from={{ opacity: 0.5, scale: 1 }}
-                                animate={{ opacity: pageIndex === index ? 1 : 0.5, width: pageIndex === index ? 24 : 12 }}
-                                transition={{ type: 'timing', duration: 300 }}
-                                style={{
-                                    width: 12,
-                                    height: 12,
-                                    borderRadius: 100,
-                                    backgroundColor: pageIndex === index ? color.secundary : color.secundary + 90,
-                                    marginHorizontal: 5,
-                                }}
+                        
+                    <Column  style={{ marginRight: 20,  justifyContent: 'center', alignItems: 'center', }}>
+                        <ExpandingDot
+                            data={pages}
+                            expandingDotWidth={30}
+                            scrollX={scrollX}
+                            containerStyle={{  bottom: 0, right: 0, }}
+                            dotStyle={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                marginHorizontal: 5
+                            }}
+                            activeDotColor={color.secundary}
+                            inActiveDotColor={color.secundary+90}
                             />
-                        ))}
-                    </Row>
+                    </Column>
+
                 </Row>
 
 
@@ -50,7 +58,12 @@ export default function OnboardingScreen({ navigation, }) {
                     pagingEnabled
                     horizontal
                     style={{ position: 'absolute', top: -60, left: 0, right: 0, }}
-                    onScroll={handleScroll}
+                    //onScroll={handleScroll}
+                    onScroll={Animated.event(
+                        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                        {
+                          useNativeDriver: false,
+                    })}
                     showsHorizontalScrollIndicator={false}
                     scrollEventThrottle={64}
                 >
@@ -80,3 +93,26 @@ export default function OnboardingScreen({ navigation, }) {
         </Main>
     )
 }
+
+
+/**Pagination
+ *  <Row style={{}}>
+                        {pages.map((_, index) => (
+                            <MotiView
+                                key={index}
+                                from={{ opacity: 0.5, scale: 1 }}
+                                animate={{ opacity: pageIndex === index ? 1 : 0.5, width: pageIndex === index ? 24 : 12 }}
+                                transition={{ type: 'timing', duration: 300 }}
+                                style={{
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: 100,
+                                    backgroundColor: pageIndex === index ? color.secundary : color.secundary + 90,
+                                    marginHorizontal: 5,
+                                }}
+                            />
+                        ))}
+                    </Row>
+ * 
+ * 
+ */

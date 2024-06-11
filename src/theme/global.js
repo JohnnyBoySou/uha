@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {  TouchableRipple } from 'react-native-paper';
+import { TouchableRipple } from 'react-native-paper';
 
 export const Main = styled.SafeAreaView`
   flex: 1;
@@ -27,14 +27,14 @@ export const Spacer = ({ height = 16, width = 16, }) => <Column style={{ height,
 
 
 export const Button = styled(TouchableRipple).attrs(() => ({
-  borderless: true, 
+  borderless: true,
   rippleColor: "#FFFFFF90",
 }))`
 `
 
 
 export const ButtonPR = styled(TouchableRipple).attrs(() => ({
-  borderless: true, 
+  borderless: true,
   rippleColor: "#FFFFFF90",
 }))`
   background-color: ${props => props.theme.color.primary};
@@ -46,7 +46,7 @@ export const ButtonPR = styled(TouchableRipple).attrs(() => ({
   justify-content: center;
 `
 export const ButtonSE = styled(TouchableRipple).attrs(() => ({
-  borderless: true, 
+  borderless: true,
   rippleColor: "#FFFFFF90",
 }))`
   border-radius: 100px;
@@ -60,7 +60,7 @@ export const ButtonSE = styled(TouchableRipple).attrs(() => ({
 
 
 export const ButtonLI = styled(TouchableRipple).attrs(() => ({
-  borderless: true, 
+  borderless: true,
   rippleColor: "#FFFFFF90",
 }))`
   border-radius: 100px;
@@ -76,7 +76,7 @@ export const ButtonLI = styled(TouchableRipple).attrs(() => ({
 
 
 export const ButtonOut = styled(TouchableRipple).attrs(() => ({
-  borderless: true, 
+  borderless: true,
   rippleColor: "#FFFFFF90",
 }))`
   border-radius: 100px;
@@ -112,6 +112,12 @@ export const LabelLI = styled.Text`
 export const U = styled.Text`
   text-decoration: underline;
 `;
+export const B = styled.Text`
+  font-weight: bold;
+  font-family: ${props => props.theme.font.bold};
+`;
+
+
 
 export const LabelPR = styled.Text`
   color: ${props => props.theme.color.light};
@@ -164,7 +170,7 @@ export const SubLabel = styled.Text`
 
 
 export const Title = styled.Text`
-  color: ${props => props.theme.color.title};
+  color: ${props => props.theme.color.secundary};
   letter-spacing: -.5px;
   line-height: 26px;
   font-size: 24px;
@@ -188,7 +194,7 @@ export const Digit = styled.Text`
 
 
 export const BtCircle = styled(TouchableRipple).attrs(() => ({
-  borderless: true, 
+  borderless: true,
   rippleColor: "#FFFFFF90",
 }))`
   background: ${props => props.theme.color.primary};
@@ -199,7 +205,7 @@ export const BtCircle = styled(TouchableRipple).attrs(() => ({
   `
 
 
-  export const HeadTitle = styled.Text`
+export const HeadTitle = styled.Text`
   color: ${props => props.theme.color.title};
   font-size: 22px;
   font-family: ${props => props.theme.font.medium};
