@@ -8,10 +8,11 @@ import { Search } from 'lucide-react-native';
 import { Carrousel } from '../home';
 import Header from '@components/header';
 
-export default function ShopSingleScreen({ navigation, }) {
+export default function ShopSingleScreen({ navigation, route}) {
     const { color, font, margin } = useContext(ThemeContext);
     const [type, settype] = useState();
-    
+    const id = route.params.id
+    console.log(id)
     return (
         <Main>
             <Scroll style={{ paddingTop: 0, }}>

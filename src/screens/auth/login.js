@@ -24,8 +24,8 @@ export default function AuthLoginScreen({ navigation, }) {
 
     const [loading, setloading] = useState(false);
 
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
+    const [email, setemail] = useState('teste@mail.com');
+    const [password, setpassword] = useState('123457342');
     const [whatsapp, setwhatsapp] = useState();
     const [cpf, setcpf] = useState();
     const [cep, setcep] = useState();

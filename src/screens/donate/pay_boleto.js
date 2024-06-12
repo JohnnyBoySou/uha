@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Column, Label, Title, Row, SubLabel, Button, LabelLI, ButtonOut, U, ButtonPR, Main, Scroll } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Clipboard as Clip, CircleDashed,   } from 'lucide-react-native';
-import { MotiImage } from 'moti';
 import * as Clipboard from 'expo-clipboard';
+import { MotiImage } from 'moti';
 import Header from '@components/header';
 
 export default function PayBoletoScreen({ navigation, route }) {
