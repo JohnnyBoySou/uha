@@ -1,6 +1,6 @@
 [
     {
-        "uid": "12345",
+        "id": "12345",
         "name": "Descricao do servico",
         "desc": "Breve descrição sobre os serviços ou produtos que a loja vende lorem ipsum",
         "categories": [
@@ -23,8 +23,4 @@
     }
 ]
 
-
-
-//url: base_url + 'api/products/id',
-//method: 'GET',
-//headers: { 'Content-Type': 'application/json }
+ 

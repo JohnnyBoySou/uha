@@ -2,16 +2,14 @@ import React, { useContext, } from 'react';
 import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, ButtonOut, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MessagesSquare, Info, ScrollText } from 'lucide-react-native';
 import Header from '../../components/header';
-import { MotiImage } from 'moti';
 
 export default function AccountFAQScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
 
     return (
         <Main>
-            <Scroll>
+            <Scroll style={{ paddingTop: 15, }}>
                 <Header title="Dúvidas frequentes"/>
                 <Title style={{ marginHorizontal: margin.h, marginTop: 30, marginBottom: -12, }}>Categoria</Title>
                 <FlatList

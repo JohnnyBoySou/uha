@@ -34,21 +34,7 @@ export default function CampaignsPontosScreen({navigation, }){
             label: 'A partir de 40 Pontos',
             color: '#',
         },
-    ]
-    const estabelecimentos = [
-        {
-            id: 1,
-            title: 'Petlove',
-            label: 'Produtos para pets',
-            img: require('@imgs/petlove.png')
-        },
-        {
-            id: 2,
-            title: 'Petz',
-            label: 'Produtos para pets',
-            img: require('@imgs/petz.png')
-        }
-    ]
+    ] 
 
     const bts = ['Estabelecimentos', 'Serviços', 'Produtos',]
     const [page, setpage] = useState('Estabelecimentos');
@@ -92,7 +78,7 @@ export default function CampaignsPontosScreen({navigation, }){
                     <Button>
                         <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                             <Filter color={color.label} size={18} />
-                            <SubLabel style={{ color: color.label, }}>Filtro</SubLabel>
+                            <SubLabel style={{ color: color.label, fontSize: 14, marginLeft: 12, }}>Filtro</SubLabel>
                         </Row>
                     </Button>
                     <Button onPress={() => settype('Pesquisar')} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
@@ -115,10 +101,10 @@ export default function CampaignsPontosScreen({navigation, }){
 
             {page == 'Estabelecimentos' && 
             <MotiView from={{opacity: 0, translateY: 30}} animate={{opacity: 1, translateY: 0}} transition={{type:'timing'}}>
-                <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
-                    <Title>Estabelecimentos gerais</Title>
+                <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingTop: 20, paddingBottom: 15,  justifyContent: 'space-between', alignItems: 'center',   }}>
+                    <Title style={{fontSize: 18}}>Estabelecimentos gerais</Title>
                     <Pressable>
-                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
+                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                     </Pressable>
                 </Row>
                 <Column style={{ backgroundColor: color.background, }}>
@@ -141,10 +127,10 @@ export default function CampaignsPontosScreen({navigation, }){
                         />
                 </Column>
 
-                <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
-                    <Title>Com ofertas relâmpago</Title>
+                <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingTop: 20, paddingBottom: 15,  justifyContent: 'space-between', alignItems: 'center',   }}>
+                    <Title style={{fontSize: 18}}>Com ofertas relâmpago</Title>
                     <Pressable>
-                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
+                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                     </Pressable>
                 </Row>
 
@@ -169,11 +155,11 @@ export default function CampaignsPontosScreen({navigation, }){
                 </Column>
                             
 
-                <Column style={{ backgroundColor: color.background, marginTop: -30,  }}>
-                    <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
-                        <Title>Casa e decoração</Title>
+                <Column style={{ backgroundColor: color.background, marginTop: -5,  }}>
+                    <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingTop: 20, paddingBottom: 15,  justifyContent: 'space-between', alignItems: 'center',   }}>
+                        <Title style={{fontSize: 18}}>Casa e decoração</Title>
                         <Pressable>
-                            <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
+                            <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                         </Pressable>
                     </Row>
                     <FlatList 

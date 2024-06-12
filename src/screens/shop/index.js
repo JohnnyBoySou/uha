@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ScrollView, FlatList, Pressable } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MotiImage } from 'moti'; 
+import { AnimatePresence, MotiImage } from 'moti'; 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Search } from 'lucide-react-native';
 import Header from '@components/header';
@@ -12,6 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 export default function ShopScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [type, settype] = useState(route.params?.type); 
+    const cat  = route.params?.cat;
+    console.log(cat?.name)
 
     return (
         <Main>
@@ -27,6 +29,16 @@ export default function ShopScreen({ navigation, route }) {
                             <Search strokeWidth={2} color="#11111190"/>
                         </Row>
                     </Button>
+                    <Row>
+                    <AnimatePresence>
+                        {type != null && <MotiView transition={{duration: 300, }} from={{opacity: 0, translateX: -30,}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary}  style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary+20, marginTop: -4, marginBottom: 14,  borderRadius: 8,}} >
+                                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                                    <Title style={{ color: color.primary, fontSize: 18, marginRight: 6,}}>{type}</Title>
+                                    <X color={color.primary}/>
+                                </Row>
+                            </Button></MotiView>}
+                    </AnimatePresence>
+                        </Row>
                     <Carrousel />
 
                     <Title style={{ marginHorizontal: margin.h, }}>Promos incríveis</Title>

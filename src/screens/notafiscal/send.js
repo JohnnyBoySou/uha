@@ -48,19 +48,19 @@ export default function NotafiscalSendScreen({ navigation, }) {
     })
 
     return (
-        <Main style={{ backgroundColor: "transparent", }}>
+        <Main style={{ backgroundColor: "#fff", }}>
             <MotiView state={bg} style={{ flex: 1,  }}>
             {value == null && 
                 <CameraView
                     barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
-                    style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: 1.2 * height, width: width, position: 'absolute', top: 0, zIndex: -2, }}
+                    style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: 1.2 * height, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
                     facing="back"
                     onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200) }}  >
                 </CameraView>}
-            <Scroll>
+            <Scroll style={{ paddingTop: 15, }}>
                 <Header />
-                <Button onPress={() => {setvalue(null)}}  style={{ position: 'absolute', top: 0, right: 20, padding: 12, borderRadius: 12, }}>
-                    <Trash size={24} color="#fff" />
+                <Button onPress={() => {setvalue(null)}}  style={{ position: 'absolute', top: 0, right: 20, padding: 12, borderRadius: 12, width: 44, height: 44, backgroundColor: '#ffffff', justifyContent: 'center', alignItems: 'center',   }}>
+                    <Trash size={24} color={color.secundary}/>
                 </Button>
                 <AnimatePresence>
 
@@ -141,7 +141,7 @@ export default function NotafiscalSendScreen({ navigation, }) {
                     <Button onPress={() => { navigation.navigate('Extract', { type: 'Cashback' }) }}  style={{ width: 62,  height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center',  }}>
                         <NotepadText size={32} color="#fff" />
                     </Button>
-                    <MotiView state={digit} style={{ backgroundColor: '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center',  borderRadius: 10,  }}>
+                    <MotiView  transition={{type: 'timing'}} state={digit} style={{ backgroundColor: '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center',  borderRadius: 10,  }}>
                         <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Minhas notas</Label>
                     </MotiView>
                 </Row>
@@ -149,7 +149,7 @@ export default function NotafiscalSendScreen({ navigation, }) {
                     <Button onPress={() => { bottomEnviar.current.expand() }} style={{ width: 62,  height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center',  }}>
                         <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
                     </Button>
-                    <MotiView state={digit} style={{ backgroundColor: '#0d8cd4', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center',  borderRadius: 10,  }}>
+                    <MotiView transition={{type: 'timing'}} state={digit} style={{ backgroundColor: '#0d8cd4', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center',  borderRadius: 10,  }}>
                         <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Digitar o código</Label>
                     </MotiView>
                 </Row>

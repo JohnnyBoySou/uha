@@ -27,7 +27,6 @@ import BuyServiceGiftErrorScreen from '@screens/buyservice/error_gift';
 import BuyServiceSuccessHideScreen from '@screens/buyservice/success_hide';
 import BuyServiceRifaSuccessScreen from '@screens/buyservice/success_rifa';
 
-
 import BuyServiceGiftCardScreen from '@screens/buyservice/gift_card';
 import BuyServiceRifaScreen from '@screens/buyservice/rifa';
 import BuyServiceReceiveGiftScreen from '@screens/buyservice/receive_gift';
@@ -72,6 +71,7 @@ import FavoritesScreen from '@screens/favorites';
 import ShopScreen from '@screens/shop';
 import ShopSingleScreen from '@screens/shop/single';
 import ShopProductSingleScreen from '@screens/shop/product_single';
+import ShopQRCodeScreen from '@screens/shop/qrcode';
 
 import QuestionsScreen from '@screens/questions';
 import QuestionListScreen from '@screens/questions/list';
@@ -91,7 +91,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Tabs'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -111,6 +111,7 @@ export default function Router() {
             <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ShopProductSingle" component={ShopProductSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="ShopQRCode" component={ShopQRCodeScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
@@ -140,7 +141,6 @@ export default function Router() {
             <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-
 
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>

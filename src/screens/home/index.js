@@ -9,6 +9,7 @@ import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import { useNavigation } from '@react-navigation/native';
 
+import services from '@data/services';
 
 export default function HomeScreen({navigation, }){
     const { color, font, margin, } = useContext(ThemeContext);
@@ -68,7 +69,7 @@ export default function HomeScreen({navigation, }){
     ]
 
 
-
+    const a = false
 
     const [showMenu, setShowMenu] = useState(false);
     const menu = useAnimationState({
@@ -93,10 +94,10 @@ export default function HomeScreen({navigation, }){
                     </Row>
                 </Row>
                 <MotiView from={{opacity: 0, translateY: 20, }} animate={{opacity: 1,  translateY: 0,}} transition={{type: 'timing'}}>
-                <Button onPress={() => {navigation.navigate('SearchModal', {type: 'ONG'})}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: "#30303030", backgroundColor: "#12121220", paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                <Button onPress={() => {navigation.navigate('SearchModal', {type: 'ONG'})}}  style={{ borderRadius: 30,  opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: color.secundary+20, backgroundColor: color.secundary+20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18,  }}>
-                        <Title style={{ fontSize: 20, fontFamily: font.medium, }}>Pesquisar</Title>
-                        <Search strokeWidth={2} color="#11111190"/>
+                        <Title style={{ fontSize: 20, fontFamily: font.medium, color: color.secundary,}}>Pesquisar</Title>
+                        <Search strokeWidth={2} color={color.secundary}/>
                     </Row>
                 </Button>
                 </MotiView>
@@ -182,7 +183,7 @@ export default function HomeScreen({navigation, }){
                 <Carrousel color={color} type="home"/>
 
                 <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32,  }}>
-                    <Title style={{ marginTop: 8, }}>Campanhas</Title>
+                    <Title style={{ marginTop: 8, fontSize: 22, }}>Campanhas</Title>
 
                     <FlatList
                         style={{ marginVertical: 12, marginHorizontal: - margin.h, }}
@@ -209,9 +210,9 @@ export default function HomeScreen({navigation, }){
                 </Column>
 
                 <Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingVertical: 20,  justifyContent: 'space-between', alignItems: 'center',   }}>
-                    <Title>Ofertas relâmpago</Title>
+                    <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
                     <Pressable>
-                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 18, }}>Ver mais</Label>
+                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                     </Pressable>
                 </Row>
                 
@@ -235,8 +236,8 @@ export default function HomeScreen({navigation, }){
                         />
                 </Column>
 
-                <Column style={{ paddingHorizontal: margin.h,  paddingVertical: 20, backgroundColor: color.background,   }}>
-                    <Title>Estabelecimentos queridinhos</Title>
+                <Column style={{ paddingHorizontal: margin.h,  paddingTop: 20, paddingBottom: 15, backgroundColor: color.background,   }}>
+                    <Title style={{ fontSize: 22, }}>Estabelecimentos queridinhos</Title>
                 </Column>
 
                 <FlatList style={{ backgroundColor: color.background, }}
@@ -250,7 +251,7 @@ export default function HomeScreen({navigation, }){
                                 <Column>
                                     <MotiImage source={item.img} style={{ width: 200, height: 60, objectFit: 'cover', borderRadius: 8, }} />
                                     <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item.title}</Title>
-                                    <Label style={{ textAlign: 'center',  color: color.title, fontFamily: font.medium, fontSize: 14, marginBottom: 12, }}>{item.label}</Label>
+                                    <Label style={{ textAlign: 'center',  color: color.title, fontFamily: font.medium, fontSize: 14,  }}>{item.label}</Label>
                                 </Column>
                             </Button>
                         )}
@@ -258,34 +259,11 @@ export default function HomeScreen({navigation, }){
                     />
                             
 
-                <Column style={{ backgroundColor: color.background, paddingTop: 20, }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Doe anônimamente</Title>
-                    <Carrousel type="doe"/>
-                </Column>
-                <Column style={{ backgroundColor: color.background, marginTop: -10,  }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Produtos em oferta</Title>
-                    <FlatList 
-                            data={ofertas}
-                            ListFooterComponent={<Column style={{ width: 24 }} />}
-                            ListHeaderComponent={<Column style={{ width: 24 }} />}
-                            showsHorizontalScrollIndicator={false}
-                            horizontal
-                            renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopProductSingle', {item: item})}}>
-                                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
-                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
-                                    </Column>
-                                </Button>
-                            )}
-                            keyExtractor={item => item.id}
-                        />
-                </Column>
+              
                 <Column style={{ backgroundColor: color.background, paddingTop: 10,  }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Serviços em oferta</Title>
+                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Serviços em oferta</Title>
                     <FlatList 
-                            data={ofertas}
+                            data={services}
                             ListFooterComponent={<Column style={{ width: 24 }} />}
                             ListHeaderComponent={<Column style={{ width: 24 }} />}
                             showsHorizontalScrollIndicator={false}
@@ -293,9 +271,9 @@ export default function HomeScreen({navigation, }){
                             renderItem={({item}) => (
                                 <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopProductSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
-                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
+                                        <MotiImage source={{ uri: item.img }} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 15, lineHeight: 18, }}>{item.title.length > 10 ? item.title.slice(0,11) + '...' : item.title}</Title>
+                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 14, marginTop: 3, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
                                     </Column>
                                 </Button>
                             )}
@@ -303,12 +281,15 @@ export default function HomeScreen({navigation, }){
                         />
                 </Column>
                 
-                <Column style={{ backgroundColor: color.background, paddingTop: 20, }} >
+              {a && <Column style={{ backgroundColor: color.background, paddingTop: 20, }} >
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Gift Card com cashback</Title>
                     <Carrousel type="gift"/>
-                </Column>
-                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, marginTop: 0,  }}>
-                    <Title>Categorias</Title>
+                </Column>}
+
+
+
+                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 20,  }}>
+                    <Title style={{ fontSize: 22, }}>Categorias</Title>
                     <FlatList 
                         data={categories}
                         ListFooterComponent={<Column style={{ width: 24 }} />}
@@ -322,8 +303,8 @@ export default function HomeScreen({navigation, }){
                                         {item.icon}
                                     </Column>
                                     <Column style={{ justifyContent: 'center', }}>
-                                        <Title style={{ fontSize: 20, lineHeight: 20,  }}>{item.title}</Title>
-                                        <Label style={{  marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 16, }}>{item.desc}</Label>
+                                        <Title style={{ fontSize: 18, lineHeight: 20,  }}>{item.title}</Title>
+                                        <Label style={{  marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 14, }}>{item.desc}</Label>
                                     </Column>
                                 </Row>
                             </Button>
@@ -333,11 +314,11 @@ export default function HomeScreen({navigation, }){
 
                 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100, paddingTop: 10,}}>
-                        <Button style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
-                            <Label style={{ fontFamily: font.bold, color: '#111', }}>Central de ajuda</Label>
+                        <Button onPress={() => {navigation.navigate('AccountFAQ')}}  style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
+                            <Label style={{ fontFamily: font.bold, color: '#111', fontSize: 16, }}>Central de ajuda</Label>
                         </Button>
                         <Button  onPress={() => {navigation.navigate('Donate',)}} style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
-                            <Label style={{ fontFamily: font.bold, color: color.primary, }}>Fazer doação</Label>
+                            <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
                         </Button>
                 </Row>
                 <Column style={{ height: 50, }} />
