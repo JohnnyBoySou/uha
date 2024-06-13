@@ -39,7 +39,6 @@ import DonateSuccessHideScreen from '@screens/donate/success_hide';
 import DonateCertificadoScreen from '@screens/donate/certificado';
 
 import PayBoletoScreen from '@screens/donate/pay_boleto';
-
 import NotafiscalScreen from '@screens/notafiscal';
 import NotafiscalSendScreen from '@screens/notafiscal/send';
 import NotafiscalSuccessScreen from '@screens/notafiscal/success';
@@ -69,9 +68,10 @@ import ONGSingleScreen from '@screens/ong/single';
 import FavoritesScreen from '@screens/favorites';
 
 import ShopScreen from '@screens/shop';
-import ShopSingleScreen from '@screens/shop/single';
-import ShopProductSingleScreen from '@screens/shop/product_single';
+import ShopSingleScreen from '@screens/shop/shop_single';
+import ShopServiceSingleScreen from '@screens/shop/service_single';
 import ShopQRCodeScreen from '@screens/shop/qrcode';
+import ShopSingleSearchScreen from '@screens/shop/search_shop_single';
 
 import QuestionsScreen from '@screens/questions';
 import QuestionListScreen from '@screens/questions/list';
@@ -91,7 +91,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Home'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -108,10 +108,11 @@ export default function Router() {
             <Stack.Screen name="AuthRegister" component={AuthRegisterScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthReset" component={AuthResetScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
 
-            <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ShopProductSingle" component={ShopProductSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-            <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.FadeFromBottomAndroid  , }}/>
+            <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS   , }}/>
             <Stack.Screen name="ShopQRCode" component={ShopQRCodeScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="ShopSingleSearch" component={ShopSingleSearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 

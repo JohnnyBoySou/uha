@@ -16,27 +16,28 @@ import HeartAnim from '../../assets/anim/heart';
 const { width, height } = Dimensions.get('window');
 
 
-export default function ShopProductSingleScreen({ navigation, }) {
+export default function ShopServiceSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const [type, settype] = useState();
     const [item, setitem] = useState();
     const [shop, setshop] = useState();
     const [others, setothers] = useState();
-
+    const id = route.params?.id ? route.params?.id : 1;
     useEffect(() => {
-        getSingleService(1).then((res) => {
+        getSingleService(id).then((res) => {
             setitem(res)
             setshop(res?.shop)
             setothers(res?.others)
         }).catch((err) => {
             console.log(err)
         })
-        verifyLiked(1).then((res) => {
+        verifyLiked(item?.id).then((res) => {
             setlike(res)
         }).catch((err) => {
             console.log(err)
         })
+
         map.transitionTo('from')
+    
     }, [item])
 
     const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -61,12 +62,11 @@ export default function ShopProductSingleScreen({ navigation, }) {
         },
     }
 
-
     const [like, setlike] = useState();
     const toggleLike = async () => {
         if (like) {
             setlike(false)
-            await removeLike(item?.id).then((res) => { }).catch((err) => { console.log(err) })
+            await removeLike(item.id).then((res) => { }).catch((err) => { console.log(err) })
         } else {
             setlike(true)
             await addLike(itm?.product).then((res) => { }).catch((err) => { console.log(err) })
@@ -90,16 +90,12 @@ export default function ShopProductSingleScreen({ navigation, }) {
             <Scroll scrollEventThrottle={16} onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 120) { digit.transitionTo('to') } else { digit.transitionTo('from') } }} style={{ paddingTop: 15, }} >
                 <Header title="Detalhes" rose />
 
-
-
-
-
                 <FlatList
                     horizontal
                     data={item?.imgs}
                     style={{ marginVertical: margin.v, marginBottom: 20, }}
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item) => item}
+                    keyExtractor={(item, index) => index.toString()}
                     snapToAlignment='center'
                     decelerationRate={'fast'}
                     onScroll={Animated.event(
@@ -176,7 +172,7 @@ export default function ShopProductSingleScreen({ navigation, }) {
                                 </Button>
                                 <Column style={{ justifyContent: 'center', marginLeft: 20, }}>
                                     <SubLabel style={{ color: color.secundary, fontSize: 16, }}>{shop?.name}</SubLabel>
-                                    <Label style={{ fontSize: 12, lineHeight: 16, }}>{shop?.address}</Label>
+                                    <Label style={{ fontSize: 12, lineHeight: 16, }}>{shop?.address.slice(0, 32)}</Label>
                                 </Column>
                             </Row>
                             <Button onPress={toggleMap} style={{ backgroundColor: showmap ? color.primary : '#FFE0F6', marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
@@ -191,17 +187,17 @@ export default function ShopProductSingleScreen({ navigation, }) {
                     <Title style={{ fontSize: 20, marginTop: -8, }}>Aproveite também</Title>
                     <FlatList
                         data={others}
-                        style={{ marginTop: 6, marginBottom: 30, }}
+                        style={{ marginTop: 6, marginBottom: 30, marginHorizontal: -8, }}
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item) => item.id}
-                        columnWrapperStyle={{ justifyContent: 'space-between', }}
+                        columnWrapperStyle={{  }}
                         numColumns={2}
                         renderItem={({ item }) => (
-                            <Button onPress={() => navigation.navigate('Home')} style={{ borderRadius: 8, padding: 4, backgroundColor: '#FFE0F6', marginVertical: 6, }}>
-                                <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Button onPress={() => navigation.navigate('Home')} style={{ borderRadius: 8, padding: 4, backgroundColor: '#f5f5f5', marginVertical: 6, flexGrow: 1, margin: 8, }}>
+                                <Row style={{  alignItems: 'center', }}>
                                     <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 6, }} />
-                                    <Column style={{ marginLeft: 6, justifyContent: 'center', marginRight: 12, }}>
-                                        <SubLabel style={{ fontFamily: 'Font_Medium', fontSize: 15, }}>{item?.name}</SubLabel>
+                                    <Column style={{ marginLeft: 8, justifyContent: 'center', marginRight: 12, }}>
+                                        <SubLabel style={{ fontFamily: 'Font_Medium', fontSize: 14, }}>{item?.name.slice(0, 14)}</SubLabel>
                                         <SubLabel style={{ color: color.primary, fontSize: 12, lineHeight: 16, }}>{item?.value} pontos</SubLabel>
                                     </Column>
                                 </Row>
@@ -262,7 +258,7 @@ const Comments = ({ id }) => {
                         data={comment.imgs}
                         style={{ marginVertical: 12, }}
                         showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item) => item}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
                             <MotiImage source={item} style={{ width: 64, height: 64, borderRadius: 12, marginRight: 12, backgroundColor: '#d7d7d7', }} />
                         )}

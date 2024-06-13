@@ -269,7 +269,7 @@ export default function HomeScreen({navigation, }){
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopProductSingle', {item: item})}}>
+                                <Button style={{   marginRight: 12, }}  onPress={() => {navigation.navigate('ShopServiceSingle', {item: item})}}>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                         <MotiImage source={{ uri: item.img }} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 15, lineHeight: 18, }}>{item.title.length > 10 ? item.title.slice(0,11) + '...' : item.title}</Title>

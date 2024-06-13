@@ -138,7 +138,20 @@ export default function ShopQRCodeScreen({ navigation, }) {
                 </MotiView>
 
                 
-                <Column style={{ marginHorizontal: margin.h - 8, }}>
+              
+                </>
+            }
+            <Column style={{height: 50, }} />
+            </Scroll>
+
+
+
+        </Main>
+    )
+}
+
+/**
+ *   <Column style={{ marginHorizontal: margin.h - 8, }}>
                     <Column style={{ backgroundColor: '#fff',  paddingTop: 20,  paddingHorizontal: 28, borderTopLeftRadius: 24, borderTopRightRadius: 24, paddingBottom: 40, marginBottom: -8,}}>
                         <Title>Status do Pedido</Title>
                         <Column style={{ backgroundColor: '#FFE0F6', borderRadius: 12, paddingVertical: 10, marginTop: 12, borderWidth: 2, borderColor: color.primary, }}>
@@ -148,13 +161,4 @@ export default function ShopQRCodeScreen({ navigation, }) {
                     <Svg style={{ marginTop: -11, }} width="100%" height="85" viewBox="0 0 589 85" fill="none" xmlns="http://www.w3.org/2000/svg"><G clipPath="url(#clip0_407_84)"><Path d="M49 85L-0.363442 -0.500009L98.3635 -0.500001L49 85Z" fill="white"/><Path d="M147 85L97.6366 -0.500009L196.363 -0.500001L147 85Z" fill="white"/><Path d="M245 85L195.637 -0.500009L294.363 -0.500001L245 85Z" fill="white"/><Path d="M343 85L293.637 -0.500009L392.363 -0.500001L343 85Z" fill="white"/><Path d="M442 85L392.637 -0.500009L491.363 -0.500001L442 85Z" fill="white"/><Path d="M540 85L490.637 -0.500009L589.363 -0.500001L540 85Z" fill="white"/></G><Defs><ClipPath id="clip0_407_84"><Rect width="589" height="85" fill="white"/></ClipPath></Defs></Svg>
                 </Column>
                 
-                </>
-            }
-            <Column style={{height: 200, }} />
-            </Scroll>
-
-
-
-        </Main>
-    )
-}
+ */
