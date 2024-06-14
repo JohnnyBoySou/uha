@@ -11,20 +11,31 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Octicons from '@expo/vector-icons/Octicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Check, NotepadText, Trash, } from 'lucide-react-native';
+import { useIsFocused } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window');
+const SCREEN_HEIGHT = 1.2 * height;
 
-
-export default function NotafiscalSendScreen({ navigation, }) {
+export default function NotafiscalSendScreen({ navigation, route}) {
     const { color, font, margin } = useContext(ThemeContext);
     const bottomEnviar = useRef(null);
     const [value, setvalue] = useState(null);
 
+    const type = route.params?.type;
 
     const itm = {
         id: value,
         name: 'Nota Fiscal',
         value: 100,
     }
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        if (type?.length > 0) {
+            setvalue(null);
+            bg.transitionTo('from');
+            digit.transitionTo('from');
+        }
+    }, [isFocused]);
+
 
     useEffect(() => {
         if (value?.length > 0) {
@@ -35,6 +46,7 @@ export default function NotafiscalSendScreen({ navigation, }) {
             digit.transitionTo('to');
             bg.transitionTo('to');
         }
+        
     }, [value]);
 
     const bg = useAnimationState({
@@ -53,7 +65,7 @@ export default function NotafiscalSendScreen({ navigation, }) {
             {value == null && 
                 <CameraView
                     barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
-                    style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: 1.2 * height, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
+                    style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
                     facing="back"
                     onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200) }}  >
                 </CameraView>}

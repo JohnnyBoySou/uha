@@ -23,11 +23,14 @@ export default function ExtractScreen({ navigation, route}) {
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     const isFocused = useIsFocused();
+    
     useEffect(() => {
         if(type === page){
             return
-        }else{
+        }else if(type?.length > 0){
             setpage(type);
+        }else{
+            setpage('Extrato');
         }
     }, [isFocused]);
 

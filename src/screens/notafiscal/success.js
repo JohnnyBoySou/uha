@@ -30,7 +30,7 @@ export default function NotafiscalSuccessScreen({ navigation, }) {
             </Column>
 
             <Row style={{ padding: 32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center', }}>
-                <ButtonOut onPress={() => {navigation.navigate('NotafiscalSend')}}  style={{ paddingHorizontal: 24, borderColor: color.primary, }}>
+                <ButtonOut onPress={() => {navigation.navigate('NotafiscalSend', {type: 'clean'})}}  style={{ paddingHorizontal: 24, borderColor: color.primary, }}>
                     <Label style={{ color: color.primary, fontFamily: font.bold, }}>Cadastrar nova</Label>
                 </ButtonOut>
                 <Column style={{ width: 24, }} />

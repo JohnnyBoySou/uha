@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const BASE_URL = 'https://api.com/'
 
-import services from '@data/services'
 import shops from '@data/shops'
+import services from '@data/services'
 import offers from '@data/services_offers'
 import services_single from '@data/service_single'
 import shop_single from '@data/shop_single'

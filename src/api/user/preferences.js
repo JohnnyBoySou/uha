@@ -27,6 +27,7 @@ async function createPreferences(preferences) {
   console.log(preferences)
   try {
     await AsyncStorage.setItem("@settings", JSON.stringify(preferences));
+    await AsyncStorage.setItem("@favorites", JSON.stringify([]));
     return true;
   } catch (error) {
     console.error("Error creating preference:", error);
@@ -44,14 +45,35 @@ async function excludePreferences() {
   }
 }
 
+async function getFavorites() {
+  try {
+    const favorites = JSON.parse(await AsyncStorage.getItem("@favorites")) || [];
+    return favorites;
+  } catch (error) {
+    console.error("Error getting preferences:", error);
+    return [];
+  }
+}
+async function editFavorites(updatedPreferences) {
+  try {
+    const favs = { ...getFavorites(), ...updatedPreferences };
+    await AsyncStorage.setItem("@favorites", JSON.stringify(favs));
+    return true;
+  } catch (error) {
+    console.error("Error editing preferences:", error);
+    return false;
+  }
+}
+
+
 async function addLike(array) {
   try {
-    const preferences = await getPreferences();
-    if (!preferences.likes) {
-      preferences.likes = [];
+    const favorites = await getFavorites();
+    if (!favorites) {
+      favorites = [];
     }
-    preferences.likes = preferences.likes.concat(array);
-    await editPreferences(preferences);
+    favorites = favorites.concat(array);
+    await editFavorites(favorites);
     return true;
   } catch (error) {
     console.error("Error adding likes array:", error);
@@ -61,7 +83,7 @@ async function addLike(array) {
 
 async function verifyLiked(id) {
   try {
-    const preferences = await getPreferences();
+    const preferences = await getFavorites();
     return preferences.likes && preferences.likes.some((manga) => manga.id === id);
   } catch (error) {
     console.error("Error verifying liked manga:", error);
@@ -71,7 +93,7 @@ async function verifyLiked(id) {
 
 async function removeLike(id) {
   try {
-    const preferences = await getPreferences();
+    const preferences = await getFavorites();
     if (!preferences.likes) {
       preferences.likes = [];
     }
@@ -179,6 +201,8 @@ export {
   addLike,
   removeLike,
   verifyLiked,
+  getFavorites,
+  editFavorites,
 
   addComplete,
   removeComplete,

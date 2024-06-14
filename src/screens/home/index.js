@@ -289,7 +289,7 @@ export default function HomeScreen({ navigation, }) {
                         keyExtractor={item => item.id}
                         style={{ marginVertical: margin.v, marginTop: 0, }}
                         renderItem={({ item }) => (
-                            <Button style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('Shop', { type: item.title }) }}>
+                            <Button style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('Shop', { type: item, }) }}>
                                 <Row style={{ alignItems: 'center', }}>
                                     <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
                                         {item.icon}
@@ -322,7 +322,7 @@ export default function HomeScreen({ navigation, }) {
 
 const categories = [
     {
-        id: 1,
+        id: 12,
         title: 'Serviços Pet',
         desc: '30 estabelecimentos parceiros',
         icon: <Bone size={28} color="#FFF2E3" />,
@@ -438,9 +438,6 @@ export const Carrousel = ({ type }) => {
 }
 
 
-
-
-
 const OffersCards = ({ data }) => {
     const { color, margin, font } = useContext(ThemeContext);
     const navigation = useNavigation();
@@ -455,9 +452,9 @@ const OffersCards = ({ data }) => {
             <FlatList
                 data={data}
                 ListFooterComponent={
-                    <Column style={{marginRight: 28, backgroundColor: color.primary+20, paddingBottom: 12,}} >
+                    <Column style={{marginRight: 28, backgroundColor: color.primary+20, paddingBottom: 12, borderTopLeftRadius: 20, borderTopRightRadius: 20,}} >
                         <Button onPress={() => { navigation.navigate('Shop') }} style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, backgroundColor: color.primary, width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20,   }}>
-                            <Label style={{ color: '#fff', fontFamily: font.bold, fontSize: 16, textAlign: 'center', }}>Ver mais Ofertas</Label>
+                            <Label style={{ color: '#fff', fontFamily: font.bold, fontSize: 16, textAlign: 'center', }}>Ver mais {'\n'}Ofertas</Label>
                         </Button>
                     </Column>
                 }
