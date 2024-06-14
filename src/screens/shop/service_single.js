@@ -11,8 +11,9 @@ import { ExpandingDot } from "react-native-animated-pagination-dots";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Feather from '@expo/vector-icons/Feather';
 
-import { removeLike, verifyLiked, addLike } from '@hooks/prefences';
+import { removeLike, verifyLiked, addLike } from '@api/user/preferences';
 import HeartAnim from '../../assets/anim/heart';
+import { createPreferences, excludeFavorites, getPreferences } from '../../api/user/preferences';
 const { width, height } = Dimensions.get('window');
 
 
@@ -37,7 +38,6 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         })
 
         map.transitionTo('from')
-    
     }, [item])
 
     const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -126,7 +126,6 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     inActiveDotColor={color.primary + 50}
                 />
                 <Column style={{ marginHorizontal: margin.h, }}>
-
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                         <Column style={{ width: '80%' }}>
                             <Title>{item?.name}</Title>
@@ -139,11 +138,10 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                             </Column>
                         </Column>
                     </Row>
-
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, marginTop: 12,}}>
                         <Row>
                             {item?.categories?.map((cat) => (
-                                <Button onPress={() => { navigation.navigate('Shop', { cat: item }) }} style={{ marginRight: 6, }}>
+                                <Button key={cat.id} onPress={() => { navigation.navigate('Shop', { type: cat }) }} style={{ marginRight: 6, }}>
                                     <Label key={cat.name} style={{ fontSize: 14, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 6, paddingHorizontal: 14, backgroundColor: color.primary + 20, borderRadius: 8, alignSelf: 'flex-start', }}>{cat?.name}</Label>
                                 </Button>
                             ))}
@@ -159,11 +157,8 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         </Button>
                     </Row>
                 </Column>
-
-
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Title style={{ fontSize: 20, }}>Onde encontrar</Title>
-
                     <Column style={{ borderRadius: 12, padding: 8, backgroundColor: '#fff', borderWidth: 1, borderColor: '#50505020', marginVertical: 12, zIndex: 9, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Row>
@@ -183,7 +178,6 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     <MotiView state={map} style={{ backgroundColor: '#f7f7f7', borderRadius: 12, marginHorizontal: 12, }} transition={{ type: 'timing' }}>
                         <MotiImage source={require('@imgs/map.png')} style={{ width: '100%', height: '100%', borderRadius: 12, }} />
                     </MotiView>
-
                     <Title style={{ fontSize: 20, marginTop: -8, }}>Aproveite também</Title>
                     <FlatList
                         data={others}
@@ -205,22 +199,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         )}
                     />
                 </Column>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <Column style={{ height: 100, }} />
-
             </Scroll>
             <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', bottom: 0, left: 20, zIndex: 99, }}>
                 <Row style={{ marginVertical: 20, }}>
@@ -285,66 +264,6 @@ const Rate = ({ rate }) => {
 }
 
 
-const product = {
-    "uid": "12345",
-    "name": "Descricao do servico",
-    "desc": "Breve descrição sobre os serviços ou produtos que a loja vende lorem ipsum",
-    "categories": [
-        {
-            "id": "12345",
-            "name": "Categoria 1"
-        },
-        {
-            "id": "12345",
-            "name": "Categoria 2"
-        }
-    ],
-    "rate": 4.5,
-    "old_value": 60,
-    "value": 40,
-    "imgs": ["url1", "url2", "url3"],
-    "share_id": "9876543456789",
-    "comments_id": "9876543456789",
-    "recomendations_id": ["12345", "12345", "12345"]
-}
-
-const produtos = [
-    {
-        name: 'Natura',
-        desc: 'A partir de 40 Pontos',
-        product: 'Eudora',
-        img: require('@imgs/natura.png'),
-    },
-    {
-        name: 'Americanas',
-        desc: 'A partir de 40 Pontos',
-        product: '23ed',
-        img: require('@imgs/americanas.png'),
-    },
-    {
-        name: 'Oboticário',
-        product: '23e5',
-        desc: 'A partir de 40 Pontos',
-        img: require('@imgs/oboticario.png'),
-    },
-    {
-        name: 'Casas Bahia',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/casas_bahia.png'),
-    },
-    {
-        name: 'Amazon',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/amazon.png'),
-    },
-
-    {
-        name: 'Petiko',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/petiko.png'),
-    },
-
-]
 
 const comments = [
     {

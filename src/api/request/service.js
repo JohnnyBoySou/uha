@@ -7,6 +7,7 @@ import services from '@data/services'
 import offers from '@data/services_offers'
 import services_single from '@data/service_single'
 import shop_single from '@data/shop_single'
+import campanhas from '@data/campanhas'
 
 export async function getShops() {
     //const res = axios.get(BASE_URL + '/shops')
@@ -19,6 +20,12 @@ export async function getServices() {
     return services
     //data = res.data
 }
+export async function getCampaigns() {
+    //const res = axios.get(BASE_URL + '/services')
+    return campanhas
+    //data = res.data
+}
+
 
 export async function getSingleService(id) {
     //const res = axios.get(BASE_URL + '/services/' + id)

@@ -54,6 +54,17 @@ async function getFavorites() {
     return [];
   }
 }
+
+async function excludeFavorites() {
+  try {
+    await AsyncStorage.removeItem("@favorites");
+    return true;
+  } catch (error) {
+    console.error("Error excluding favorites ", error);
+    return false;
+  }
+}
+
 async function editFavorites(updatedPreferences) {
   try {
     const favs = { ...getFavorites(), ...updatedPreferences };
@@ -65,15 +76,16 @@ async function editFavorites(updatedPreferences) {
   }
 }
 
-
 async function addLike(array) {
   try {
     const favorites = await getFavorites();
+    let updatedFavorites;
     if (!favorites) {
-      favorites = [];
+      updatedFavorites = [];
+    } else {
+      updatedFavorites = favorites.concat(array);
     }
-    favorites = favorites.concat(array);
-    await editFavorites(favorites);
+    await editFavorites(updatedFavorites);
     return true;
   } catch (error) {
     console.error("Error adding likes array:", error);
@@ -83,8 +95,9 @@ async function addLike(array) {
 
 async function verifyLiked(id) {
   try {
-    const preferences = await getFavorites();
-    return preferences.likes && preferences.likes.some((manga) => manga.id === id);
+    const favorites = await getFavorites();
+    console.log(favorites)  
+    return favorites && favorites.some((item) => item.id === id);
   } catch (error) {
     console.error("Error verifying liked manga:", error);
     return false;
@@ -93,12 +106,12 @@ async function verifyLiked(id) {
 
 async function removeLike(id) {
   try {
-    const preferences = await getFavorites();
-    if (!preferences.likes) {
-      preferences.likes = [];
+    const favorites = await getFavorites();
+    if (!favorites) {
+      favorites  = [];
     }
-    preferences.likes = preferences.likes.filter((manga) => manga.id !== id);
-    await editPreferences(preferences);
+    favorites = favorites.filter((item) => item.id !== id);
+    await editFavorites(favorites);
     return true;
   } catch (error) {
     console.error("Error removing like:", error);
@@ -203,6 +216,7 @@ export {
   verifyLiked,
   getFavorites,
   editFavorites,
+  excludeFavorites,
 
   addComplete,
   removeComplete,
