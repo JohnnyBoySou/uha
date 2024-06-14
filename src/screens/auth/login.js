@@ -9,7 +9,7 @@ import CheckBox from '@components/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import Octicons from '@expo/vector-icons/Octicons';
 import BottomSheet  from '@gorhom/bottom-sheet'
-
+import { createPreferences } from '../../api/user/preferences';
 
 export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -49,17 +49,30 @@ export default function AuthLoginScreen({ navigation, }) {
     const porcentagePassword = Object.values(passwordCriteria).filter((e) => e).length / Object.values(passwordCriteria).length * 100;
     const messagePassword = porcentagePassword < 50 ? 'Fraca' : porcentagePassword < 80 ? 'Razoável' : 'Forte';
     const colorPassword = porcentagePassword < 50 ? color.red : porcentagePassword < 80 ? '#f5ad42': color.green;
-
-    const handleLogin = () => {
-        if(email?.length < 5 ) return alert('Preencha o campo de e-mail')
-        else if(password?.length < 8) return alert('Preencha o campo de senha')
-        
-        setloading(true)
-        setTimeout(() => {
-            setloading(false)
-            navigation.replace('Tabs')
-        }, 2000);
-    }
+    const handleLogin = async () => {
+        if (!email || email.length < 5) {
+            return alert('Preencha o campo de e-mail');
+        }
+        if (!password || password.length < 8) {
+            return alert('Preencha o campo de senha');
+        }
+        setloading(true);
+        const params = {
+            "name": 'Teste',
+            "email": email,
+            "password": password,
+            "cpf": '123.456.789-00',
+            "whatsapp": '55 11 99999-9999',
+            "cep": '00000-000',
+        };
+        await createPreferences(params).then(res => {
+            if(res){
+                navigation.replace('Tabs')
+            }
+        })
+       
+    };
+    
 
     const handleRegister = () => {
         setloading(true)
@@ -151,10 +164,10 @@ export default function AuthLoginScreen({ navigation, }) {
                             </Pressable>
                         </Row>
 
-                        <ButtonPR onPress={handleLogin} style={{ marginTop: 30, }}>
+                        <ButtonPR onPress={handleLogin} disabled={loading} style={{ marginTop: 30, }}>
                             <Row>
                                 {loading ?
-                                    <ActivityIndicator animating={loading} color="#fff" size={27} />
+                                    <ActivityIndicator  color="#fff" size={27} />
                                     :
                                     <LabelPR>Entrar</LabelPR>
                                 }

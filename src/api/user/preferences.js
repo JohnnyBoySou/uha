@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const key = "@settings";
+
 async function getPreferences() {
   try {
-    const preferences = JSON.parse(await AsyncStorage.getItem("@settings")) || [];
+    const preferences = JSON.parse(await AsyncStorage.getItem("@settings")) || {};
     return preferences;
   } catch (error) {
     console.error("Error getting preferences:", error);
@@ -22,6 +24,7 @@ async function editPreferences(updatedPreferences) {
 }
 
 async function createPreferences(preferences) {
+  console.log(preferences)
   try {
     await AsyncStorage.setItem("@settings", JSON.stringify(preferences));
     return true;
@@ -184,11 +187,6 @@ export {
   addFollow,
   removeFollow,
   verifyFollow, 
-  
-  addMark,
-  removeMark,
-  getMarks,
- 
 };
 
 

@@ -4,7 +4,7 @@ import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubL
 import { ThemeContext } from 'styled-components/native';
 import { CircleCheck, Info, CircleX, AlarmClock, Plus, Car } from 'lucide-react-native';
 import { AnimatePresence, MotiView, useAnimationState } from 'moti';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import doacoes from '@data/doacoes';
 import extrato from '@data/extrato';
 import coins from '@data/coins';
@@ -15,7 +15,6 @@ import user from '@data/user';
 export default function ExtractScreen({ navigation, route}) {
     const { color, font, margin } = useContext(ThemeContext);
     let type = route.params?.type;
-
     const [page, setpage] = useState(type ? type : 'Extrato');
     const [dateSelect, setdateSelect] = useState('Hoje');
     const scrollTags = useRef(null);
@@ -23,13 +22,19 @@ export default function ExtractScreen({ navigation, route}) {
     const bts = ['Extrato', 'Doações', 'Pontos', 'Rifas', 'Moedas']
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        if(type === page){
+            return
+        }else{
+            setpage(type);
+        }
+    }, [isFocused]);
+
+
     useEffect(() => {
         const selectType = () => {
-            if(page === 'Extrato') Card.transitionTo('open');
-            if(type?.lenght > 0) {
-                setpage(type)
-            }
-            
+            if(page === 'Extrato'){Card.transitionTo('open');}
         }
 
         const handleScroll = () => {
@@ -38,7 +43,6 @@ export default function ExtractScreen({ navigation, route}) {
         }
         handleScroll()
         selectType()
-        
     }, [page]);
     
     const [actionButton, setactionButton] = useState(false);
@@ -101,7 +105,7 @@ export default function ExtractScreen({ navigation, route}) {
                     </Button>
                     </MotiView>
                 ))}
-                <Column style={{width: 100, height: 12, }} />
+                <Column style={{width: 60, height: 12, }} />
             </ScrollView>
 
             <Row style={{ justifyContent: 'flex-end', alignItems: 'center', marginHorizontal: margin.h,  }}>

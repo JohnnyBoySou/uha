@@ -1,12 +1,24 @@
 import React, { useEffect } from 'react';
 import { Main, Row } from '@theme/global';
 import { MotiImage } from 'moti';
+import { getPreferences } from '../../api/user/preferences';
+
 export default function AsyncStaticScreen({ navigation, }) {
     useEffect(() => {
-        setTimeout(() => {
-            navigation.replace('Onboarding')
-        }, 2200)
-    }, [])
+        const fetchData = async () => {
+            const user = await getPreferences()
+            if (user?.email) {
+                setTimeout(() => {
+                    navigation.replace('Tabs')
+                }, 2000);
+            }
+            else{
+               navigation.replace('Onboarding')
+            }
+        }
+        fetchData()
+    }, []);
+
     return (
         <Main style={{ backgroundColor: "#FE25BD", flex: 1, justifyContent: 'center', alignItems: 'center', }}>
             <Row>

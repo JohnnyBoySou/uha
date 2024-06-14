@@ -1,16 +1,14 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { FlatList, ScrollView, View, Animated, Pressable } from 'react-native';
-import { Main, Scroll, Row, Column, Title, Label, Button, ButtonPR } from '@theme/global';
+import { FlatList, View, Animated } from 'react-native';
+import { Main, Scroll, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MotiImage,  } from 'moti';
-import { Bell , Search} from 'lucide-react-native';
-import Avatar from '@components/avatar';
-import Notify from '@components/notify';
 import Header from '@components/header';
 
 
 export default function NotafiscalScreen({navigation, }){
     const { color, font, margin, } = useContext(ThemeContext);
+    const a = false;
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
@@ -25,7 +23,7 @@ export default function NotafiscalScreen({navigation, }){
                     <Button onPress={() => {navigation.navigate('NotafiscalSend')}} style={{ borderRadius: 8, marginTop: 24, backgroundColor: color.primary, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                         <Label style={{ fontFamily: font.bold, color: "#fff", textAlign: 'center', }}>Cadastrar nota fiscal</Label>
                     </Button>
-                    <Button onPress={() => {navigation.navigate('Extract', { type: 'Cashback'})}}  style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                    <Button onPress={() => {navigation.navigate('Tabs', { screen: 'Extract', params: { type: 'Moedas'}})}}  style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                         <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Minhas notas</Label>
                     </Button>
 
@@ -35,9 +33,11 @@ export default function NotafiscalScreen({navigation, }){
                     <Label style={{ fontSize: 16, marginTop: 10, }}> - Independente do valor da nota fiscal ela valerá 1 ponto.</Label>
 
 
-                    <Title style={{ marginTop: 24, fontSize: 20, marginBottom: -12,}}>Compre a partir de 15 notas fiscais</Title>
                    
                 </Column>
+                
+               {a && <>
+                <Title style={{ marginTop: 24, fontSize: 20, marginBottom: -12,}}>Compre a partir de 15 notas fiscais</Title>
                 <Scroll horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: margin.h, marginBottom: 24,}}>
                         <Column style={{ marginBottom: 12,  }}>
                             <MotiImage style={{ width: 250, height: 70, backgroundColor: '#30303030', borderRadius: 16, marginRight: 24, }}/>
@@ -56,6 +56,7 @@ export default function NotafiscalScreen({navigation, }){
                         </Column>
 
                     </Scroll>
+               </>}
                 <Column style={{height: 100, }} />
             </Scroll>
 
