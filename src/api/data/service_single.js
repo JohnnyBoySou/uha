@@ -145,7 +145,7 @@ const service_single = [
     },
     {
         name: "Exames de rotina",
-        id: 5,
+        id: 6,
         img: "https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg",
         desc: "Breve descrição sobre o serviço que a loja vende",
         label: 'A partir de 50 pontos',
@@ -179,7 +179,78 @@ const service_single = [
                 value: 50,
             },
         ],
-
+    },
+    {
+        name: "Consulta de Emergência 24h",
+        id: 7,
+        img: "https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg",
+        desc: "Breve descrição sobre o serviço que a loja vende",
+        label: 'A partir de 50 pontos',
+        value: 100,
+        imgs: ['https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg', 'https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg'],
+        old_value: 120,
+        categories: [
+            {
+                id: 12345,
+                name: "Pets"
+            },
+            {
+                id: 1234,
+                name: "Cuidados"
+            }
+        ],
+        shop: {
+            id: 24,
+        },
+        others: [
+            {
+                name: "Corte de cabelo",
+                id: 3,
+                img: "https://i.pinimg.com/564x/79/0d/99/790d99b47c5f8f45c6321d6768bd2d4b.jpg",
+                value: 15,
+            },
+            {
+                name: "Exames de rotina",
+                id: 5,
+                img: "https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg",
+                value: 50,
+            },
+        ],
+    },
+    {
+        name: "Limpeza bocal",
+        id: 5,
+        img: "https://i.pinimg.com/736x/ab/47/bf/ab47bf4ce01e56a884cb0f077f7d873a.jpg",
+        value: 12,
+        old_value: 24, 
+        imgs: ['https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg', 'https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg'],
+        categories: [
+            {
+                id: 12345,
+                name: "Pets"
+            },
+            {
+                id: 1234,
+                name: "Cuidados"
+            }
+        ],
+        shop: {
+            id: 24,
+        },
+        others: [
+            {
+                name: "Corte de cabelo",
+                id: 3,
+                img: "https://i.pinimg.com/564x/79/0d/99/790d99b47c5f8f45c6321d6768bd2d4b.jpg",
+                value: 15,
+            },
+            {
+                name: "Exames de rotina",
+                id: 5,
+                img: "https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg",
+                value: 50,
+            },
+        ],
     },
     
 ]

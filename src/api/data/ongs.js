@@ -1,5 +1,4 @@
-
-const Ongs = [
+const ongs = [
     {
         id: 1,
         name: 'Patinhas do Bem',
@@ -24,4 +23,4 @@ const Ongs = [
 
     },
 ]
-export default Ongs;
+export default ongs;

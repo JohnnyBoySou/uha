@@ -1,89 +1,163 @@
 import React, { useContext, useState, useRef } from 'react';
-import { FlatList, Pressable, ScrollView, ActivityIndicator } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonLI, LabelLI, ButtonOut, Digit, ButtonPR } from '@theme/global';
+import { FlatList } from 'react-native';
+import { Main, Scroll, Column, Label, Title, Row, Button, LabelLI, ButtonOut } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Clipboard as Clip, X, CheckCircle } from 'lucide-react-native';
-import Header from '@components/header';
-import { AnimatePresence, MotiImage, MotiView } from 'moti';
+import { CircleCheck, ArrowLeft, Info, Clipboard as Clip, CheckCircle, Edit } from 'lucide-react-native';
+import CheckBox from '@components/checkbox';
+import { MotiImage, MotiView } from 'moti';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
+import QRCode from 'react-native-qrcode-svg';
+import DonateONGS from './ongs';
 
 
 export default function DonateValueHideScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const value = route.params?.value;
-
-    const [loading, setloading] = useState(false);
+    const item = { code: '122131313', }
     const [visible, setVisible] = useState(false);
+
     const data = { pix: 'chavepix09876543456789087' }
-    const copyToClipboard = async () => {
-        setVisible(true);
-        await Clipboard.setStringAsync(value.pix);
+    const [clip, setclip] = useState(false);
+
+    const handleClipboard = async () => {
+        await Clipboard.setStringAsync(data.pix);
+        setclip(true)
     };
+
+
     const bottomONGS = useRef(null);
+    const [ong, setong] = useState();
+    const handleOng = (vl) => {
+        setong(vl)
+        bottomONGS.current.close()
+    }
 
 
     return (
-        <Main style={{}}>
-            <Scroll>
-                <Header title="Fazer doação anônima" />
-                <Column style={{ marginHorizontal: margin.h, marginVertical: 32, }}>
-                    <Label>Você está fazendo uma doação de</Label>
-                    <Title style={{ fontSize: 32, lineHeight: 36, marginTop: 8, marginBottom: 12, }}>R$ {value},00</Title>
+        <Main style={{ backgroundColor: color.primary, }}>
+            <Scroll style={{ paddingTop: 15, }}>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
+                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        <ArrowLeft color={color.secundary} />
+                    </Button>
+                    <Title style={{ color: '#fff', marginTop: 8, }}>Doação anônima</Title>
+                    <Column style={{ width: 42, height: 42, justifyContent: 'center', alignItems: 'center', }}>
+                        <Info color="#fff" size={32} />
+                    </Column>
+                </Row>
 
-                    <ButtonOut onPress={() => { bottomONGS.current.expand() }} style={{ borderColor: color.primary, alignSelf: 'flex-start', paddingVertical: 8, marginVertical: 12, }}>
+                <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0,}} delay={300}>
+                <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginBottom: -44, zIndex: 99, alignSelf: 'center' }} />
+                <Column style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: '#fff', paddingTop: 40, borderRadius: 12, }}>
+
+                    <Column style={{ marginHorizontal: 20, }}>
+                        <Label style={{ textAlign: 'center', }}>Você está fazendo {'\n'}uma doação de</Label>
+                        <Row style={{ justifyContent: 'center', alignItems: 'center', marginTop: 8, marginBottom: 12, }}>
+                            <Title style={{ fontSize: 32, lineHeight: 36, }}>R$ {value},00</Title>
+                            <Button onPress={() => { navigation.goBack() }} style={{ justifyContent: 'center', marginLeft: 12, alignItems: 'center', width: 32, height: 32, backgroundColor: color.secundary + 20, borderRadius: 100, }}>
+                                <Edit size={18} color={color.secundary} />
+                            </Button>
+                        </Row>
+                    </Column>
+
+
+                    {ong && <Button onPress={() => { bottomONGS.current.expand() }} style={{ backgroundColor: color.blue + 30, padding: 10, marginHorizontal: 20, borderRadius: 12, }}>
+                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+
+                            <Row style={{ alignItems: 'center', }}>
+                                <Button>
+                                    <MotiImage style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: '#FFE0F6' }} source={{ uri: ong?.img }} />
+                                </Button>
+                                <Column style={{ marginLeft: 14, }}>
+                                    <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', }}>{ong?.name.length >= 20 ? ong?.name.slice(0, 15) + '...' : ong?.name}</Title>
+                                    <Label style={{ fontSize: 12, marginTop: -2, }}>{ong?.desc.length >= 26 ? ong?.desc.slice(0, 20) + '...' : ong?.desc}</Label>
+                                </Column>
+                            </Row>
+                            <CheckBox status={true} />
+                        </Row>
+
+                    </Button>}
+
+
+                    {!ong && <ButtonOut onPress={() => { bottomONGS.current.expand() }} style={{ borderColor: color.primary, alignSelf: 'flex-start', paddingVertical: 8,  alignSelf: 'center', }}>
                         <LabelLI style={{ color: color.primary }}>Escolher ONG</LabelLI>
                     </ButtonOut>
-
-                    <Label>Local de doação: aplicativo </Label>
+                    }
+                    <Row style={{ marginHorizontal: - 24, justifyContent: 'center', alignItems: 'center', marginTop: 10, }}>
+                        <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
+                        <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
+                            <Column style={{ width: '100%', height: 5, borderTopWidth: 2, borderColor: '#00000030', borderStyle: 'dashed', }} />
+                        </Column>
+                        <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
+                    </Row>
+                    <Title style={{ textAlign: 'center', }}>Aponte a câmera</Title>
                     <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }}>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Column style={{ borderWidth: 1, borderColor: color.primary, borderRadius: 32, padding: 32, backgroundColor: "#fff", marginVertical: 20, }}>
-                                <MotiImage source={require('@imgs/qrcode.png')} style={{ width: 300, height: 300, }} />
+                                <QRCode
+                                    size={230}
+                                    quietZone={10}
+                                    value={item.code}
+                                    logo={require('@imgs/logo_u_black.png')}
+                                    logoSize={52}
+                                    color={color.secundary}
+                                    logoBorderRadius={0}
+                                    logoBackgroundColor='#fff'
+                                    logoMargin={6}
+                                />
                             </Column>
+                            <Row style={{ marginHorizontal: - 24, justifyContent: 'center', alignItems: 'center', marginTop: 10, }}>
+                                <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
+                                <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
+                                    <Column style={{ width: '100%', height: 5, borderTopWidth: 2, borderColor: '#00000030', borderStyle: 'dashed', }} />
+                                </Column>
+                                <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
+                            </Row>
                             <Label style={{ marginVertical: 20, }}>Ou copie o código para pagamento</Label>
-                            <Button onPress={copyToClipboard} style={{ borderStyle: 'dashed', borderWidth: 2, borderColor: color.secundary, borderRadius: 12, flexGrow: 1, paddingHorizontal: 30, }}>
-                                <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                    <Title style={{ paddingTop: 14, paddingBottom: 10, fontSize: 18, lineHeight: 18, }}>{data.pix}...</Title>
-                                    <Clip size={16} color="#000" style={{ marginLeft: 12, }} />
+                            <Button onPress={handleClipboard} >
+                                <Row style={{ borderWidth: 2, borderStyle: 'dashed', padding: 12, borderRadius: 12, justifyContent: 'center', alignItems: 'center', borderColor: clip ? color.green : color.secundary, }}>
+                                    <Title style={{ marginBottom: -3, marginRight: 12, color: clip ? color.green : color.secundary, }}>{item.code}</Title>
+                                    <Clip size={22} color={color.primary} />
                                 </Row>
                             </Button>
 
-                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 30, }}>
-                                <Title style={{ marginRight: 6, }}>Status: pagamento aprovado</Title>
+                            <Row style={{ alignItems: 'center', marginTop: 30, marginBottom: 30, }}>
+                                <Title style={{ marginRight: 6, fontSize: 18, }}>Status: aguardando pagamento</Title>
                                 <CircleCheck color={color.green} size={24} />
                             </Row>
 
-                            <Row style={{ padding: 32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', }}>
-                                <ButtonPR style={{ paddingHorizontal: 24, }} onPress={() => { navigation.navigate('BuyServiceSuccess') }} >
-                                    <LabelLI  style={{ color: '#fff', }}>Fazer doação</LabelLI>
-                                </ButtonPR>
-                            </Row>
-                            
+
                         </Column>
                     </MotiView>
 
                 </Column>
-            </Scroll>
-            <BottomSheet
-                ref={bottomONGS}
-                snapPoints={[0.4, 800]}
+                </MotiView>
 
-            >
+
+            </Scroll>
+
+            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 800]}>
                 <BottomSheetScrollView>
-                    <ONGS value={value} navigation={navigation}/>
+                    <DonateONGS handleOng={handleOng} value={value} />
                 </BottomSheetScrollView>
             </BottomSheet>
-
 
             <Snackbar style={{ backgroundColor: "#fff", marginVertical: 12, marginHorizontal: margin.h, }} visible={visible} onDismiss={() => setVisible(false)} action={{ label: 'Pronto', onPress: () => setVisible(false), }}><Label>Copiado para a área de transferência</Label></Snackbar>
         </Main>
     )
 }
 
-
+/**
+ *     <Row style={{ padding: 32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', }}>
+                                <ButtonPR style={{ paddingHorizontal: 24, }} onPress={() => { navigation.navigate('BuyServiceSuccess') }} >
+                                    <LabelLI style={{ color: '#fff', }}>Fazer doação</LabelLI>
+                                </ButtonPR>
+                            </Row>
+ * 
+ */
 
 const listOngs = [
     {
@@ -106,15 +180,15 @@ const listOngs = [
         about: 'Fundado em fevereiro de 2015, a partir da união de um grupo de pessoas em prol do propósito de cuidar bem e adotar bem cada animal, o Instituto Caramelo atua principalmente no resgate de animais feridos ou em situação de risco, recuperação e adoção. Mantemos um abrigo com cerca de 300 animais, entre cães e gatos, todos resgatados das ruas, onde eles são protegidos, tratados, alimentados e aguardam pela chance de serem adotados.'
     },
 ]
-const ONGS = ({ navigation, value}) => {
+const ONGS = ({ navigation, value }) => {
     const { color, font, margin } = useContext(ThemeContext);
     const [type, settype] = useState(false);
     return (
         <Column style={{ paddingHorizontal: margin.h, paddingVertical: margin.v, }}>
             <Title style={{ fontSize: 36, lineHeight: 40, marginBottom: 12, }}>Escolha qual ONG {'\n'}deseja beneficiar</Title>
             <Label>Ao cadastrar sua nota o valor de R$ {value},00 será doado para a ONG abaixo de sua escolha</Label>
-            <ButtonOut onPress={() => { settype(!type) }} style={{ borderColor: type ? '#fff': color.primary,  paddingVertical: 8, marginVertical: 18, backgroundColor: type ? color.primary : 'transparent' }}>
-                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+            <ButtonOut onPress={() => { settype(!type) }} style={{ borderColor: type ? '#fff' : color.primary, paddingVertical: 8, marginVertical: 18, backgroundColor: type ? color.primary : 'transparent' }}>
+                <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <LabelLI style={{ color: type ? '#fff' : color.primary }}>Deixar escolha em aberto</LabelLI>
                     <CheckCircle size={20} color='#fff' style={{ marginLeft: 12, }} />
                 </Row>
@@ -124,9 +198,9 @@ const ONGS = ({ navigation, value}) => {
                 data={listOngs}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                    <Button onPress={() => {navigation.navigate('ONGSingle', {item: item,})}}  key={item.id} style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginBottom: 12, paddingBottom: 12, }}>
-                        <Row style={{  alignItems: 'center',  }}>
-                            <MotiImage style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: '#FFE0F6' }}/>
+                    <Button onPress={() => { navigation.navigate('ONGSingle', { item: item, }) }} key={item.id} style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginBottom: 12, paddingBottom: 12, }}>
+                        <Row style={{ alignItems: 'center', }}>
+                            <MotiImage style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: '#FFE0F6' }} />
                             <Column style={{ marginLeft: 20, }}>
                                 <Title>{item?.name}</Title>
                                 <Label>{item?.desc}</Label>

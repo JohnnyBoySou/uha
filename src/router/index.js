@@ -37,6 +37,7 @@ import DonateHideScreen from '@screens/donate/hide';
 import DonateValueHideScreen from '@screens/donate/value_hide';
 import DonateSuccessHideScreen from '@screens/donate/success_hide';
 import DonateCertificadoScreen from '@screens/donate/certificado';
+import DonateONGS from '@screens/donate/ongs';
 
 import PayBoletoScreen from '@screens/donate/pay_boleto';
 import NotafiscalScreen from '@screens/notafiscal';

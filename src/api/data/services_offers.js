@@ -1,7 +1,7 @@
 const offers = [
     {
         name: "Corte de cabelo",
-        id: 2,
+        id: 3,
         img: "https://i.pinimg.com/564x/79/0d/99/790d99b47c5f8f45c6321d6768bd2d4b.jpg",
         value: 15,
         old_value: 30,
@@ -9,7 +9,7 @@ const offers = [
     },
     {
         name: "Exames de rotina",
-        id: 3,
+        id: 6,
         img: "https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg",
         value: 50,
         old_value: 70,
@@ -17,7 +17,7 @@ const offers = [
     },
     {
         name: "Consulta de Emergência 24h",
-        id: 4,
+        id: 7,
         img: "https://i.pinimg.com/736x/50/b2/b8/50b2b80696deda48656c3cbb36b2d446.jpg",
         value: 100,
         old_value: 120,
@@ -31,5 +31,6 @@ const offers = [
         old_value: 24,
         sell_porcentage: 50,
     },
+    
 ]
 export default offers

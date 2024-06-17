@@ -24,7 +24,6 @@ async function editPreferences(updatedPreferences) {
 }
 
 async function createPreferences(preferences) {
-  console.log(preferences)
   try {
     await AsyncStorage.setItem("@settings", JSON.stringify(preferences));
     await AsyncStorage.setItem("@favorites", JSON.stringify([]));
@@ -77,16 +76,23 @@ async function editFavorites(updatedPreferences) {
 }
 
 async function addLike(array) {
+  console.log(array)
+
+
   try {
     const favorites = await getFavorites();
-    let updatedFavorites;
+    console.log(favorites)
+  
+  
+  
+  /*  let updatedFavorites;
     if (!favorites) {
       updatedFavorites = [];
     } else {
       updatedFavorites = favorites.concat(array);
     }
     await editFavorites(updatedFavorites);
-    return true;
+    */return true;
   } catch (error) {
     console.error("Error adding likes array:", error);
     return false;

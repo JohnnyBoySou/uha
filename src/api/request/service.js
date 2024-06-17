@@ -9,11 +9,6 @@ import services_single from '@data/service_single'
 import shop_single from '@data/shop_single'
 import campanhas from '@data/campanhas'
 
-export async function getShops() {
-    //const res = axios.get(BASE_URL + '/shops')
-    return shops
-    //data = res.data
-}
 
 export async function getServices() {
     //const res = axios.get(BASE_URL + '/services')
@@ -35,6 +30,14 @@ export async function getSingleService(id) {
     return rs 
 }
 
+//remove next code review
+export async function getShops() {
+    //const res = axios.get(BASE_URL + '/shops')
+    return shops
+    //data = res.data
+}
+
+//remove next code review
 export async function getSingleShop(id) {
     //const res = axios.get(BASE_URL + '/shop/' + id)
     const data = shop_single.find((shop) => shop.id == id)
@@ -42,6 +45,7 @@ export async function getSingleShop(id) {
     return rs
 }
 
+//remove next code review
 export async function getSingleShopServices(id, query) {
     //const res = axios.get(BASE_URL + '/shop/' + id)
     const shop = shop_single.find((shop) => shop.id == id)

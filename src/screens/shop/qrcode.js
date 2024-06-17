@@ -69,7 +69,7 @@ export default function ShopQRCodeScreen({ navigation, }) {
                         <MotiImage source={{ uri: item.product.img }} style={{ width: 56, height: 56, borderRadius: 8, marginLeft: 6, }} />
                         <Column style={{ justifyContent: 'center', marginLeft: 20, }}>
                             <Title style={{fontSize: 20, }}>{item.product.name} </Title>
-                            <Title style={{fontSize: 16, color: color.primary, marginTop: -5, }}>{item.product.value} pontos</Title>
+                            <Title style={{fontSize: 16, color: color.primary, marginTop: -5, }}>{item?.product?.value} pontos</Title>
                         </Column>
                         </Row>
                         <Button onPress={() => {navigation.goBack()}}  style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100,  marginRight: 12,}}>
@@ -82,7 +82,7 @@ export default function ShopQRCodeScreen({ navigation, }) {
                         
                         <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginBottom: -24, zIndex: 99, }} />
                         <Column style={{ backgroundColor: '#fff',  borderRadius: 32, padding: 32,  }}>
-                            <Title style={{ marginVertical: 10, fontSize: 24, textAlign: 'center' }}>Aponte a camera</Title>
+                            <Title style={{ marginVertical: 10, fontSize: 24, textAlign: 'center' }}>Aponte a câmera</Title>
                             <Column style={{width: 290,  height: 5, borderTopWidth: 2, borderColor: '#00000030', borderStyle: 'dashed',  marginTop: 20, marginBottom: 30,}} />
                         <Column style={{ alignSelf: 'center', }}>
                             <QRCode

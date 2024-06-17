@@ -25,19 +25,12 @@ export default function DonateHideScreen({ navigation,  }) {
             setvalue('0');
         }else{
             setvalue(value.slice(0, -1));
-        
         }
-
     }
 
     const handleClean = () => {
         setvalue('0');
     }
-    const values = {
-        total: 300,
-    }
-
-    const patinhas = value * 6;
 
     const handleFinish = () => {
         setloading(true);
@@ -49,7 +42,7 @@ export default function DonateHideScreen({ navigation,  }) {
 
     return (
         <Main style={{ paddingTop: 30, }}>
-            <Header title="Fazer doação anonima"/>
+            <Header title="Doação anônima"/>
             <Column style={{ backgroundColor: color.primary, marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 24, marginBottom: -70, zIndex: 99, }}>
                 <Title style={{ fontSize: 24, color:  color.background, lineHeight: 28, }}>R$</Title>
                 <Title style={{ fontSize: 52, color: color.background, lineHeight: 56, }}>{value},00</Title>
@@ -59,7 +52,7 @@ export default function DonateHideScreen({ navigation,  }) {
                 <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center',  paddingTop: 60,   }}>
                 <ButtonPR style={{ paddingHorizontal: 24, flexGrow: 1, }} disabled={loading} onPress={handleFinish} >
                         <>
-                        {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI style={{ color: color.background, }}>Gerar QR Code</LabelLI>  }
+                        {loading ? <ActivityIndicator color="#fff" size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI style={{ color: color.background, }}>Gerar QR Code</LabelLI>  }
                         </>
                   </ButtonPR>
                 </Row>

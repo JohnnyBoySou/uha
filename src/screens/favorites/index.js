@@ -6,36 +6,36 @@ import { Search } from 'lucide-react-native';
 import { AnimatePresence, MotiImage, MotiView } from 'moti';
 import Octicons from '@expo/vector-icons/Octicons';
 import { useNavigation } from '@react-navigation/native';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import { getFavorites } from '@api/user/preferences';
+import { getFavs } from '@api/user/favorites';
 
 export default function FavoritesScreen({ navigation, }) {
     const { color, font, margin} = useContext(ThemeContext);
-    const [type, settype] = useState('all');
     const [data, setdata] = useState();
 
     useEffect(() => {
-        getFavorites().then((res) => {
-            console.log(res)
-            setdata(res)
-    }) },[])
+        async function fetchFavorites() {
+          const favs = await getFavs();
+          setdata(favs);
+          console.log(favs);
+        }
+        fetchFavorites();
+      }, []);
+    
 
     return (
-        <Main>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
                 <Row style={{ marginHorizontal: margin.h, justifyContent: 'space-between', alignItems: 'center',  }}>
                         <Title>Favoritos</Title>
-                        <Button onPress={() => settype('Pesquisar')} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
+                        <Button onPress={() => navigation.navigate('SearchModal')} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
                             <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                             <Label>Pesquisar</Label>
-                            <Search color={color.label} size={18} style={{ marginLeft: 8, }}/>
+                                <Search color={color.label} size={18} style={{ marginLeft: 8, }}/>
                             </Row>
                         </Button>
                     </Row>
-
-                {data?.length > 0 ? <Offers data={data} /> : 
+                    {data?.length > 0 ? <Offers data={data} /> : 
                 <Empty />}
-
 
             </Scroll>
         </Main>
@@ -66,12 +66,9 @@ const Offers = ({ data }) => {
         horizontal
         style={{ marginVertical: 12, }}
         renderItem={({ item }) => (
-            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+            <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                 <Column style={{ justifyContent: 'center', width: 124, }}>
-                    <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
-                    <Row style={{ backgroundColor: '#d7d7d7', }}>
-                        <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
-                    </Row>
+                    <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderRadius: 12,  objectFit: 'cover', backgroundColor: "#fff", }} />
                     <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.slice(0, 42)}</Title>
                     <Row style={{}}>
                         <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>

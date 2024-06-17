@@ -56,7 +56,7 @@ export default function DonateScreen({ navigation, }) {
 
             <Column style={{  flexGrow: 1, alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, }}>
                <Row style={{ justifyContent: 'center', alignItems: 'center',  marginBottom: 100, }}>
-                <Label style={{ color: '#fff', }}>Total em patinhas: </Label>
+                <Label style={{ color: '#fff', }}>Total em pontos: </Label>
                     <Button  style={{ borderRadius: 100, }} >
                         <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary+20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{patinhas}</Label>
                     </Button>

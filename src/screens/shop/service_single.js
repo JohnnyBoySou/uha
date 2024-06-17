@@ -5,14 +5,18 @@ import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState } from 'moti';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Header from '@components/header';
-import { getSingleService, getSingleShop} from '@request/service';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Feather from '@expo/vector-icons/Feather';
 
-import { removeLike, verifyLiked, addLike } from '@api/user/preferences';
-import HeartAnim from '../../assets/anim/heart';
+import HeartAnim from '@anim/heart';
+
+import { getSingleService, getSingleShop} from '@request/service';
+import { veriFav, addFav, delFav } from '@api/user/favorites';
+import { excludeFavs } from '../../api/user/favorites';
+
+
 const { width, height } = Dimensions.get('window');
 
 
@@ -25,17 +29,14 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     useEffect(() => {
         getSingleService(id).then((res) => {
             setitem(res)
-            console.log(res.shop.id)
             getSingleShop(res.shop.id).then((res) => {
-                console.log(res)
                 setshop(res)
             })
             setothers(res?.others)
         }).catch((err) => {
             console.log(err)
         })
-
-        verifyLiked(item?.id).then((res) => {
+        veriFav(item?.id).then((res) => {
             setlike(res)
         }).catch((err) => {
             console.log(err)
@@ -70,10 +71,10 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     const toggleLike = async () => {
         if (like) {
             setlike(false)
-            await removeLike(item.id).then((res) => { }).catch((err) => { console.log(err) })
+            await delFav(item.id).then((res) => { }).catch((err) => { console.log(err) })
         } else {
             setlike(true)
-            await addLike(itm?.product).then((res) => { }).catch((err) => { console.log(err) })
+            await addFav(itm?.product).then((res) => { }).catch((err) => { console.log(err) })
         }
 
     }
