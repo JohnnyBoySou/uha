@@ -23,5 +23,11 @@ const services = [
         title: 'Sobrancelhas',
         label: 'A partir de 40 pontos',
     },
+    {
+        id: 5,
+        img: 'https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg',
+        title: 'Exames de rotina',
+        label: 'A partir de 50 pontos',
+    },
 ]
 export default services;

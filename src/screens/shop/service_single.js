@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState } from 'moti';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Header from '@components/header';
-import { getSingleService } from '@request/service';
+import { getSingleService, getSingleShop} from '@request/service';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -13,7 +13,6 @@ import Feather from '@expo/vector-icons/Feather';
 
 import { removeLike, verifyLiked, addLike } from '@api/user/preferences';
 import HeartAnim from '../../assets/anim/heart';
-import { createPreferences, excludeFavorites, getPreferences } from '../../api/user/preferences';
 const { width, height } = Dimensions.get('window');
 
 
@@ -26,11 +25,16 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     useEffect(() => {
         getSingleService(id).then((res) => {
             setitem(res)
-            setshop(res?.shop)
+            console.log(res.shop.id)
+            getSingleShop(res.shop.id).then((res) => {
+                console.log(res)
+                setshop(res)
+            })
             setothers(res?.others)
         }).catch((err) => {
             console.log(err)
         })
+
         verifyLiked(item?.id).then((res) => {
             setlike(res)
         }).catch((err) => {

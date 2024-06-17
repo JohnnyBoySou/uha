@@ -30,6 +30,6 @@ const offers = [
         value: 12,
         old_value: 24,
         sell_porcentage: 50,
-    }
+    },
 ]
 export default offers

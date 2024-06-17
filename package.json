@@ -1,6 +1,6 @@
 {
-  "name": "Uha!",
-  "version": "1.2.0",
+  "name": "uha",
+  "version": "3.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

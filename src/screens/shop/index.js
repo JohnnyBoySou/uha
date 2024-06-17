@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ScrollView, FlatList, Pressable, ScrollViewComponent } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -60,7 +60,7 @@ export default function ShopScreen({ navigation, route }) {
                 
                 {type != null && <Result value={type} />}
 
-                <Title style={{ marginHorizontal: margin.h, marginBottom: -20, }}>Promos incríveis</Title>
+                <Title style={{ marginHorizontal: margin.h, marginBottom: -20, marginTop: 20,}}>Promos incríveis</Title>
                 <Promos data={data} />
                 <Title style={{ marginHorizontal: margin.h, marginBottom: 10, marginTop: 20, }}>Ofertas relâmpago</Title>
                 <Offers data={offers} />
@@ -224,7 +224,7 @@ const Result = ({ value }) => {
     }, [])
     if(type == null) return null;
     return (
-        <Column style={{ marginBottom: 20, }}>
+        <Column style={{ marginBottom: 0, }}>
             <Title style={{ marginHorizontal: margin.h, marginVertical: 12,}}>Estabelecimentos que oferecem</Title>
             <Row style={{ marginHorizontal: margin.h, marginBottom: -40, }}>
                     <AnimatePresence>
@@ -236,8 +236,11 @@ const Result = ({ value }) => {
                         </Button></MotiView>}
                     </AnimatePresence>
                 </Row>
-
-            <Promos data={data} />
+            {data?.length > 0 && <Promos data={data} />}
+            {data?.length == 0 && <Column style={{ marginHorizontal: margin.h, marginTop: 50, marginBottom: 20, }}>
+                <Title>Não conseguimos encontrar nada...</Title>
+                <Label>Tente buscar por outro termo</Label>
+                </Column>}
         </Column>
     )
 }

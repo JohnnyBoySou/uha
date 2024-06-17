@@ -5,7 +5,7 @@ import { Main, Column, Label, Title, Row, SubLabel, Button } from '@theme/global
 
 import { ThemeContext } from 'styled-components/native';
 
-import { AnimatePresence, MotiImage, MotiView, useAnimationState } from 'moti';
+import { AnimatePresence, MotiImage, MotiView, } from 'moti';
 
 //icons
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -19,7 +19,6 @@ import BottomSheet from '@gorhom/bottom-sheet'
 import { getSingleShop } from '@request/service';
 
 import { ScrollView } from 'react-native-gesture-handler';
-import Animated, { useAnimatedScrollHandler, useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 const { width } = Dimensions.get('window');
 
 export default function ShopSingleScreen({ navigation, route }) {
@@ -143,11 +142,16 @@ export default function ShopSingleScreen({ navigation, route }) {
                         ListFooterComponent={<Column style={{ width: margin.h  }} />}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <Button onPress={() => navigation.navigate('ShopServiceSingle', {id: item?.id})} style={{ borderRadius: 8, padding: 4, backgroundColor: '#f7f7f7', marginRight: 12, }}>
-                                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                    <MotiImage source={{ uri: item.img }} style={{ width: 84, height: 92, borderRadius: 6, marginBottom: 4, marginTop: 10, }} />
-                                    <SubLabel style={{ fontFamily: 'Font_Medium', fontSize: 15,}}>{item.name.slice(0,13)}</SubLabel>
-                                    <Label style={{ width: 100, textAlign: 'center', fontSize: 12, lineHeight: 16, color: color.primary, fontFamily: 'Font_Bold', }}>{item.value} pontos</Label>
+                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                                <Column style={{ justifyContent: 'center', width: 124, }}>
+                                    <MotiImage source={{ uri: item?.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                    <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item?.name?.slice(0, 42)}</Title>
+                                    <Row style={{}}>
+                                        <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>
+                                        <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
+                                    </Row>
+        
+                                    <Title style={{ color: "#000", fontSize: 12, marginTop: -6, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value}</Title>
                                 </Column>
                             </Button>
                         )}

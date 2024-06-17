@@ -180,7 +180,7 @@ export default function HomeScreen({ navigation, }) {
                 </MotiView>
                 <OffersCards data={offers} />
 
-                <Queridinhos data={shops.slice(1)} />
+                <Queridinhos data={shops?.slice(1)} />
 
                 <Column style={{ backgroundColor: color.background, paddingTop: 10, }}>
                     <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Serviços em oferta</Title>
@@ -191,7 +191,7 @@ export default function HomeScreen({ navigation, }) {
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         renderItem={({ item }) => (
-                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { item: item }) }}>
+                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                     <MotiImage source={{ uri: item.img }} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                     <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 15, lineHeight: 18, }}>{item.title.length > 10 ? item.title.slice(0, 11) + '...' : item.title}</Title>
@@ -428,7 +428,7 @@ const Queridinhos = ({ data }) => {
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopSingle', { item: item }) }} >
+                    <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
