@@ -4,6 +4,7 @@ import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubL
 import { ThemeContext } from 'styled-components/native';
 import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Delete, X } from 'lucide-react-native';
 import Header from '@components/header';
+import { MotiImage, MotiView } from 'moti';
 
 export default function DonateHideScreen({ navigation,  }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -33,6 +34,9 @@ export default function DonateHideScreen({ navigation,  }) {
     }
 
     const handleFinish = () => {
+        if(value === '0'){
+            return
+        }
         setloading(true);
         setTimeout(() => {
             navigation.navigate('DonateValueHide', { value: value,  });
@@ -41,18 +45,42 @@ export default function DonateHideScreen({ navigation,  }) {
     }
 
     return (
-        <Main style={{ paddingTop: 30, }}>
-            <Header title="Doação anônima"/>
-            <Column style={{ backgroundColor: color.primary, marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 24, marginBottom: -70, zIndex: 99, }}>
-                <Title style={{ fontSize: 24, color:  color.background, lineHeight: 28, }}>R$</Title>
-                <Title style={{ fontSize: 52, color: color.background, lineHeight: 56, }}>{value},00</Title>
+        <Main style={{ paddingTop: 40, }}>
+          <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
+                <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: color.secundary, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                    <ArrowLeft color="#fff" />
+                </Button>
+                <Title style={{ color: color.secundary, marginTop: 8, }}>Doação anônima</Title>
+                <Column style={{ width: 35, height: 35, justifyContent: 'center', alignItems: 'center', }}>
+                    <MotiImage source={require('@icons/private.png')} style={{ width: 38, height: 38, }} />
+                </Column>
+            </Row>
+
+            <Column style={{ backgroundColor: "#fff", marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
+                <Title style={{ fontSize: 24, color: color.secundary, lineHeight: 28, }}>R$</Title>
+                <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{value},00</Title>
             </Column>
-            <Column style={{  flexGrow: 1, alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 180, }}>
+
+
+            <Column style={{  flexGrow: 1, alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 32, borderTopRightRadius: 32,  }}>
+               
+                <Row style={{ paddingTop: 100, paddingBottom: 80, }}>
+                    <MotiView from={{opacity: 0, translateY: 30,}} animate={{opacity: 1, translateY: 0,}} delay={300} transition={{type: 'timing'}}>
+                        <Button onPress={() => {setvalue(10)}}  style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor:"#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 10,00</Label></Button>
+                    </MotiView>
+                    <MotiView from={{opacity: 0, translateY: 30,}} animate={{opacity: 1, translateY: 0,}} delay={600} transition={{type: 'timing'}}>
+                        <Button onPress={() => {setvalue(30)}}  style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, marginHorizontal: 12, backgroundColor: "#ffffff20", borderColor:"#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 30,00</Label></Button>
+                    </MotiView>
+                    <MotiView from={{opacity: 0, translateY: 30,}} animate={{opacity: 1, translateY: 0,}} delay={900} transition={{type: 'timing'}}>
+                        <Button onPress={() => {setvalue(50)}}  style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor:"#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 50,00</Label></Button>
+                    </MotiView>
+                </Row>
+
                 <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean}/>              
                 <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center',  paddingTop: 60,   }}>
-                <ButtonPR style={{ paddingHorizontal: 24, flexGrow: 1, }} disabled={loading} onPress={handleFinish} >
+                <ButtonPR style={{ paddingHorizontal: 24, flexGrow: 1,}} disabled={loading} onPress={handleFinish} >
                         <>
-                        {loading ? <ActivityIndicator color="#fff" size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI style={{ color: color.background, }}>Gerar QR Code</LabelLI>  }
+                        {loading ? <ActivityIndicator color="#fff" size={26} style={{ }}/> :  <LabelLI style={{ color: "#fff", }}>Gerar QR Code</LabelLI>  }
                         </>
                   </ButtonPR>
                 </Row>

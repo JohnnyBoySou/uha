@@ -15,8 +15,7 @@ export default function FavoritesScreen({ navigation, }) {
     useEffect(() => {
         async function fetchFavorites() {
           const favs = await getFavs();
-          setdata(favs);
-          console.log(favs);
+          setdata(favs.reverse());
         }
         fetchFavorites();
       }, []);
@@ -48,7 +47,7 @@ const Empty = () => {
     <Column>
         <Octicons name="heart" size={32} color={color.primary} style={{ textAlign: 'center', marginTop: 50, marginBottom: 20,}} />
         <Title style={{ fontSize: 22, textAlign: 'center' }}>Ops, parece que você {'\n'}ainda não favoritou nada..</Title>
-        <Label style={{ textAlign: 'center', fontSize: 16, marginTop: 10, marginHorizontal: margin.h, }}>Clique nos corações ao lado direito para favoritar os estabelecimentos, serviços e produtos que mais gostar!</Label>
+        <Label style={{ textAlign: 'center', fontSize: 16, marginTop: 10, marginHorizontal: margin.h, }}>Clique nos corações ao lado direito para favoritar os estabelecimentos e serviços que mais gostar!</Label>
     </Column>
 )}
 
@@ -60,16 +59,15 @@ const Offers = ({ data }) => {
     return (
         <FlatList
         data={data}
-        ListFooterComponent={<Column style={{ width: 24 }} />}
-        ListHeaderComponent={<Column style={{ width: 24 }} />}
         showsHorizontalScrollIndicator={false}
-        horizontal
-        style={{ marginVertical: 12, }}
+        columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 28, }}
+        numColumns={3}
+        style={{ marginVertical: 24, }}
         renderItem={({ item }) => (
-            <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                <Column style={{ justifyContent: 'center', width: 124, }}>
-                    <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderRadius: 12,  objectFit: 'cover', backgroundColor: "#fff", }} />
-                    <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.slice(0, 42)}</Title>
+            <Button style={{  borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                <Column style={{ justifyContent: 'center', width: 100, }}>
+                    <MotiImage source={{ uri: item.img }} style={{ width: 100, height: 100, borderRadius: 12,  objectFit: 'cover', backgroundColor: "#fff", }} />
+                    <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 100, }}>{item.name.slice(0, 42)}</Title>
                     <Row style={{}}>
                         <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>
                         <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>

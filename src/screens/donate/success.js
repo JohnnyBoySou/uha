@@ -11,6 +11,7 @@ export default function DonateSuccessScreen({ navigation, }) {
    
     return (
         <Main style={{ backgroundColor: "#fff", }}>
+            <Scroll>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: margin.h, }}>
                 <Button onPress={() => {navigation.goBack()}} style={{ backgroundColor: "#ffffff80", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center',   }}>
                     <ArrowLeft color={color.secundary}/>
@@ -38,6 +39,7 @@ export default function DonateSuccessScreen({ navigation, }) {
                     <Label style={{ color: "#111", fontFamily: font.bold, }}>Exportar recibo</Label>
                   </ButtonOut>
                 </Row>
+            </Scroll>
         </Main>
     )
 }

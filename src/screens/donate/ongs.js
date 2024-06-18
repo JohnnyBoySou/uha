@@ -30,7 +30,7 @@ const DonateONGS = ({ navigation, item, handleOng }) => {
                 <Title style={{ fontSize: 28, lineHeight: 28, marginBottom: 12, }}>Escolha qual ONG deseja beneficiar</Title>
                 <Label>Ao cadastrar sua nota, o valor de <B>R$ {item?.value},00</B> será doado para a ONG abaixo de sua escolha.</Label>
                 
-                <SubLabel style={{ fontSize: 24, color: color.secundary, marginVertical: 12, marginTop: 20, }}>ONGs recentes</SubLabel>
+                <SubLabel style={{ fontSize: 24, color: color.secundary, marginVertical: 12, marginTop: 20, }}>ONGs</SubLabel>
                 <FlatList
                     data={ongs}
                     keyExtractor={item => item?.id}

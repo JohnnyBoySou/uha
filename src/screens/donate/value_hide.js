@@ -27,7 +27,6 @@ export default function DonateValueHideScreen({ navigation, route }) {
         setclip(true)
     };
 
-
     const bottomONGS = useRef(null);
     const [ong, setong] = useState();
     const handleOng = (vl) => {
@@ -49,9 +48,9 @@ export default function DonateValueHideScreen({ navigation, route }) {
                     </Column>
                 </Row>
 
-                <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0,}} delay={300}>
+                <MotiView from={{opacity: 0, translateY: 150,}} animate={{opacity: 1, translateY: 0,}} delay={500} transition={{type: 'timing'}}>
                 <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginBottom: -44, zIndex: 99, alignSelf: 'center' }} />
-                <Column style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: '#fff', paddingTop: 40, borderRadius: 12, }}>
+                <Column style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: '#fff', paddingTop: 40, borderRadius: 24,  marginBottom: 50,}}>
 
                     <Column style={{ marginHorizontal: 20, }}>
                         <Label style={{ textAlign: 'center', }}>Você está fazendo {'\n'}uma doação de</Label>
@@ -82,7 +81,7 @@ export default function DonateValueHideScreen({ navigation, route }) {
                     </Button>}
 
 
-                    {!ong && <ButtonOut onPress={() => { bottomONGS.current.expand() }} style={{ borderColor: color.primary, alignSelf: 'flex-start', paddingVertical: 8,  alignSelf: 'center', }}>
+                    {!ong && <ButtonOut onPress={() => { bottomONGS.current.expand() }} style={{ borderColor: color.primary, alignSelf: 'flex-start', paddingVertical: 8,  alignSelf: 'center', borderStyle: 'dashed', }}>
                         <LabelLI style={{ color: color.primary }}>Escolher ONG</LabelLI>
                     </ButtonOut>
                     }
@@ -139,7 +138,7 @@ export default function DonateValueHideScreen({ navigation, route }) {
 
             </Scroll>
 
-            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 800]}>
+            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 600]}>
                 <BottomSheetScrollView>
                     <DonateONGS handleOng={handleOng} value={value} />
                 </BottomSheetScrollView>

@@ -1,9 +1,9 @@
 import React, { useContext, useState, } from 'react';
 import { Pressable, ActivityIndicator } from 'react-native';
-import { Main, Column, Label, Title, Row, Button, ButtonLI, LabelLI , ButtonOut, Digit } from '@theme/global';
+import { Main, Column, Label, Title, Row, Button, ButtonLI, LabelLI, ButtonOut, Digit, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { Delete } from 'lucide-react-native';
-import Header from '@components/header';
+import { Delete , ArrowLeft } from 'lucide-react-native';
+import { MotiView } from 'moti';
 
 export default function DonateScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -47,34 +47,45 @@ export default function DonateScreen({ navigation, }) {
 
     return (
         <Main style={{ paddingTop: 30, }}>
-            <Header title="Fazer doação"/>
+             <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
+                <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: color.secundary, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                    <ArrowLeft color="#fff" />
+                </Button>
+                <Title style={{ color: color.secundary, marginTop: 8, }}>Doação</Title>
+                <Column style={{ width: 35, height: 35, justifyContent: 'center', alignItems: 'center', }}>
+                </Column>
+            </Row>
 
-            <Column style={{ backgroundColor: color.primary, marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 24, marginBottom: -70, zIndex: 99, }}>
-                <Title style={{ fontSize: 24, color: color.background, lineHeight: 28,}}>R$</Title>
-                <Title style={{ fontSize: 52, color: color.background, lineHeight: 56, }}>{value},00</Title>
+            <Column style={{ backgroundColor: "#fff", marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
+                <Title style={{ fontSize: 24, color: color.secundary, lineHeight: 28,}}>R$</Title>
+                <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{value},00</Title>
             </Column>
 
             <Column style={{  flexGrow: 1, alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, }}>
-               <Row style={{ justifyContent: 'center', alignItems: 'center',  marginBottom: 100, }}>
+               <Row style={{ justifyContent: 'center', alignItems: 'center',  marginBottom: 20, }}>
                 <Label style={{ color: '#fff', }}>Total em pontos: </Label>
                     <Button  style={{ borderRadius: 100, }} >
                         <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary+20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12,}}>{patinhas}</Label>
                     </Button>
                </Row>
-
+               <Row style={{ paddingTop: 0, paddingBottom: 80, }}>
+                    <MotiView from={{opacity: 0, translateY: 30,}} animate={{opacity: 1, translateY: 0,}} delay={300} transition={{type: 'timing'}}>
+                        <Button onPress={() => {setvalue(10)}}  style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor:"#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 10,00</Label></Button>
+                    </MotiView>
+                    <MotiView from={{opacity: 0, translateY: 30,}} animate={{opacity: 1, translateY: 0,}} delay={600} transition={{type: 'timing'}}>
+                        <Button onPress={() => {setvalue(30)}}  style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, marginHorizontal: 12, backgroundColor: "#ffffff20", borderColor:"#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 30,00</Label></Button>
+                    </MotiView>
+                    <MotiView from={{opacity: 0, translateY: 30,}} animate={{opacity: 1, translateY: 0,}} delay={900} transition={{type: 'timing'}}>
+                        <Button onPress={() => {setvalue(50)}}  style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor:"#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 50,00</Label></Button>
+                    </MotiView>
+                </Row>
                 <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean}/>              
 
-                <Row style={{ padding:32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center',     }}>
-                <ButtonLI style={{ paddingHorizontal: 24, }} disabled={loading} onPress={() => {navigation.navigate('DonateValue', {valor: value})}} >
+                <ButtonPR style={{ paddingHorizontal: 24, marginTop: 20, width: '88%', marginHorizontal: 28, }} disabled={loading} onPress={() => {navigation.navigate('DonateValue', {valor: value})}} >
                         <>
-                        {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI>Transferir</LabelLI>  }
+                        {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal:31, marginVertical: 1 }}/> :  <LabelLI style={{ color: '#fff', }}>Continuar</LabelLI>  }
                         </>
-                  </ButtonLI>
-                  <Column style={{width: 24, }} />
-                  <ButtonOut onPress={() => {navigation.navigate('BuyServiceError')}} >
-                    <LabelLI style={{ color: "#fff" }}>Campanhas</LabelLI>
-                  </ButtonOut>
-                </Row>
+                  </ButtonPR>
             </Column>
         </Main>
     )

@@ -20,8 +20,8 @@ const Check = ({status}) => {
      
 
     return(
-            <Row style={{ backgroundColor: status ? color.primary+30 : "#fff", width: 50, borderRadius: 100, padding: 6, }}>
-                <MotiView state={animationState} style={{ width: 18, height: 18, borderRadius: 100, backgroundColor: status ?  color.primary+90 : color.primary+30 }} />
+            <Row style={{ backgroundColor: status ? color.primary+30 : "#d7d7d7", width: 50, borderRadius: 100, padding: 6, }}>
+                <MotiView state={animationState} style={{ width: 18, height: 18, borderRadius: 100, backgroundColor: status ?  color.primary+90 : "#808080" }} />
             </Row>
 )}
 export default Check;
