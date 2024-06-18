@@ -85,7 +85,7 @@ export default function AccountScreen({ navigation, }) {
 
                     <Row style={{ alignItems: 'center', marginVertical: 8, justifyContent: 'space-between', }}>
                         <Row style={{ alignItems: 'center', }}>
-                            <Moon size={24} color="#111" />
+                            <Moon size={24} color="#5C0D45" />
                             <Title style={{ fontSize: 18, marginLeft: 12, }}>Modo de luz escuro</Title>
                         </Row>
                         <Pressable onPress={() => setdark(!dark)}>
@@ -100,7 +100,7 @@ export default function AccountScreen({ navigation, }) {
                     />
                     <Row style={{ alignItems: 'center', marginVertical: 8, justifyContent: 'space-between', }}>
                         <Row style={{ alignItems: 'center', }}>
-                            <LogOut size={24} color="#111" />
+                            <LogOut size={24} color="#5C0D45" />
                             <Title style={{ fontSize: 18, marginLeft: 12, }}>Sair ou Trocar de conta</Title>
                         </Row>
                         <Pressable >
@@ -181,22 +181,7 @@ const Configs = [
         screen: 'CampaignsProgress',
         img: require('@icons/ic4.png'),
     },
-    {
-        title: 'Histórico de Pontos',
-        description: 'Acompanhe as movimentações',
-        icon: 'log-out',
-        check: true,
-        screen: 'Extract',
-        img: require('@icons/ic5.png'),
-    },
-    {
-        title: 'Histórico de Rifas',
-        description: 'Acompanhe ganhos e gastos',
-        icon: 'log-out',
-        check: true,
-        screen: 'Extract',
-        img: require('@icons/ic5.png'),
-    },
+   
     {
         title: 'Estabelecimentos',
         description: 'Descubra nossos parceiros',
@@ -218,22 +203,42 @@ const Configs = [
 const Links = [
     {
         title: 'Central de ajuda',
-        icon: <Info size={24} color="#111" />,
+        icon: <Info size={24} color="#5C0D45" />,
         screen: 'AccountFAQ',
     },
     {
         title: 'Feedback e sugestões',
-        icon: <MessagesSquare size={24} color="#111" />,
+        icon: <MessagesSquare size={24} color="#5C0D45" />,
         screen: 'Questions',
     },
     {
         title: 'Acesso à informação',
-        icon: <Info size={24} color="#111" />,
+        icon: <Info size={24} color="#5C0D45" />,
         screen: 'AccountAccess',
     },
     {
         title: 'Termos e condições',
-        icon: <ScrollText size={24} color="#111" />,
+        icon: <ScrollText size={24} color="#5C0D45" />,
         screen: 'AccountTerms',
     },
 ]
+
+
+/**
+ *  {
+        title: 'Histórico de Pontos',
+        description: 'Acompanhe as movimentações',
+        icon: 'log-out',
+        check: true,
+        screen: 'Extract',
+        img: require('@icons/ic5.png'),
+    },
+    {
+        title: 'Histórico de Rifas',
+        description: 'Acompanhe ganhos e gastos',
+        icon: 'log-out',
+        check: true,
+        screen: 'Extract',
+        img: require('@icons/ic5.png'),
+    },
+ */

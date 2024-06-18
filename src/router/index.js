@@ -37,7 +37,6 @@ import DonateHideScreen from '@screens/donate/hide';
 import DonateValueHideScreen from '@screens/donate/value_hide';
 import DonateSuccessHideScreen from '@screens/donate/success_hide';
 import DonateCertificadoScreen from '@screens/donate/certificado';
-import DonateONGS from '@screens/donate/ongs';
 
 import PayBoletoScreen from '@screens/donate/pay_boleto';
 import NotafiscalScreen from '@screens/notafiscal';
@@ -66,6 +65,7 @@ import CampaignsSingleScreen from '@screens/campaigns/single';
 import CampaignsSingleFinishScreen from '@screens/campaigns/finish';
 
 import ONGSingleScreen from '@screens/ong/single';
+import ONGListScreen from '@screens/ong/list';
 import FavoritesScreen from '@screens/favorites';
 
 import ShopScreen from '@screens/shop';
@@ -73,6 +73,7 @@ import ShopSingleScreen from '@screens/shop/shop_single';
 import ShopServiceSingleScreen from '@screens/shop/service_single';
 import ShopQRCodeScreen from '@screens/shop/qrcode';
 import ShopSingleSearchScreen from '@screens/shop/search_shop_single';
+import ShopOffersScreen from '@screens/shop/offers';
 
 import QuestionsScreen from '@screens/questions';
 import QuestionListScreen from '@screens/questions/list';
@@ -109,12 +110,13 @@ export default function Router() {
             <Stack.Screen name="AuthRegister" component={AuthRegisterScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthReset" component={AuthResetScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
 
-            <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.FadeFromBottomAndroid  , }}/>
+            <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
             <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS   , }}/>
             <Stack.Screen name="ShopQRCode" component={ShopQRCodeScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="ShopSingleSearch" component={ShopSingleSearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-            
+            <Stack.Screen name="ShopOffers" component={ShopOffersScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -164,6 +166,9 @@ export default function Router() {
             <Stack.Screen name="CampaignsSingleFinish" component={CampaignsSingleFinishScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
+
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="QuestionsChat" component={QuestionsChatScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>

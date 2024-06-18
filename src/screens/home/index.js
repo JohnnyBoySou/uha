@@ -11,6 +11,7 @@ import Notify from '@components/notify';
 
 import { useNavigation } from '@react-navigation/native';
 import { getOffers, getShops, getServices, getCampaigns } from '@request/service';
+import Router from './../../router/index';
 
 export default function HomeScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -183,7 +184,12 @@ export default function HomeScreen({ navigation, }) {
                 <Queridinhos data={shops?.slice(1)} />
 
                 <Column style={{ backgroundColor: color.background, paddingTop: 10, }}>
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Serviços em oferta</Title>
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                        <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Serviços em oferta</Title>
+                        <Pressable onPress={() => { navigation.navigate('ShopOffers') }} style={{ marginRight: 28, }}>
+                            <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
+                        </Pressable>
+                    </Row>
                     <FlatList
                         data={services}
                         ListFooterComponent={<Column style={{ width: 24 }} />}
@@ -203,10 +209,7 @@ export default function HomeScreen({ navigation, }) {
                     />
                 </Column>
 
-                {a && <Column style={{ backgroundColor: color.background, paddingTop: 20, }} >
-                    <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, }}>Gift Card com cashback</Title>
-                    <Carrousel type="gift" />
-                </Column>}
+
 
                 <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 20, }}>
                     <Title style={{ fontSize: 22, }}>Categorias</Title>
@@ -280,59 +283,32 @@ const categories = [
 ]
 
 
-export const Carrousel = ({ type }) => {
-    const flat = useRef();
+export const Carrousel = ({ }) => {
+
+
+
     const navigation = useNavigation();
-    const scrollX = useRef(new Animated.Value(0)).current;
-    const route = type === 'doe' ? 'DonateHide' : type === 'gift' ? 'CampaignsGiftCard' : 'ShopSingle'
-    const { color, font, margin } = useContext(ThemeContext)
     const render = ({ item }) => {
         const link = item.img
         return (
-            <Button onPress={() => { navigation.navigate(route) }}  >
+            <Button onPress={() => { navigation.navigate(item?.route) }}  >
                 <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
             </Button>
         )
     }
 
-    const data = type == 'gift' ? gift : type == 'doe' ? doe : type == 'home' ? home : home
-
     const home = [
-        { id: 1, title: '1', img: require('@imgs/carrousel1.png') },
-        { id: 2, title: '2', img: require('@imgs/carrousel2.png') },
-        { id: 3, title: '3', img: require('@imgs/carrousel3.png') },
+        { id: 1, title: '1', img: require('@imgs/carrousel1.png'), route: 'Share' },
+        { id: 2, title: '2', img: require('@imgs/carrousel2.png'), route: 'Notafiscal' },
+        { id: 3, title: '3', img: require('@imgs/carrousel3.png'), route: 'ShopOffers', },
     ]
-    const gift = [
-        { id: 1, title: '1', img: require('@imgs/gift1.png') },
-        { id: 2, title: '2', img: require('@imgs/gift2.png') },
-        { id: 3, title: '2', img: require('@imgs/gift2.png') },
-    ]
-    const doe = [
-        { id: 1, title: '1', img: require('@imgs/doe1.png') },
-        { id: 2, title: '2', img: require('@imgs/doe2.png') },
-        { id: 3, title: '2', img: require('@imgs/doe2.png') },
-    ]
-
-    const [scrollPosition, setScrollPosition] = useState(0);
-
-
-    const a = false;
 
     return (
-
         <Column>
-
             <FlatList
-                onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                    {
-                        useNativeDriver: false,
-                    }
-                )}
-                ref={flat}
                 decelerationRate={'fast'}
                 scrollEventThrottle={16}
-                data={type == 'gift' ? gift : type == 'doe' ? doe : type == 'home' ? home : home}
+                data={home}
                 renderItem={render}
                 keyExtractor={item => item.id}
                 horizontal
@@ -344,21 +320,7 @@ export const Carrousel = ({ type }) => {
                 pagingEnabled
 
             />
-            {a &&
-                <SlidingDot
-                    data={[1, 2, 3]}
-                    expandingDotWidth={30}
-                    scrollX={scrollX}
-                    dotStyle={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 5,
-                        marginHorizontal: 5
-                    }}
-                    activeDotColor={color.secundary}
-                    inActiveDotColor={color.secundary + 90}
-                />
-            }
+
         </Column>
     )
 }
@@ -369,9 +331,9 @@ const OffersCards = ({ data }) => {
     const navigation = useNavigation();
     return (
         <>
-            <Row style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, justifyContent: 'space-between', alignItems: 'center', }}>
+            <Row style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 16, justifyContent: 'space-between', alignItems: 'center', }}>
                 <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
-                <Pressable onPress={() => { navigation.navigate('Shop') }} >
+                <Pressable onPress={() => { navigation.navigate('ShopOffers') }} >
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                 </Pressable>
             </Row>
@@ -418,7 +380,12 @@ const Queridinhos = ({ data }) => {
     return (
         <>
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background, }}>
-                <Title style={{ fontSize: 22, }}>Estabelecimentos queridinhos</Title>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
+                    <Title style={{ fontSize: 22, }}>Queridinhos</Title>
+                    <Pressable onPress={() => { navigation.navigate('Shop') }} style={{ }}>
+                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
+                    </Pressable>
+                </Row>
             </Column>
 
             <FlatList style={{ backgroundColor: color.background, }}

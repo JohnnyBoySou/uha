@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { FlatList, ActivityIndicator, Pressable } from 'react-native';
 import { Button, ButtonOut, Scroll, Column, Label, Row, Title, B, LabelPR, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MotiImage } from 'moti';
@@ -7,9 +7,10 @@ import { ArrowUpRight } from 'lucide-react-native';
 import CheckBox from '@components/checkbox';
 import { getONGs } from '@api/request/ongs';
 import ongs from '@data/ongs'
+import { useNavigation } from '@react-navigation/native';
 
-const DonateONGS = ({ navigation, item, handleOng }) => {
-
+export default function DonateONGS ({ item, handleOng }){
+    const navigation = useNavigation()
     const { color,  margin } = useContext(ThemeContext);
     const [loading, setloading] = useState();
     const [selectOng, setselectOng] = useState();
@@ -28,9 +29,15 @@ const DonateONGS = ({ navigation, item, handleOng }) => {
         <Scroll style={{ paddingTop: 10, }} >
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 5, }}>
                 <Title style={{ fontSize: 28, lineHeight: 28, marginBottom: 12, }}>Escolha qual ONG deseja beneficiar</Title>
-                <Label>Ao cadastrar sua nota, o valor de <B>R$ {item?.value},00</B> será doado para a ONG abaixo de sua escolha.</Label>
                 
-                <SubLabel style={{ fontSize: 24, color: color.secundary, marginVertical: 12, marginTop: 20, }}>ONGs</SubLabel>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
+                    <SubLabel style={{ fontSize: 24, color: color.secundary, marginVertical: 12, marginTop: 20, }}>ONGs</SubLabel>
+                    <Pressable onPress={() => {navigation.navigate('ONGList')}} >
+                        <Label style={{ fontFamily: 'Font_Bold', color: color.primary, }}>Ver todas</Label>
+                    </Pressable>
+                </Row>
+                
+                
                 <FlatList
                     data={ongs}
                     keyExtractor={item => item?.id}
@@ -64,5 +71,4 @@ const DonateONGS = ({ navigation, item, handleOng }) => {
     )
 }
 
-export default DonateONGS;
 

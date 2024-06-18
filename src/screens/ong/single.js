@@ -3,10 +3,13 @@ import { Main, Scroll, Column, Label, Title, Button, LabelLI, ButtonPR } from '@
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import { MotiImage, MotiView } from 'moti';
-import { Pressable } from 'react-native';
+
+import { FlatList, Pressable } from 'react-native';
+import ongs from '@data/ongs';
+
 export default function ONGSingleScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
-    const item = route?.params?.item
+    const item = route?.params?.item ? route.params.item : ongs[3];
      
     const [showDesc, setshowDesc] = useState(false);
     return (
@@ -19,22 +22,50 @@ export default function ONGSingleScreen({ navigation, route }) {
                     <Label style={{ marginTop: 6, }}>{item?.desc}</Label>
                 </Column>  
                 <Column style={{ marginHorizontal: margin.h, }}>
-                    <Title style={{ marginBottom: 12, }}>Quem somos</Title>
-                
-                   {showDesc ? <Label style={{ fontSize: 16, }}>{item?.about}</Label> : <Label style={{ fontSize: 16, }}>{item?.about?.slice(0, 200)}...</Label>}
+                    <Title style={{ marginBottom: 6, fontSize: 18, }}>Sobre nós</Title>
+
+                   {showDesc ? <Label style={{ fontSize: 14, }}>{item?.about}</Label> : <Label style={{ fontSize: 14, }}>{item?.about?.slice(0, 200)}...</Label>}
                 
                     <Button onPress={() => {setshowDesc(!showDesc)}} style={{ alignSelf: 'flex-start', marginVertical: 12, backgroundColor:'#FFE0F6', paddingVertical: 8, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24, borderRadius: 100,  }}>
                         <LabelLI style={{ color: color.primary, fontSize: 15,  }}>{showDesc ? 'Mostrar menos' : 'Ver mais'}</LabelLI>
                     </Button>
 
                 </Column>
+                <Banners data={item?.imgs} />
+                <Column style={{ marginHorizontal: margin.h, }}>
+                    <Title style={{ marginBottom: 6, fontSize: 18, }}>Onde encontrar</Title>
+
+                    <Button style={{ alignSelf: 'flex-start', marginVertical: 12, backgroundColor:'#FFE0F6', paddingVertical: 8, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24, borderRadius: 100,  }}>
+                        <LabelLI style={{ color: color.primary, fontSize: 15,  }}>Abrir no mapa</LabelLI>
+                    </Button>
+
+                </Column>
+
             </Scroll>
     )
-}
+} 
 
-/**
- * 
-                    <ButtonPR style={{borderRadius: 100, }} onPress={() => {navigation.goBack()}} >
-                        <LabelLI style={{ color: '#fff', }}>Escolher ONG</LabelLI>
-                    </ButtonPR>
- */
+
+const Banners = ({ data }) => {
+    const render = ({ item }) => {
+        return (
+            <Button onPress={() => { }}  >
+                <MotiImage source={{ uri: item }} style={{ width: 240, height: 300, borderRadius: 24, marginRight: 18, objectFit: 'cover', }} />
+            </Button>
+        )
+    }
+    return (
+        <FlatList
+            decelerationRate={'fast'}
+            scrollEventThrottle={16}
+            data={data}
+            renderItem={render}
+            keyExtractor={item => item}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            ListFooterComponent={<Column style={{ width: 34 }} />}
+            style={{ paddingHorizontal: 24, marginBottom: 32, }}
+            snapToOffsets={[0, 200, 420]}
+        />
+    )
+}

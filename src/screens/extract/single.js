@@ -40,7 +40,7 @@ export default function ExtractSingleScreen({ navigation, route }) {
 
     return (
         <Main>
-        <Scroll>
+        <Scroll style={{ paddingTop: 15, }}>
 
             <Header title="Detalhes" />
            

@@ -9,12 +9,11 @@ import { MotiView } from 'moti';
 import { useNavigation, } from '@react-navigation/native';
 
 import { getShops, getOffers } from '@request/service';
-import { getCategory } from '../../api/request/category';
+import { getCategory } from '@request/category';
 
 export default function ShopScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [type, settype] = useState(route.params?.type);
-    const cat = route.params?.cat;
     const [data, setdata] = useState();
     const [offers, setoffers] = useState();
     const a = false;
@@ -33,7 +32,7 @@ export default function ShopScreen({ navigation, route }) {
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll onScroll={(event) => {
                 const scrolling = event.nativeEvent.contentOffset.y;
-                if (scrolling > 120) {
+                if (scrolling > 80) {
                     setFixedMenu(true);
                 } else {
                     setFixedMenu(false);
@@ -143,6 +142,7 @@ export default function ShopScreen({ navigation, route }) {
                         keyExtractor={item => item.id}
                     />
                 </Column>}
+                <Column style={{ height: 50, }} />
             </Scroll>
 
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
@@ -156,18 +156,6 @@ export default function ShopScreen({ navigation, route }) {
                 </AnimatePresence>
             </Column>
         </Main>
-    )
-}
-
-const Rate = ({ rate }) => {
-    const { color, font, margin } = useContext(ThemeContext);
-    const ar = Array.from({ length: rate }, (_, i) => i + 1);
-    return (
-        <Row style={{ alignItems: 'center', justifyContent: 'center', }}>
-            {ar.map((i) => (
-                <AntDesign key={i} name="star" size={24} color={color.primary} />
-            ))}
-        </Row>
     )
 }
 
@@ -244,7 +232,6 @@ const Result = ({ value }) => {
         </Column>
     )
 }
-
 
 const Offers = ({ data }) => {
     const { color } = useContext(ThemeContext);
@@ -337,8 +324,12 @@ const Promos = ({ data }) => {
 
 const Cards = () => {
     const { color, margin, } = useContext(ThemeContext);
+    const navigation = useNavigation()
     return (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 40, }}>
+            
+            
+            <Button onPress={() => {navigation.navigate('NotafiscalSend')}} >
             <MotiView from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 600, }} style={{ width: 240, height: 300, backgroundColor: color.primary, borderRadius: 18, marginRight: 20, marginLeft: 28, overflow: 'hidden', }}>
                 <Column style={{ margin: 20, }}>
                     <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ganhe +</Title>
@@ -349,6 +340,9 @@ const Cards = () => {
                 <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: -20, scale: 1.3, }} source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', objectFit: 'cover', }} />
                 <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: 0, scale: 1.3, }} source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
             </MotiView>
+            </Button>
+
+            <Button onPress={() => {navigation.navigate('ShopOffers')}} >
             <MotiView from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 600, }} style={{ width: 240, height: 300, backgroundColor: color.secundary, borderRadius: 18, marginRight: 20, overflow: 'hidden', }}>
                 <Column style={{ margin: 20, }}>
                     <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ofertas</Title>
@@ -360,6 +354,7 @@ const Cards = () => {
                 <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: -50, scale: 1.2, }} source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', objectFit: 'contain', marginRight: -20, }} />
                 <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: 0, scale: 1.1, }} source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
             </MotiView>
+            </Button>
 
         </ScrollView>
     )

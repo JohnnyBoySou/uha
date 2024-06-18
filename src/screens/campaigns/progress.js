@@ -19,7 +19,7 @@ export default function CampaignsProgressScreen({ navigation, }) {
                     <Title style={{ marginTop: 20, }}>Seus pedidos</Title>
                 </Column>
 
-                <Column style={{ marginHorizontal: margin.h, }}>
+                <Column style={{ marginHorizontal: 12, }}>
 
 
                     <FlatList
