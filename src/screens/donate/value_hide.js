@@ -138,7 +138,7 @@ export default function DonateValueHideScreen({ navigation, route }) {
 
             </Scroll>
 
-            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 600]}>
+            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 600]} backgroundStyle={{backgroundColor: '#f7f7f7'}}>
                 <BottomSheetScrollView>
                     <DonateONGS handleOng={handleOng} value={value} />
                 </BottomSheetScrollView>

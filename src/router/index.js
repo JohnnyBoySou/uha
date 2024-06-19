@@ -48,6 +48,7 @@ import NotafiscalONGS from '@screens/notafiscal/ongs';
 import ExtractScreen from '@screens/extract';
 import ExtractSingleScreen from '@screens/extract/single';
 import ExtractSingleMoedasScreen from '@screens/extract/single_moedas';
+import ExtractSingleRifasScreen from '@screens/extract/single_rifas';
 
 import AccountScreen from '@screens/account';
 import AccountNotifyScreen from '@screens/account/notify';
@@ -93,7 +94,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Extract'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -149,6 +150,8 @@ export default function Router() {
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="ExtractSingleMoedas" component={ExtractSingleMoedasScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="ExtractSingleRifas" component={ExtractSingleRifasScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+
 
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>

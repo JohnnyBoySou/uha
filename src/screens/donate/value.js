@@ -38,7 +38,7 @@ export default function DonateValueScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: color.primary, }}>
-            <Scroll>
+            <Scroll style={{ paddingTop: 15, }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <ArrowLeft color={color.secundary} />
@@ -179,7 +179,7 @@ export default function DonateValueScreen({ navigation, route }) {
 
                 </Column>
             </Scroll>
-            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 600]}>
+            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 600]} backgroundStyle={{backgroundColor: '#f7f7f7'}}>
                 <BottomSheetScrollView>
                     <DonateONGS handleOng={handleOng} value={value} />
                 </BottomSheetScrollView>

@@ -26,7 +26,7 @@ export default function DonateONGS ({ item, handleOng }){
     }, []);
 
     return (
-        <Scroll style={{ paddingTop: 10, }} >
+        <Scroll style={{ paddingTop: 10, backgroundColor: "#f7f7f7", paddingBottom: 30,}} >
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 5, }}>
                 <Title style={{ fontSize: 28, lineHeight: 28, marginBottom: 12, }}>Escolha qual ONG deseja beneficiar</Title>
                 
@@ -51,7 +51,7 @@ export default function DonateONGS ({ item, handleOng }){
                                     </Column>
                                 </Button>
                                 <Column style={{ marginLeft: 20, }}>
-                                    <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', }}>{item?.name.length >= 20 ? item?.name.slice(0, 20) + '...' : item?.name}</Title>
+                                    <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', }}>{item?.name.length >= 20 ? item?.name.slice(0, 18) + '...' : item?.name}</Title>
                                     <Label style={{ fontSize: 12, marginTop: -2, }}>{item?.desc.length >= 26 ? item?.desc.slice(0, 26) + '...' : item?.desc}</Label>
                                 </Column>
                                </Row>

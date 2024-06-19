@@ -9,7 +9,8 @@ import ongs from '@data/ongs';
 
 export default function ONGSingleScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
-    const item = route?.params?.item ? route.params.item : ongs[3];
+    const id = route?.params?.id
+    const item = ongs.find((item) => item.id === id);
      
     const [showDesc, setshowDesc] = useState(false);
     return (
@@ -17,7 +18,7 @@ export default function ONGSingleScreen({ navigation, route }) {
                 <Header title="Detalhes" />
                 
                 <Column style={{ justifyContent: 'center', alignItems: 'center',  marginVertical: 24,  }}>
-                    <MotiImage source={{uri: item.img}} from={{opacity: 0, scale: 0.6,}} animate={{opacity: 1, scale: 1,}} style={{ width: 200, height: 200, borderRadius: 12, backgroundColor: '#FFE0F6', marginBottom: 30,}}/>
+                    <MotiImage source={{uri: item?.img}} from={{opacity: 0, scale: 0.6,}} animate={{opacity: 1, scale: 1,}} style={{ width: 200, height: 200, borderRadius: 12, backgroundColor: '#FFE0F6', marginBottom: 30,}}/>
                     <Title>{item?.name}</Title>
                     <Label style={{ marginTop: 6, }}>{item?.desc}</Label>
                 </Column>  
