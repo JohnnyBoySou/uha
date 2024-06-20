@@ -5,7 +5,7 @@ const extrato = [
         date: '10/10/2024',
         status: 'Moedas confirmadas',
         icon: 'check',
-        id: '9876543234567898765434567899876543',
+        id: 'extrato-1',
     },
     {
         value: 100,
@@ -13,7 +13,7 @@ const extrato = [
         date: '10/10/2024',
         status: 'Transferência pronta para resgate',
         icon: 'check',
-        id: '9876543234567898765434567899876543',
+        id: 'extrato-2',
     },
     {
         value: 10,
@@ -21,7 +21,7 @@ const extrato = [
         date: '10/10/2024',
         status: 'Moedas em análise',
         icon: 'await',
-        id: '9876543234567898765434567899876543',
+        id: 'extrato-3',
     },
     {
         value: 50,
@@ -29,7 +29,7 @@ const extrato = [
         date: '10/10/2024',
         status: 'Moedas negadas',
         icon: 'uncheck',
-        id: '9876543234567898765434567899876543',
+        id: 'extrato-4',
     },
     {
         value: 300,
@@ -37,7 +37,7 @@ const extrato = [
         date: '10/10/2024',
         status: 'Transferência bem sucedida',
         icon: 'check',
-        id: '9876543234567898765434567899876543',
+        id: 'extrato-5',
     },
     {
         value: 10,
@@ -45,7 +45,7 @@ const extrato = [
         date: '10/10/2024',
         status: 'Pagamento confirmado',
         icon: 'check',
-        id: '9876543234567898765434567899876543',
+        id: 'extrato-6',
     },
     {
         value: 5,
@@ -53,7 +53,7 @@ const extrato = [
         date: '10/10/2024',
         status: 'Moedas expiradas',
         icon: 'dimiss',
-        id: '9876543234567898765434567899876543',
+        id: 'extrato-7',
     },
 ]
 

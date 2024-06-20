@@ -1,10 +1,10 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { FlatList, ScrollView, Dimensions, View, Pressable } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, LineL, ButtonPR, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { CircleCheck, Info, CircleX, AlarmClock, Plus, Car, QrCode, Smartphone, TicketPercent, BadgePercent, ArrowUp, } from 'lucide-react-native';
-import { AnimatePresence, MotiView, useAnimationState } from 'moti';
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { CircleCheck, Info, CircleX, AlarmClock, Plus, Car, QrCode, Smartphone, TicketPercent, BadgePercent, ArrowUp } from 'lucide-react-native';
+import { AnimatePresence, MotiView } from 'moti';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -18,65 +18,127 @@ import user from '@data/user';
 import TopSheet from '@components/topsheet';
 import Avatar from '@components/avatar';
 
+const Header = React.memo(({ dates, dateSelect, setdateSelect, color }) => (
+    <Column>
+        <Row style={{ justifyContent: 'flex-end', alignItems: 'center', backgroundColor: "#f7f7f7", borderBottomLeftRadius: 12, borderBottomRightRadius: 12, marginHorizontal: 28, paddingHorizontal: 12, }}>
+            {dates.map((date, i) => (
+                <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} key={i}>
+                    <Button onPress={() => setdateSelect(date)} style={{ paddingVertical: 10, paddingHorizontal: 6, borderRadius: 100, }}>
+                        <Label style={{ color: date === dateSelect ? color.primary : color.secundary + 99, fontFamily: 'Font_Medium', fontSize: 14, }}>{date}</Label>
+                    </Button>
+                </MotiView>
+            ))}
+        </Row>
+    </Column>
+));
+
+const Empty = React.memo(() => {
+    const { color, margin } = useContext(ThemeContext);
+    const navigation = useNavigation();
+    return (
+        <Column style={{ backgroundColor: '#f9f9f9', marginHorizontal: margin.h, marginVertical: 20, borderRadius: 24, overflow: 'hidden', }}>
+            <Row style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 30, }}>
+                <Column style={{ backgroundColor: color.secundary, width: 54, height: 54, borderRadius: 100, borderWidth: 3, borderColor: "#fff", justifyContent: 'center', alignItems: 'center', }}>
+                    <QrCode size={24} color="#fff" />
+                </Column>
+                <Column style={{ backgroundColor: color.primary, width: 54, height: 54, borderRadius: 100, borderWidth: 3, borderColor: "#fff", justifyContent: 'center', alignItems: 'center', zIndex: 2, marginLeft: -10, }}>
+                    <Smartphone size={24} color="#fff" />
+                </Column>
+            </Row>
+            <Title style={{ fontSize: 20, textAlign: 'center', marginTop: 8, }}>Comece a utilizar {'\n'}seus pontos</Title>
+            <ButtonPR style={{ marginHorizontal: 24, marginVertical: 12, }} onPress={() => { navigation.navigate('Shop') }} >
+                <LabelLI style={{ color: '#fff', }}>Ver estabelecimentos</LabelLI>
+            </ButtonPR>
+            <LinearGradient colors={['#f7f7f7', color.primary + 20,]} style={{ flexGrow: 1, height: 100, marginTop: -80, zIndex: -1, }} />
+        </Column>
+    );
+});
+
+const CardExtrato = React.memo(({ item }) => {
+    const navigation = useNavigation();
+    const { color, font, margin } = useContext(ThemeContext);
+    const cl = useMemo(() => item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : '#ffffff', [item?.icon, color]);
+    const icon = useMemo(() => item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> : item?.icon === 'await' ? <Info color={color.blue} size={24} /> : item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> : <Feather name='loader' color="#000000" size={24} />, [item?.icon, color]);
+
+    return (
+        <Button onPress={() => { navigation.navigate('ExtractSingleRifas', { id: item.id }) }} style={{ paddingHorizontal: margin.h, }}>
+            <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        {icon}
+                    </Column>
+                    <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', }}>{item?.date}</SubLabel>
+                </Column>
+                <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
+                    <Title style={{
+                        color: cl,
+                        fontSize: 24, lineHeight: 24, textAlign: 'right',
+                        textDecoration: item?.type === 'dimiss' ? 'underline' : 'none',
+                        textDecorationLine: item?.icon === 'dimiss' ? "line-through" : "none",
+                        textDecorationStyle: item?.icon === 'dimiss' ? "solid" : "none",
+                        textDecorationColor: item?.icon === 'dimiss' ? "#000" : 'transparent',
+                    }}>R$ {item?.value},00</Title>
+                    <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -4, }}>{item?.status}</SubLabel>
+                    <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{item?.type}</Label>
+                </Column>
+            </Row>
+        </Button>
+    );
+});
 
 export default function ExtractScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    let type = route.params?.type ? route.params?.type : 'Extrato';
-
+    const type = route.params?.type || 'Extrato';
     const [page, setpage] = useState(type);
+
     const [dateSelect, setdateSelect] = useState('Hoje');
-
-
+    const [actionButton, setactionButton] = useState(false);
 
     const scrollTags = useRef(null);
-
-    const bts = ['Extrato', 'Doações', 'Pontos', 'Rifas', 'Moedas']
-    const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
-
+    const scrollMain = useRef(null);
     const isFocused = useIsFocused();
-
     useEffect(() => {
-        if (type === page) {
-            return
-        } else if (type?.length > 0) {
-            setpage(type);
-        } else {
-            setpage('Extrato');
-        }
-    }, [isFocused]);
+        if (type !== page) setpage(type);
+    }, [isFocused, type]);
 
     useEffect(() => {
         const handleScroll = () => {
-            if (page === 'Moedas' || page === 'Rifas') { scrollTags.current.scrollToEnd({ animated: true }); }
-            else if (page === 'Extrato' || page === 'Doações') { scrollTags.current.scrollTo({ x: 0, y: 0, animated: true }); }
-        }
-        handleScroll()
+            if (page === 'Moedas' || page === 'Rifas') {
+                scrollTags.current.scrollToEnd({ animated: true });
+            } else if (page === 'Extrato' || page === 'Doações') {
+                scrollTags.current.scrollTo({ x: 0, y: 0, animated: true });
+            }
+        };
+        handleScroll();
     }, [page]);
 
-    useEffect(() => {
 
-    }, []);
-    const Header = () => {
-        return (
-            <Column>
-                <Row style={{ justifyContent: 'flex-end', alignItems: 'center', backgroundColor: "#f7f7f7", borderBottomLeftRadius: 12, borderBottomRightRadius: 12, marginHorizontal: margin.h, paddingHorizontal: 12, }}>
-                {dates.map((date, i) => (
-                    <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} key={i}>
-                        <Button onPress={() => { setdateSelect(date) }} style={{ paddingVertical: 10, paddingHorizontal: 6, borderRadius: 100, }}>
-                            <Label style={{ color: date === dateSelect ? color.primary : color.secundary + 99, fontFamily: font.medium, fontSize: 14, }}>{date}</Label>
-                        </Button>
-                    </MotiView>
-                ))}
-                </Row>
-            </Column>
-        )
-    }
+    const bts = useMemo(() => ['Extrato', 'Doações', 'Pontos', 'Rifas', 'Moedas'], []);
+    const dates = useMemo(() => ['Hoje', '15 dias', 'Mensal', 'Anual'], []);
 
-    const [actionButton, setactionButton] = useState(false);
-    const scrollMain = useRef()
+    const data = useMemo(() => {
+        switch (page) {
+            case 'Doações':
+                return doacoes;
+            case 'Pontos':
+                return coins;
+            case 'Rifas':
+                return rifas;
+            case 'Moedas':
+                return moedas;
+            default:
+                return extrato;
+        }
+    }, [page]);
+
+    const keyExtractor = useCallback((item) => item.id.toString(), []);
+
+    const getItemLayout = useCallback((data, index) => (
+        { length: 20, offset: 20 * index, index }
+    ), []);
+
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-
             <TopSheet
                 min={
                     <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }}>
@@ -195,89 +257,31 @@ export default function ExtractScreen({ navigation, route }) {
 
             <Column style={{ height: 115, }} />
             <Column>
-                <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12,  }} showsHorizontalScrollIndicator={false}>
-                    {bts.map((bt, index) => (
-                        <Button key={index} onPress={() => setpage(bt)} 
-                        style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0,}}>
-                            <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16,  textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
-                        </Button>
-                    ))}
-                    <Column style={{ width: 60, height: 12, }} />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={scrollTags}>
+                    <Row style={{ marginHorizontal: margin.h, paddingBottom: 20, paddingTop: 10, }}>
+                        {bts.map((bt, index) => (
+                            <Button key={index} onPress={() => setpage(bt)} 
+                            style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0,}}>
+                                <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16,  textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
+                            </Button>
+                        ))}
+                    </Row>
                 </ScrollView>
             </Column>
 
             <FlatList
-                ListHeaderComponent={Header}
-                data={page === 'Doações' ? doacoes : page === 'Pontos' ? coins : page === 'Rifas' ? rifas : page === 'Moedas' ? moedas : page === 'Extrato' ? extrato : []}
-                keyExtractor={(item) => item.id}
+                ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} margin={margin} color={color} font={font} />}
+                data={data.filter((item) => item.date.includes(dateSelect))}
+                keyExtractor={keyExtractor}
+                renderItem={({ item }) => <CardExtrato item={item} />}
+                contentContainerStyle={{ paddingBottom: 80, }}
                 ListEmptyComponent={<Empty />}
                 ref={scrollMain}
-                initialNumToRender={5}
-                showsVerticalScrollIndicator={false}
-                onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
-                ListFooterComponent={<Column style={{ height: 100, }} />}
-                renderItem={({ item, index }) => <CardExtrato item={item} index={index} />}
+                initialNumToRender={20}
+                getItemLayout={getItemLayout}
             />
+
+
         </Main>
-    )
-}
-
-const Empty = () => {
-    const { color, margin } = useContext(ThemeContext);
-    const navigation = useNavigation();
-    return (
-        <Column style={{ backgroundColor: '#f9f9f9', marginHorizontal: margin.h, marginVertical: 20, borderRadius: 24, overflow: 'hidden', }}>
-            <Row style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 30, }}>
-                <Column style={{ backgroundColor: color.secundary, width: 54, height: 54, borderRadius: 100, borderWidth: 3, borderColor: "#fff", justifyContent: 'center', alignItems: 'center', }}>
-                    <QrCode size={24} color="#fff" />
-                </Column>
-                <Column style={{ backgroundColor: color.primary, width: 54, height: 54, borderRadius: 100, borderWidth: 3, borderColor: "#fff", justifyContent: 'center', alignItems: 'center', zIndex: 2, marginLeft: -10, }}>
-                    <Smartphone size={24} color="#fff" />
-                </Column>
-            </Row>
-            <Title style={{ fontSize: 20, textAlign: 'center', marginTop: 8, }}>Comece a utilizar {'\n'}seus pontos</Title>
-
-            <ButtonPR style={{ marginHorizontal: 24, marginVertical: 12, }} onPress={() => { navigation.navigate('Shop') }} >
-                <LabelLI style={{ color: '#fff', }}>Ver estabelecimentos</LabelLI>
-            </ButtonPR>
-
-            <LinearGradient
-                colors={['#f7f7f7', color.primary + 20,]}
-                style={{ flexGrow: 1, height: 100, marginTop: -80, zIndex: -1, }} />
-        </Column>
-    )
-}
-
-const CardExtrato = ({ item }) => {
-    const navigation = useNavigation();
-    const { color, font, margin } = useContext(ThemeContext);
-    const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : '#ffffff'
-    const icon = item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> : item?.icon === 'await' ? <Info color={color.blue} size={24} /> : item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> : <Feather name='loader' color="#000000" size={24} />
-    return (
-        <Button onPress={() => { navigation.navigate('ExtractSingleRifas', { id: item.id }) }} style={{ paddingHorizontal: margin.h, }}>
-            <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
-
-                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                    <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                        {icon}
-                    </Column>
-                    <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', }}>{item?.date}</SubLabel>
-                </Column>
-
-                <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
-                    <Title style={{
-                        color: cl,
-                        fontSize: 24, lineHeight: 24, textAlign: 'right',
-                        textDecoration: item?.type === 'dimiss' ? 'underline' : 'none',
-                        textDecorationLine: item?.icon === 'dimiss' ? "line-through" : "none",
-                        textDecorationStyle: item?.icon === 'dimiss' ? "solid" : "none",
-                        textDecorationColor: item?.icon === 'dimiss' ? "#000" : 'transparent',
-                    }}>R$ {item?.value},00</Title>
-                    <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -4, }}>{item?.status}</SubLabel>
-                    <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{item?.type}</Label>
-                </Column>
-            </Row>
-        </Button>
-
-    )
+    );
 }

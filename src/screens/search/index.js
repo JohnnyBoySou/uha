@@ -5,105 +5,119 @@ import Header from './../../components/header';
 import { TextInput, FlatList } from 'react-native';
 import { Search, CircleHelp, X } from 'lucide-react-native';
 import { MotiView, AnimatePresence, MotiImage } from 'moti';
+import { getSearch } from '../../api/request/search';
 
-export default function SearchScreen({ navigation, route}) {
+export default function SearchScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [query, setquery] = useState('');
     const [focus, setfocus] = useState();
     const [type, settype] = useState();
+    const [shops, setshops] = useState([]);
+    const [services, setservices] = useState([]);
     const value = route.params?.type;
     useEffect(() => {
-        if(value != null){
+        if (value != null) {
             settype('ONGs');
         }
     }, [value])
-    
+
     const handleClean = () => {
         settype(null)
     }
-    
+
+    const handleSearch = async () => {
+        await getSearch(query).then(res => {
+            setshops(res.shop);
+            setservices(res.service);
+        })
+    }
+
     return (
         <Main style={{ backgroundColor: "#fff", }}>
-            <Scroll>
-                <Header title="Pesquisar" rose/>
-                <Column style={{ marginHorizontal: margin.h, marginVertical: 20, flex: 1,}}>
-                
-                    <Row style={{ marginBottom: 24, justifyContent: 'center', alignItems: 'center',  }}>
+                <Header title="Pesquisar" rose />
+                <Column style={{ marginHorizontal: margin.h, marginVertical: 20, flex: 1, }}>
+                    <Row style={{ marginBottom: 24, justifyContent: 'center', alignItems: 'center', }}>
                         <TextInput value={query} onChangeText={e => setquery(e)}
                             onFocus={() => setfocus(true)}
                             onBlur={() => setfocus(false)}
                             placeholder='Buscar'
-                            placeholderTextColor={color.title+60}
-                            style={{ backgroundColor: '#f7f7f7', borderRadius: 12, padding: 12, width: '100%', fontFamily: font.bold, fontSize: 16, color: color.dark,}}
-                            />
-                            <Column style={{  padding: 8, borderRadius: 100,  position: 'absolute', right: 6,  }}>
-                                <Search size={24} color={color.primary} style={{ zIndex: 99, }} />
-                            </Column>
-                    </Row>
-                    <Row style={{ alignItems: 'center',  marginTop: -15, marginBottom: 20,}}>
-                        <CircleHelp color={color.label} size={16}/>
-                        <Label style={{ fontSize: 14, marginLeft: 4, }}>Busque por <U>estabelecimentos</U>, <U>serviços</U> ou <U>produtos</U>.</Label>
+                            placeholderTextColor={color.title + 60}
+                            onSubmitEditing={handleSearch}
+                            style={{ backgroundColor: '#f7f7f7', borderRadius: 12, padding: 12, width: '100%', fontFamily: font.bold, fontSize: 16, color: color.title, borderWidth:2, borderColor: focus ? color.primary : '#f7f7f7'}}
+                        />
+                        <Button onPress={handleSearch} style={{ padding: 8, backgroundColor: color.primary, borderRadius: 100, position: 'absolute', right: 6, }}>
+                            <Search size={24} color="#fff" style={{ zIndex: 99, }} />
+                        </Button>
                     </Row>
 
-                        <Row>
-                    <AnimatePresence>
-                        {type != null && <MotiView transition={{duration: 300, }} from={{opacity: 0, translateX: -30,}} animate={{opacity: 1, translateX: 0}} exit={{opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary}  style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary+20, marginTop: -4, marginBottom: 14,  borderRadius: 8,}} >
-                                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                    <Title style={{ color: color.primary, fontSize: 18, marginRight: 6,}}>{type}</Title>
-                                    <X color={color.primary}/>
+                    <Row style={{ alignItems: 'center', marginTop: -15, marginBottom: 20, }}>
+                        <CircleHelp color={color.label} size={16} />
+                        <Label style={{ fontSize: 14, marginLeft: 4, }}>Busque por <U>estabelecimentos</U> ou <U>serviços</U>.</Label>
+                    </Row>
+
+                    <Row>
+                        <AnimatePresence>
+                            {type != null && <MotiView transition={{ duration: 300, }} from={{ opacity: 0, translateX: -30, }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: -4, marginBottom: 14, borderRadius: 8, }} >
+                                <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
+                                    <Title style={{ color: color.primary, fontSize: 18, marginRight: 6, }}>{type}</Title>
+                                    <X color={color.primary} />
                                 </Row>
                             </Button></MotiView>}
-                    </AnimatePresence>
-                        </Row>
+                        </AnimatePresence>
+                    </Row>
 
-                    <Title>Recentes</Title>
-                    <FlatList 
-                            data={ofertas}
+                    {shops?.length > 0 && <>
+                        <Title>Estabelecimentos</Title>
+                        <FlatList
+                            data={shops}
                             ListFooterComponent={<Column style={{ width: 24 }} />}
                             showsHorizontalScrollIndicator={false}
-                            horizontal
                             style={{ marginVertical: 14, }}
-                            renderItem={({item}) => (
-                                <Button style={{   marginRight: 12, }}>
-                                    <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                        <MotiImage source={ item.img } style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.title}</Title>
-                                            <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium,  marginBottom: 12, }}>{item.label}</Label>
+                            renderItem={({ item }) => (
+                                <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}>
+                                    <Row style={{}}>
+                                        <Column style={{ width: 220, justifyContent: 'center', }}>
+                                            <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item?.name?.slice(0, 24)}</Title>
+                                            <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
+                                            <Row style={{ marginTop: 8, }}>
+                                                {item.categories.map((cat) => (
+                                                    <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>
+                                                ))}
+                                            </Row>
+
+                                        </Column>
+                                        <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                    </Row>
+                                </Button>
+                            )}
+                            keyExtractor={item => item.id}
+                        />
+                    </>}
+                    {services?.length > 0 && <>
+                        <Title>Serviços</Title>
+                        <FlatList
+                            data={services}
+                            ListFooterComponent={<Column style={{ width: 24, height: 40, }} />}
+                            showsHorizontalScrollIndicator={false}
+                            numColumns={2}
+                            style={{ marginVertical: 14, }}
+                            renderItem={({ item }) => (
+                                <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                                    <Column style={{ justifyContent: 'center', width: 124, }}>
+                                        <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                        <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item?.title?.slice(0, 42)}</Title>
+                                        <Row style={{}}>
+                                            <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>
+                                            <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
+                                        </Row>
+                                        <Title style={{ color: "#000", fontSize: 12, marginTop: -6, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value}</Title>
                                     </Column>
                                 </Button>
                             )}
                             keyExtractor={item => item.id}
                         />
-
-
+                    </>}
                 </Column>
-
-            </Scroll>
         </Main>
     )
 }
-
-
-const ofertas = [
-    {
-        id: 1,
-        img: require('@imgs/amazon.png'),
-        title: 'Amazon',
-        label: 'A partir de 40 Pontos',
-        color: '#',
-    },
-    {
-        id: 2,
-        img: require('@imgs/petiko.png'),
-        title: 'Petiko',
-        label: 'A partir de 40 Pontos',
-        color: '#',
-    },
-    {
-        id: 3,
-        img: require('@imgs/cobasi.png'),
-        title: 'Cobasi',
-        label: 'A partir de 40 Pontos',
-        color: '#',
-    },
-]
