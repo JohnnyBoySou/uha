@@ -341,7 +341,7 @@ const OffersCards = ({ data }) => {
                 data={data}
                 ListFooterComponent={
                     <Column style={{ marginRight: 28, backgroundColor: color.primary + 20, paddingBottom: 12, borderTopLeftRadius: 20, borderTopRightRadius: 20, }} >
-                        <Button onPress={() => { navigation.navigate('Shop') }} style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, backgroundColor: color.primary, width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
+                        <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, backgroundColor: color.primary, width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
                             <Label style={{ color: '#fff', fontFamily: font.bold, fontSize: 16, textAlign: 'center', }}>Ver mais {'\n'}Ofertas</Label>
                         </Button>
                     </Column>

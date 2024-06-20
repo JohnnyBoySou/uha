@@ -35,21 +35,16 @@ export default function ShopOffersScreen({ navigation, route }) {
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#FFE0F6", borderRadius: 100, justifyContent: 'center', alignItems: 'center', width: 42, height: 28, }}>
                         <ArrowLeft color={color.secundary} size={24} />
                     </Button>
-                    
                 </Row>
-
                 <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
                     <Title style={{ fontSize: 28, lineHeight: 28, }}>Ofertas fresquinhas</Title>
                     <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre as melhores ofertas dos seus serviços favoritos</Label>
                 </Column>
 
-
                 <Title style={{ marginHorizontal: margin.h, marginBottom: 5, marginTop: 0, }}>⚡ Relâmpago</Title>
                 <Rain data={offers} />
                 <Title style={{ marginHorizontal: margin.h, marginBottom: 5, marginTop: 10, }}>Todas as ofertas</Title>
                 <Offers data={offers} />
-
-
              
                 <Column style={{ height: 50, }} />
             </Scroll>

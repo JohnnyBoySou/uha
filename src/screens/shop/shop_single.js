@@ -8,7 +8,6 @@ import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, } from 'moti';
 
 //icons
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { ArrowLeft, ArrowRight, MapPin, Search } from 'lucide-react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
@@ -23,7 +22,6 @@ const { width } = Dimensions.get('window');
 
 export default function ShopSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const [type, settype] = useState();
     const id = route.params?.id ? route.params?.id : 12345;
     const [item, setitem] = useState();
     const [offers, setoffers] = useState();
@@ -140,7 +138,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                         showsHorizontalScrollIndicator={false}
                         ListHeaderComponent={<Column style={{ width: margin.h, }} />}
                         ListFooterComponent={<Column style={{ width: margin.h  }} />}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item?.id.toString()}
                         renderItem={({ item }) => (
                             <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                                 <Column style={{ justifyContent: 'center', width: 124, }}>
@@ -168,7 +166,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                         showsHorizontalScrollIndicator={false}
                         ListHeaderComponent={<Column style={{ width: margin.h - 8, }} />}
                         ListFooterComponent={<Column style={{ width: margin.h - 8, }} />}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(index) => index.toString()}
                         renderItem={({ item }) => (
                             <Button onPress={() => navigation.navigate('ShopServiceSingle', {id: item?.id})} style={{ borderRadius: 0, paddingBottom: 4, borderBottomWidth: 1, borderColor: '#60606020', marginHorizontal: margin.h, marginVertical: 6, }}>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
@@ -231,8 +229,8 @@ const Banners = ({ data }) => {
             decelerationRate={'fast'}
             scrollEventThrottle={16}
             data={data}
-            renderItem={render}
-            keyExtractor={item => item.id}
+            renderItem={render} 
+            keyExtractor={(index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}
             ListFooterComponent={<Column style={{ width: 34 }} />}
@@ -242,53 +240,3 @@ const Banners = ({ data }) => {
         />
     )
 }
-
-const Rate = ({ rate }) => {
-    const { color, font, margin } = useContext(ThemeContext);
-    const ar = Array.from({ length: rate }, (_, i) => i + 1);
-    return (
-        <Row style={{ alignItems: 'center', justifyContent: 'center', }}>
-            {ar.map((i) => (
-                <AntDesign key={i} name="star" size={24} color={color.primary} />
-            ))}
-        </Row>
-    )
-}
-
-const produtos = [
-    {
-        name: 'Natura',
-        desc: 'A partir de 40 Pontos',
-        product: 'Eudora',
-        img: require('@imgs/natura.png'),
-    },
-    {
-        name: 'Americanas',
-        desc: 'A partir de 40 Pontos',
-        product: '23ed',
-        img: require('@imgs/americanas.png'),
-    },
-    {
-        name: 'Oboticário',
-        product: '23e5',
-        desc: 'A partir de 40 Pontos',
-        img: require('@imgs/oboticario.png'),
-    },
-    {
-        name: 'Casas Bahia',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/casas_bahia.png'),
-    },
-    {
-        name: 'Amazon',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/amazon.png'),
-    },
-
-    {
-        name: 'Petiko',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/petiko.png'),
-    },
-
-]

@@ -13,11 +13,11 @@ const shop_single = [
         img: 'https://i.pinimg.com/564x/08/f6/3d/08f63d42e41667f518127da812cfe654.jpg',
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],
@@ -84,7 +84,7 @@ const shop_single = [
             },
             {
                 name: "Exames de rotina",
-                id: 123456,
+                id: 3,
                 img: "https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg",
                 value: 50,
                 old_value: 70,
@@ -94,7 +94,7 @@ const shop_single = [
         services: [
                 {
                     name: "Conjunto Guias + Peitoral",
-                    id: 12345,
+                    id: 18,
                     img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
                     value: 30,
                 },
@@ -106,19 +106,14 @@ const shop_single = [
                 },
                 {
                     name: "Adoação de pets",
-                    id: 123453,
+                    id: 17,
                     img: "https://i.pinimg.com/564x/d1/83/56/d18356e65e9990a38e516f2357a8101f.jpg",
                     value: 20,
                 },
-                {
-                    name: "Aplicaçao de vacina",
-                    id: 123457,
-                    img: "https://i.pinimg.com/564x/e7/2b/1f/e72b1f9953c3d94890ca2e50b6737129.jpg",
-                    value: 15,
-                },
+               
                 {
                     name: "1 mês de plano de saúde",
-                    id: 1234568,
+                    id: 15,
                     img: "https://i.pinimg.com/564x/f7/d0/88/f7d0881b57c942a9dfe581fa925e4f55.jpg",
                     value: 80,
                 },

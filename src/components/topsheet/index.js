@@ -17,7 +17,7 @@ export default function TopSheet({ children, min, max, normal,  }) {
 
   const MIN_HEIGHT = 120; // Altura mínima
   const NORMAL_HEIGHT = 300; // Altura normal
-  const MAX_HEIGHT = 700; // Altura máxima
+  const MAX_HEIGHT = 730; // Altura máxima
 
   const [currentStatus, setCurrentStatus] = useState('min');
 

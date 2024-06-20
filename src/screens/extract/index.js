@@ -248,7 +248,7 @@ const Empty = () => {
     )
 }
 
-const CardExtrato = ({ item }) => {
+const CardExtrato = ({ item, index }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext);
     const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : '#ffffff'
@@ -256,7 +256,6 @@ const CardExtrato = ({ item }) => {
     return (
         <Button onPress={() => { navigation.navigate('ExtractSingleRifas', { id: item.id }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
-
                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         {icon}
@@ -278,6 +277,5 @@ const CardExtrato = ({ item }) => {
                 </Column>
             </Row>
         </Button>
-
     )
 }
