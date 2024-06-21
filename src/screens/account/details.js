@@ -18,6 +18,14 @@ export default function AccountDetailsScreen({ navigation, }) {
     const [cpf, setcpf] = useState();
     const [disabled, setdisabled] = useState(true);
 
+
+    const [focusEmail, setfocusEmail] = useState(false);
+    const [focusWhatsapp, setfocusWhatsapp] = useState(false);
+    const [focusCep, setfocusCep] = useState(false);
+    const [focusName, setfocusName] = useState(false);
+    const [focusCpf, setfocusCpf] = useState(false)
+
+
     useEffect(() => {
         const fecthData = async () => {
             const usr = await getUser();
@@ -49,7 +57,7 @@ export default function AccountDetailsScreen({ navigation, }) {
                     </Column>
 
                     <Column style={{ marginBottom: 20, }}>
-                        <Input label="Nome completo" disabled={disabled} value={name} setValue={setname} />
+                        <Input label="Nome completo" disabled={disabled} value={name} setValue={setname}  />
                         <Input label="E-mail" disabled={disabled} value={email} setValue={setemail} />
                         <Input label="CPF" disabled={disabled} value={cpf} setValue={setcpf} />
                         <Input label="WhatsApp" disabled={disabled} value={whatsapp} setValue={setwhatsapp} />
@@ -65,10 +73,11 @@ export default function AccountDetailsScreen({ navigation, }) {
                         </ButtonOut>
                     </Column>
 
-                    <Label style={{ backgroundColor: color.primary + 20, color: color.primary, marginVertical: 20, borderRadius: 12, paddingHorizontal: 24, paddingVertical: 12, textAlign: 'center', }}>
+                    <Label style={{ backgroundColor: color.primary + 20, color: color.primary, borderRadius: 12, paddingHorizontal: 24, paddingVertical: 12, textAlign: 'center', }}>
                         As alterações podem levar alguns minutos para serem processadas
                     </Label>
                 </Column>
+                <Column style={{height: 40, }} />
             </Scroll>
             <AnimatePresence>
                     <MotiView from={{ opacity: 0, scale: .6, rotate: '32deg', }} animate={{ opacity: 1, rotate: '0deg', scale: 1, }} transition={{ type: 'timing' }} exit={{ opacity: 0, rotate: '32deg', scale: .7, }} style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>

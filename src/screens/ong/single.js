@@ -10,7 +10,8 @@ import ongs from '@data/ongs';
 export default function ONGSingleScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const id = route?.params?.id
-    const item = ongs.find((item) => item.id === id);
+    const item = route?.params?.item || ongs.find((item) => item.id === id);  
+    ongs.find((item) => item.id === id);
      
     const [showDesc, setshowDesc] = useState(false);
     return (
