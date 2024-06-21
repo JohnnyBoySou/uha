@@ -104,7 +104,7 @@ export default function SearchScreen({ navigation, route }) {
                             renderItem={({ item }) => (
                                 <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                                     <Column style={{ justifyContent: 'center', width: 124, }}>
-                                        <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                        <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                         <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item?.title?.slice(0, 42)}</Title>
                                         <Row style={{}}>
                                             <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>

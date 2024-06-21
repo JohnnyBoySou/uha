@@ -56,6 +56,7 @@ export default function HomeScreen({ navigation, }) {
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Scroll>
+
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <MotiImage delay={300} from={{ opacity: 0, translateX: -40, scale: 0, }} animate={{ opacity: 1, translateX: 0, scale: 1, }} transition={{ type: 'spring' }} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
@@ -64,6 +65,7 @@ export default function HomeScreen({ navigation, }) {
                         <Avatar />
                     </Row>
                 </Row>
+
                 <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing' }} delay={300}>
                     <Button onPress={() => { navigation.navigate('SearchModal', { type: 'ONG' }) }} style={{ borderRadius: 30, opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: color.secundary + 20, backgroundColor: color.secundary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18, }}>
@@ -152,88 +154,16 @@ export default function HomeScreen({ navigation, }) {
                 </MotiView>
 
                 <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1000}>
-                    <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32, }}>
-                        <Title style={{ marginTop: 8, fontSize: 22, }}>Campanhas</Title>
-
-                        <FlatList
-                            style={{ marginVertical: 12, marginHorizontal: - margin.h, }}
-                            data={campaigns}
-                            ListFooterComponent={<Column style={{ width: 24 }} />}
-                            ListHeaderComponent={<Column style={{ width: 24 }} />}
-                            showsHorizontalScrollIndicator={false}
-                            horizontal
-                            renderItem={({ item }) => (
-                                <Button style={{ backgroundColor: "#fff", borderRadius: 24, marginRight: 12, }} onPress={() => { navigation.navigate('Shop') }}>
-                                    <Column>
-                                        <MotiImage source={item?.img} style={{ width: 300, height: 400, borderRadius: 24, }} />
-                                        <Column style={{ backgroundColor: '#fff', marginHorizontal: 24, padding: 12, borderRadius: 24, position: 'absolute', bottom: 20, }}>
-                                            <Title style={{ textAlign: 'center', marginTop: 6, }}>{item.title}</Title>
-                                            <Label style={{ textAlign: 'center', marginTop: 12, color: color.title, fontFamily: font.medium, fontSize: 16, marginBottom: 12, }}>{item.label}</Label>
-                                            <Title style={{ backgroundColor: color.primary, borderRadius: 100, fontSize: 12, paddingVertical: 4, paddingHorizontal: 12, textAlign: 'center', alignSelf: 'center', color: '#fff', }}>Ver estabelecimentos parceiros</Title>
-                                        </Column>
-                                    </Column>
-                                </Button>
-                            )}
-                            keyExtractor={item => item.id}
-                        />
-
-                    </Column>
+                    <Campanhas data={campaigns}/>
                 </MotiView>
+
                 <OffersCards data={offers} />
 
                 <Queridinhos data={shops?.slice(1)} />
 
-                <Column style={{ backgroundColor: color.background, paddingTop: 10, }}>
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                        <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Serviços em oferta</Title>
-                        <Pressable onPress={() => { navigation.navigate('ShopOffers') }} style={{ marginRight: 28, }}>
-                            <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
-                        </Pressable>
-                    </Row>
-                    <FlatList
-                        data={services}
-                        ListFooterComponent={<Column style={{ width: 24 }} />}
-                        ListHeaderComponent={<Column style={{ width: 24 }} />}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        renderItem={({ item }) => (
-                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                    <MotiImage source={{ uri: item.img }} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                    <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 15, lineHeight: 18, }}>{item.title.length > 10 ? item.title.slice(0, 11) + '...' : item.title}</Title>
-                                    <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 14, marginTop: 3, color: color.title, fontFamily: font.medium, marginBottom: 12, }}>{item.label}</Label>
-                                </Column>
-                            </Button>
-                        )}
-                        keyExtractor={item => item.id}
-                    />
-                </Column>
+                <Servicos data={services} />
 
-
-
-                <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 20, }}>
-                    <Title style={{ fontSize: 22, }}>Categorias</Title>
-                    <FlatList
-                        data={categories}
-                        ListFooterComponent={<Column style={{ width: 24 }} />}
-                        ListHeaderComponent={<Column style={{ width: 24 }} />}
-                        keyExtractor={item => item.id}
-                        style={{ marginVertical: margin.v, marginTop: 0, }}
-                        renderItem={({ item }) => (
-                            <Button style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('Shop', { type: item, }) }}>
-                                <Row style={{ alignItems: 'center', }}>
-                                    <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
-                                        {item.icon}
-                                    </Column>
-                                    <Column style={{ justifyContent: 'center', }}>
-                                        <Title style={{ fontSize: 18, lineHeight: 20, }}>{item.title}</Title>
-                                        <Label style={{ marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 14, }}>{item.desc}</Label>
-                                    </Column>
-                                </Row>
-                            </Button>
-                        )}
-                    />
-                </Column>
+                <Categorias />
 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100, paddingTop: 10, }}>
                     <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
@@ -243,45 +173,108 @@ export default function HomeScreen({ navigation, }) {
                         <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
                     </Button>
                 </Row>
+                
                 <Column style={{ height: 50, }} />
             </Scroll>
         </Main>
     )
 }
 
-const categories = [
-    {
-        id: 12,
-        title: 'Serviços Pet',
-        desc: '30 estabelecimentos parceiros',
-        icon: <Bone size={28} color="#FFF2E3" />,
-    },
-    {
-        id: 2,
-        title: 'Vestuário',
-        desc: '43 estabelecimentos parceiros',
-        icon: <Shirt size={28} color="#FFF2E3" />,
-    },
-    {
-        id: 3,
-        title: 'Esportivo',
-        desc: '15 estabelecimentos parceiros',
-        icon: <Bike size={28} color="#FFF2E3" />,
-    },
-    {
-        id: 4,
-        title: 'Farmácia',
-        desc: '27 estabelecimentos parceiros',
-        icon: <Hospital size={28} color="#FFF2E3" />,
-    },
-    {
-        id: 5,
-        title: 'Cuidados estéticos',
-        desc: '29 estabelecimentos parceiros',
-        icon: <Brush size={28} color="#FFF2E3" />,
-    },
-]
+const Campanhas = ({data}) => {
+    const navigation = useNavigation()
+    const { color, margin, font } = useContext(ThemeContext);
+    return (
+        <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32, }}>
+            <Title style={{ marginTop: 8, fontSize: 22, }}>Campanhas</Title>
 
+            <FlatList
+                style={{ marginVertical: 12, marginHorizontal: - margin.h, }}
+                data={data}
+                ListFooterComponent={<Column style={{ width: 24 }} />}
+                ListHeaderComponent={<Column style={{ width: 24 }} />}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                renderItem={({ item }) => (
+                    <Button style={{ backgroundColor: "#fff", borderRadius: 24, marginRight: 12, }} onPress={() => { navigation.navigate('Shop') }}>
+                        <Column>
+                            <MotiImage source={item?.img} style={{ width: 300, height: 400, borderRadius: 24, }} />
+                            <Column style={{ backgroundColor: '#fff', marginHorizontal: 24, padding: 12, borderRadius: 24, position: 'absolute', bottom: 20, }}>
+                                <Title style={{ textAlign: 'center', marginTop: 6, }}>{item.title}</Title>
+                                <Label style={{ textAlign: 'center', marginTop: 12, color: color.title, fontFamily: font.medium, fontSize: 16, marginBottom: 12, }}>{item.label}</Label>
+                                <Title style={{ backgroundColor: color.primary, borderRadius: 100, fontSize: 12, paddingVertical: 4, paddingHorizontal: 12, textAlign: 'center', alignSelf: 'center', color: '#fff', }}>Ver estabelecimentos parceiros</Title>
+                            </Column>
+                        </Column>
+                    </Button>
+                )}
+                keyExtractor={item => item.id}
+            />
+
+        </Column>
+    )
+}
+
+const Categorias = () => {
+
+    const categories = [
+        {
+            id: 12,
+            title: 'Serviços Pet',
+            desc: '30 estabelecimentos parceiros',
+            icon: <Bone size={28} color="#FFF2E3" />,
+        },
+        {
+            id: 2,
+            title: 'Vestuário',
+            desc: '43 estabelecimentos parceiros',
+            icon: <Shirt size={28} color="#FFF2E3" />,
+        },
+        {
+            id: 3,
+            title: 'Esportivo',
+            desc: '15 estabelecimentos parceiros',
+            icon: <Bike size={28} color="#FFF2E3" />,
+        },
+        {
+            id: 4,
+            title: 'Farmácia',
+            desc: '27 estabelecimentos parceiros',
+            icon: <Hospital size={28} color="#FFF2E3" />,
+        },
+        {
+            id: 5,
+            title: 'Cuidados estéticos',
+            desc: '29 estabelecimentos parceiros',
+            icon: <Brush size={28} color="#FFF2E3" />,
+        },
+    ]
+    const navigation = useNavigation()
+    const { color, margin, font } = useContext(ThemeContext);
+    return (
+        <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 20, }}>
+            <Title style={{ fontSize: 22, }}>Categorias</Title>
+            <FlatList
+                data={categories}
+                ListFooterComponent={<Column style={{ width: 24 }} />}
+                ListHeaderComponent={<Column style={{ width: 24 }} />}
+                keyExtractor={item => item.id}
+                style={{ marginVertical: margin.v, marginTop: 0, }}
+                renderItem={({ item }) => (
+                    <Button style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('Shop', { type: item, }) }}>
+                        <Row style={{ alignItems: 'center', }}>
+                            <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                                {item.icon}
+                            </Column>
+                            <Column style={{ justifyContent: 'center', }}>
+                                <Title style={{ fontSize: 18, lineHeight: 20, }}>{item.title}</Title>
+                                <Label style={{ marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 14, }}>{item.desc}</Label>
+                            </Column>
+                        </Row>
+                    </Button>
+                )}
+            />
+        </Column>
+    )
+}
 
 export const Carrousel = ({ }) => {
 
@@ -324,7 +317,6 @@ export const Carrousel = ({ }) => {
         </Column>
     )
 }
-
 
 const OffersCards = ({ data }) => {
     const { color, margin, font } = useContext(ThemeContext);
@@ -373,16 +365,15 @@ const OffersCards = ({ data }) => {
     )
 }
 
-
 const Queridinhos = ({ data }) => {
     const navigation = useNavigation()
     const { color, margin, font } = useContext(ThemeContext);
     return (
         <>
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background, }}>
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                     <Title style={{ fontSize: 22, }}>Queridinhos</Title>
-                    <Pressable onPress={() => { navigation.navigate('Shop') }} style={{ }}>
+                    <Pressable onPress={() => { navigation.navigate('Shop') }} style={{}}>
                         <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                     </Pressable>
                 </Row>
@@ -399,12 +390,44 @@ const Queridinhos = ({ data }) => {
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
-                            <Label style={{ textAlign: 'center', color: color.title, fontFamily: font.medium, fontSize: 14, width: 180, }}>{item?.desc}</Label>
+                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.desc}</Label>
                         </Column>
                     </Button>
                 )}
                 keyExtractor={item => item.id}
             />
         </>
+    )
+}
+
+const Servicos = ({ data }) => {
+    const navigation = useNavigation()
+    const { color, margin, font } = useContext(ThemeContext);
+    return (
+        <Column style={{ backgroundColor: color.background, paddingTop: 10, }}>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Serviços</Title>
+                <Pressable onPress={() => { navigation.navigate('Shop') }} style={{ marginRight: 28, }}>
+                    <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
+                </Pressable>
+            </Row>
+            <FlatList
+                data={data}
+                ListFooterComponent={<Column style={{ width: 24 }} />}
+                ListHeaderComponent={<Column style={{ width: 24 }} />}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                renderItem={({ item }) => (
+                    <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                        <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                            <MotiImage source={{ uri: item.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item.title.length > 10 ? item.title.slice(0, 11) + '...' : item.title}</Title>
+                            <Label style={{ textAlign: 'center', width: 84, fontSize: 14, lineHeight: 15, marginTop: 3, color: color.secundary + 99, fontFamily: font.medium, marginBottom: 12, }}>{item.label}</Label>
+                        </Column>
+                    </Button>
+                )}
+                keyExtractor={item => item.id}
+            />
+        </Column>
     )
 }

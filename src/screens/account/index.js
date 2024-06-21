@@ -74,7 +74,7 @@ export default function AccountScreen({ navigation, }) {
 
 
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 24, }}>
-                    <Title>Configurações</Title>
+                    <Title style={{ fontSize: 18, }}>Configurações</Title>
                     <FlatList
                         style={{ marginTop: 12, }}
                         data={Configs}
@@ -125,11 +125,11 @@ const Card = ({ item }) => {
                 </Column>
                 <Column style={{ marginHorizontal: 20, }}>
                     <Row style={{ alignItems: 'center', }}>
-                        <Title style={{ fontSize: 18, marginRight: 6, }}>{item?.title}</Title>
+                        <Title style={{ fontSize: 16, marginRight: 6, }}>{item?.title}</Title>
                         {item.check && <CircleCheck color={color.primary} size={18} />}
                         {item.check == false && <CircleX color={color.red} size={18} />}
                     </Row>
-                    <Label style={{ fontSize: 14, }}>{item?.description}</Label>
+                    <Label style={{ fontSize: 14, marginTop: -5, color: color.secundary+99, }}>{item?.description}</Label>
                 </Column>
             </Row>
         </Button>
@@ -153,7 +153,7 @@ const Configs = [
         title: 'Dados cadastrais',
         description: 'Edite seu avatar e infos',
         icon: 'user',
-        check: false,
+        check: null,
         screen: 'AccountDetails',
         img: require('@icons/ic1.png'),
     },
@@ -161,7 +161,7 @@ const Configs = [
         title: 'Notificações',
         description: 'Configure como desejar',
         icon: 'bell',
-        check: true,
+        check: null,
         screen: 'AccountNotify',
         img: require('@icons/ic2.png'),
     },

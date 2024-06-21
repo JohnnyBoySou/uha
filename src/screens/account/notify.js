@@ -19,15 +19,15 @@ export default function AccountNotifyScreen({ navigation, }) {
     const [whatsapp, setwhatsapp] = useState();
 
     return (
-        <Main style={{  }}>
+        <Main style={{ backgroundColor: '#fff', }}>
                 <Scroll style={{ paddingTop: 20, }}>
                     <Header title='Notificações' />
                     <Column style={{ paddingHorizontal: margin.h, }}>
-                        <Title style={{ marginTop: 30, marginBottom: 30,}}>Escolha quais deseja receber</Title>
+                        <Title style={{ marginTop: 30, marginBottom: 30, fontSize: 22,}}>Escolha quais deseja receber</Title>
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
                             <Column style={{ width: 250, }}>
-                                <Title style={{ fontSize: 20, }}>Promocionais</Title>
-                                <Label style={{ fontSize: 16, }}>Receba descontos, alertas de novas campanhas e encerramentos</Label>
+                                <Title style={{ fontSize: 18, }}>Promocionais</Title>
+                                <Label style={{ fontSize: 14, color: color.secundary+99, }}>Receba descontos, alertas de novas campanhas e encerramentos</Label>
                             </Column>
                             <Button onPress={() => {setpromocionais(!promocionais)}} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 100,  }}>
                                 <Check status={promocionais}/>
@@ -36,8 +36,8 @@ export default function AccountNotifyScreen({ navigation, }) {
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
                             <Column style={{ width: 250, }}>
-                                <Title style={{ fontSize: 20, }}>Alertas</Title>
-                                <Label style={{ fontSize: 16, }}>Receba alertas exclusivos de ofertas relâmpago e campanhas promocionais</Label>
+                                <Title style={{ fontSize: 18, }}>Alertas</Title>
+                                <Label style={{ fontSize: 14, color: color.secundary+99,}}>Receba alertas exclusivos de ofertas relâmpago e campanhas promocionais</Label>
                             </Column>
                             <Button onPress={() => {setalertas(!alertas)}} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 100,  }}>
                                 <Check status={alertas}/>
@@ -46,8 +46,8 @@ export default function AccountNotifyScreen({ navigation, }) {
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
                             <Column style={{ width: 250, }}>
-                                <Title style={{ fontSize: 20, }}>Aplicativo</Title>
-                                <Label style={{ fontSize: 16, }}>Receba as notificações do aplicativo e fique por dentro de cada processo</Label>
+                                <Title style={{ fontSize: 18, }}>Aplicativo</Title>
+                                <Label style={{ fontSize: 14, color: color.secundary+99,}}>Receba as notificações do aplicativo e fique por dentro de cada processo</Label>
                             </Column>
                             <Button onPress={() => {setaplicativo(!aplicativo)}} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 100,  }}>
                                 <Check status={aplicativo}/>
@@ -56,8 +56,8 @@ export default function AccountNotifyScreen({ navigation, }) {
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
                             <Column style={{ width: 250, }}>
-                                <Title style={{ fontSize: 20, }}>E-mail</Title>
-                                <Label style={{ fontSize: 16, }}>Receba nossos e-mails promocionais e novidades em primeira mão</Label>
+                                <Title style={{ fontSize: 18, }}>E-mail</Title>
+                                <Label style={{ fontSize: 14, color: color.secundary+99,}}>Receba nossos e-mails promocionais e novidades em primeira mão</Label>
                             </Column>
                             <Button onPress={() => {setemail(!email)}} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 100,  }}>
                                 <Check status={email}/>
@@ -66,8 +66,8 @@ export default function AccountNotifyScreen({ navigation, }) {
                     
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
                             <Column style={{ width: 250, }}>
-                                <Title style={{ fontSize: 20, }}>SMS</Title>
-                                <Label style={{ fontSize: 16, }}>Receba atualizações, promoções e novidades em seu SMS</Label>
+                                <Title style={{ fontSize: 18, }}>SMS</Title>
+                                <Label style={{ fontSize: 14, color: color.secundary+99, }}>Receba atualizações, promoções e novidades em seu SMS</Label>
                             </Column>
                             <Button onPress={() => {setsms(!sms)}} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 100,  }}>
                                 <Check status={sms}/>
@@ -76,8 +76,8 @@ export default function AccountNotifyScreen({ navigation, }) {
 
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>
                             <Column style={{ width: 250, }}>
-                                <Title style={{ fontSize: 20, }}>WhatsApp</Title>
-                                <Label style={{ fontSize: 16, }}>Receba atualizações, promoções e novidades em seu WhatsApp</Label>
+                                <Title style={{ fontSize: 18, }}>WhatsApp</Title>
+                                <Label style={{ fontSize: 14, color: color.secundary+99, }}>Receba atualizações, promoções e novidades em seu WhatsApp</Label>
                             </Column>
                             <Button onPress={() => {setwhatsapp(!whatsapp)}} style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 100,  }}>
                                 <Check status={whatsapp}/>
@@ -85,9 +85,9 @@ export default function AccountNotifyScreen({ navigation, }) {
                         </Row>
 
 
-                        <SubLabel style={{ backgroundColor: color.primary+20, marginVertical: 20, borderRadius: 12, paddingHorizontal: 24, paddingVertical: 12, textAlign: 'center', }}>
-                        As alterações podem levar alguns minutos para serem processadas
-                        </SubLabel>
+                        <Label style={{ backgroundColor: color.primary+20, marginVertical: 20, borderRadius: 12, paddingHorizontal: 24, paddingVertical: 12, textAlign: 'center', color: color.primary, fontSize: 18, }}>
+                        As alterações podem levar alguns minutos para serem processadas.
+                        </Label>
                     </Column>
                 </Scroll>
 
