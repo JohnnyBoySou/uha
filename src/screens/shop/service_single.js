@@ -12,7 +12,7 @@ import Feather from '@expo/vector-icons/Feather';
 
 import HeartAnim from '@anim/heart';
 
-import { getSingleService, getSingleShop} from '@request/service';
+import { getSingleService, getSingleShop } from '@request/service';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
 import { excludeFavs } from '../../api/user/favorites';
 
@@ -143,14 +143,21 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                             </Column>
                         </Column>
                     </Row>
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, marginTop: 12,}}>
-                        <Row>
-                            {item?.categories?.map((cat) => (
-                                <Button key={cat.id} onPress={() => { navigation.navigate('Shop', { type: cat }) }} style={{ marginRight: 6, }}>
-                                    <Label key={cat.name} style={{ fontSize: 14, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 6, paddingHorizontal: 14, backgroundColor: color.primary + 20, borderRadius: 8, alignSelf: 'flex-start', }}>{cat?.name}</Label>
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, marginTop: 12, }}>
+                        <FlatList
+                            data={item?.categories}
+                            style={{ marginVertical: 6, }}
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            renderItem={({ item }) => (
+                                <Button key={item.id} onPress={() => { navigation.navigate('Shop', { type: item }) }} style={{ marginRight: 6, }}>
+                                    <Label key={item.name} style={{ fontSize: 14, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 6, paddingHorizontal: 14, backgroundColor: color.primary + 20, borderRadius: 8, alignSelf: 'flex-start', }}>{item?.name}</Label>
                                 </Button>
-                            ))}
-                        </Row>
+                            )}
+
+                        />
+
                         <Button onPress={toggleLike} style={{ alignSelf: 'center', width: 42, height: 42, borderRadius: 12, backgroundColor: color.primary + 20, justifyContent: 'center', alignItems: 'center', }}>
                             <Row>
                                 <AnimatePresence>
@@ -189,11 +196,11 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         style={{ marginTop: 6, marginBottom: 30, marginHorizontal: -8, }}
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item) => item.id}
-                        columnWrapperStyle={{  }}
+                        columnWrapperStyle={{}}
                         numColumns={2}
                         renderItem={({ item }) => (
                             <Button onPress={() => navigation.navigate('Home')} style={{ borderRadius: 8, padding: 4, backgroundColor: '#f5f5f5', marginVertical: 6, flexGrow: 1, margin: 8, }}>
-                                <Row style={{  alignItems: 'center', }}>
+                                <Row style={{ alignItems: 'center', }}>
                                     <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 6, }} />
                                     <Column style={{ marginLeft: 8, justifyContent: 'center', marginRight: 12, }}>
                                         <SubLabel style={{ fontFamily: 'Font_Medium', fontSize: 14, }}>{item?.name.slice(0, 14)}</SubLabel>

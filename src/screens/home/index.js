@@ -3,7 +3,7 @@ import { FlatList, View, Dimensions, Pressable, Animated } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
-import { Bike, Bone, Brush, Hospital, Indent, Minus, Plus, Search, Shirt } from 'lucide-react-native';
+import { Bike, Bone, Brush, Hospital, Indent, Minus, Plus, Search, Shirt, ShoppingBag } from 'lucide-react-native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Internet from '@components/internet';
@@ -57,12 +57,12 @@ export default function HomeScreen({ navigation, }) {
                 </Row>
 
                 <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing' }} delay={300}>
-                    <Button onPress={() => { navigation.navigate('SearchModal', { type: 'ONG' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                    <Button onPress={() => { navigation.navigate('SearchModal') }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                         <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
 
-                            <Column style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
+                            <MotiView from={{opacity: 0, scale: 0,}} animate={{opacity: 1, scale: 1,}} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
                                 <Search strokeWidth={2} color="#fff" size={24} />
-                            </Column>
+                            </MotiView>
 
                             <Column style={{ justifyContent: 'center', marginLeft: 16, }}>
                                 <Title style={{ fontSize: 18, fontFamily: font.medium, marginTop: 4, marginBottom: -2, lineHeight: 18, color: color.secundary, }}>Pesquisar</Title>
@@ -84,17 +84,17 @@ export default function HomeScreen({ navigation, }) {
                         </Column>
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <Button onPress={() => { navigation.navigate('CampaignsPontos') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
+                            <Button onPress={() => { navigation.navigate('Donate') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                 <MotiImage source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                             </Button>
-                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Pontos</Label>
+                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Doação</Label>
                         </Column>
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <Button onPress={() => { navigation.navigate('CampaignsGiftCard') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
-                                <MotiImage source={require('@icons/gift.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                            <Button onPress={() => { navigation.navigate('Shop') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
+                                <ShoppingBag color={color.primary} size={32}  strokeWidth={2}/>
                             </Button>
-                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Gift Card</Label>
+                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Shop</Label>
                         </Column>
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
@@ -111,13 +111,6 @@ export default function HomeScreen({ navigation, }) {
                         {showMenu &&
                             <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} exit={{ opacity: 0, translateY: 20, }} transition={{ type: 'timing', duration: 300, }}>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
-
-                                    <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                        <Button onPress={() => { navigation.navigate('Notafiscal') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
-                                            <MotiImage source={require('@icons/nota.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
-                                        </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
-                                    </Column>
 
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('CampaignsPontos') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
@@ -139,6 +132,13 @@ export default function HomeScreen({ navigation, }) {
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Ranking</Label>
                                     </Column>
+                                    
+                                    <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                                        <Column onPress={() => { navigation.navigate('Favorites') }} rippleColor={color.secundary} style={{  padding: 18, borderRadius: 12, backgroundColor: color.primary + 20,}}>
+                                            <MotiImage source={require('@icons/heart.png')} style={{ width: 34, objectFit: 'contain', height: 34, }} />
+                                        </Column>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Favoritos</Label>
+                                    </Column>
                                 </Row>
                             </MotiView>
                         }
@@ -157,6 +157,8 @@ export default function HomeScreen({ navigation, }) {
                 <OffersCards data={offers} />
 
                 <Queridinhos data={shops?.slice(1)} />
+
+                <Donate/>
 
                 <Servicos data={services} />
 
@@ -183,7 +185,6 @@ const Campanhas = ({ data }) => {
     return (
         <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32, }}>
             <Title style={{ marginTop: 8, fontSize: 22, }}>Campanhas</Title>
-
             <FlatList
                 style={{ marginVertical: 12, marginHorizontal: - margin.h, }}
                 data={data}
@@ -196,9 +197,9 @@ const Campanhas = ({ data }) => {
                         <Column>
                             <MotiImage source={item?.img} style={{ width: 300, height: 400, borderRadius: 24, }} />
                             <Column style={{ backgroundColor: '#fff', marginHorizontal: 24, padding: 12, borderRadius: 24, position: 'absolute', bottom: 20, }}>
-                                <Title style={{ textAlign: 'center', marginTop: 6, }}>{item.title}</Title>
-                                <Label style={{ textAlign: 'center', marginTop: 12, color: color.title, fontFamily: font.medium, fontSize: 16, marginBottom: 12, }}>{item.label}</Label>
-                                <Title style={{ backgroundColor: color.primary, borderRadius: 100, fontSize: 12, paddingVertical: 4, paddingHorizontal: 12, textAlign: 'center', alignSelf: 'center', color: '#fff', }}>Ver estabelecimentos parceiros</Title>
+                                <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 20, lineHeight: 20, }}>{item.title}</Title>
+                                <Label style={{ textAlign: 'center', marginTop: 6,  color: color.secundary+99, fontFamily: font.medium, fontSize: 14, marginBottom: 12, }}>{item.label}</Label>
+                                <Title style={{ backgroundColor: color.primary, borderRadius: 100, fontSize: 14, paddingVertical: 4, paddingHorizontal: 12, textAlign: 'center', alignSelf: 'center', color: '#fff', }}>Ver estabelecimentos</Title>
                             </Column>
                         </Column>
                     </Button>
@@ -211,35 +212,34 @@ const Campanhas = ({ data }) => {
 }
 
 const Categorias = () => {
-
     const categories = [
         {
             id: 12,
-            title: 'Serviços Pet',
+            name: 'Serviços Pet',
             desc: '30 estabelecimentos parceiros',
             icon: <Bone size={28} color="#FFF2E3" />,
         },
         {
             id: 2,
-            title: 'Vestuário',
+            name: 'Vestuário',
             desc: '43 estabelecimentos parceiros',
             icon: <Shirt size={28} color="#FFF2E3" />,
         },
         {
             id: 3,
-            title: 'Esportivo',
+            name: 'Esportivo',
             desc: '15 estabelecimentos parceiros',
             icon: <Bike size={28} color="#FFF2E3" />,
         },
         {
             id: 4,
-            title: 'Farmácia',
+            name: 'Farmácia',
             desc: '27 estabelecimentos parceiros',
             icon: <Hospital size={28} color="#FFF2E3" />,
         },
         {
             id: 5,
-            title: 'Cuidados estéticos',
+            name: 'Cuidados estéticos',
             desc: '29 estabelecimentos parceiros',
             icon: <Brush size={28} color="#FFF2E3" />,
         },
@@ -262,7 +262,7 @@ const Categorias = () => {
                                 {item.icon}
                             </Column>
                             <Column style={{ justifyContent: 'center', }}>
-                                <Title style={{ fontSize: 18, lineHeight: 20, }}>{item.title}</Title>
+                                <Title style={{ fontSize: 18, lineHeight: 20, }}>{item.name}</Title>
                                 <Label style={{ marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 14, }}>{item.desc}</Label>
                             </Column>
                         </Row>
@@ -419,7 +419,7 @@ const Queridinhos = ({ data }) => {
         <>
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background, }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                    <Title style={{ fontSize: 22, }}>Queridinhos</Title>
+                    <Title style={{ fontSize: 22, }}>Estabelecimentos</Title>
                     <Pressable onPress={() => { navigation.navigate('Shop') }} style={{}}>
                         <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                     </Pressable>
@@ -478,3 +478,96 @@ const Servicos = ({ data }) => {
         </Column>
     )
 }
+
+const Donate = () => {
+    const { color } = useContext(ThemeContext);
+    const navigation = useNavigation();
+    const [activeIndex, setActiveIndex] = useState(0);
+    const flatListRef = useRef(null);
+    const windowWidth = 300;
+    const scrollX = useRef(new Animated.Value(0)).current;
+
+    const activyColor = '#5C0D45';
+    const inactivyColor = '#5C0D4570';
+
+    useEffect(() => {
+        const listener = scrollX.addListener(({ value }) => {
+            const index = Math.round(value / windowWidth);
+            setActiveIndex(index);
+        });
+
+        return () => {
+            scrollX.removeListener(listener);
+        };
+    }, [scrollX, windowWidth]);
+
+    const handleScroll = Animated.event(
+        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+        { useNativeDriver: false }
+    );
+
+    const render = ({ item }) => {
+        const link = item.img;
+        return (
+            <Button onPress={() => { navigation.navigate(item?.route) }} >
+                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
+            </Button>
+        );
+    };
+
+    const home = [
+        { id: '1', title: '1', img: require('@imgs/doe1.png'), route: 'DonateHide' },
+        { id: '2', title: '2', img: require('@imgs/doe2.png'), route: 'DonateHide' },
+    ];
+
+    return (
+        <Column style={{ backgroundColor: color.background, paddingTop: 30,}}>
+            <Title style={{ marginLeft: 28, marginBottom: 14, fontSize: 22, }}>Doe anonimamente</Title>
+            <FlatList
+                ref={flatListRef}
+                decelerationRate={'fast'}
+                scrollEventThrottle={16}
+                data={home}
+                renderItem={render}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ListHeaderComponent={<View style={{ width: 28 }} />}
+                ListFooterComponent={<View style={{ width: 0 }} />}
+                snapToAlignment='center'
+                pagingEnabled
+                onScroll={handleScroll}
+            />
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 14, marginBottom: 0, }}>
+                {home.map((_, index) => {
+                    const inputRange = [
+                        (index - 1) * windowWidth,
+                        index * windowWidth,
+                        (index + 1) * windowWidth
+                    ];
+
+                    const dotWidth = scrollX.interpolate({
+                        inputRange,
+                        outputRange: [8, 30, 8],
+                        extrapolate: 'clamp',
+                    });
+
+                    return (
+                        <>
+                            <Animated.View
+                                key={index}
+                                style={{
+                                    width: dotWidth,
+                                    height: 8,
+                                    borderRadius: 4,
+                                    backgroundColor: index == activeIndex ? activyColor : inactivyColor,
+                                    marginHorizontal: 4,
+                                }}
+                            />
+                        </>
+                    );
+                })}
+            </View>
+        </Column>
+    );
+};

@@ -30,7 +30,7 @@ export default function OnboardingScreen({ navigation, }) {
     return (
         <Main>
             <Column style={{ flex: 1, }}>
-                <Row style={{ position: 'absolute', top: 30, left: 0, right: 10, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
+                <Row style={{ position: 'absolute', top: 50, left: 10, right: 10, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
                     <MotiImage source={require('@imgs/logo.png')} style={{ objectFit: 'contain', width: 100, }} />
                         
                     <Column  style={{ marginRight: 20,  justifyContent: 'center', alignItems: 'center', }}>
@@ -81,11 +81,11 @@ export default function OnboardingScreen({ navigation, }) {
 
 
                 <Column style={{ paddingHorizontal: margin.h, width: '100%', position: 'absolute', bottom: 0, paddingBottom: 50, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
-                    <ButtonPR onPress={() => { navigation.replace('AuthLogin') }} style={{ marginTop: 24, }} >
+                    <ButtonPR onPress={() => { navigation.navigate('AuthLogin') }} style={{ marginTop: 24, }} >
                         <LabelSE>Próximo</LabelSE>
                     </ButtonPR>
-                    <Button onPress={() => { navigation.push('DonateHide') }} style={{ marginTop: 12, alignSelf: 'center', }} >
-                        <LabelLI style={{ textDecorationLine: 'underline', textDecorationStyle: 'solid', color: '#fff', textAlign: 'center', }}>Doar anonimamente</LabelLI>
+                    <Button onPress={() => { navigation.push('DonateHide') }} style={{ marginTop: 12, alignSelf: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 100, }} >
+                        <LabelLI style={{ textDecorationLine: 'underline', textDecorationStyle: 'solid', color: '#fff', textAlign: 'center',  }}>Doar anonimamente</LabelLI>
                     </Button>
 
                 </Column>

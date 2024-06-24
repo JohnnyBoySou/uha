@@ -9,19 +9,19 @@ export default function Internet() {
     
     const { color } = useContext(ThemeContext)
     const netInfo = useNetInfo();
-    const [messageConnection, setMessageConnection] = useState('Connected');
+    const [messageConnection, setMessageConnection] = useState(false);
 
     useEffect(() => {
-        if (netInfo.isConnected) {
-            setMessageConnection(true);
-        } else {
+        if (netInfo?.isConnected) {
             setMessageConnection(false);
+        } else {
+            setMessageConnection(true);
         }
     }, [netInfo]);
 
     return (<AnimatePresence>
-        {!messageConnection &&
-        <MotiView from={{opacity:0, translateY: -50,}} animate={{opacity: 1, translateY: 0,}} exit={{translateY: 0,}} style={{ position: 'absolute', top: 0, width: '100%', zIndex: 99, }}>
+        {messageConnection &&
+        <MotiView from={{opacity:0, translateY: -50,}} animate={{opacity: 1, translateY: 0,}} exit={{translateY: 0, opacity: 0,}} style={{ position: 'absolute', top: 0, width: '100%', zIndex: 99, }}>
             <Row style={{ paddingTop: 40, backgroundColor: '#f7f7f7', justifyContent: 'center',  paddingBottom: 12, }}>
                 <Button style={{ backgroundColor: color?.secundary+10, padding: 12,  borderRadius: 100,}}>
                     <Feather style={{ textAlign: 'center', }} name="wifi-off" size={24} color={color?.secundary} />

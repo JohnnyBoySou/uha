@@ -33,7 +33,7 @@ export default function RankingScreen({ navigation, }) {
             }
         </AnimatePresence>
 
-            <Scroll style={{ paddingTop: 0,  }} onScroll={(event) => {  const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else {  setactionButton(false); } }}>
+            <Scroll style={{ paddingTop: 0,  }} onScroll={(event) => {  const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 5) { setactionButton(true); } else {  setactionButton(false); } }}>
                 <Column style={{ paddingVertical: 30, backgroundColor: color.primary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, marginVertical: 16, }}>
                         <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
@@ -112,17 +112,9 @@ export default function RankingScreen({ navigation, }) {
                     renderItem={({ item }) => <RankItem item={item} />}
                     style={{ marginHorizontal: margin.h, }}
                 />
-
-                <Title style={{ textAlign: 'center', marginVertical: 20, }}>Prêmios</Title>
-                <Row style={{ marginHorizontal: margin.h, }}>
-                    <MotiImage style={{ width: 100, height: 100, backgroundColor: color.off, borderRadius: 12, }}/>
-                </Row>
-                <Row style={{ marginHorizontal: margin.h, }}>
-                    <MotiImage style={{ width: 100, height: 100, backgroundColor: color.off, borderRadius: 12, }}/>
-                </Row>
-                <Row style={{ marginHorizontal: margin.h, }}>
-                    <MotiImage style={{ width: 100, height: 100, backgroundColor: color.off, borderRadius: 12, }}/>
-                </Row>
+                
+                <Column style={{height: 100, }} />
+               
 
             </Scroll>
             <BottomSheet snapPoints={[0.2, 300]} ref={modalUser}   backgroundStyle={{backgroundColor: '#EDF9FF',}} >
@@ -147,7 +139,7 @@ const RankItem = ({ item }) => {
         <Row style={{  marginBottom: 10, paddingBottom: 10, borderBottomWidth: 0.5, borderBottomColor: color.off,  }}>
             <Title style={{ textAlign: 'center', width: 60, fontSize: 20,  color: item.position % 2 ? color.primary+80 : color.primary}}>{item.position}</Title>
             <Title style={{   width: 150, marginLeft: 24, fontSize: 16, fontFamily:'Font_Book', }}>@{item.username}</Title>
-            <Title style={{ textAlign: 'center',  width: 100, fontSize: 16, }}>{item.points}</Title>
+            <Title style={{ textAlign: 'center',  width: 100, fontSize: 16,  }}>{item.points}</Title>
         </Row>
     )
 }
@@ -159,7 +151,7 @@ const MyRankItem = ({ item }) => {
         <Row style={{   paddingVertical: 10,  borderRadius: 8, borderBottomColor: color.off, backgroundColor: item?.current ? '#00A3FF': 'transparent' }}>
             <Title style={{ textAlign: 'center', width: 60, fontSize: 20,  color: item.current ? '#fff' : '#00A3FF'}}>{item.position}</Title>
             <Title style={{   width: 150, marginLeft: 24, fontSize: 16, fontFamily: item.current ? 'Font_Bold' : 'Font_Medium', color: item.current ? '#fff' : '#00A3FF90' }}>@{item.username}</Title>
-            <Title style={{ textAlign: 'center',  width: 100, fontSize: 16, color: item.current ? '#fff' : '#00A3FF' }}>{item.points}</Title>
+            <Title style={{ textAlign: 'center',  width: 100, fontSize: 16, color: item.current ? '#fff' : '#00A3FF', paddingRight: 20, }}>{item.points}</Title>
         </Row>
     )
 }

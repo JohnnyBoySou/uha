@@ -6,7 +6,7 @@ import { AnimatePresence, MotiImage } from 'moti';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { ArrowLeft, Search, X } from 'lucide-react-native';
 import { MotiView } from 'moti';
-import { useNavigation, } from '@react-navigation/native';
+import { useIsFocused, useNavigation, } from '@react-navigation/native';
 
 import { getShops, getOffers } from '@request/service';
 import { getCategory } from '@request/category';
@@ -199,8 +199,10 @@ const produtos = [
 ]
 
 const Result = ({ value }) => {
+    console.log(value)
     const [type, settype] = useState(value);
     const [data, setdata] = useState();
+    const { isFocused } = useIsFocused();
     const { color, margin } = useContext(ThemeContext);
     useEffect(() => {
         const fecthData = async () => {
@@ -209,27 +211,28 @@ const Result = ({ value }) => {
             })
         }
         fecthData()
-    }, [])
+    }, [value])
     if(type == null) return null;
     return (
-        <Column style={{ marginBottom: 0, }}>
+        <MotiView from={{opacity: 0,}} animate={{opacity: 1}} exit={{opacity: 0,}} style={{ marginBottom: 0, }}>
             <Title style={{ marginHorizontal: margin.h, marginVertical: 12,}}>Estabelecimentos que oferecem</Title>
             <Row style={{ marginHorizontal: margin.h, marginBottom: -40, }}>
                     <AnimatePresence>
-                        {type != null && <MotiView transition={{ duration: 300, }} from={{ opacity: 0, translateX: -30, }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, }}><Button onPress={() => { settype(null) }} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: -4, marginBottom: 14, borderRadius: 8, }} >
+                        {type != null &&
+                            <Button onPress={() => settype(null)} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: -4, marginBottom: 14, borderRadius: 8, }} >
                             <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                <Title style={{ color: color.primary, fontSize: 18, marginRight: 6, }}>{type?.title}</Title>
+                                <Title style={{ color: color.primary, fontSize: 18, marginRight: 6, }}>{type?.name}</Title>
                                 <X color={color.primary} />
                             </Row>
-                        </Button></MotiView>}
+                        </Button>}
                     </AnimatePresence>
                 </Row>
             {data?.length > 0 && <Promos data={data} />}
             {data?.length == 0 && <Column style={{ marginHorizontal: margin.h, marginTop: 50, marginBottom: 20, }}>
-                <Title>Não conseguimos encontrar nada...</Title>
-                <Label>Tente buscar por outro termo</Label>
+                <Title style={{ fontSize: 22, lineHeight: 22, marginBottom: 6,}}>Não conseguimos encontrar nada...</Title>
+                <Label style={{ fontSize: 16, }}>Tente buscar por outro termo</Label>
                 </Column>}
-        </Column>
+        </MotiView>
     )
 }
 

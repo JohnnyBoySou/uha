@@ -1,6 +1,6 @@
 import React, { useContext, useState, } from 'react';
 import { Pressable, ActivityIndicator } from 'react-native';
-import { Main, Column, Label, Title, Row, Button, ButtonLI, LabelLI, ButtonOut, Digit, ButtonPR } from '@theme/global';
+import { Main, Column, Label, Title, Row, Button, Scroll, LabelLI, ButtonOut, Digit, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Delete , ArrowLeft } from 'lucide-react-native';
 import { MotiView } from 'moti';
@@ -46,7 +46,9 @@ export default function DonateScreen({ navigation, }) {
     }
 
     return (
-        <Main style={{ paddingTop: 30, }}>
+        <Main style={{  }}>
+            <Scroll style={{ paddingTop: 15, }}>
+
              <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
                 <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: color.secundary, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                     <ArrowLeft color="#fff" />
@@ -56,12 +58,12 @@ export default function DonateScreen({ navigation, }) {
                 </Column>
             </Row>
 
-            <Column style={{ backgroundColor: "#fff", marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
+            <Column style={{ backgroundColor: "#fff", marginTop: 20, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
                 <Title style={{ fontSize: 24, color: color.secundary, lineHeight: 28,}}>R$</Title>
                 <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{value},00</Title>
             </Column>
 
-            <Column style={{  flexGrow: 1, alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, }}>
+            <Column style={{  alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, paddingBottom: 100,  }}>
                <Row style={{ justifyContent: 'center', alignItems: 'center',  marginBottom: 20, }}>
                 <Label style={{ color: '#fff', }}>Total em pontos: </Label>
                     <Button  style={{ borderRadius: 100, }} >
@@ -87,6 +89,8 @@ export default function DonateScreen({ navigation, }) {
                         </>
                   </ButtonPR>
             </Column>
+            </Scroll>
+
         </Main>
     )
 }

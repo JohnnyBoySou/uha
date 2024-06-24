@@ -24,7 +24,6 @@ export async function getCampaigns() {
 
 export async function getSingleService(id) {
     //const res = axios.get(BASE_URL + '/services/' + id)
-    console.log(id)
     const data = services_single.find((service) => service.id == id)
     const rs = data ? data : services_single[0]
     return rs 

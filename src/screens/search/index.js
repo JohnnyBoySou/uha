@@ -52,7 +52,7 @@ export default function SearchScreen({ navigation, route }) {
 
                     <Row style={{ alignItems: 'center', marginTop: -15, marginBottom: 20, }}>
                         <CircleHelp color={color.label} size={16} />
-                        <Label style={{ fontSize: 14, marginLeft: 4, }}>Busque por <U>estabelecimentos</U> ou <U>serviços</U>.</Label>
+                        <Label style={{ fontSize: 14, marginLeft: 4, }}>Busque por <U>estabelecimentos</U>, <U>serviços</U> ou <U>ONGs</U>.</Label>
                     </Row>
 
                     <Row>

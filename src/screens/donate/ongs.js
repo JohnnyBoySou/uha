@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, ActivityIndicator, Pressable } from 'react-native';
-import { Button, ButtonOut, Scroll, Column, Label, Row, Title, B, LabelPR, SubLabel } from '@theme/global';
+import { Button, ButtonOut, Scroll, Column, Label, Row, Title, B, LabelPR, SubLabel, Main } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MotiImage } from 'moti';
 import { ArrowUpRight } from 'lucide-react-native';
@@ -26,7 +26,7 @@ export default function DonateONGS ({ item, handleOng }){
     }, []);
 
     return (
-        <Scroll style={{ paddingTop: 10, backgroundColor: "#f7f7f7", paddingBottom: 30,}} >
+        <Main style={{ paddingTop: 10, backgroundColor: "#f7f7f7", paddingBottom: 30,}} >
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 5, }}>
                 <Title style={{ fontSize: 28, lineHeight: 28, marginBottom: 12, }}>Escolha qual ONG deseja beneficiar</Title>
                 
@@ -36,11 +36,10 @@ export default function DonateONGS ({ item, handleOng }){
                         <Label style={{ fontFamily: 'Font_Bold', color: color.primary, }}>Ver todas</Label>
                     </Pressable>
                 </Row>
-                
-                
                 <FlatList
                     data={ongs}
                     keyExtractor={item => item?.id}
+                    showsVerticalScrollIndicator={true}
                     renderItem={({ item }) => (
                         <Row  key={item?.id} style={{  marginVertical: 3, paddingHorizontal: 12, borderRadius:12, paddingVertical:12, alignItems: 'center', justifyContent: 'space-between', backgroundColor: item?.id === selectOng?.id ? color.blue+30 : 'transparent',}}>
                                <Row style={{  alignItems: 'center',  }}>
@@ -67,7 +66,7 @@ export default function DonateONGS ({ item, handleOng }){
                    </Row>
                 </ButtonOut>
             </Column>
-        </Scroll>
+        </Main>
     )
 }
 

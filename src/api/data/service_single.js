@@ -6,11 +6,11 @@ const service_single = [
         label: 'A partir de 40 pontos',
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],
@@ -42,11 +42,11 @@ const service_single = [
         label: 'A partir de 40 pontos',
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],
@@ -78,11 +78,11 @@ const service_single = [
         label: 'A partir de 15 pontos',
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],
@@ -114,11 +114,11 @@ const service_single = [
         label: 'A partir de 40 pontos',
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],
@@ -154,11 +154,11 @@ const service_single = [
         old_value: 70,
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],
@@ -191,11 +191,11 @@ const service_single = [
         old_value: 120,
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],
@@ -226,11 +226,11 @@ const service_single = [
         imgs: ['https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg', 'https://i.pinimg.com/564x/8c/bd/52/8cbd52096f4d6835f454f142e4842988.jpg'],
         categories: [
             {
-                id: 12345,
+                id: 14,
                 name: "Pets"
             },
             {
-                id: 1234,
+                id: 12,
                 name: "Cuidados"
             }
         ],

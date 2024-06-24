@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef } from 'react';
 import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button, LabelLI, ButtonOut } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { CircleCheck, ArrowLeft, Info, Clipboard as Clip, CheckCircle, Edit } from 'lucide-react-native';
+import { CircleCheck, ArrowLeft, Info, Clipboard as Clip, CheckCircle, Edit, CircleDashed } from 'lucide-react-native';
 import CheckBox from '@components/checkbox';
 import { MotiImage, MotiView } from 'moti';
 import * as Clipboard from 'expo-clipboard';
@@ -124,8 +124,10 @@ export default function DonateValueHideScreen({ navigation, route }) {
                             </Button>
 
                             <Row style={{ alignItems: 'center', marginTop: 30, marginBottom: 30, }}>
-                                <Title style={{ marginRight: 6, fontSize: 18, }}>Status: aguardando pagamento</Title>
-                                <CircleCheck color={color.green} size={24} />
+
+                                <Title style={{ marginRight: 6, fontSize: 18, fontFamily: 'Font_Medium', }}>Status:</Title>
+                                <Title style={{ marginRight: 6, fontSize: 18, }}>Aguardando pagamento</Title>
+                                <CircleDashed color={color.blue} size={24} />
                             </Row>
 
 
@@ -138,7 +140,7 @@ export default function DonateValueHideScreen({ navigation, route }) {
 
             </Scroll>
 
-            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 600]} backgroundStyle={{backgroundColor: '#f7f7f7'}}>
+            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 800]} backgroundStyle={{backgroundColor: '#f7f7f7'}}>
                 <BottomSheetScrollView>
                     <DonateONGS handleOng={handleOng} value={value} />
                 </BottomSheetScrollView>
