@@ -33,7 +33,7 @@ export default function SearchScreen({ navigation, route }) {
     }
 
     return (
-        <Main style={{ backgroundColor: "#fff", paddingTop: type ? 15 : 30, }}>
+        <Main style={{ backgroundColor: "#fff", paddingTop: type ? 20 : 40, }}>
                 <Header title="Pesquisar" rose />
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 20, flex: 1, }}>
                     <Row style={{ marginBottom: 24, justifyContent: 'center', alignItems: 'center', }}>
