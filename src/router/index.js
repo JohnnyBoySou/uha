@@ -152,7 +152,6 @@ export default function Router() {
             <Stack.Screen name="ExtractSingleMoedas" component={ExtractSingleMoedasScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="ExtractSingleRifas" component={ExtractSingleRifasScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
-
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -170,7 +169,6 @@ export default function Router() {
 
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
 
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

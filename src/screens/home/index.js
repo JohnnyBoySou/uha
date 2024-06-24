@@ -1,26 +1,18 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { FlatList, View, Animated, Pressable } from 'react-native';
+import { FlatList, View, Dimensions, Pressable, Animated } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
-import { Bike, Bone, Brush, Hospital, Minus, Plus, Search, Shirt } from 'lucide-react-native';
-import { SlidingDot } from "react-native-animated-pagination-dots";
+import { Bike, Bone, Brush, Hospital, Indent, Minus, Plus, Search, Shirt } from 'lucide-react-native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
-
+import Internet from '@components/internet';
 
 import { useNavigation } from '@react-navigation/native';
 import { getOffers, getShops, getServices, getCampaigns } from '@request/service';
-import Router from './../../router/index';
 
 export default function HomeScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
-    const a = false
-
-
-
-
-
     const [showMenu, setShowMenu] = useState(false);
     const menu = useAnimationState({
         open: { height: 260, },
@@ -50,13 +42,11 @@ export default function HomeScreen({ navigation, }) {
         })
     }, [])
 
-
-
-
     return (
         <Main style={{ backgroundColor: "#fff" }}>
-            <Scroll>
+            <Internet />
 
+            <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <MotiImage delay={300} from={{ opacity: 0, translateX: -40, scale: 0, }} animate={{ opacity: 1, translateX: 0, scale: 1, }} transition={{ type: 'spring' }} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
@@ -67,10 +57,17 @@ export default function HomeScreen({ navigation, }) {
                 </Row>
 
                 <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing' }} delay={300}>
-                    <Button onPress={() => { navigation.navigate('SearchModal', { type: 'ONG' }) }} style={{ borderRadius: 30, opacity: .7, borderWidth: 2, marginVertical: 24, borderColor: color.secundary + 20, backgroundColor: color.secundary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
-                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18, }}>
-                            <Title style={{ fontSize: 20, fontFamily: font.medium, color: color.secundary, }}>Pesquisar</Title>
-                            <Search strokeWidth={2} color={color.secundary} />
+                    <Button onPress={() => { navigation.navigate('SearchModal', { type: 'ONG' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                        <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
+
+                            <Column style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
+                                <Search strokeWidth={2} color="#fff" size={24} />
+                            </Column>
+
+                            <Column style={{ justifyContent: 'center', marginLeft: 16, }}>
+                                <Title style={{ fontSize: 18, fontFamily: font.medium, marginTop: 4, marginBottom: -2, lineHeight: 18, color: color.secundary, }}>Pesquisar</Title>
+                                <Label style={{ fontSize: 12, color: color.secundary + 99, }}>Serviços - Estabelecimentos - ONGs</Label>
+                            </Column>
                         </Row>
                     </Button>
                 </MotiView>
@@ -154,7 +151,7 @@ export default function HomeScreen({ navigation, }) {
                 </MotiView>
 
                 <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1000}>
-                    <Campanhas data={campaigns}/>
+                    <Campanhas data={campaigns} />
                 </MotiView>
 
                 <OffersCards data={offers} />
@@ -173,14 +170,14 @@ export default function HomeScreen({ navigation, }) {
                         <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
                     </Button>
                 </Row>
-                
+
                 <Column style={{ height: 50, }} />
             </Scroll>
         </Main>
     )
 }
 
-const Campanhas = ({data}) => {
+const Campanhas = ({ data }) => {
     const navigation = useNavigation()
     const { color, margin, font } = useContext(ThemeContext);
     return (
@@ -276,29 +273,51 @@ const Categorias = () => {
     )
 }
 
-export const Carrousel = ({ }) => {
-
-
-
+export const Carrousel = () => {
     const navigation = useNavigation();
+    const [activeIndex, setActiveIndex] = useState(0);
+    const flatListRef = useRef(null);
+    const windowWidth = 300;
+    const scrollX = useRef(new Animated.Value(0)).current;
+
+    const activyColor = '#5C0D45';
+    const inactivyColor = '#5C0D4570';
+
+    useEffect(() => {
+        const listener = scrollX.addListener(({ value }) => {
+            const index = Math.round(value / windowWidth);
+            setActiveIndex(index);
+        });
+
+        return () => {
+            scrollX.removeListener(listener);
+        };
+    }, [scrollX, windowWidth]);
+
+    const handleScroll = Animated.event(
+        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+        { useNativeDriver: false }
+    );
+
     const render = ({ item }) => {
-        const link = item.img
+        const link = item.img;
         return (
-            <Button onPress={() => { navigation.navigate(item?.route) }}  >
+            <Button onPress={() => { navigation.navigate(item?.route) }} >
                 <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
             </Button>
-        )
-    }
+        );
+    };
 
     const home = [
-        { id: 1, title: '1', img: require('@imgs/carrousel1.png'), route: 'Share' },
-        { id: 2, title: '2', img: require('@imgs/carrousel2.png'), route: 'Notafiscal' },
-        { id: 3, title: '3', img: require('@imgs/carrousel3.png'), route: 'ShopOffers', },
-    ]
+        { id: '1', title: '1', img: require('@imgs/carrousel1.png'), route: 'Share' },
+        { id: '2', title: '2', img: require('@imgs/carrousel2.png'), route: 'Notafiscal' },
+        { id: '3', title: '3', img: require('@imgs/carrousel3.png'), route: 'ShopOffers' },
+    ];
 
     return (
         <Column>
             <FlatList
+                ref={flatListRef}
                 decelerationRate={'fast'}
                 scrollEventThrottle={16}
                 data={home}
@@ -307,16 +326,44 @@ export const Carrousel = ({ }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 ListHeaderComponent={<View style={{ width: 28 }} />}
-                ListFooterComponent={<View style={{ width: 28 }} />}
-                style={{ marginBottom: 32, }}
+                ListFooterComponent={<View style={{ width: 0 }} />}
                 snapToAlignment='center'
                 pagingEnabled
-
+                onScroll={handleScroll}
             />
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 16, marginBottom: 24, }}>
+                {home.map((_, index) => {
+                    const inputRange = [
+                        (index - 1) * windowWidth,
+                        index * windowWidth,
+                        (index + 1) * windowWidth
+                    ];
 
+                    const dotWidth = scrollX.interpolate({
+                        inputRange,
+                        outputRange: [8, 30, 8],
+                        extrapolate: 'clamp',
+                    });
+
+                    return (
+                        <>
+                            <Animated.View
+                                key={index}
+                                style={{
+                                    width: dotWidth,
+                                    height: 8,
+                                    borderRadius: 4,
+                                    backgroundColor: index == activeIndex ? activyColor : inactivyColor,
+                                    marginHorizontal: 4,
+                                }}
+                            />
+                        </>
+                    );
+                })}
+            </View>
         </Column>
-    )
-}
+    );
+};
 
 const OffersCards = ({ data }) => {
     const { color, margin, font } = useContext(ThemeContext);
