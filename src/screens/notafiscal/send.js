@@ -59,6 +59,16 @@ export default function NotafiscalSendScreen({ navigation, route}) {
         to: { opacity: 1, width: 180, },
     })
 
+    const [permission, requestPermission] = useCameraPermissions();
+    useEffect(() => {
+        if (permission === 'granted') {
+            return;
+        }else{
+            requestPermission();
+        }
+    }, [isFocused]);
+
+
     return (
         <Main style={{ backgroundColor: "#fff", }}>
             <MotiView state={bg} style={{ flex: 1,  }}>
