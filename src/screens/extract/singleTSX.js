@@ -3,15 +3,14 @@ import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LabelSE, SubLabel, Button, U, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Info, ClipboardPen, CircleX, KeyRound, AlarmClock, Shirt, X, Plus, ArrowRight } from 'lucide-react-native';
-import Header from '@components/header';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { getSingleExtract } from '@request/extract/gets';
 import { MotiImage } from 'moti';
 
 
-export default function ExtractSingleRifasScreen({ navigation, route }) {
+export default function ExtractSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const id = route.params.id;
+    const id = route?.params?.id ? route?.params?.id : 'rifa-1';
     const [item, setitem] = useState();
     const [steps, setsteps] = useState();
     const [ong, setong] = useState();

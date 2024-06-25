@@ -11,7 +11,7 @@ export default function NotafiscalScreen({ navigation, }) {
     const a = false;
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll>
+            <Scroll style={{  }}>
                 <Header title="Nota fiscal" rose />
                 <Column style={{ height: 24, }} />
                 <Carrousel color={color} />
@@ -34,7 +34,7 @@ export default function NotafiscalScreen({ navigation, }) {
 
                 </Column>
 
-                <Column style={{ height: 100, }} />
+                <Column style={{ height: 200, }} />
             </Scroll>
 
         </Main>

@@ -37,17 +37,9 @@ export default function DonateScreen({ navigation, }) {
 
     const patinhas = value * 6;
 
-    const handleFinish = () => {
-        setloading(true);
-        setTimeout(() => {
-            navigation.navigate('BuyServiceSuccess');
-            setloading(false)
-        }, 3500);
-    }
-
     return (
         <Main style={{  }}>
-            <Scroll style={{ paddingTop: 15, }}>
+            <Scroll>
 
              <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
                 <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: color.secundary, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>

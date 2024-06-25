@@ -11,9 +11,6 @@ import user from '@data/user'
 export default function ShareScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
 
-    const bg = color.blue
-    const [clip, setclip] = useState();
-
     return (
         <Main style={{ }}>
             <Scroll style={{ }}>
@@ -68,7 +65,7 @@ export default function ShareScreen({ navigation, }) {
                         </ButtonOut>
                     </Row>
 
-
+                <Column style={{height: 150, }} />
                 </Column>
             </Scroll>
         </Main>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList, ScrollView, StyleSheet } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Search } from 'lucide-react-native';
@@ -23,10 +23,10 @@ export default function FavoritesScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll>
+            <Scroll style={{ paddingTop: 50, }}>
                 <Row style={{ marginHorizontal: margin.h, justifyContent: 'space-between', alignItems: 'center',  }}>
                         <Title>Favoritos</Title>
-                        <Button onPress={() => navigation.navigate('SearchModal')} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
+                        <Button onPress={() => navigation.navigate('Tabs', { screen: 'Search'})} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
                             <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                             <Label>Pesquisar</Label>
                                 <Search color={color.label} size={18} style={{ marginLeft: 8, }}/>

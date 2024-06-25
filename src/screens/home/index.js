@@ -7,7 +7,6 @@ import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, S
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Internet from '@components/internet';
-
 import { useNavigation } from '@react-navigation/native';
 import { getOffers, getShops, getServices, getCampaigns } from '@request/service';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -46,7 +45,6 @@ export default function HomeScreen({ navigation, }) {
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Internet />
-
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <MotiImage delay={300} from={{ opacity: 0, translateX: -40, scale: 0, }} animate={{ opacity: 1, translateX: 0, scale: 1, }} transition={{ type: 'spring' }} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
@@ -58,7 +56,7 @@ export default function HomeScreen({ navigation, }) {
                 </Row>
 
                 <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing' }} delay={300}>
-                    <Button onPress={() => { navigation.navigate('SearchModal') }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                    <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search'}) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                         <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
 
                             <MotiView from={{opacity: 0, scale: 0,}} animate={{opacity: 1, scale: 1,}} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>

@@ -47,8 +47,6 @@ import NotafiscalONGS from '@screens/notafiscal/ongs';
 
 import ExtractScreen from '@screens/extract';
 import ExtractSingleScreen from '@screens/extract/single';
-import ExtractSingleMoedasScreen from '@screens/extract/single_moedas';
-import ExtractSingleRifasScreen from '@screens/extract/single_rifas';
 
 import AccountScreen from '@screens/account';
 import AccountNotifyScreen from '@screens/account/notify';
@@ -104,7 +102,7 @@ export default function Router() {
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
@@ -132,7 +130,7 @@ export default function Router() {
             <Stack.Screen name="BuyServiceSuccessHide" component={BuyServiceSuccessHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="BuyServiceReceiveGift" component={BuyServiceReceiveGiftScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
-            <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
             <Stack.Screen name="DonateHide" component={DonateHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
@@ -149,8 +147,6 @@ export default function Router() {
 
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-            <Stack.Screen name="ExtractSingleMoedas" component={ExtractSingleMoedasScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-            <Stack.Screen name="ExtractSingleRifas" component={ExtractSingleRifasScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
 
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>

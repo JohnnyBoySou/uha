@@ -1,132 +1,128 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, ButtonSE, LabelSE, SubLabel, Button, LabelLI, ButtonOut } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, LabelSE, SubLabel, Button, U, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { CircleCheck, Info, ClipboardPen, CircleX, KeyRound, AlarmClock } from 'lucide-react-native';
-import  Header   from '@components/header';
+import { Info, ClipboardPen, CircleX, KeyRound, AlarmClock, Shirt, X, Plus, ArrowRight } from 'lucide-react-native';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { getSingleExtract } from '@request/extract/gets';
+import { MotiImage, MotiView } from 'moti';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 export default function ExtractSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const item = route.params.item;
-    const user = {balance: 550, cashback: 100,}
-    const icon = item?.icon === 'check' ? <CircleCheck color={color.blue} size={24} /> : item?.icon === 'await' ? <Info color={color.primary} size={24} /> : item?.icon === 'uncheck' ? <CircleX color={color.red} size={24} /> : item?.icon === 'dimiss' ? <AlarmClock color="#000" size={24}/> : null;
-
-    const road = [
-        {
-            step: 1,
-            type: 'Nota fiscal',
-            date: '08/10/2024',
-            status: 'Nota fiscal enviada',
-            label: 'Aguardando análise',
-            icon: 'check',
-        },
-        {
-            step: 2,
-            type: 'Nota fiscal',
-            date: '09/10/2024',
-            status: 'Cashback identificado',
-            label: 'Nota fiscal válida',
-            icon: 'check',
-        },
-        {
-            step: 3,
-            type: 'Nota fiscal',
-            date: '09/10/2024',
-            status: 'Cashback confirmado',
-            label: 'Você recebeu suas Pontos',
-            icon: 'check',
-        },
-    ]
-
+    const id = route?.params?.id ? route?.params?.id : 'rifa-1';
+    const [item, setitem] = useState();
+    const [steps, setsteps] = useState();
+    const [ong, setong] = useState();
+    const size = 46;
+    const icon = item?.icon === 'check' ? <MaterialIcons name="check-circle" size={size} color={color.green} /> : item?.icon === 'await' ? <Info color={color.blue} size={size} /> : item?.icon === 'uncheck' ? <CircleX color={color.red} size={size} /> : item?.icon === 'dimiss' ? <AlarmClock color="#000" size={size} /> : null;
+    const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item?.icon === 'dimiss' ? "#303030" : color.red;
+    const bg = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? "#fa8484" : item?.icon === 'dimiss' ? "#606060" : color.red;
+    useEffect(() => {
+        const fetchData = async () => {
+            await getSingleExtract(id).then((res) => {
+                setitem(res);
+                setsteps(res.steps);
+                setong(res.ong);
+            });
+        }
+        fetchData()
+    }, []);
+    const disable = item?.icon === 'check' || item?.icon === 'await' ? false : item?.icon === 'uncheck' || item?.icon === 'dimiss' ? true : false;
+   
     return (
-        <Main>
-        <Scroll style={{ paddingTop: 15, }}>
+        <Main style={{ backgroundColor: '#f7f7f7', }}>
+            <Scroll style={{ paddingTop: 15, }}>
+                <Column style={{  marginHorizontal: margin.h, borderRadius: 24,  }}>
 
-            <Header title="Detalhes" />
-           
-            <Column style={{backgroundColor: color.secundary, paddingHorizontal: 32, paddingVertical: 24, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
-               <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
-              
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
-                    <SubLabel style={{  color: "#fff", fontSize: 24, marginRight: 12, }}>Status</SubLabel>
-                    {icon}
-                </Row>
-              
-                <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: "#fff", }}>R$ {item?.value}</Title>
-               </Row>
+                    <Column style={{ marginVertical: 18, }}>
+                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 12,}}>
+                            <Button onPress={() => {navigation.goBack()}}  style={{ backgroundColor: color.secundary, padding: 12, borderRadius: 100, }}>
+                                <X color="#fff" size={24} />
+                            </Button>
+                            <Label style={{ color: color.secundary, fontSize: 14, textAlign: 'center', marginBottom: 5,  }}>{item?.date}{'\n'}{item?.hours ? item?.hours : '14:32'}</Label>
+                        </Row>
+                        
+                        <MotiView from={{opacity: 0, scale: 0,}} animate={{opacity: 1, scale: 1,}} delay={200} transition={{duration: 600,}} style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: bg+20, width: 102, height: 102, borderRadius: 100,  alignSelf: 'center', }}>
+                            {icon}
+                        </MotiView>
 
-                <Label style={{ color: "#fff", marginTop: 12, marginBottom: 4, fontFamily: font.bold, }}>Nota fiscal</Label>
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
-                    <Label style={{color: "#ffffff90", }}>Valor da nota: R$ {user?.cashback},00</Label>
-                    <Label style={{color: "#ffffff90", }}>{item.date}</Label>
-                </Row>
-               
-            </Column>
+                        <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0}} delay={500} >
 
-            <Column style={{  paddingVertical: 12, marginHorizontal: margin.h, }}>
-                <FlatList
-                    data={road.reverse()}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <CardRoad item={item} />}
-                />
-            </Column>
+                        <Title style={{ color: color.secundary, fontSize: 24,  textAlign: 'center', marginTop: 30, }}>{item?.type}</Title>
+                        <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: color.primary, textAlign: 'center', marginTop: -6, }}>R$ {item?.value},00</Title>
+                        <Label style={{ color: color.secundary, fontSize: 16, textAlign: 'center', marginBottom: -4, marginTop: 6,}}>{item?.name}</Label>
+                        </MotiView>
 
-            <Column style={{  paddingVertical: 12, marginHorizontal: margin.h,  }}>
-                <Row style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 18, marginBottom: 18, }}>
-                    <Column style={{ padding: 24, backgroundColor: color.primary+20, borderRadius: 12, }}>
-                        <KeyRound color={color.primary} size={32} />
                     </Column>
-                    <Column style={{ marginHorizontal: margin.h - 5, justifyContent: 'center', }}>
-                        <Title>Chave da nota</Title>
-                        <SubLabel style={{ width: 250, opacity: .7, }}>{item?.id}</SubLabel>
-                    </Column>
-                </Row>
-                <Button>
-                    <Row>
-                        <Column style={{ padding: 24, backgroundColor: color.primary+20, borderRadius: 12, }}>
-                            <ClipboardPen  color={color.primary} size={32}/>
-                        </Column>
-                        <Column style={{ marginHorizontal: margin.h - 5, justifyContent: 'center', }}>
-                            <Title>Nova nota</Title>
-                            <SubLabel style={{ width: 250, opacity: .7, }}>Cadastre uma nova nota fiscal</SubLabel>
-                        </Column>
+
+                    <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0}} delay={700}  style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row'  }}>
+                        <Title style={{ fontSize: 18, textAlign: 'center', marginTop: 16, fontFamily: 'Font_Medium', }}>Status: </Title>
+                        <Title style={{ fontSize: 18, textAlign: 'center', marginTop: 16, color: cl,}}><U>{item?.status}</U></Title>
+                    </MotiView>
+                    {steps && <Road data={steps} />}
+
+                    <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0}} delay={1200}  style={{ paddingVertical: 12,  }}>
+                        <Button onPress={() => { navigation.navigate('ONGSingle', { item: ong, }) }} style={{ backgroundColor: '#fff', borderRadius: 16, marginBottom: 10, zIndex: 2,}} >
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                                <Row>
+                                    <Row style={{ padding: 18, }}>
+                                        <Column style={{ backgroundColor: color.primary, transform: [{ rotate: '12deg', }], width: 56, height: 56, borderRadius: 8, }} />
+                                        <MotiImage source={{ uri: ong?.img }} style={{ width: 56, height: 56, borderWidth: 2, borderColor: "#fff", borderRadius: 8, objectFit: 'cover', marginLeft: -54, transform: [{ rotate: '-5deg', }], }} />
+                                    </Row>
+                                    <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
+                                        <Label style={{ fontSize: 14, marginBottom: -4, }}>ONG favorecida</Label>
+                                        <Title style={{ fontSize: 18, }}>{ong?.name}</Title>
+                                    </Column>
+                                </Row>
+                                <ArrowRight color={color.primary} size={24} style={{ marginRight: 20, }} />
+                            </Row>
+                        </Button>
+                        <Column style={{ flexGrow: 1, borderRadius: 6, height: 26, backgroundColor: '#d7d7d750', marginTop: -24, marginHorizontal: 24, }} />
+                    </MotiView>
+
+                    <Row style={{ alignItems: 'center', marginTop: 20, justifyContent: 'center', }}>
+                        <ButtonPR onPress={() => { navigation.navigate('Recibo') }} style={{ paddingVertical: 8, opacity: disable ? 0.6 : 1, }} disabled={disable}>
+                            <LabelSE>Exportar recibo </LabelSE>
+                        </ButtonPR>
                     </Row>
-                </Button>
 
-                <Row style={{  alignItems: 'center', marginTop: 50, justifyContent: 'center', }}>
-                    <ButtonOut style={{ borderColor: color.secundary, }}>
-                        <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Central de ajuda</Label>
-                    </ButtonOut>
-                    <Column style={{ width: 16, }} />
-                    <ButtonSE>
-                        <LabelSE>Exportar recibo</LabelSE>
-                    </ButtonSE>
-                </Row>
-                <ButtonOut style={{ borderColor: color.green, marginTop: 18, marginBottom: 50, marginHorizontal: margin.h, }}>
-                    <LabelLI style={{ color: color.green, }}>Informações da campanha</LabelLI>
-                </ButtonOut>
+                </Column>
+            </Scroll>
 
-            </Column>
-
-        </Scroll>
-    </Main>
+            <Button onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ justifyContent: 'center', alignItems: 'center', padding: 18, backgroundColor: "#FFE0F6", borderRadius: 100, position: 'absolute', bottom: 30, right: 30, }}>
+                <MaterialCommunityIcons name="qrcode-scan" size={24} color={color.primary} />
+            </Button>
+        </Main>
     )
 }
 
-//ADD CODEREVIEW
-
-const CardRoad = ({item}) => {
+const Road = ({ data }) => {
     const { color, font, margin } = useContext(ThemeContext);
-    return(
-        <Row style={{ justifyContent: 'space-between', alignItems: 'center',  marginVertical: 14, }}>
-            {item.step === 2 && <Column style={{ width: 4, height: 160, backgroundColor: color.blue, position: 'absolute', left: 4,}} />}
-            <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                <Column style={{width: 12, height: 12, backgroundColor: color.blue, borderRadius: 100,  }} />
-                <Column style={{ marginLeft: 32, }}>
-                    <Title style={{ fontSize: 18, }}>{item?.status}</Title>
-                    <Label style={{ fontSize: 16, }}>{item?.label}</Label>
-                </Column>
-            </Row>
-            <SubLabel>{item?.date}</SubLabel>
-        </Row>
-    )}
+    const Card = ({ step1 }) => {
+        if (step1 == undefined) return null;
+        const cl = step1.icon == 'check' ? color.blue : step1.icon == 'uncheck' ? color.red : step1.icon == 'await' ? "#d7d7d7" : '#000000';
+        return (
+                <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                    <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <Column style={{ width: 12, height: 12, backgroundColor: cl, borderRadius: 100, zIndex: 99, }} />
+                        <Column style={{ width: 5, flexGrow: 1, backgroundColor: cl+99, borderRadius: 12, marginBottom: -5, marginTop: -5, }} />
+                    </Column>
+
+                    <Column style={{ marginLeft: 26, marginBottom: 12, marginTop: -4, }}>
+                        <Title style={{ fontSize: 15, }}>{step1?.status}</Title>
+                        <Label style={{ fontSize: 12, width: 190, marginTop: -4, color: color.secundary+99 }}>{step1?.label}.</Label>
+                    </Column>
+                </Row>
+        )
+    }
+    return (
+        <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0}} delay={1000} transition={{type: 'timing'}} style={{paddingVertical: 24,  borderStyle: 'dashed', borderWidth: 2, borderColor: '#40404040', backgroundColor: '#fff', borderRadius: 12, marginVertical: 16, marginHorizontal: 28, paddingBottom: 20,}}>
+            <Card step1={data[0]} />
+            <Card step1={data[1]} />
+            <Card step1={data[2]} />
+        </MotiView>
+    )
+}
+
