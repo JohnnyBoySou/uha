@@ -3,7 +3,7 @@ import { FlatList, View, Dimensions, Pressable, Animated } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
-import { Bike, Bone, Brush, Hospital, Indent, Minus, Plus, Search, Shirt, ShoppingBag } from 'lucide-react-native';
+import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, Shirt, ShoppingBag } from 'lucide-react-native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Internet from '@components/internet';
@@ -159,7 +159,7 @@ export default function HomeScreen({ navigation, }) {
 
                 <OffersCards data={offers} />
 
-                <Queridinhos data={shops?.slice(1)} />
+                <Queridinhos data={shops} />
 
                 <Donate/>
 
@@ -245,6 +245,18 @@ const Categorias = () => {
             name: 'Cuidados estéticos',
             desc: '29 estabelecimentos parceiros',
             icon: <Brush size={28} color="#FFF2E3" />,
+        },
+        {
+            id: 15,
+            name: 'Comida',
+            desc: '12 estabelecimentos parceiros',
+            icon: <Pizza size={28} color="#FFF2E3" />,
+        },
+        {
+            id: 16,
+            name: 'Veículos',
+            desc: '8 estabelecimentos parceiros',
+            icon: <Car size={28} color="#FFF2E3" />,
         },
     ]
     const navigation = useNavigation()
@@ -440,7 +452,7 @@ const Queridinhos = ({ data }) => {
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
-                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.desc}</Label>
+                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.desc.length > 42 ? item?.desc.slice(0, 42) + '...' : item?.desc}</Label>
                         </Column>
                     </Button>
                 )}

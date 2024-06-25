@@ -157,6 +157,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                     {item?.banners?.length > 0 && <Banners data={item?.banners} />}
 
 
+                   {services?.length > 0 && <>
                     <Column style={{ marginHorizontal: margin.h, marginTop: 0, }}>
                         <Title>Serviços</Title>
                     </Column>
@@ -183,7 +184,10 @@ export default function ShopSingleScreen({ navigation, route }) {
                             </Button>
                         )}
                     />
+                    </>}
+
                 </Column>
+
 
             </ScrollView>
 

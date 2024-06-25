@@ -190,6 +190,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     <MotiView state={map} style={{ backgroundColor: '#f7f7f7', borderRadius: 12, marginHorizontal: 12, }} transition={{ type: 'timing' }}>
                         <MotiImage source={require('@imgs/map.png')} style={{ width: '100%', height: '100%', borderRadius: 12, }} />
                     </MotiView>
+                    {others?.length > 0 && <>
                     <Title style={{ fontSize: 20, marginTop: -8, }}>Aproveite também</Title>
                     <FlatList
                         data={others}
@@ -210,6 +211,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                             </Button>
                         )}
                     />
+                    </>}
                 </Column>
                 <Column style={{ height: 100, }} />
             </Scroll>

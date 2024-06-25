@@ -252,6 +252,69 @@ const service_single = [
             },
         ],
     },
+
+    {
+        name: "2 Whopper + Refri",
+        id: 10,
+        desc: 'Mate sua fome com 2 Whopper + Refri 500ml por apenas 50 pontos!',
+        img: "https://static.ifood-static.com.br/image/upload/t_medium/pratos/6e73dce2-a17f-4aef-9035-1409cea198fe/202311230000_SNTH_i.jpg",
+        value: 50 ,
+        imgs: ['https://static.ifood-static.com.br/image/upload/t_medium/pratos/6e73dce2-a17f-4aef-9035-1409cea198fe/202311230000_SNTH_i.jpg','https://i.pinimg.com/564x/8b/f9/19/8bf91974e09b9751b427d9ceadccb571.jpg', 'https://i.pinimg.com/564x/34/98/b9/3498b9b4f9233d3527146e9d72cfe5e4.jpg'],
+        old_value: 70,
+        sell_porcentage: 52,
+        categories: [
+            {
+                id: 15,
+                name: "Comida"
+            }
+        ],
+        shop: {
+            id: 19,
+        },
+        others: [
+        ],
+    },
+    {
+        name: "2 diárias Uno Attractive",
+        id: 11,
+        img: "https://scontent.ffln5-1.fna.fbcdn.net/v/t1.6435-9/54433468_2007785595996747_1245666100683735040_n.png?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=v8UImchButUQ7kNvgHSie2v&_nc_ht=scontent.ffln5-1.fna&oh=00_AYCkwnSszG0kXuU-Bf2EV1jK4yq7J5m0MQbkHDnO7UJfGQ&oe=66A1898D",
+        value: 1200,
+        desc: 'Passeie com um Uno Attractive por 2 diárias por apenas 1200 pontos!',
+        imgs: ['https://scontent.ffln5-1.fna.fbcdn.net/v/t1.6435-9/54433468_2007785595996747_1245666100683735040_n.png?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=v8UImchButUQ7kNvgHSie2v&_nc_ht=scontent.ffln5-1.fna&oh=00_AYCkwnSszG0kXuU-Bf2EV1jK4yq7J5m0MQbkHDnO7UJfGQ&oe=66A1898D','https://quatrorodas.abril.com.br/wp-content/uploads/2016/11/58263bbc0e216302700e2f62img_96681.jpeg?quality=70&strip=all', 'https://resized-images.autoconf.com.br/768x576/filters:format(webp)/veiculos/fotos/364408/8a1b363a-08a9-46d6-ae58-c32a82861b6e.jpg',],
+        old_value: 1500,
+        sell_porcentage: 30,
+        categories: [
+            {
+                id: 16,
+                name: "Veículos"
+            }
+        ],
+        shop: {
+            id: 18,
+        },
+        others: [
+        ],
+    },
+    {
+        name: "Perfume EGEO",
+        id: 12,
+        desc: 'Desfrute do Perfume EGEO por apenas 670 pontos!',
+        img: "https://www.revendedor.com.br/wp-content/uploads/2024/05/Egeo-Fresh-Meli-Desodorante-Colonia-90ml.jpg",
+        imgs: ['https://www.revendedor.com.br/wp-content/uploads/2024/05/Egeo-Fresh-Meli-Desodorante-Colonia-90ml.jpg','https://mir-s3-cdn-cf.behance.net/projects/404/17a58d197200717.Y3JvcCwxNDAwLDEwOTUsMCwxMzU.jpg', 'https://down-br.img.susercontent.com/file/br-11134207-7qukw-livc6b93qwxh4b' ],
+        value: 670 ,
+        old_value: 750,
+        sell_porcentage: 72,
+        categories: [
+            {
+                id: 5,
+                name: "Cuidados estéticos"
+            },
+        ],
+        shop: {
+            id: 17,
+        },
+        others:[],
+    },
     
 ]
 

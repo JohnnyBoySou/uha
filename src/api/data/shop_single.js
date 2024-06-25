@@ -1,5 +1,90 @@
 const shop_single = [
     {
+        name: "O Boticário",
+        id: 17,
+        desc: 'Aqui no Boticário você encontra os melhores itens de perfumaria, maquiagem, cosméticos, presentes e mais!',
+        cep: '89260665',
+        address: "Rua Josival Lourenço, N. 12 - Centro - PR",
+        phone: "11999999999",
+        open: "08:00",
+        close: "18:00",
+        whatsapp: '49 9 9999-9909',
+        capa: 'https://i.pinimg.com/564x/9d/7d/55/9d7d552f312b30f67a4e4f1f3bc57a36.jpg',
+        img: 'https://gkpb.com.br/wp-content/uploads/2020/08/novo-logo-o-boticario-2020.jpg',
+        banners: ['https://forbes.com.br/wp-content/uploads/2024/05/Egeo.Melancia.png','https://mir-s3-cdn-cf.behance.net/projects/404/9c40d3122739933.Y3JvcCw3MjMsNTY1LDMyNCwxMzI.png', 'https://a-static.mlcdn.com.br/450x450/malbec-ultra-bleu-desodorante-colonia-100ml-o-boticario/redchilioficial/b50119/43df50df38087df0d5ab322b37da70c9.jpeg'],
+        categories: [
+            {
+                id: 5,
+                name: "Cuidados estéticos"
+            },
+        ],
+        offers: [
+            {
+                name: "Perfume EGEO",
+                id: 12,
+                img: "https://www.revendedor.com.br/wp-content/uploads/2024/05/Egeo-Fresh-Meli-Desodorante-Colonia-90ml.jpg",
+                value: 670 ,
+            },
+        ]
+    },
+    {
+        name: "Movida",
+        id: 18,
+        desc: 'Aluguel de carros e veículos utilitários com a Movida Rent a Car. Reserve online e economize! ',
+        cep: '89260665',
+        address: "Rua Josival Lourenço, N. 12 - Centro - PR",
+        phone: "11999999999",
+        open: "08:00",
+        close: "18:00",
+        whatsapp: '49 9 9999-9909',
+        banners: ['https://www.mercadoeeventos.com.br/wp-content/uploads/2019/04/image003-3.jpg','https://pbs.twimg.com/media/FfSYsz9X0AMn7mv?format=jpg&name=large','https://scontent.ffln5-1.fna.fbcdn.net/v/t39.30808-6/401736029_675643401363537_5819329149375454194_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=5YD0wcS3ZgEQ7kNvgFzN9Il&_nc_ht=scontent.ffln5-1.fna&oh=00_AYATO_G7MbrAsILVWX2I4so2Cc4miEy6Ct1wGezi6VetgQ&oe=667FE940'],
+        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfAWAu4uYgTyoYPn6KagcIK4adWWtSnG-CRA&s',
+        capa: 'https://www.mercadoeeventos.com.br/wp-content/uploads/2020/01/Movida-anuncia-novo-posicionamento-atrav%C3%A9s-de-campanha-publicit%C3%A1ria-renovada.jpg',
+        categories: [
+            {
+                id: 16,
+                name: "Veículos"
+            },
+        ],
+        offers: [
+            {
+                name: "2 diárias Uno Attractive",
+                id: 11,
+                img: "https://scontent.ffln5-1.fna.fbcdn.net/v/t1.6435-9/54433468_2007785595996747_1245666100683735040_n.png?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=v8UImchButUQ7kNvgHSie2v&_nc_ht=scontent.ffln5-1.fna&oh=00_AYCkwnSszG0kXuU-Bf2EV1jK4yq7J5m0MQbkHDnO7UJfGQ&oe=66A1898D",
+                value: 1200,
+            }
+        ]
+    },
+
+    {
+        name: "Burger King",
+        id: 19,
+        desc: 'Venha saborear nossos deliciosos hambúrgueres, como o icônico Whopper, feitos na hora para você.',
+        address: "Rua Josival Lourenço, N. 12 - Centro - PR",
+        cep: '89260665',
+        phone: "11999999999",
+        open: "08:00",
+        close: "18:00",
+        whatsapp: '49 9 9999-9909',
+        capa: 'https://i.pinimg.com/736x/ed/fb/1d/edfb1d6721339ce26de155224cbf9d95.jpg',
+        img: 'https://seeklogo.com/images/B/Burger_King-logo-EB00FAD8D3-seeklogo.com.png',
+        banners: ['https://mir-s3-cdn-cf.behance.net/projects/404/5ff6cf193558767.Y3JvcCwxMzgwLDEwODAsMjcwLDA.png', 'https://mir-s3-cdn-cf.behance.net/projects/404/96554c151235331.Y3JvcCwzMzY4LDI2MzUsNDgzLDgyMTM.jpg', 'https://i.pinimg.com/564x/65/ae/d2/65aed26cacd307bb218a58b2ea5fdbc7.jpg'],
+        categories: [
+            {
+                id: 15,
+                name: "Comida"
+            },
+        ],
+        offers: [
+            {
+                name: "2 Whopper + Refri",
+                id: 10,
+                img: "https://static.ifood-static.com.br/image/upload/t_medium/pratos/6e73dce2-a17f-4aef-9035-1409cea198fe/202311230000_SNTH_i.jpg",
+                value: 50,
+            }
+        ]
+    },
+    {
         name: "Pet",
         id: 20,
         desc: 'Aqui você encontra tudo para seu pet',
@@ -36,19 +121,19 @@ const shop_single = [
             },
         ],
         services: [
-                {
-                    name: "Conjunto Guias + Peitoral",
-                    id: 6,
-                    img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
-                    value: 30,
-                },
-                {
-                    name: "Banho e tosa",
-                    id: 7,
-                    img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
-                    value: 50,
-                },
-               
+            {
+                name: "Conjunto Guias + Peitoral",
+                id: 6,
+                img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
+                value: 30,
+            },
+            {
+                name: "Banho e tosa",
+                id: 7,
+                img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
+                value: 50,
+            },
+
         ],
         banners: ["https://i.pinimg.com/564x/d1/83/56/d18356e65e9990a38e516f2357a8101f.jpg", "https://i.pinimg.com/564x/50/50/f4/5050f4ee4098c3fca68e695e312d2753.jpg", "https://i.pinimg.com/564x/e5/bd/32/e5bd32c81a2ca7a3bec21368c3858cc6.jpg"],
     },
@@ -89,37 +174,37 @@ const shop_single = [
                 value: 50,
                 old_value: 70,
             },
-            
+
         ],
         services: [
-                {
-                    name: "Conjunto Guias + Peitoral",
-                    id: 18,
-                    img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
-                    value: 30,
-                },
-                {
-                    name: "Banho e tosa",
-                    id: 1,
-                    img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
-                    value: 50,
-                },
-                {
-                    name: "Adoação de pets",
-                    id: 17,
-                    img: "https://i.pinimg.com/564x/d1/83/56/d18356e65e9990a38e516f2357a8101f.jpg",
-                    value: 20,
-                },
-               
-                {
-                    name: "1 mês de plano de saúde",
-                    id: 15,
-                    img: "https://i.pinimg.com/564x/f7/d0/88/f7d0881b57c942a9dfe581fa925e4f55.jpg",
-                    value: 80,
-                },
+            {
+                name: "Conjunto Guias + Peitoral",
+                id: 18,
+                img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
+                value: 30,
+            },
+            {
+                name: "Banho e tosa",
+                id: 1,
+                img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
+                value: 50,
+            },
+            {
+                name: "Adoação de pets",
+                id: 17,
+                img: "https://i.pinimg.com/564x/d1/83/56/d18356e65e9990a38e516f2357a8101f.jpg",
+                value: 20,
+            },
+
+            {
+                name: "1 mês de plano de saúde",
+                id: 15,
+                img: "https://i.pinimg.com/564x/f7/d0/88/f7d0881b57c942a9dfe581fa925e4f55.jpg",
+                value: 80,
+            },
         ],
         banners: ["https://i.pinimg.com/236x/b3/ac/35/b3ac35f2ce68c929d640cb2f998f644f.jpg", "https://i.pinimg.com/564x/36/93/29/369329d80afeac8df4ebde5a42d8a154.jpg", "https://i.pinimg.com/564x/be/9a/46/be9a46dec423d842d7a29cb7f047d26a.jpg"],
-    },  
+    },
     {
         name: "Zoa",
         id: 22,
@@ -157,24 +242,24 @@ const shop_single = [
                 value: 50,
                 old_value: 70,
             },
-            
+
         ],
         services: [
-                {
-                    name: "Conjunto Guias + Peitoral",
-                    id: 12345,
-                    img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
-                    value: 30,
-                },
-                {
-                    name: "Banho e tosa",
-                    id: 1,
-                    img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
-                    value: 50,
-                },
+            {
+                name: "Conjunto Guias + Peitoral",
+                id: 12345,
+                img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
+                value: 30,
+            },
+            {
+                name: "Banho e tosa",
+                id: 1,
+                img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
+                value: 50,
+            },
         ],
         banners: ["https://i.pinimg.com/564x/61/f3/f6/61f3f6286de2ad3ea13c400168ee157a.jpg", "https://i.pinimg.com/564x/f6/a5/b8/f6a5b835a31a6d28c2ae395f2386c491.jpg"],
-    },  
+    },
     {
         name: "Me-o",
         id: 23,
@@ -212,24 +297,24 @@ const shop_single = [
                 value: 50,
                 old_value: 70,
             },
-            
+
         ],
         services: [
-                {
-                    name: "Conjunto Guias + Peitoral",
-                    id: 3,
-                    img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
-                    value: 30,
-                },
-                {
-                    name: "Banho e tosa",
-                    id: 4,
-                    img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
-                    value: 50,
-                },
+            {
+                name: "Conjunto Guias + Peitoral",
+                id: 3,
+                img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
+                value: 30,
+            },
+            {
+                name: "Banho e tosa",
+                id: 4,
+                img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
+                value: 50,
+            },
         ],
         banners: ["https://i.pinimg.com/564x/27/c2/ba/27c2ba718cd88e422601a3585d07b0ab.jpg", "https://i.pinimg.com/236x/49/83/26/498326d338e3d0c730a8ff5e874f437d.jpg", "https://i.pinimg.com/564x/44/f5/3e/44f53e5f7a6f35bb0f4c86852e9980a9.jpg",],
-    },  
+    },
     {
         name: "Dogy",
         id: 24,
@@ -267,24 +352,24 @@ const shop_single = [
                 value: 50,
                 old_value: 70,
             },
-            
+
         ],
         services: [
-                {
-                    name: "Conjunto Guias + Peitoral",
-                    id: 3,
-                    img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
-                    value: 30,
-                },
-                {
-                    name: "Banho e tosa",
-                    id: 4,
-                    img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
-                    value: 50,
-                },
+            {
+                name: "Conjunto Guias + Peitoral",
+                id: 3,
+                img: "https://i.pinimg.com/564x/30/6f/1f/306f1fd4fd7a125096c3930488afde9b.jpg",
+                value: 30,
+            },
+            {
+                name: "Banho e tosa",
+                id: 4,
+                img: "https://i.pinimg.com/564x/8b/02/f5/8b02f58cc7ed6b3b2c109df908362800.jpg",
+                value: 50,
+            },
         ],
         banners: ["https://i.pinimg.com/564x/10/a9/88/10a98873154fb14bb0d20daffc3fb298.jpg", "https://i.pinimg.com/564x/2a/a1/24/2aa1245b2010e8ea0e32d1267c44e900.jpg",],
-    },  
+    },
 ]
 
 export default shop_single;

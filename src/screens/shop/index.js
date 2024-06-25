@@ -199,7 +199,6 @@ const produtos = [
 ]
 
 const Result = ({ value }) => {
-    console.log(value)
     const [type, settype] = useState(value);
     const [data, setdata] = useState();
     const { isFocused } = useIsFocused();
@@ -283,7 +282,7 @@ const Promos = ({ data }) => {
                         <Row style={{}}>
                             <Column style={{ width: 220, justifyContent: 'center', }}>
                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
-                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
+                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc.length > 80 ? item?.desc.slice(0, 80) + '...' : item?.desc }</Label>
                                 <Row style={{ marginTop: 8, }}>
                                     {item.categories.map((cat) => (
                                         <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>
@@ -301,7 +300,31 @@ const Promos = ({ data }) => {
                 data={data?.slice(3, 6)}
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
-                style={{ marginLeft: 28, marginRight: 28, }}
+                style={{ marginLeft: 28,  }}
+                renderItem={({ item }) => (
+                    <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}  >
+                        <Row style={{}}>
+                            <Column style={{ width: 220, justifyContent: 'center', }}>
+                                <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
+                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
+                                <Row style={{ marginTop: 8, }}>
+                                    {item.categories.map((cat) => (
+                                        <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>
+                                    ))}
+                                </Row>
+
+                            </Column>
+                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                        </Row>
+                    </Button>
+                )}
+                keyExtractor={item => item?.id}
+            />
+            <FlatList
+                data={data?.slice(6, 9)}
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                style={{ marginLeft: 28, marginRight: 22, }}
                 renderItem={({ item }) => (
                     <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}  >
                         <Row style={{}}>

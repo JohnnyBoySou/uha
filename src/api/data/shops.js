@@ -1,5 +1,20 @@
 
 const shops = [
+    
+    
+    {
+        name: "Burger King",
+        id: 19,
+        desc: 'Conheça o Burger King, onde a grelha é o rei! Venha saborear nossos deliciosos hambúrgueres, como o icônico Whopper, feitos na hora para você.',
+        cep: '89260665',
+        img: 'https://seeklogo.com/images/B/Burger_King-logo-EB00FAD8D3-seeklogo.com.png',
+        categories: [
+            {
+                id: 15,
+                name: "Comida"
+            },
+        ],
+    },
     {
         name: "Pet",
         id: 20,
@@ -18,6 +33,19 @@ const shops = [
         ],
     },
     {
+        name: "Movida",
+        id: 18,
+        desc: 'Aluguel de carros e veículos utilitários com a Movida Rent a Car. Reserve online e economize! ',
+        cep: '89260665',
+        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfAWAu4uYgTyoYPn6KagcIK4adWWtSnG-CRA&s',
+        categories: [
+            {
+                id: 16,
+                name: "Veículos"
+            },
+        ],
+    },
+    {
         name: "Petix",
         id: 21,
         desc: 'Petix na mão eles veem até você',
@@ -32,6 +60,19 @@ const shops = [
                 id: 12,
                 name: "Cuidados"
             }
+        ],
+    },
+    {
+        name: "O Boticário",
+        id: 17,
+        desc: 'Aqui no Boticário você encontra os melhores itens de perfumaria, maquiagem, cosméticos, presentes e mais!',
+        cep: '89260665',
+        img: 'https://gkpb.com.br/wp-content/uploads/2020/08/novo-logo-o-boticario-2020.jpg',
+        categories: [
+            {
+                id: 5,
+                name: "Cuidados estéticos"
+            },
         ],
     },
     {
