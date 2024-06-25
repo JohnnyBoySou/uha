@@ -35,6 +35,6 @@ export async function getExtractDonate(){
     return doacoes;
 }
 export async function getExtractMoedas(){
-    return rifas;
+    return moedas;
 }
 
