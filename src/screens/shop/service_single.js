@@ -179,7 +179,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                                 </Button>
                                 <Column style={{ justifyContent: 'center', marginLeft: 20, }}>
                                     <SubLabel style={{ color: color.secundary, fontSize: 16, }}>{shop?.name}</SubLabel>
-                                    <Label style={{ fontSize: 12, lineHeight: 16, }}>{shop?.address.slice(0, 32)}</Label>
+                                    <Label style={{ fontSize: 12, lineHeight: 16, }}>{shop?.address.slice(0, 24)}</Label>
                                 </Column>
                             </Row>
                             <Button onPress={toggleMap} style={{ backgroundColor: showmap ? color.primary : '#FFE0F6', marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>

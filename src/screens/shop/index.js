@@ -149,7 +149,7 @@ export default function ShopScreen({ navigation, route }) {
                 <AnimatePresence>
                     {fixedMenu &&
                         <MotiView from={{ opacity: 0, scale: 0, }} animate={{ scale: 1, opacity: 1, }} exit={{ scale: 0, opacity: 0, }} transition={{ type: 'timing' }} >
-                            <Button onPress={() => { navigation.navigate('SearchModal',) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <Button onPress={() => { navigation.navigate('Tabs', {screen: 'Search'},) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                                 <Search size={24} color="#fff" />
                             </Button>
                         </MotiView>}

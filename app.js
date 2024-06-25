@@ -7,10 +7,9 @@ import light from './src/theme/light';
 import { StatusBar } from 'expo-status-bar';
 import { preventAutoHideAsync, hideAsync} from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { View, useColorScheme } from 'react-native';
+import { View, useColorScheme, LogBox} from 'react-native';
 import Router from './src/router/index';
-import AsyncStaticScreen from '@screens/async';
-
+import AsyncStaticScreen from '@screens/async'; 
 preventAutoHideAsync();
 
 export default function App() {
@@ -19,6 +18,7 @@ export default function App() {
   const theme = useColorScheme();
 
   useEffect(() => {
+    LogBox.ignoreAllLogs(true)
     async function prepare() {
       try{
         await Font.loadAsync({

@@ -1,37 +1,42 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
-import { FlatList, ScrollView, Dimensions, View, Pressable } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, LineL, ButtonPR, LabelLI } from '@theme/global';
+import React, { useContext, useState, useRef, useEffect, useMemo } from 'react';
+import { FlatList, ScrollView } from 'react-native';
+import { Main, Column, Label, Title, Row, SubLabel, Button, ButtonPR, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { CircleCheck, Info, CircleX, AlarmClock, Plus, Car, QrCode, Smartphone, TicketPercent, BadgePercent, ArrowUp, } from 'lucide-react-native';
-import { AnimatePresence, MotiView, useAnimationState } from 'moti';
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { Info, QrCode, Smartphone, BadgePercent, ArrowUp, } from 'lucide-react-native';
+import { AnimatePresence, MotiView } from 'moti';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import doacoes from '@data/doacoes';
 import extrato from '@data/extrato';
-import coins from '@data/coins';
+import pontos from '@data/pontos';
 import moedas from '@data/moedas';
 import rifas from '@data/rifas';
+
 import user from '@data/user';
 
 import TopSheet from '@components/topsheet';
 import Avatar from '@components/avatar';
 
+import BottomSheet, {  BottomSheetScrollView } from '@gorhom/bottom-sheet';
+
 
 export default function ExtractScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    let type = route.params?.type ? route.params?.type : 'Extrato';
+    let type = route.params?.type
 
-    const [page, setpage] = useState(type);
+    const [page, setpage] = useState('Extrato');
     const [dateSelect, setdateSelect] = useState('Hoje');
 
-
+    const edit = useRef(null);
+    const snapPoints = useMemo(() => ["1%", "50%"], []);
 
     const scrollTags = useRef(null);
 
     const bts = ['Extrato', 'Doações', 'Pontos', 'Rifas', 'Moedas']
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
+    const [cache, setcache] = useState();
 
     const isFocused = useIsFocused();
 
@@ -40,9 +45,7 @@ export default function ExtractScreen({ navigation, route }) {
             return
         } else if (type?.length > 0) {
             setpage(type);
-        } else {
-            setpage('Extrato');
-        }
+        } 
     }, [isFocused]);
 
     useEffect(() => {
@@ -56,6 +59,10 @@ export default function ExtractScreen({ navigation, route }) {
     useEffect(() => {
 
     }, []);
+
+
+
+
     const Header = () => {
         return (
             <Column>
@@ -208,7 +215,7 @@ export default function ExtractScreen({ navigation, route }) {
 
             <FlatList
                 ListHeaderComponent={Header}
-                data={page === 'Doações' ? doacoes : page === 'Pontos' ? coins : page === 'Rifas' ? rifas : page === 'Moedas' ? moedas : page === 'Extrato' ? extrato : []}
+                data={page === 'Doações' ? doacoes : page === 'Pontos' ? pontos : page === 'Rifas' ? rifas : page === 'Moedas' ? moedas : page === 'Extrato' ? extrato : []}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={<Empty />}
                 ref={scrollMain}
@@ -216,8 +223,16 @@ export default function ExtractScreen({ navigation, route }) {
                 showsVerticalScrollIndicator={false}
                 onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
                 ListFooterComponent={<Column style={{ height: 100, }} />}
-                renderItem={({ item, index }) => <CardExtrato item={item} index={index} />}
+                renderItem={({ item, index }) => <CardExtrato item={item} index={index} onLong={(item) => {setcache(item); edit.current?.expand()}}/>}
             />
+
+            <BottomSheet ref={edit} snapPoints={snapPoints} 
+                modalStyle={{ borderTopLeftRadius: 24, borderTopRightRadius: 24, }} >
+                <BottomSheetScrollView style={{ borderTopLeftRadius: 24, borderTopRightRadius: 24, }}>
+                    <Column style={{ padding: 24, }}>
+                    </Column>
+                </BottomSheetScrollView>
+            </BottomSheet>
         </Main>
     )
 }
@@ -248,13 +263,13 @@ const Empty = () => {
     )
 }
 
-const CardExtrato = ({ item, index }) => {
+const CardExtrato = ({ item, index, onLong }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext);
     const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : '#ffffff'
     const icon = item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> : item?.icon === 'await' ? <Info color={color.blue} size={24} /> : item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> : <Feather name='loader' color="#000000" size={24} />
     return (
-        <Button onPress={() => { navigation.navigate('ExtractSingle', { id: item.id }) }} style={{ paddingHorizontal: margin.h, }}>
+        <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>

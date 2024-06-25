@@ -112,7 +112,7 @@ const Road = ({ data }) => {
 
                     <Column style={{ marginLeft: 26, marginBottom: 12, marginTop: -4, }}>
                         <Title style={{ fontSize: 15, }}>{step1?.status}</Title>
-                        <Label style={{ fontSize: 12, width: 190, marginTop: -4, color: color.secundary+99 }}>{step1?.label}.</Label>
+                        <Label style={{ fontSize: 12, lineHeight: 14, width: 190, marginTop: 2, color: color.secundary+99 }}>{step1?.label}.</Label>
                     </Column>
                 </Row>
         )

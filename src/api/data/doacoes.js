@@ -1,5 +1,6 @@
 const doacoes = [
     {
+        id: 'doacoes-1',
         value: 35,
         type: 'Doação',
         date: '10/10/2024',
@@ -7,14 +8,15 @@ const doacoes = [
         icon: 'await',
     },
     {
+        id: 'doacoes-2',
         value: 50,
         type: 'Doação',
         date: '12/08/2024',
         status: 'Pagamento confirmado',
-        
         icon: 'check',
     },
     {
+        id: 'doacoes-3',
         value: 100,
         type: 'Doação',
         date: '05/05/2024',

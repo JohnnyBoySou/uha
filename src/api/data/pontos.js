@@ -1,7 +1,8 @@
 
 
-const coins = [
+const pontos = [
     {
+        id: 'pontos-1',
         value: 1,
         type: 'Nota fiscal',
         date: '10/10/2024',
@@ -10,12 +11,15 @@ const coins = [
     },
     {
         value: 1,
+        id: 'pontos-2',
         type: 'Nota fiscal',
         date: '10/10/2024',
         status: 'Pontos confirmado',
         icon: 'check',
     },
     {
+        
+        id: 'pontos-3',
         value: 1,
         type: 'Nota fiscal',
         date: '10/10/2024',
@@ -23,6 +27,7 @@ const coins = [
         icon: 'uncheck',
     },
     {
+        id: 'pontos-4',
         value: 30,
         type: 'Doação',
         date: '10/10/2024',
@@ -30,6 +35,7 @@ const coins = [
         icon: 'check',
     },
     {
+        id: 'pontos-5',
         value: 300,
         type: 'Doação',
         date: '10/10/2024',
@@ -37,6 +43,7 @@ const coins = [
         icon: 'check',
     },
     {
+        id: 'pontos-6',
         value: -300,
         type: 'Pontos',
         date: '10/10/2024',
@@ -44,6 +51,7 @@ const coins = [
         icon: 'check',
     },
     {
+        id: 'pontos-7',
         value: 300,
         type: 'Doação',	
         date: '10/10/2024',
@@ -51,6 +59,7 @@ const coins = [
         icon: 'check',
     },
     {
+        id: 'pontos-8',
         value: 45,
         type: 'Doação',	
         date: '10/10/2024',
@@ -58,4 +67,4 @@ const coins = [
         icon: 'dimiss',
     },
 ]
-export default coins;
+export default pontos;

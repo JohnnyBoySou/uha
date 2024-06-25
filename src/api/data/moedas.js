@@ -1,5 +1,6 @@
 const moedas = [
     {
+        id: 'moedas-1',
         value: 1,
         type: 'Nota fiscal',
         date: '10/10/2024',
@@ -7,24 +8,27 @@ const moedas = [
         icon: 'await',
     },
     {
+        id: 'moedas-2',
         value: 95,
         type: 'Doação',
         date: '10/10/2024',
-        status: 'Moedas confirmado',
+        status: 'Moedas confirmadas',
         icon: 'check',
     },
     {
+        id: 'moedas-3',
         value: 1,
         type: 'Nota fiscal',
         date: '10/10/2024',
-        status: 'Moedas negado',
+        status: 'Moedas negadas',
         icon: 'uncheck',
     },
     {
+        id: 'moedas-4',
         value: 30,
         type: 'Doação',
         date: '10/10/2024',
-        status: 'Moedas expirado',
+        status: 'Moedas expiradas',
         icon: 'dimiss',
     },
 ]

@@ -26,7 +26,7 @@ export default function FavoritesScreen({ navigation, }) {
             <Scroll style={{ paddingTop: 50, }}>
                 <Row style={{ marginHorizontal: margin.h, justifyContent: 'space-between', alignItems: 'center',  }}>
                         <Title>Favoritos</Title>
-                        <Button onPress={() => navigation.navigate('Tabs', { screen: 'Search'})} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
+                        <Button onPress={() => navigation.navigate('Tabs', { screen: 'Search',})} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
                             <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                             <Label>Pesquisar</Label>
                                 <Search color={color.label} size={18} style={{ marginLeft: 8, }}/>
