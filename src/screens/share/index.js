@@ -12,7 +12,7 @@ export default function ShareScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
 
     return (
-        <Main style={{ }}>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll style={{ }}>
                 <Header rose/>
                 <Column style={{ marginHorizontal: margin.h, marginTop: 12 , }}>
@@ -20,16 +20,17 @@ export default function ShareScreen({ navigation, }) {
                     <Title>Indique e ganhe</Title>
                 </Column>
                 <Row style={{ marginVertical: 20, marginLeft: 28, }}>
-                    <Column style={{ marginRight: 18, backgroundColor: "#fff", padding: 12, borderRadius: 12, justifyContent: 'center', alignItems: 'center', }}>
+                    <Column style={{ marginRight: 18, backgroundColor: color.background, padding: 12, borderRadius: 12, justifyContent: 'center', alignItems: 'center', }}>
                         <QRCode
                             size={180}
                             quietZone={10}
                             value={user?.code}
                             logo={require('@imgs/logo_u_black.png')}
                             logoSize={52}
+                            backgroundColor="transparent"
                             color={color.secundary}
                             logoBorderRadius={0}
-                            logoBackgroundColor='#fff'
+                            logoBackgroundColor={color.background}
                             logoMargin={6}
                         />
                     </Column>
@@ -64,6 +65,7 @@ export default function ShareScreen({ navigation, }) {
                         </ButtonOut>
                     </Row>
                 </Column>
+                <Column style={{height: 70 }} />
             </Scroll>
         </Main>
     )

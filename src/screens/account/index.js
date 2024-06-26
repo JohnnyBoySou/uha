@@ -37,7 +37,7 @@ export default function AccountScreen({ navigation, }) {
 
                 <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} delay={200} style={{ backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: "#fff", }}>Pontos em conta</Label>
-                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: "#fff", }}>{data?.points}</Title>
+                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{data?.points}</Title>
                     <LineL />
                     <Label style={{ color: "#fff", marginTop: 12, }}>Saldo em moedas resgatadas</Label>
                     <Label style={{ color: "#fff", }}>R$ {data?.moedas}</Label>

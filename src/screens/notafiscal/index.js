@@ -35,7 +35,7 @@ export default function NotafiscalScreen({ navigation, }) {
 
                 </Column>
 
-                <Column style={{ height: 140, }} />
+                <Column style={{ height: 180, }} />
             </Scroll>
 
         </Main>
