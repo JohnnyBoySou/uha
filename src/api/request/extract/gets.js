@@ -1,10 +1,9 @@
 import axios from 'axios';
-import rifas from '@data/rifas';
-import extrato from '@data/extrato';
-import moedas from '@data/moedas';
-import pontos from '@data/pontos';
-import doacoes from '@data/doacoes';
-
+import rifas from '@data/extract/rifas';
+import extrato from '@data/extract/extrato';
+import moedas from '@data/extract/moedas';
+import pontos from '@data/extract/pontos';
+import doacoes from '@data/extract/doacoes';
 
 import rifas_single from '@data/extract/rifas_single';
 import moedas_single from '@data/extract/moedas_single';
@@ -20,7 +19,6 @@ export async function getSingleExtract(id){
     const extrato = extrato_single.find(extrato => extrato.id === id);
     return rifas ? rifas : moedas ? moedas : pontos ? pontos : doacoes ? doacoes : extrato ? extrato : [];
 }
-
 
 export async function getExtract(){
     return extrato

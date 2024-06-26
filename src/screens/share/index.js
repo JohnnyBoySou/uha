@@ -18,7 +18,6 @@ export default function ShareScreen({ navigation, }) {
                 <Column style={{ marginHorizontal: margin.h, marginTop: 12 , }}>
                     <Label style={{ color: color.secundary + 99, }}>Campanha</Label>
                     <Title>Indique e ganhe</Title>
-
                 </Column>
                 <Row style={{ marginVertical: 20, marginLeft: 28, }}>
                     <Column style={{ marginRight: 18, backgroundColor: "#fff", padding: 12, borderRadius: 12, justifyContent: 'center', alignItems: 'center', }}>
@@ -64,8 +63,6 @@ export default function ShareScreen({ navigation, }) {
                             <LabelLI style={{ color: color.primary, }}>Dúvidas frequentes</LabelLI>
                         </ButtonOut>
                     </Row>
-
-                <Column style={{height: 150, }} />
                 </Column>
             </Scroll>
         </Main>

@@ -15,7 +15,7 @@ export default function ONGListScreen({ navigation, route }) {
     return (
         <Main style={{ backgroundColor: '#fff', }}>
 
-            <Scroll style={{ paddingTop: 15, }}>
+            <Scroll>
                 <Header title="Lista de ONG's" rose />
 
                 <FlatList

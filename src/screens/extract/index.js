@@ -8,18 +8,13 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import doacoes from '@data/doacoes';
-import extrato from '@data/extrato';
-import pontos from '@data/pontos';
-import moedas from '@data/moedas';
-import rifas from '@data/rifas';
-
-import user from '@data/user';
-
 import TopSheet from '@components/topsheet';
 import Avatar from '@components/avatar';
 
 import BottomSheet, {  BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { getExtractDonate, getExtractMoedas, getExtractPontos, getExtractRifas, getExtract } from '@request/extract/gets';
+import { getUser } from '@api/request/user';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function ExtractScreen({ navigation, route }) {
@@ -29,14 +24,14 @@ export default function ExtractScreen({ navigation, route }) {
     const [page, setpage] = useState('Extrato');
     const [dateSelect, setdateSelect] = useState('Hoje');
 
+    //bottomsheet
     const edit = useRef(null);
+    const [cache, setcache] = useState();
     const snapPoints = useMemo(() => ["1%", "50%"], []);
 
     const scrollTags = useRef(null);
-
     const bts = ['Extrato', 'Doações', 'Pontos', 'Rifas', 'Moedas']
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
-    const [cache, setcache] = useState();
 
     const isFocused = useIsFocused();
 
@@ -56,8 +51,36 @@ export default function ExtractScreen({ navigation, route }) {
         handleScroll()
     }, [page]);
 
-    useEffect(() => {
 
+    const [extrato, setextrato] = useState();
+    const [doacoes, setdoacoes] = useState();
+    const [pontos, setpontos] = useState();
+    const [moedas, setmoedas] = useState();
+    const [rifas, setrifas] = useState();
+    const [user, setuser] = useState();
+
+    useEffect(() => {
+        const fetchData  = async () => {
+            getUser().then((res) => {
+                setuser(res)
+            });
+            getExtract().then((res) => {
+                setextrato(res)
+            });
+            getExtractRifas().then((res) => {
+                setrifas(res)
+            });
+            getExtractMoedas().then((res) => {
+                setmoedas(res)
+            });
+            getExtractPontos().then((res) => {
+                setpontos(res)
+            });
+            getExtractDonate().then((res) => {
+                setdoacoes(res)
+            });
+        };
+        fetchData();
     }, []);
 
 
@@ -83,6 +106,7 @@ export default function ExtractScreen({ navigation, route }) {
     const scrollMain = useRef()
     return (
         <Main style={{ backgroundColor: '#fff', }}>
+            {isFocused  && <StatusBar style="light"  backgroundColor={color.primary} animated={true}/>}
 
             <TopSheet
                 min={
@@ -90,11 +114,11 @@ export default function ExtractScreen({ navigation, route }) {
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Column>
                                 <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Moedas</Title>
-                                <Title style={{ color: "#fff" }}>R$ {user.moedas}</Title>
+                                <Title style={{ color: "#fff" }}>R$ {user?.moedas}</Title>
                             </Column>
                             <Column>
                                 <Title style={{ color: "#fff", textAlign: 'right', fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user.points}</Title>
+                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user?.points}</Title>
                             </Column>
                         </Row>
                     </MotiView>
@@ -105,12 +129,12 @@ export default function ExtractScreen({ navigation, route }) {
                             <Row style={{ justifyContent: 'space-between', }}>
                                 <Column style={{ borderWidth: 1, borderColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
                                     <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Moedas</Title>
-                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>R$ {user.moedas}</Title>
+                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>R$ {user?.moedas}</Title>
                                 </Column>
                                 <Column style={{ width: 16, }} />
                                 <Column style={{ backgroundColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
                                     <Title style={{ color: color.secundary, fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                    <Title style={{ color: color.secundary, }}>{user.points}</Title>
+                                    <Title style={{ color: color.secundary, }}>{user?.points}</Title>
                                 </Column>
                             </Row>
                             <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', }}>
@@ -200,7 +224,7 @@ export default function ExtractScreen({ navigation, route }) {
                 }
             </AnimatePresence>
 
-            <Column style={{ height: 115, }} />
+            <Column style={{ height: 150, }} />
             <Column>
                 <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12,  }} showsHorizontalScrollIndicator={false}>
                     {bts.map((bt, index) => (
@@ -223,7 +247,7 @@ export default function ExtractScreen({ navigation, route }) {
                 showsVerticalScrollIndicator={false}
                 onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
                 ListFooterComponent={<Column style={{ height: 100, }} />}
-                renderItem={({ item, index }) => <CardExtrato item={item} index={index} onLong={(item) => {setcache(item); edit.current?.expand()}}/>}
+                renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} onLong={(item) => {setcache(item); edit.current?.expand()}}/>}
             />
 
             <BottomSheet ref={edit} snapPoints={snapPoints} 
@@ -263,13 +287,13 @@ const Empty = () => {
     )
 }
 
-const CardExtrato = ({ item, index, onLong }) => {
+const CardExtrato = ({ item, index, onLong, type }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext);
     const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : '#ffffff'
     const icon = item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> : item?.icon === 'await' ? <Info color={color.blue} size={24} /> : item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> : <Feather name='loader' color="#000000" size={24} />
     return (
-        <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id }) }} style={{ paddingHorizontal: margin.h, }}>
+        <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
@@ -286,7 +310,9 @@ const CardExtrato = ({ item, index, onLong }) => {
                         textDecorationLine: item?.icon === 'dimiss' ? "line-through" : "none",
                         textDecorationStyle: item?.icon === 'dimiss' ? "solid" : "none",
                         textDecorationColor: item?.icon === 'dimiss' ? "#000" : 'transparent',
-                    }}>R$ {item?.value},00</Title>
+                    }}>
+                        {type == 'Pontos' ? item?.value : `R$ ${item?.value},00` }
+                        </Title>
                     <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -4, }}>{item?.status}</SubLabel>
                     <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{item?.type}</Label>
                 </Column>

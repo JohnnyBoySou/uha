@@ -15,7 +15,7 @@ export default function ONGSingleScreen({ navigation, route }) {
      
     const [showDesc, setshowDesc] = useState(false);
     return (
-            <Scroll style={{ paddingTop: 15, }}>
+            <Scroll >
                 <Header title="Detalhes" />
                 
                 <Column style={{ justifyContent: 'center', alignItems: 'center',  marginVertical: 24,  }}>

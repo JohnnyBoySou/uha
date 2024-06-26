@@ -9,16 +9,9 @@ import * as Clipboard from 'expo-clipboard';
 import { Clipboard as Clip, } from 'lucide-react-native';
 import Svg, { G, Path, Defs, ClipPath, Rect } from 'react-native-svg';
 
-export default function ShopQRCodeScreen({ navigation, }) {
+export default function ShopQRCodeScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const item = {
-        code: '091722209593', 
-        product: {
-            name: 'Banho e tosa',
-            value: '40',
-            img: 'https://i.pinimg.com/564x/6b/36/7f/6b367f53e5df858d867aa45ab0ea93ca.jpg',
-        }}
-    //const item = route.params.item;
+    const item = route.params.item;
     const [loading, setloading] = useState(true);
 
     useEffect(() => {
@@ -121,7 +114,7 @@ export default function ShopQRCodeScreen({ navigation, }) {
                             <Title style={{ fontSize: 18, }}>Detalhes</Title>
                             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
                                 <Label style={{ fontSize: 14, }}>Criado em:</Label>
-                                <Label style={{ fontSize: 14, }}>10/10/2024</Label>
+                                <Label style={{ fontSize: 14, }}>{item?.date}</Label>
                             </Row>
                             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
                                 <Label style={{ fontSize: 14, }}>Gerador:</Label>
@@ -129,7 +122,7 @@ export default function ShopQRCodeScreen({ navigation, }) {
                             </Row>
                             <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
                                 <Label style={{ fontSize: 14, }}>Estabelecimento:</Label>
-                                <Label style={{ fontSize: 14, }}>Pet Tosas</Label>
+                                <Label style={{ fontSize: 14, }}>{item?.shop?.name}</Label>
                             </Row>
                         </Column>
                             <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginBottom: -52, zIndex: 99,  alignSelf: 'center', }} />

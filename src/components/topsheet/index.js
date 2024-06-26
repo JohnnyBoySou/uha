@@ -13,9 +13,9 @@ import { Column, Title } from '@theme/global';
 
 
 export default function TopSheet({ children, min, max, normal,  }) {
-  const height = useSharedValue(120); // Altura inicial do componente
+  const height = useSharedValue(150); // Altura inicial do componente
 
-  const MIN_HEIGHT = 120; // Altura mínima
+  const MIN_HEIGHT = 150; // Altura mínima
   const NORMAL_HEIGHT = 300; // Altura normal
   const MAX_HEIGHT = 730; // Altura máxima
 
@@ -57,7 +57,7 @@ export default function TopSheet({ children, min, max, normal,  }) {
 
   return (
     <Animated.View style={[{ width: '100%', top: 0, zIndex: 99, borderBottomLeftRadius: 18,  borderBottomRightRadius: 18, position: 'absolute', }, animatedStyle]} >
-      <Column style={{ paddingHorizontal: 28, paddingTop: 40, }}>
+      <Column style={{ paddingHorizontal: 28, paddingTop: 60, }}>
         {currentStatus === 'min' && min}
         {currentStatus === 'normal' && normal}
         {currentStatus === 'max' && max}

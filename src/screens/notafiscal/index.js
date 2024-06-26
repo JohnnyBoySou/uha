@@ -4,14 +4,15 @@ import { Main, Scroll, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MotiImage, } from 'moti';
 import Header from '@components/header';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function NotafiscalScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
-    const a = false;
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll style={{  }}>
+            <StatusBar style="dark"  backgroundColor="#fff" animated/>
+            <Scroll>
                 <Header title="Nota fiscal" rose />
                 <Column style={{ height: 24, }} />
                 <Carrousel color={color} />
@@ -34,7 +35,7 @@ export default function NotafiscalScreen({ navigation, }) {
 
                 </Column>
 
-                <Column style={{ height: 200, }} />
+                <Column style={{ height: 140, }} />
             </Scroll>
 
         </Main>

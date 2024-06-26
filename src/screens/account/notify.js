@@ -20,8 +20,8 @@ export default function AccountNotifyScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-                <Scroll style={{ paddingTop: 20, }}>
-                    <Header title='Notificações' />
+                <Scroll  >
+                    <Header title='Notificações' rose/>
                     <Column style={{ paddingHorizontal: margin.h, }}>
                         <Title style={{ marginTop: 30, marginBottom: 30, fontSize: 22,}}>Escolha quais deseja receber</Title>
                         <Row style={{ marginBottom: 20,  justifyContent: 'space-between', alignItems: 'center',  }}>

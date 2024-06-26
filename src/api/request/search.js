@@ -1,6 +1,6 @@
 import axios from "axios";
-import shops from '@data/shops';
-import services from '@data/services';
+import shops from '@data/shops/shops';
+import services from '@data/services/services';
 
 export async function getSearch(query) {
     //const res = await axios.get(`https://api.github.com/search/repositories?q=${query}`);

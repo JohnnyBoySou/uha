@@ -23,7 +23,7 @@ export default function BuyServiceReceiveGiftScreen({ navigation, }) {
 
     return (
         <Main style={{  }}>
-            <Scroll style={{ paddingTop: 20, }}>
+            <Scroll >
 
             <Header title="Gift Card"/>
 

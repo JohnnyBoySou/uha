@@ -10,6 +10,8 @@ import Internet from '@components/internet';
 import { useNavigation } from '@react-navigation/native';
 import { getOffers, getShops, getServices, getCampaigns } from '@request/service';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import campanhas from '@data/campanhas';
+import { StatusBar } from 'expo-status-bar';
 
 export default function HomeScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -25,8 +27,7 @@ export default function HomeScreen({ navigation, }) {
 
     const [offers, setoffers] = useState();
     const [shops, setshops] = useState();
-    const [services, setservices] = useState();
-    const [campaigns, setcampaigns] = useState();
+    const [services, setservices] = useState(); 
     useEffect(() => {
         getOffers().then((res) => {
             setoffers(res)
@@ -37,14 +38,12 @@ export default function HomeScreen({ navigation, }) {
         getServices().then((res) => {
             setservices(res)
         })
-        getCampaigns().then((res) => {
-            setcampaigns(res)
-        })
     }, [])
 
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Internet />
+            <StatusBar style="dark"  backgroundColor="#fff"/>
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <MotiImage delay={300} from={{ opacity: 0, translateX: -40, scale: 0, }} animate={{ opacity: 1, translateX: 0, scale: 1, }} transition={{ type: 'spring' }} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
@@ -152,7 +151,7 @@ export default function HomeScreen({ navigation, }) {
                 </MotiView>
 
                 <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1000}>
-                    <Campanhas data={campaigns} />
+                    <Campanhas data={campanhas} />
                 </MotiView>
 
                 <OffersCards data={offers} />

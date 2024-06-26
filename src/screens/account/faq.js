@@ -9,7 +9,7 @@ export default function AccountFAQScreen({ navigation, }) {
 
     return (
         <Main>
-            <Scroll style={{ paddingTop: 15, }}>
+            <Scroll style={{  }}>
                 <Header title="Dúvidas frequentes"/>
                 <Title style={{ marginHorizontal: margin.h, marginTop: 30, marginBottom: -12, }}>Categoria</Title>
                 <FlatList

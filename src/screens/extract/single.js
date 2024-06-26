@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function ExtractSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const id = route?.params?.id ? route?.params?.id : 'rifa-1';
+    const type = route?.params?.type ? route?.params?.type : 'Rifas';
     const [item, setitem] = useState();
     const [steps, setsteps] = useState();
     const [ong, setong] = useState();
@@ -33,7 +34,7 @@ export default function ExtractSingleScreen({ navigation, route }) {
    
     return (
         <Main style={{ backgroundColor: '#f7f7f7', }}>
-            <Scroll style={{ paddingTop: 15, }}>
+            <Scroll style={{  }}>
                 <Column style={{  marginHorizontal: margin.h, borderRadius: 24,  }}>
 
                     <Column style={{ marginVertical: 18, }}>
@@ -51,7 +52,7 @@ export default function ExtractSingleScreen({ navigation, route }) {
                         <MotiView from={{opacity: 0, translateY: 20,}} animate={{opacity: 1, translateY: 0}} delay={500} >
 
                         <Title style={{ color: color.secundary, fontSize: 24,  textAlign: 'center', marginTop: 30, }}>{item?.type}</Title>
-                        <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: color.primary, textAlign: 'center', marginTop: -6, }}>R$ {item?.value},00</Title>
+                        <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: color.primary, textAlign: 'center', marginTop: -6, }}> {type == 'Pontos' ? item?.value : `R$ ${item?.value},00` }</Title>
                         <Label style={{ color: color.secundary, fontSize: 16, textAlign: 'center', marginBottom: -4, marginTop: 6,}}>{item?.name}</Label>
                         </MotiView>
 

@@ -9,6 +9,7 @@ import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut } 
 import { MotiImage, MotiView } from 'moti';
 import { useNavigation } from '@react-navigation/native';
 import { getUser } from '@api/request/user';
+import { StatusBar } from 'expo-status-bar';
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -23,8 +24,8 @@ export default function AccountScreen({ navigation, }) {
     const [dark, setdark] = useState(false);
     return (
         <Main style={{ backgroundColor: '#fff', }}>
+            <StatusBar style="dark"  backgroundColor="#fff" animated/>
             <Scroll>
-
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <Title>Olá, {data?.name}</Title>
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
@@ -170,7 +171,7 @@ const Configs = [
         description: 'Desfrute de serviços parceiros',
         icon: 'lock',
         check: null,
-        screen: 'CampaignsPontos',
+        screen: 'Shop',
         img: require('@icons/ic3.png'),
     },
     {
@@ -178,7 +179,7 @@ const Configs = [
         description: 'Concorra a premios diversos',
         icon: 'file-text',
         check: null,
-        screen: 'CampaignsProgress',
+        screen: 'Extract',
         img: require('@icons/ic4.png'),
     },
    

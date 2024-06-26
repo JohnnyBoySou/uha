@@ -37,7 +37,7 @@ export default function DonateValueHideScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: color.primary, }}>
-            <Scroll style={{ paddingTop: 15, }}>
+            <Scroll >
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <ArrowLeft color={color.secundary} />

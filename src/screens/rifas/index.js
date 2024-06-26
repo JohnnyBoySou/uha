@@ -7,7 +7,7 @@ import Header from '@components/header';
 import { useNavigation } from '@react-navigation/native';
 import { CircleCheck, CircleX, AlarmClock } from 'lucide-react-native';
 
-export default function CampaignsProgressScreen({ navigation, }) {
+export default function RifasScreen({ navigation, }) {
     const { margin, } = useContext(ThemeContext);
     return (
         <Main >

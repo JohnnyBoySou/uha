@@ -16,7 +16,7 @@ export default function PayBoletoScreen({ navigation, route }) {
 
         return(
             <Main>
-                <Scroll style={{ paddingTop: 20, }}>
+                <Scroll >
                 <Header title="Pagar boleto"  />
                 <Column style={{ marginHorizontal: margin.h, }}>
 

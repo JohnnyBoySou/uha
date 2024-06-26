@@ -10,7 +10,7 @@ export default function CampaignsGiftCardScreen({ navigation, }) {
         <Main>
             <Scroll>
                <Header title='Gift Card'/>
-                <Column style={{ paddingHorizontal: 28, }}>
+                <Column style={{ paddingHorizontal: 28,  }}>
                     <MotiImage source={require('@imgs/gift_card.png')} style={{ borderRadius: 24, width: '100%', height: 280, marginVertical: 24, }} from={{opacity: 0, translateY: -20,}} animate={{opacity: 1, translateY: 0,}}/>
                     <Column style={{ backgroundColor: color.primary, borderRadius: 100, paddingVertical: 24, paddingHorizontal: 30, justifyContent: 'center', alignItems: 'center',  marginTop: -60, zIndex: 99, }}>
                         <Title style={{ color: "#fff", }}>Presenteie alguém especial!</Title>
@@ -38,6 +38,7 @@ export default function CampaignsGiftCardScreen({ navigation, }) {
                     <ButtonOut onPress={() => {navigation.navigate('Shop')}}  style={{ borderColor: '#000', paddingVertical: 12, marginTop: 24, marginBottom: 40, }}>
                         <LabelLI style={{  }}>Conhecer estabelecimentos parceiros</LabelLI>
                     </ButtonOut>
+                    <Column style={{height:100, }} />
                 </Column>
             </Scroll>
         </Main>

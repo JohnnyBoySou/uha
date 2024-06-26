@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const BASE_URL = 'https://api.com/'
 
-import shops from '@data/shops'
+import shops from '@data/shops/shops'
 
 export async function getCategory(id = 12) {
     //const res = axios.get(BASE_URL + '/shops')

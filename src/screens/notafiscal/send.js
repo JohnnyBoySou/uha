@@ -79,7 +79,7 @@ export default function NotafiscalSendScreen({ navigation, route}) {
                     facing="back"
                     onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200) }}  >
                 </CameraView>}
-            <Scroll style={{ paddingTop: 15, }}>
+            <Scroll >
                 <Header />
                 <Button onPress={() => {setvalue(null)}}  style={{ position: 'absolute', top: 0, right: 20, padding: 12, borderRadius: 12, width: 44, height: 44, backgroundColor: '#ffffff', justifyContent: 'center', alignItems: 'center',   }}>
                     <Trash size={24} color={color.secundary}/>

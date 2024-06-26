@@ -14,11 +14,8 @@ import HeartAnim from '@anim/heart';
 
 import { getSingleService, getSingleShop } from '@request/service';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
-import { excludeFavs } from '../../api/user/favorites';
-
 
 const { width, height } = Dimensions.get('window');
-
 
 export default function ShopServiceSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -57,8 +54,14 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         to: { height: 180, borderRadius: 12, traslateY: -10, },
     })
 
+    const nowdate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const code = nowdate.replace(/ /g, '').replace(/-/g, '').replace(/:/g, '').replace(/\//g, '')
     const itm = {
-        code: '091722209593',
+        code: code,
+        date: nowdate,
+        shop: {
+            name: shop?.name,
+        },
         product: {
             name: item?.name,
             value: item?.value,
@@ -191,26 +194,26 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         <MotiImage source={require('@imgs/map.png')} style={{ width: '100%', height: '100%', borderRadius: 12, }} />
                     </MotiView>
                     {others?.length > 0 && <>
-                    <Title style={{ fontSize: 20, marginTop: -8, }}>Aproveite também</Title>
-                    <FlatList
-                        data={others}
-                        style={{ marginTop: 6, marginBottom: 30, marginHorizontal: -8, }}
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item) => item.id}
-                        columnWrapperStyle={{}}
-                        numColumns={2}
-                        renderItem={({ item }) => (
-                            <Button onPress={() => navigation.navigate('Home')} style={{ borderRadius: 8, padding: 4, backgroundColor: '#f5f5f5', marginVertical: 6, flexGrow: 1, margin: 8, }}>
-                                <Row style={{ alignItems: 'center', }}>
-                                    <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 6, }} />
-                                    <Column style={{ marginLeft: 8, justifyContent: 'center', marginRight: 12, }}>
-                                        <SubLabel style={{ fontFamily: 'Font_Medium', fontSize: 14, }}>{item?.name.slice(0, 14)}</SubLabel>
-                                        <SubLabel style={{ color: color.primary, fontSize: 12, lineHeight: 16, }}>{item?.value} pontos</SubLabel>
-                                    </Column>
-                                </Row>
-                            </Button>
-                        )}
-                    />
+                        <Title style={{ fontSize: 20, marginTop: -8, }}>Aproveite também</Title>
+                        <FlatList
+                            data={others}
+                            style={{ marginTop: 6, marginBottom: 30, marginHorizontal: -8, }}
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={(item) => item.id}
+                            columnWrapperStyle={{}}
+                            numColumns={2}
+                            renderItem={({ item }) => (
+                                <Button onPress={() => navigation.navigate('Home')} style={{ borderRadius: 8, padding: 4, backgroundColor: '#f5f5f5', marginVertical: 6, flexGrow: 1, margin: 8, }}>
+                                    <Row style={{ alignItems: 'center', }}>
+                                        <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 6, }} />
+                                        <Column style={{ marginLeft: 8, justifyContent: 'center', marginRight: 12, }}>
+                                            <SubLabel style={{ fontFamily: 'Font_Medium', fontSize: 14, }}>{item?.name.slice(0, 14)}</SubLabel>
+                                            <SubLabel style={{ color: color.primary, fontSize: 12, lineHeight: 16, }}>{item?.value} pontos</SubLabel>
+                                        </Column>
+                                    </Row>
+                                </Button>
+                            )}
+                        />
                     </>}
                 </Column>
                 <Column style={{ height: 100, }} />

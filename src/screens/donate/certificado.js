@@ -16,7 +16,7 @@ export default function DonateCertificadoScreen({ navigation, route }) {
 
         return(
             <Main style={{ backgroundColor: '#fff', }}>
-                <Scroll style={{ paddingTop: 20, }}>
+                <Scroll  >
                 <Header title="Certificado" rose />
                 <Column style={{ marginHorizontal: margin.h, }}>
 

@@ -2,14 +2,12 @@ import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import React, { useCallback, useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components/native';
-import dark from './src/theme/dark';
 import light from './src/theme/light';
-import { StatusBar } from 'expo-status-bar';
 import { preventAutoHideAsync, hideAsync} from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { View, useColorScheme, LogBox} from 'react-native';
 import Router from './src/router/index';
-import AsyncStaticScreen from '@screens/async'; 
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 preventAutoHideAsync();
 
 export default function App() {
@@ -50,8 +48,9 @@ export default function App() {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <ThemeProvider theme={light}>
-        <StatusBar style="dark" translucent />
+        <SafeAreaProvider>
         <Router />
+        </SafeAreaProvider>
       </ThemeProvider>
     </View>
   );

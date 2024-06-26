@@ -46,7 +46,7 @@ export default function AccountDetailsScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll style={{ paddingTop: 20, }}>
+            <Scroll >
                 <Header title='Dados cadastrais' rose />
                 <Column style={{ paddingHorizontal: margin.h, marginTop: 20, }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>

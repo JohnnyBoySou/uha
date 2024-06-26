@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Main, Row } from '@theme/global';
 import { MotiImage } from 'moti';
 import { getPreferences } from '../../api/user/preferences';
+import { StatusBar } from 'expo-status-bar';
 
 export default function AsyncStaticScreen({ navigation, }) {
     useEffect(() => {
@@ -21,6 +22,7 @@ export default function AsyncStaticScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: "#FE25BD", flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+            <StatusBar style="light" backgroundColor="#FE25BD"/>
             <Row>
                 <MotiImage source={require('@imgs/u.png')} style={{ width: 100, objectFit: 'contain' }} 
                     transition={{duration: 600, type: 'timing',  delay: 200,}}

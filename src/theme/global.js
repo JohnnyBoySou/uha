@@ -6,7 +6,7 @@ export const Main = styled.SafeAreaView`
   background: ${props => props.theme.background};
 `
 export const Scroll = styled.ScrollView`
-  padding-top: 40px;
+  padding-top: 50px;
   flex: 1;
 `
 
