@@ -9,11 +9,8 @@ import Pagination from '@components/pagination';
 import rifa_single from '@data/rifas/rifa_single';
 
 
-
-export default function RifasSingleScreen({ navigation, }) {
+export default function RaspadinhasSingleScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
-
-
     const [user, setUser] = useState({ id: '0987654321234567890', index: 11 + 1, winner: true, })
 
 

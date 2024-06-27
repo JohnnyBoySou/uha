@@ -58,9 +58,10 @@ const Carrousel = () => {
         { id: 2, title: '2', img: require('@imgs/nota2.png') },
         { id: 3, title: '3', img: require('@imgs/nota3.png') },
     ]
-    const [activeIndex, setActiveIndex] = useState(0);
     const flatListRef = useRef(null);
     const windowWidth = 300;
+    
+    const [activeIndex, setActiveIndex] = useState(0);
     const scrollX = useRef(new Animated.Value(0)).current;
 
     const activyColor = '#5C0D45';

@@ -3,13 +3,13 @@ import { ScrollView, FlatList, Pressable, ScrollViewComponent } from 'react-nati
 import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { ArrowLeft, Search, X } from 'lucide-react-native';
 import { MotiView } from 'moti';
 import { useIsFocused, useNavigation, } from '@react-navigation/native';
 
 import { getShops, getOffers } from '@request/service';
 import { getCategory } from '@request/category';
+import Header from '@components/header';
 
 export default function ShopScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -47,6 +47,7 @@ export default function ShopScreen({ navigation, route }) {
                         <Title style={{ fontSize: 16, }}>100 pontos</Title>
                     </Button>
                 </Row>
+                <Header title='Shop' />
 
                 {type == null &&
                     <><Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>

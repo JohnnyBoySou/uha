@@ -43,7 +43,7 @@ export default function HomeScreen({ navigation, }) {
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Internet />
-            <StatusBar style="dark"  backgroundColor="#fff"/>
+            <StatusBar style="dark"  backgroundColor="#fff" animated={true}/>
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <MotiImage delay={300} from={{ opacity: 0, translateX: -40, scale: 0, }} animate={{ opacity: 1, translateX: 0, scale: 1, }} transition={{ type: 'spring' }} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />

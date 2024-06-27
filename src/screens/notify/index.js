@@ -60,10 +60,10 @@ export default function NotifyScreen({ navigation, }) {
 
 
     return (
-        <Main style={{ marginTop: -10, }}>
+        <Main style={{backgroundColor: '#fff', }}>
             <Scroll>
 
-                <Header title='Notificações' />
+                <Header title='Notificações' rose/>
                 <Row style={{ paddingHorizontal: margin.h, }}>
                     <AnimatePresence>
                         {type != null && <MotiView  transition={{ duration: 500, type: 'timing'}} from={{ opacity: 0, translateX: -30, }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: 12, borderRadius: 8, }} >

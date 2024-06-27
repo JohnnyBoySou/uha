@@ -58,12 +58,8 @@ export default function ShareScreen({ navigation, }) {
                     </Column>
 
 
-                    <Row style={{ marginVertical: 12, justifyContent: 'center', alignItems: 'center', }}>
-                        <Column style={{ width: 24, }} />
-                        <ButtonOut onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderColor: color.primary, }}>
-                            <LabelLI style={{ color: color.primary, }}>Dúvidas frequentes</LabelLI>
-                        </ButtonOut>
-                    </Row>
+                  
+                        
                 </Column>
                 <Column style={{height: 70 }} />
             </Scroll>
@@ -72,6 +68,9 @@ export default function ShareScreen({ navigation, }) {
 }
 
 /**
+ * <ButtonOut onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderColor: color.primary, }}>
+                            <LabelLI style={{ color: color.primary, }}>Dúvidas frequentes</LabelLI>
+                        </ButtonOut>
                     <Title style={{ marginTop: 14, fontSize: 18, marginBottom: 8, textAlign: 'center', }}>Você também pode nos encontrar em</Title>
  * 
  *    <CardSheet children={

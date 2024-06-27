@@ -179,7 +179,7 @@ const Configs = [
         description: 'Concorra a premios diversos',
         icon: 'file-text',
         check: null,
-        screen: 'Extract',
+        screen: 'Rifas',
         img: require('@icons/ic4.png'),
     },
    

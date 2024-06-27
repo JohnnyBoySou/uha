@@ -9,7 +9,7 @@ import Feather from '@expo/vector-icons/Feather';
 
 import rifas from '@data/rifas/rifas'
 
-export default function RifasScreen({ navigation, }) {
+export default function RaspadinhasScreen({ navigation, }) {
     const { margin, color, font } = useContext(ThemeContext);
 
 

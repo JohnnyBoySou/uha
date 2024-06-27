@@ -40,6 +40,7 @@ export default function QuestionsScreen({ navigation, }) {
                     </ButtonOut>
                 </Column>
 
+                <Column style={{height: 60, }} />
             </Scroll>
         </Main>
     )

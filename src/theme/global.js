@@ -162,7 +162,7 @@ export const Label = styled.Text`
 
 
 export const SubLabel = styled.Text`
-  color: ${props => props.theme.color.title};
+  color: ${props => props.theme.color.secundary};
   font-size: 16px;
   letter-spacing: -.5px;
   font-family: ${props => props.theme.font.bold};
