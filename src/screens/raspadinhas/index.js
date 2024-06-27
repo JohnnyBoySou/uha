@@ -1,68 +1,136 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { FlatList , ScrollView} from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 import Header from '@components/header';
 import { useNavigation } from '@react-navigation/native';
-import { CircleCheck, CircleX, AlarmClock, Info, Trophy } from 'lucide-react-native';
+import { CircleCheck, CircleX, AlarmClock, Info, Trophy, CheckCheck, ShoppingCart, Search } from 'lucide-react-native';
 import Feather from '@expo/vector-icons/Feather';
 
-import rifas from '@data/rifas/rifas'
+import raspadinhas from '@data/raspadinhas/raspadinhas'
+import { MotiView } from 'moti';
 
 export default function RaspadinhasScreen({ navigation, }) {
     const { margin, color, font } = useContext(ThemeContext);
 
 
-    const bts = ['Todas', 'Vencidas', 'Em andamento', 'Concluídas', ]
-    const [page, setpage] = useState('Todas');
-    
-    const progress = rifas.filter(rifa => rifa.icon === 'await');
-    const finish = rifas.filter(rifa => rifa.icon === 'check');
-    const win = rifas.filter(rifa => rifa.icon === 'lucky');
-    const all = rifas
+    const bts = ['Hoje', '15 dias', 'Mensal', 'Anual',]
+    const [page, setpage] = useState('Hoje');
+
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll  >
-                <Header rose title='Seus pedidos' />
-                <ScrollView  horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12,  }} showsHorizontalScrollIndicator={false}>
+            <Scroll>
+                <Header rose title='Raspadinhas' />
+                <Column style={{ marginVertical: 12, marginHorizontal: margin.h, }}>
+                    <Button onPress={() => navigation.navigate('Tabs', { screen: 'Search', })} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6, }}>
+                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Label>Pesquisar</Label>
+                            <Search color={color.label} size={18} style={{ marginLeft: 8, }} />
+                        </Row>
+                    </Button>
+                    <Title style={{ fontSize: 22, lineHeight: 22, marginTop: 30, marginBottom: 2, }}>Tipos de cartela</Title>
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 12, }}>
+                        <Column style={{ flexGrow: 1, marginRight: 12, }}>
+                            <Button style={{ backgroundColor: color.background, flexGrow: 1, borderRadius: 100, marginBottom: 12, }}>
+                                <Row style={{ alignItems: 'center', flexGrow: 1, }}>
+                                    <Column style={{ width: 45, height: 45, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: '#EFBBE0', }}>
+                                        <Title style={{ fontSize: 8, lineHeight: 8, }}>R$</Title>
+                                        <Title style={{ fontSize: 10, lineHeight: 10, }}>05,00</Title>
+                                    </Column>
+                                    <Title style={{ fontSize: 18, marginHorizontal: 12, }}>Básica</Title>
+                                </Row>
+                            </Button>
+                            <Button style={{ backgroundColor: color.background, flexGrow: 1, borderRadius: 100, }}>
+                                <Row style={{ alignItems: 'center', flexGrow: 1, }}>
+                                    <Column style={{ width: 45, height: 45, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: color.secundary, }}>
+                                        <Title style={{ fontSize: 8, lineHeight: 8, color: '#fff', }}>R$</Title>
+                                        <Title style={{ fontSize: 10, lineHeight: 10, color: '#fff', }}>13,00</Title>
+                                    </Column>
+                                    <Title style={{ fontSize: 18, marginHorizontal: 12, }}>Premium</Title>
+                                </Row>
+                            </Button>
+                        </Column>
+                        <Column style={{ flexGrow: 2, marginLeft: 12, }}>
+                            <Button style={{ backgroundColor: color.background, flexGrow: 1, borderRadius: 100, marginBottom: 12, }}>
+                                <Row style={{ alignItems: 'center', flexGrow: 1, }}>
+                                    <Column style={{ width: 45, height: 45, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary, }}>
+                                        <Title style={{ fontSize: 8, lineHeight: 8, color: '#fff', }}>R$</Title>
+                                        <Title style={{ fontSize: 10, lineHeight: 10, color: '#fff', }}>09,00</Title>
+                                    </Column>
+                                    <Title style={{ fontSize: 18, marginHorizontal: 12, }}>Pro</Title>
+                                </Row>
+                            </Button>
+                            <Button style={{ backgroundColor: color.background, flexGrow: 1, borderRadius: 100, }}>
+                                <Row style={{ alignItems: 'center', flexGrow: 1, }}>
+                                    <Column style={{ width: 45, height: 45, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: color.blue, }}>
+                                        <Title style={{ fontSize: 8, lineHeight: 8, color: '#fff', }}>R$</Title>
+                                        <Title style={{ fontSize: 10, lineHeight: 10, color: '#fff', }}>17,00</Title>
+                                    </Column>
+                                    <Title style={{ fontSize: 18, marginHorizontal: 12, }}>Plus</Title>
+                                </Row>
+                            </Button>
+                        </Column>
+                    </Row>
+                </Column>
+                <Scroll horizontal style={{ paddingTop: 10, paddingHorizontal: margin.h, paddingBottom: 30, }} showsHorizontalScrollIndicator={false}>
+                    <Column style={{ width: 140, height: 180, borderRadius: 16, backgroundColor: '#EFBBE0', marginRight: 12, }}></Column>
+                    <Column style={{ width: 140, height: 180, borderRadius: 16, backgroundColor: '#FF26BD', marginRight: 12, }}></Column>
+                    <Column style={{ width: 140, height: 180, borderRadius: 16, backgroundColor: '#5C0D45', marginRight: 12, }}></Column>
+                    <Column style={{ width: 140, height: 180, borderRadius: 16, backgroundColor: '#00A3FF', marginRight: 12, }}></Column>
+                    <Column style={{ width: 30, }}></Column>
+                </Scroll>
+
+                <Title style={{ fontSize: 22, lineHeight: 22, marginHorizontal: margin.h, }}>Histórico de raspadinhas</Title>
+                <ScrollView horizontal style={{ paddingHorizontal: margin.h, }} showsHorizontalScrollIndicator={false}>
                     {bts.map((bt, index) => (
-                        <Button key={index} onPress={() => setpage(bt)} 
-                        style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0,}}>
-                            <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16,  textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
+                        <Button key={index} onPress={() => setpage(bt)}
+                            style={{ color: bt === page ? color.primary : 'transparent', paddingVertical: 8, borderRadius: 100, marginRight: 10, paddingRight: 12, }}>
+                            <Label style={{ color: bt === page ? color.primary : color.secundary, fontFamily: font.medium, fontSize: 16, textAlign: 'left', }}>{bt}</Label>
                         </Button>
                     ))}
                     <Column style={{ width: 60, height: 12, }} />
                 </ScrollView>
 
                 <Column style={{ marginHorizontal: 12, }}>
-
-
                     <FlatList
-                        style={{ marginVertical: 12, marginBottom: 50, }}
-                        data={page === 'Todas' ? all : page === 'Em andamento' ? progress : page === 'Concluídas' ? finish : page === 'Vencidas' ? win : all}
+                        style={{ marginBottom: 50, }}
+                        data={raspadinhas}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => (
-                            <CardExtrato2 item={item} />
+                            <CardRaspadinha item={item} />
                         )}
                         keyExtractor={item => item.id}
                     />
 
                 </Column>
+                <Column style={{ height: 60, }} />
             </Scroll>
+            <MotiView from={{ opacity: 0, scale: .6, }} animate={{ opacity: 1, scale: 1, }} transition={{ type: 'timing' }} exit={{ opacity: 0, scale: .7, }} style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
+                <Button onPress={() => { navigation.navigate('RaspadinhasRaspar') }} style={{ width: 52, height: 52, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}><ShoppingCart size={26} color="#fff" /></Button>
+            </MotiView>
         </Main>
     )
 }
 
 
 
-
-
-const CardExtrato2 = ({ item, index, onLong, type }) => {
+const CardRaspadinha = ({ item, index, onLong, type }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext);
-    const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : item?.icon === 'lucky' ? color.primary : '#303030'
-    const icon = item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> : item?.icon === 'await' ? <Info color={color.blue} size={24} /> : item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> : item.icon === 'lucky' ? <Trophy size={24} color={color.primary} /> : <Feather name='loader' color="#000000" size={24} />
+    const cl = item?.icon === 'check' ? color.green :
+        item?.icon === 'await' ? color.blue :
+            item?.icon === 'uncheck' ? color.red :
+                item.icon === 'dimiss' ? '#000000' :
+                    item?.icon === 'lucky' ? color.primary :
+                        item?.icon === 'used' ? color.primary : '#303030'
+    const icon = item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> :
+        item?.icon === 'await' ? <Info color={color.blue} size={24} /> :
+            item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> :
+                item.icon === 'used' ? <CheckCheck size={24} color={color.primary} /> :
+                    item.icon === 'dimiss' ? <Feather name='x' size={24} color={'#000000'} /> :
+
+                        <Feather name='loader' color="#000000" size={24} />
     return (
         <Button onLongPress={onLong} onPress={() => { navigation.navigate('RifasSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
@@ -81,9 +149,9 @@ const CardExtrato2 = ({ item, index, onLong, type }) => {
                         textDecorationLine: item?.icon === 'dimiss' ? "line-through" : "none",
                         textDecorationStyle: item?.icon === 'dimiss' ? "solid" : "none",
                         textDecorationColor: item?.icon === 'dimiss' ? "#000" : 'transparent',
-                    }}>{item?.value} rifa{item?.value > 1 ? 's' : ''} </Title>
-                    <SubLabel style={{ color: cl, }}>{item?.result} {item.icon === 'lucky' ? '- Parabéns' : item.icon != 'lucky' ? '' : '- Sem sorte'}</SubLabel>
-                    <Label style={{ fontSize: 12,  textAlign: 'right', lineHeight:12, marginTop:5, }}>N. {item?.id}</Label>
+                    }}>R$ {item?.name},00</Title>
+                    <Label style={{ fontSize: 14, textAlign: 'right', lineHeight: 14, marginVertical: 3, }}>{item?.value} | {item?.type}</Label>
+                    <Label style={{ fontSize: 14, textAlign: 'right', lineHeight: 16, color: cl, fontFamily: 'Font_Medium', }}>{item?.status}</Label>
                 </Column>
             </Row>
         </Button>
