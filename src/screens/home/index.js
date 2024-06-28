@@ -3,15 +3,18 @@ import { FlatList, View, Dimensions, Pressable, Animated } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
-import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, Shirt, ShoppingBag } from 'lucide-react-native';
+import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, Ticket } from 'lucide-react-native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Internet from '@components/internet';
 import { useNavigation } from '@react-navigation/native';
 import { getOffers, getShops, getServices, getCampaigns } from '@request/service';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import campanhas from '@data/campanhas';
 import { StatusBar } from 'expo-status-bar';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+
 
 export default function HomeScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -111,33 +114,32 @@ export default function HomeScreen({ navigation, }) {
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
 
                                     
-
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                        <Button onPress={() => { navigation.navigate('CampaignsGiftCard') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
-                                            <MotiImage source={require('@icons/gift.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                                        <Button onPress={() => { navigation.navigate('Raspadinhas') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
+                                            <FontAwesome5 name="hand-sparkles" size={30} color={color.primary} />
                                         </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Gift Card</Label>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Raspadinhas</Label>
                                     </Column>
 
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Ranking') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                             <MotiImage source={require('@icons/rank.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                                         </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Ranking</Label>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Ranking</Label>
                                     </Column>
                                     
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Favorites') }} rippleColor={color.secundary} style={{  padding: 18, borderRadius: 12, backgroundColor: color.primary + 20,}}>
                                             <MotiImage source={require('@icons/heart.png')} style={{ width: 34, objectFit: 'contain', height: 34, }} />
                                         </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Favoritos</Label>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Favoritos</Label>
                                     </Column>
 
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                        <Column onPress={() => { navigation.navigate('CampaignsPontos') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, }}>
-                                            <MotiImage resizeMode='contain' style={{ width: 34, height: 34, }} />
-                                        </Column>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}></Label>
+                                        <Button onPress={() => { navigation.navigate('Rifas') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12,  backgroundColor: color.primary + 20, }}>
+                                            <Ionicons name="ticket-outline" size={28} color={color.primary} />
+                                        </Button>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Rifas</Label>
                                     </Column>
                                 </Row>
                             </MotiView>

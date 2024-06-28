@@ -3,10 +3,8 @@ import { Main, Scroll, Column, Label, Title, Row, ButtonOut, LineL, LabelLI } fr
 import { ThemeContext } from 'styled-components/native';
 import { MotiImage } from 'moti';
 import QRCode from 'react-native-qrcode-svg';
-import CardSheet from '../../components/cardsheet';
-import Avatar from '@components/avatar';
 import Header from '@components/header';
-import user from '@data/user'
+import user from '@data/user/user'
 
 export default function ShareScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);

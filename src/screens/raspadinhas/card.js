@@ -1,18 +1,20 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
-  Canvas,
-  Group,
-  Image,
-  Mask,
-  Path,
-  Rect,
-  Skia,
+    Canvas,
+    Group,
+    Image,
+    Mask,
+    Path,
+    Rect,
+    Skia,
+    useImage,
 } from '@shopify/react-native-skia';
 import { StyleProp, View, ViewStyle, StyleSheet } from 'react-native';
 
-export const ScratchCard = ({ style, children, image }) => {
+export const ScratchCard = ({ style, children, img }) => {
     const [[width, height], setSize] = useState([0, 0]);
     const path = useRef(Skia.Path.Make());
+    const image = useImage(img);
 
     return (
         <View
@@ -32,7 +34,7 @@ export const ScratchCard = ({ style, children, image }) => {
                             path.current.lineTo(nativeEvent.locationX, nativeEvent.locationY);
                         }}>
                         <Mask
-                            mode="luminance"
+                            mode='luminance'
                             mask={
                                 <Group>
                                     <Rect x={0} y={0} width={1000} height={1000} color="white" />
@@ -64,25 +66,25 @@ export const ScratchCard = ({ style, children, image }) => {
 
 const styles = StyleSheet.create({
     container: {
-      position: 'relative',
-      width: 300,
-      height: 500,
-      overflow: 'hidden',
-      backgroundColor: '#FFE0F6',
+        position: 'relative',
+        width: 300,
+        height: 500,
+        overflow: 'hidden',
+        backgroundColor: '#FFE0F6',
     },
     content: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: '#FFE0F6',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#FFE0F6',
     },
     canvas: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
     },
-  });
+});

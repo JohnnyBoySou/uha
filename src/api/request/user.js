@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.com';
-import user from '@data/user'
+import user from '@data/user/user'
 
 export const getUser = async (email, password) => {
   try {

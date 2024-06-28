@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { FlatList, ScrollView } from 'react-native';
@@ -6,14 +6,15 @@ import Header from '@components/header';
 import { useNavigation } from '@react-navigation/native';
 import { CircleCheck, CircleX, AlarmClock, Info, Trophy, CheckCheck, ShoppingCart, Search } from 'lucide-react-native';
 import Feather from '@expo/vector-icons/Feather';
-
 import raspadinhas from '@data/raspadinhas/raspadinhas'
 import { MotiView } from 'moti';
+import BottomSheet, {  BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import RaspadinhasShopScreen from './shop';
 
 export default function RaspadinhasScreen({ navigation, }) {
     const { margin, color, font } = useContext(ThemeContext);
 
-
+    const shop = useRef()
     const bts = ['Hoje', '15 dias', 'Mensal', 'Anual',]
     const [page, setpage] = useState('Hoje');
 
@@ -107,8 +108,11 @@ export default function RaspadinhasScreen({ navigation, }) {
                 <Column style={{ height: 60, }} />
             </Scroll>
             <MotiView from={{ opacity: 0, scale: .6, }} animate={{ opacity: 1, scale: 1, }} transition={{ type: 'timing' }} exit={{ opacity: 0, scale: .7, }} style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
-                <Button onPress={() => { navigation.navigate('RaspadinhasRaspar') }} style={{ width: 52, height: 52, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}><ShoppingCart size={26} color="#fff" /></Button>
+                <Button onPress={() => { shop.current.expand() }} style={{ width: 52, height: 52, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}><ShoppingCart size={26} color="#fff" /></Button>
             </MotiView>
+            <BottomSheet snapPoints={[0.5, 600]} index={0} ref={shop} backgroundStyle={{ backgroundColor: "#f7f7f7" }} handleStyle={{ backgroundColor: "#f7f7f7" }} handleIndicatorStyle={{ backgroundColor: "#30303040", width: 60, height: 6, borderRadius: 100, }}>
+                <RaspadinhasShopScreen />
+            </BottomSheet>
         </Main>
     )
 }
@@ -132,7 +136,7 @@ const CardRaspadinha = ({ item, index, onLong, type }) => {
 
                         <Feather name='loader' color="#000000" size={24} />
     return (
-        <Button onLongPress={onLong} onPress={() => { navigation.navigate('RifasSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
+        <Button onLongPress={onLong} onPress={() => { navigation.navigate('RaspadinhasSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>

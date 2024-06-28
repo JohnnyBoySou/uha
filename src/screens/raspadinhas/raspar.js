@@ -15,8 +15,6 @@ const getRandomNumber = () => {
 export default function RaspadinhasRasparScreen({ navigation, }) {
     const { color, font, } = useContext(ThemeContext);
     const [randomNumber, setRandomNumber] = useState(getRandomNumber());
-    const image = useImage(ScratchImage);
-
     const [showPrize, setshowPrize] = useState(false);
    
     return (
@@ -34,7 +32,7 @@ export default function RaspadinhasRasparScreen({ navigation, }) {
                     <ScratchCard
                         key={`scratch-${randomNumber}`}
                         style={{ borderRadius: 12, }}
-                        image={image}>
+                        img={ScratchImage}>
                         <Column style={{
                             backgroundColor: '#FFE0F6',
                             width: '100%',
