@@ -39,15 +39,8 @@ export default function ShopScreen({ navigation, route }) {
                 }
             }} scrollEventThrottle={16}>
 
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
-                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#FFE0F6", borderRadius: 100, justifyContent: 'center', alignItems: 'center', width: 42, height: 28, }}>
-                        <ArrowLeft color={color.secundary} size={24} />
-                    </Button>
-                    <Button style={{ backgroundColor: "#FFE0F6", borderRadius: 100, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 8, }}>
-                        <Title style={{ fontSize: 16, }}>100 pontos</Title>
-                    </Button>
-                </Row>
-                <Header title='Shop' />
+               
+                <Header  rose />
 
                 {type == null &&
                     <><Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>

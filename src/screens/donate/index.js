@@ -31,9 +31,10 @@ export default function DonateScreen({ navigation, }) {
     const handleClean = () => {
         setvalue('0');
     }
-    const values = {
-        total: 300,
-    }
+
+    const formatValue = (val) => {
+        return parseInt(val).toLocaleString('pt-BR');
+    };
 
     const patinhas = value * 6;
 
@@ -52,7 +53,7 @@ export default function DonateScreen({ navigation, }) {
 
             <Column style={{ backgroundColor: "#fff", marginTop: 20, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
                 <Title style={{ fontSize: 24, color: color.secundary, lineHeight: 28,}}>R$</Title>
-                <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{value},00</Title>
+                <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{formatValue(value)},00</Title>
             </Column>
 
             <Column style={{  alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, paddingBottom: 100,  }}>

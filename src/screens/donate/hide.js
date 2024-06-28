@@ -44,6 +44,10 @@ export default function DonateHideScreen({ navigation,  }) {
         }, 1500);
     }
 
+    const formatValue = (val) => {
+        return parseInt(val).toLocaleString('pt-BR');
+    };
+
     return (
         <Main>
             <Scroll style={{ paddingTop: 40, }}>
@@ -59,7 +63,7 @@ export default function DonateHideScreen({ navigation,  }) {
 
                 <Column style={{ backgroundColor: "#fff", marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
                     <Title style={{ fontSize: 24, color: color.secundary, lineHeight: 28, }}>R$</Title>
-                    <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{value},00</Title>
+                    <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{formatValue(value)},00</Title>
                 </Column>
 
 
