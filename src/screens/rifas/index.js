@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { FlatList , ScrollView} from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 import Header from '@components/header';
 import { useNavigation } from '@react-navigation/native';
-import { CircleCheck, CircleX, AlarmClock, Info, Trophy } from 'lucide-react-native';
+import { CircleCheck, CircleX, AlarmClock, Info, Trophy, Clock, Magnet } from 'lucide-react-native';
 import Feather from '@expo/vector-icons/Feather';
 
 import rifas from '@data/rifas/rifas'
@@ -13,23 +13,41 @@ export default function RifasScreen({ navigation, }) {
     const { margin, color, font } = useContext(ThemeContext);
 
 
-    const bts = ['Todas', 'Vencidas', 'Em andamento', 'Concluídas', ]
+    const bts = ['Todas', 'Vencidas', 'Em andamento', 'Concluídas',]
     const [page, setpage] = useState('Todas');
-    
+
     const progress = rifas.filter(rifa => rifa.icon === 'await');
     const finish = rifas.filter(rifa => rifa.icon === 'check');
     const win = rifas.filter(rifa => rifa.icon === 'lucky');
     const all = rifas
+    const a = false;
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll  >
                 <Header rose title='Seus pedidos' />
-                <ScrollView  horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12,  }} showsHorizontalScrollIndicator={false}>
+
+               {a && <Row style={{ marginHorizontal: margin.h, justifyContent: 'space-between', alignItems: 'center',  }}>
+
+                    <Row style={{ backgroundColor: color.blue + 30, width: '46%', borderRadius: 12, padding: 24, }}>
+                        <Clock size={32} color={color.blue} />
+                        <Title style={{ color: color.blue, fontFamily: 'Font_Bold', fontSize: 18, lineHeight: 18, marginTop: 12, }}>Em andamento</Title>
+                    </Row>
+
+                    <Column style={{ width: 12, }} />
+
+                    <Row style={{ backgroundColor: color.blue + 30, width: '46%', borderRadius: 12, padding: 24, justifyContent: 'center', alignItems: 'center',  }}>
+                        <Clock size={32} color={color.blue} />
+                        <Title style={{ color: color.blue, fontFamily: 'Font_Bold', fontSize: 18, lineHeight: 18, marginTop: 12, }}>Em andamento</Title>
+                    </Row>
+                </Row>}
+
+
+                <ScrollView horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12, }} showsHorizontalScrollIndicator={false}>
                     {bts.map((bt, index) => (
-                        <Button key={index} onPress={() => setpage(bt)} 
-                        style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0,}}>
-                            <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16,  textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
+                        <Button key={index} onPress={() => setpage(bt)}
+                            style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0, }}>
+                            <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
                         </Button>
                     ))}
                     <Column style={{ width: 60, height: 12, }} />
@@ -83,7 +101,7 @@ const CardExtrato2 = ({ item, index, onLong, type }) => {
                         textDecorationColor: item?.icon === 'dimiss' ? "#000" : 'transparent',
                     }}>{item?.value} rifa{item?.value > 1 ? 's' : ''} </Title>
                     <SubLabel style={{ color: cl, }}>{item?.result} {item.icon === 'lucky' ? '- Parabéns' : item.icon != 'lucky' ? '' : '- Sem sorte'}</SubLabel>
-                    <Label style={{ fontSize: 12,  textAlign: 'right', lineHeight:12, marginTop:5, }}>N. {item?.id}</Label>
+                    <Label style={{ fontSize: 12, textAlign: 'right', lineHeight: 12, marginTop: 5, }}>N. {item?.id}</Label>
                 </Column>
             </Row>
         </Button>
