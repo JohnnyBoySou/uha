@@ -4,6 +4,8 @@ const campaigns_single = [
         name: 'Canil Rio Grande da Serra',
         date: '10/10/2024',
         finish: '10/12/2024',
+        rifa_id: 'rifa-1',
+        status: 'Campanha em andamento',
         about: 'Foram mais de 135 animais resgatados do canil onde sofriam maus tratos, todos devem receber cuidados adequados. Responsável pelo canil segue liberada.',
         how: 'Ajude os animais do canil fazendo doações ou comprando uma rifa solidária. Você pode comprar quantos números quiser até a data 10/10/2024, o sorteio será realizado no dia 12/10/2024. Acompanhe seus números na página de histórico de doações - rifas. Boa sorte e gratidão!',
         what: 'A ONG recebeu uma denúncia de que os cachorros eram espancados. Os cães estavam amontoados em um canil certificado que funcionava em uma casa de alto padrão. Sem banho, tinham fezes grudadas nos pelos. Foram encontrados 9 corpos de filhotes no lixo. Os animais foram levados todos para a ONG.',
@@ -16,3 +18,4 @@ const campaigns_single = [
         ]
     },
 ]
+export default campaigns_single;

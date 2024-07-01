@@ -83,6 +83,7 @@ import RankingScreen from '@screens/ranking';
 
 import RifasScreen from '@screens/rifas';
 import RifasSingleScreen from '@screens/rifas/single';
+import RifasBuyScreen from '@screens/rifas/buy';
 
 import RaspadinhasScreen from '@screens/raspadinhas';
 import RaspadinhasSingleScreen from '@screens/raspadinhas/single';
@@ -100,7 +101,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Campaigns'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -176,6 +177,7 @@ export default function Router() {
 
             <Stack.Screen name="Rifas" component={RifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="RifasSingle" component={RifasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="RifasBuy" component={RifasBuyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

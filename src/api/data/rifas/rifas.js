@@ -1,7 +1,7 @@
 
 const rifas = [
     {
-        id: '1234567890',
+        id: 'rifa-1',
         value: 15,
         status: 'Pagamento em espera',
         icon: 'await',
@@ -9,7 +9,7 @@ const rifas = [
         result: 'Campanha em andamento',
     },
     {
-        id: '12345678910',
+        id: 'rifa-2',
         value: 1,
         status: 'Pagamento confirmado',
         icon: 'await',
@@ -17,18 +17,18 @@ const rifas = [
         result: 'Campanha em andamento',
     },
     {
-        id: '12345678912',
+        id: 'rifa-3',
         value: 20,
         status: 'Pagamento confirmado',
-        icon: 'check',
+        icon: 'lucky',
         date: '10/10/24',
         result: 'Sorteio finalizado',
     },
     {
-        id: '12345678911',
+        id: 'rifa-4',
         value: 10,
         status: 'Pagamento confirmado',
-        icon: 'lucky',
+        icon: 'check',
         date: '10/10/24',
         result: 'Sorteio finalizado',
     },

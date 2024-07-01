@@ -1,65 +1,81 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel, ButtonOut, ButtonLI, LabelLI, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft, Info , Infinity } from 'lucide-react-native';
 import { MotiImage } from 'moti';
 import { FlatList } from 'react-native';
 import Header from '@components/header';
-export default function CampaignsSingleScreen({ navigation, }) {
+import { getCampaignSingle } from '@request/campaigns';
+
+export default function CampaignsSingleScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
-    const [user, setUser] = useState({id: '0987654321234567890', index: 11 + 1, winner: true,})
-    const list = [{img: require("@imgs/current.png")}, {img: require("@imgs/current.png")}]
+
+    const id = route.params?.id ? route.params?.id : 'camp-1';
+    const [item, setitem] = useState();
+    const a = false;
+
+
+    useEffect(() => {
+        const fecthData = () => {
+            getCampaignSingle(id).then((res) => {
+                setitem(res);
+            })
+        }
+        fecthData();
+    },[])
+
+
+
     return (
-        <Main >
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll style={{ paddingTop: 20,  }}>
-                <Header />  
+                <Header rose title="Detalhes" />  
 
                 <Column style={{ marginHorizontal: margin.h, }}>
-                    <SubLabel style={{  marginTop: 12, fontFamily: 'Font_Medium' }}>Campanha em andamento</SubLabel>
-                    <Title style={{ marginTop: 6,  }}>Canil Rio Grande da Serra</Title>
-                    <Label style={{ fontSize: 12, marginBottom: 10,  }}>Data 10/10/2024 até 01/12/2024</Label>
+                    <SubLabel style={{  marginTop: 12, fontFamily: 'Font_Medium' }}>{item?.status}</SubLabel>
+                    <Title style={{ marginTop: 6,  }}>{item?.name}</Title>
+                    <Label style={{ fontSize: 12, marginBottom: 10,  }}>De {item?.date} até {item?.finish}</Label>
                 </Column>
 
                 <FlatList
                     style={{ marginTop: 12, }}
-                    data={list}
+                    data={item?.banners}
                     horizontal
+                    pagingEnabled
+                    snapToOffsets={[0, 300, 600]}
                     ListHeaderComponent={<Column style={{ width: margin.h, }}/>}
                     ListFooterComponent={<Column style={{ width: margin.h, }}/>}
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index}) => <MotiImage source={item.img} style={{ width: 280, height: 140, borderRadius: 24, marginRight: 12, }}/>}
+                    renderItem={({ item, index}) => <MotiImage source={{uri: item}} style={{ width: 280, height: 320, borderRadius: 24, marginRight: 12, }}/>}
                 />
-
-
 
                 <Column style={{ marginHorizontal: margin.h, }}>
                    
                     <Title style={{ marginTop: 32, marginBottom: 8, fontSize: 22, }}>Conheça a campanha</Title>
-                    <Label style={{ fontSize: 16, lineHeight: 18, }}>Foram mais de 135 animais resgatados do canil onde sofriam maus tratos, todos devem receber cuidados adequados. Responsável pelo canil segue liberada.</Label>
+                    <Label style={{ fontSize: 16, lineHeight: 18, }}>{item?.about}</Label>
                     
                     <Title style={{ marginTop: 32, marginBottom: 8, fontSize: 22, }}>Como participar</Title>
-                    <Label style={{ fontSize: 15, lineHeight: 18, }}>Ajude os animais do canil fazendo doações ou comprando uma rifa solidária. Você pode comprar quantos números quiser até a data 10/10/2024, o sorteio será realizado no dia 12/10/2024.
-Acompanhe seus números na página de histórico de doações - rifas. Boa sorte e gratidão!</Label>
+                    <Label style={{ fontSize: 15, lineHeight: 18, }}>{item?.how}</Label>
                     
                     
-                    <Button onPress={() => {navigation.navigate('BuyServiceRifa')}} style={{ borderRadius: 8, marginTop: 24, backgroundColor: color.primary, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                    <Button onPress={() => {navigation.navigate('RifasBuy', { id: item.id, camp: item})}} style={{ borderRadius: 8, marginTop: 24, backgroundColor: color.primary, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                         <Label style={{ fontFamily: font.bold, color: "#fff", textAlign: 'center', }}>Comprar números</Label>
                     </Button>
-                    <Button onPress={() => {navigation.navigate('CampaignsProgress', { type: 'Cashback'})}}  style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
+                    <Button onPress={() => {navigation.navigate('Rifas', { type: 'Cashback'})}}  style={{ borderRadius: 8, borderColor: color.secundary, borderWidth: 2, marginBottom: 32, paddingVertical: 16, paddingHorizontal: 20, marginVertical: 6,  }}>
                         <Label style={{ fontFamily: font.bold, color: color.secundary, textAlign: 'center', }}>Acompanhar número</Label>
                     </Button>
-
-
                  
 
                 <Column style={{  }}>
                     <Title style={{ marginBottom: 8, fontSize: 22, }}>Quem essa campanha beneficia?</Title>
-                    <Label style={{ fontSize: 16, lineHeight: 18, }}>A ONG recebeu uma denúncia de que oscachorros eram espancados. Os cães estavam amontoados em um canil certificado que funcionava em uma casa de alto padrão. Sem banho, tinham fezes grudadas nos pelos. Foram encontrados 9 corpos de filhotes no lixo. Os animais foram levados todos para a ONG.</Label>
+                    <Label style={{ fontSize: 16, lineHeight: 18, }}>{item?.what}</Label>
 
-                    <MotiImage source={require('@imgs/video.png')}  style={{ objectFit: 'contain', alignSelf: 'center', marginVertical: 12, }}/>
+                    {item?.video?.length > 0 && <MotiImage source={require('@imgs/video.png')}  style={{ objectFit: 'contain', alignSelf: 'center', marginVertical: 12, }}/>}
 
 
+
+                    {a && <Column>
                     <Title style={{ fontSize: 16, backgroundColor: color.secundary, color: "#fff", paddingVertical: 8, marginBottom: 12, paddingHorizontal: 16, borderRadius: 100, alignSelf: 'flex-start',  }}>Canil Rio Grande da Serra</Title>
                     <SubLabel>“Me faltam palavras para descrever todo o horror que presenciei”</SubLabel>
                     <Row style={{ marginVertical: 20, alignSelf: 'center', alignItems: 'center',  }}>
@@ -78,6 +94,7 @@ Acompanhe seus números na página de histórico de doações - rifas. Boa sorte
                             <MotiImage source={require('@imgs/canil6.png')} style={{ objectFit: 'contain', }}/>
                         </Column>
                     </Row>
+                    </Column>}
 
 
                 </Column>

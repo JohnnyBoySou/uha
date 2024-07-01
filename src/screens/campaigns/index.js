@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import Avatar from '@components/avatar';
 import { getCampaigns, getOffers } from '@request/service';
+import Header from '@components/header';
 
 export default function CampaignsScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -20,7 +21,6 @@ export default function CampaignsScreen({ navigation, }) {
                 setoffers(res);
             });
             getCampaigns().then((res) => {
-                console.log(res)
                 setcampaigns(res);
             });
         }
@@ -33,19 +33,14 @@ export default function CampaignsScreen({ navigation, }) {
     const [campaigns, setcampaigns] = useState();
 
     return (
-        <Main >
+        <Main style={{  }}>
             <Scroll style={{ paddingTop: 0, }}>
-                <Column style={{ paddingHorizontal: 42, paddingTop: 40, backgroundColor: color.secundary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, }}>
-
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                        <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                            <ArrowLeft color={color.secundary} />
-                        </Button>
-                        <Avatar />
-                    </Row>
-
+                <Column style={{ paddingHorizontal: 0, paddingTop: 40, backgroundColor: color.secundary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, }}>
+                    <Header />
+                    <Column style={{ marginHorizontal: margin.h, }}>
                     <Title style={{ fontSize: 22, lineHeight: 24, color: color.text, marginTop: 32, }}>Campanhas do momento</Title>
                     <Label style={{ color: color.text, marginTop: 10, fontSize: 16, lineHeight: 18, }}>Participe das novas campanhas todos os meses e concorra a diversos prêmios em produtos, serviços e bônus relâmpago!</Label>
+                    </Column>
                     <MotiImage source={require('@imgs/campaigns.png')} style={{ borderRadius: 24, height: 190, marginHorizontal: - margin.h, marginTop: -24, alignSelf: 'center', objectFit: 'contain' }} from={{ opacity: 0, }} animate={{ opacity: 1, }} />
                 </Column>
 
@@ -181,12 +176,13 @@ const CampaignsCards = ({ data }) => {
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => 
-                <Button onPress={() => {navigation.navigate('CampaignsSingle', {id: item?.id})}}  style={{ width: 280, backgroundColor: "#fff", borderRadius: 12, marginRight: 12, }}>
+                <Button onPress={() => {navigation.navigate('CampaignsSingle', {id: item?.id})}}  style={{ width: 280,  borderRadius: 12, marginRight: 12, }}>
                     <Column>
+                        <Label style={{ fontSize: 12, lineHeight: 12, textAlign: 'right', alignSelf: 'flex-end', padding: 5, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 8, borderTopRightRadius: 8, paddingVertical: 5, paddingHorizontal: 10, backgroundColor: color.primary, color: '#fff', zIndex: 99,}}>{item?.date} até {item?.finish}</Label>
                         <MotiImage source={{ uri: item?.img}} style={{ width: 280, height: 150, borderRadius: 12, marginRight: 12, }} />
-                        <Column style={{ width: 260, paddingHorizontal: 10, paddingVertical: 10, }}>
-                            <Title style={{ fontSize: 18, lineHeight: 20, marginTop: 6, }}>{item?.name}</Title>
-                            <Label style={{ fontSize: 14,  marginTop: 2, }}>{item?.date} até {item?.finish}</Label>
+                        <Column style={{ width: 260, paddingHorizontal: 10, paddingVertical: 10, marginHorizontal: 12, backgroundColor: '#fff', borderBottomLeftRadius: 12, borderBottomRightRadius: 12,}}>
+                            <Title style={{ fontSize: 18, lineHeight: 20, marginTop: -2, marginBottom: 4, }}>{item?.name}</Title>
+                            <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc?.slice(0,72)}...</Label>
                         </Column>
                     </Column>
                 </Button>

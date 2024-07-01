@@ -17,11 +17,10 @@ export default function DonateValueHideScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const value = route.params?.value;
     const item = { code: '122131313', }
-    const [visible, setVisible] = useState(false);
 
+    const [visible, setVisible] = useState(false);
     const data = { pix: 'chavepix09876543456789087' }
     const [clip, setclip] = useState(false);
-
     const handleClipboard = async () => {
         await Clipboard.setStringAsync(data.pix);
         setclip(true)

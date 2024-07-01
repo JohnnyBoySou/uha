@@ -1,29 +1,35 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
-import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel, ButtonOut, ButtonLI, LabelLI, ButtonPR } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel, ButtonOut, ButtonLI, LabelLI, ButtonPR, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ArrowLeft, Info, Phone, Plus } from 'lucide-react-native';
+import { ArrowLeft, Clock, Info, Phone, Plus, X } from 'lucide-react-native';
 import { MotiImage } from 'moti';
 import { FlatList, Animated, ScrollView } from 'react-native';
 import Header from '@components/header';
 import Pagination from '@components/pagination';
-import rifa_single from '@data/rifas/rifa_single';
+import { getRifaSingle } from '@api/request/rifa';
 
 
 
-export default function RifasSingleScreen({ navigation, }) {
+export default function RifasSingleScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
+    const id = route.params?.id ? route.params?.id : 'rifa-1';
+    const [item, setitem] = useState();
+    const [winner, setwinner] = useState();
+
+    useEffect(() => {
+        const fecthData = () => {
+            getRifaSingle(id).then((res) => {
+                setitem(res);
+                const winner = res?.sorteados?.includes(res.user.id) ? true : res.sorteados.length == 0 ? null : false;
+                setwinner(winner)
+            })
+        }
+        fecthData();
+    }, [])
 
 
-    const [user, setUser] = useState({ id: '0987654321234567890', index: 11 + 1, winner: true, })
 
-
-    const item = rifa_single[0]
-    const id = item.id
-    const winner = item.sorteados.includes(item.id) ? true : false
-
-
-
-    const windowWidth = 300;
+    const windowWidth = 200;
 
     const [activeIndex, setActiveIndex] = useState(0);
     const scrollX = useRef(new Animated.Value(0)).current;
@@ -56,8 +62,8 @@ export default function RifasSingleScreen({ navigation, }) {
                         <Label style={{ fontSize: 12, lineHeight: 12, textAlign: 'right', alignSelf: 'flex-end', padding: 5, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 8, borderTopRightRadius: 8, paddingVertical: 5, paddingHorizontal: 10, backgroundColor: color.primary, color: '#fff', }}>{item?.camp.date} até {item?.camp.finish}</Label>
                         <Title style={{ fontSize: 18, lineHeight: 18, marginTop: 8, }}>{item?.camp.name}</Title>
                         <Label style={{ fontSize: 12, lineHeight: 12, marginTop: 10, }}>{item?.camp?.desc.slice(0, 90)}...</Label>
-                        <Row style={{ marginTop: 12, justifyContent: 'space-between', alignItems: 'center',  }}>
-                            <Column style={{ backgroundColor: '#fff', borderRadius: 12, paddingVertical: 8, paddingHorizontal: 8,  }}>
+                        <Row style={{ marginTop: 12, justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Column style={{ backgroundColor: '#fff', borderRadius: 12, paddingVertical: 8, paddingHorizontal: 8, }}>
                                 <Row>
                                     <MotiImage source={{ uri: item?.camp?.ong?.img }} style={{ width: 45, height: 45, borderRadius: 100, backgroundColor: '#303030', borderWidth: 0, borderColor: color.primary, }} />
                                     <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
@@ -66,7 +72,7 @@ export default function RifasSingleScreen({ navigation, }) {
                                     </Column>
                                 </Row>
                             </Column>
-                            <Button style={{ width: 60, height: 60, backgroundColor: color.primary, borderRadius: 12, justifyContent: 'center', alignItems: 'center', }}>
+                            <Button style={{ width: 60, height: 60, backgroundColor: color.primary, borderRadius: 12, justifyContent: 'center', alignItems: 'center', }} onPress={() => { navigation.navigate('Campaigns') }}>
                                 <Plus color='#fff' size={32} />
                             </Button>
                         </Row>
@@ -83,9 +89,9 @@ export default function RifasSingleScreen({ navigation, }) {
                     </Row>
                     <Column style={{ backgroundColor: '#fff', marginHorizontal: 30, borderRadius: 12, paddingVertical: 28, paddingHorizontal: 20, }}>
                         <Title>Seu pedido</Title>
-                        <Row style={{ alignItems: 'center', marginTop: 12, }}>
+                        <Row style={{ alignItems: 'center', marginTop: 12, justifyContent: 'space-between' }}>
                             <SubLabel>Número: </SubLabel>
-                            <Label style={{ fontSize: 14, lineHeight: 14, color: color.secundary + 99, }}>{user?.id}</Label>
+                            <Label style={{ fontSize: 14, lineHeight: 14, color: color.secundary + 99, }}>{item?.user?.id}</Label>
                         </Row>
                         <Row style={{ alignItems: 'center', justifyContent: 'space-between', }}>
                             <SubLabel>Data: </SubLabel>
@@ -94,6 +100,10 @@ export default function RifasSingleScreen({ navigation, }) {
                         <Row style={{ alignItems: 'center', justifyContent: 'space-between', }}>
                             <SubLabel>Pontos recebidos: </SubLabel>
                             <Label style={{ fontSize: 14, lineHeight: 14, color: color.secundary + 99, }}>{item?.pontos}</Label>
+                        </Row>
+                        <Row style={{ alignItems: 'center', justifyContent: 'space-between', }}>
+                            <SubLabel>Rifas geradas: </SubLabel>
+                            <Label style={{ fontSize: 14, lineHeight: 14, color: color.secundary + 99, }}>{item?.rifas}</Label>
                         </Row>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: -40, marginVertical: 12, }}>
                             <Ball />
@@ -134,82 +144,90 @@ export default function RifasSingleScreen({ navigation, }) {
                     </Row>
                 </Column>
 
-
-
-
-
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Title style={{ marginVertical: 12, marginTop: 24, fontSize: 22, }}>Prêmios</Title>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
 
                         {item?.prizes?.map((prize) => <Column key={prize.id} style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <Column style={{ backgroundColor: "#FFE0F6", justifyContent: 'center', alignItems: 'center',  borderRadius: 12, }}>
+                            <Column style={{ backgroundColor: "#FFE0F6", justifyContent: 'center', alignItems: 'center', borderRadius: 12, }}>
                                 <MotiImage source={{ uri: prize?.img }} style={{ width: 64, height: 64, borderRadius: 6, }} />
                             </Column>
                             <SubLabel style={{ fontSize: 12, marginTop: 6, }}>{prize.name.length > 12 ? prize?.name.slice(0, 10) + '...' : prize?.name}</SubLabel>
                         </Column>)}
                     </Row>
 
+                    {item?.sorteados?.length > 0 &&  <>
                     <Title style={{ marginTop: 32, fontSize: 22, }}>Números sorteados</Title>
                     <FlatList
-                        style={{ marginTop: 10, backgroundColor: color.primary+12, paddingHorizontal: 20, borderRadius: 12, }}
-                        data={item.sorteados}
+                        style={{ marginTop: 10, borderWidth: 1, borderColor: color.off, padding: 10, borderRadius: 12, }}
+                        data={item?.sorteados}
                         keyExtractor={(item, index) => item.toString()}
                         renderItem={({ item, index }) => <Column>
-                            <Row style={{ marginVertical: 5, alignItems: 'center', borderBottomWidth: 1, borderBottomColor: color.off, }}>
-                                <SubLabel>{index + 1}</SubLabel>
+                            <Row style={{ paddingVertical: 4, alignItems: 'center',  backgroundColor: index % 2 == 0 ? '#f1f1f1' : 'transparent', borderRadius: 6,  }}>
+                                <SubLabel style={{ marginLeft: 12, }}>{index + 1}</SubLabel>
                                 <Title style={{ backgroundColor: item == id ? color.blue : 'transparent', color: item == id ? '#fff' : '#000', padding: 6, borderRadius: 6, fontSize: 18, flexGrow: 1, marginLeft: 20, }}>{item}</Title>
-                                {item.winner && <SubLabel style={{ backgroundColor: color.blue, color: '#fff', padding: 6, paddingHorizontal: 12, borderRadius: 6, marginLeft: 5, fontSize: 18, }}>Ganhador</SubLabel>
+                                {item?.winner && <SubLabel style={{ backgroundColor: color.blue, color: '#fff', padding: 6, paddingHorizontal: 12, borderRadius: 6, marginLeft: 5, fontSize: 18, }}>Ganhador</SubLabel>
                                 }
                             </Row>
                         </Column>}
                     />
+                    </>}
 
 
-
-                    {winner ? <>
-                        <Column style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 40, }}>
-                            <Title style={{ marginVertical: 12, }}>Parabéns! </Title>
-                            <Label>Seu número foi premiado</Label>
-
-                            <Row style={{ marginVertical: 5, alignItems: 'center', }}>
-                                <SubLabel>{user?.index}</SubLabel>
-                                <Title style={{ backgroundColor: color.blue, color: '#fff', padding: 6, borderRadius: 12, borderBottomRightRadius: 0, fontSize: 18, flexGrow: 1, marginLeft: 20, }}> {item?.id}</Title>
-                                <SubLabel style={{ backgroundColor: color.blue, color: '#fff', padding: 6, paddingHorizontal: 12, borderRadius: 12, borderBottomLeftRadius: 0, marginLeft: 5, fontSize: 18, }}>Ganhador</SubLabel>
+                    {winner == true && <Column style={{ marginVertical: 40, borderWidth: 1, borderColor: color.off, borderRadius: 16, padding: 12, }}>
+                        <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                            <Title style={{ marginTop: 12, textAlign: 'center', fontSize: 22,}}>Parabéns!</Title>
+                            <Label style={{  textAlign: 'center', fontSize: 16, marginTop: 5, }}>Seu número foi premiado!</Label>
+                            <Row style={{ marginVertical: 12, alignItems: 'center', marginHorizontal: 24, }}>
+                                <SubLabel>{item?.user?.index}</SubLabel>
+                                <Title style={{ backgroundColor: color.blue, color: '#fff', padding: 6, borderRadius: 12, borderBottomRightRadius: 0, fontSize: 18, flexGrow: 1, marginLeft: 20, }}> {item?.user?.id}</Title>
                             </Row>
                         </Column>
 
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <MotiImage source={{uri: item?.your_prize?.img}} style={{ width: 145, height: 145,  borderRadius: 12, }} />
+                            <MotiImage source={{ uri: item?.your_prize?.img }} style={{ width: 145, height: 145, borderRadius: 12, }} />
                             <SubLabel style={{ fontSize: 18, marginVertical: 6, }}>{item?.your_prize?.name}</SubLabel>
-                            <Label style={{ textAlign: 'center', }}>Você será contatado em até 3 dias úteis para enviarmos seu prêmio ou entre em contato abaixo para resgatar pessoalmente</Label>
+                            <Label style={{ textAlign: 'center', fontSize: 14, lineHeight: 16, color: color.secundary + 99,  marginHorizontal: 20,}}>Você será contatado em até 3 dias úteis para enviarmos seu prêmio ou entre em contato abaixo para resgatar pessoalmente</Label>
                         </Column>
 
-                        <ButtonPR style={{ paddingHorizontal: 24, marginTop: 30, }} onPress={() => { navigation.navigate('BuyServiceSuccess') }} >
+                        <ButtonPR style={{ marginHorizontal: 22, marginTop: 30, }} onPress={() => { navigation.navigate('AccountFAQ') }} >
                             <LabelLI style={{ color: "#fff", }}>Resgatar pessoalmente</LabelLI>
                         </ButtonPR>
                         <Row style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 12, }}>
-                            <ButtonOut style={{ borderColor: "#000", }} onPress={() => { navigation.navigate('AccountFAQ') }} >
-                                <LabelLI style={{ color: "#000" }}>Central de ajuda</LabelLI>
-                            </ButtonOut>
                             <Column style={{ width: 12, }} />
                             <ButtonOut style={{ borderColor: color.primary, }} onPress={() => { navigation.navigate('Campaigns') }} >
-                                <LabelLI style={{ color: color.primary }}>Nova campanha</LabelLI>
+                                <LabelLI style={{ color: color.primary }}>Campanhas</LabelLI>
                             </ButtonOut>
                         </Row>
-                    </> :
-                        <Column style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 40, }}>
-                            <Title>Não foi dessa vez</Title>
-                            <Label>Mas você pode tentar de novo!</Label>
-                            <ButtonOut style={{ borderColor: color.primary, marginVertical: 20, }} onPress={() => { navigation.navigate('BuyServiceError') }} >
-                                <LabelLI style={{ color: color.primary }}>Nova campanha</LabelLI>
-                            </ButtonOut>
+                    </Column> }
+
+
+                    {winner == false && <>
+                        <Column style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 40, borderWidth: 1, borderColor: color.off, borderRadius: 16, padding: 12, paddingVertical: 20, }}>
+                        <Column style={{ width: 64, height: 64, borderRadius: 100, backgroundColor: color.red+20, justifyContent: 'center', alignItems: 'center', }}>
+                            <X size={32} color={color?.red}/>
                         </Column>
+                        <Title style={{ marginTop: 12, textAlign:'center', fontSize: 20, lineHeight: 22, }}>Não foi dessa vez.</Title>
+                        <Label style={{ textAlign: 'center', fontSize: 15, lineHeight: 16, marginTop: 6, marginBottom: 12, color: color.secundary+99, }}>Mas você pode tentar de novo! Contribua com uma campanha para ter mais chances de ganhar</Label>
+                        <ButtonPR onPress={() => {navigation.navigate('Campaigns')}} >
+                            <LabelPR>Campanhas</LabelPR>
+                        </ButtonPR>
+                    </Column>
+                    </>
                     }
 
-
-
+                    {winner == null && <Column style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 40, borderWidth: 1, borderColor: color.off, borderRadius: 16, padding: 12, paddingVertical: 20, }}>
+                        <Column style={{ width: 64, height: 64, borderRadius: 100, backgroundColor: color.primary+20, justifyContent: 'center', alignItems: 'center', }}>
+                            <Clock size={24} color={color?.primary}/>
+                        </Column>
+                        <Title style={{ marginTop: 12, textAlign:'center', fontSize: 20, lineHeight: 22, }}>A rifa solidaria está em andamento.</Title>
+                        <Label style={{ textAlign: 'center', fontSize: 15, lineHeight: 16, marginTop: 6, marginBottom: 12, color: color.secundary+99, }}>Essa rifa se encerra em {item?.date}, aguarde para que o sorteio seja realizado.</Label>
+                        <ButtonPR onPress={() => {navigation.navigate('Rifas')}} >
+                            <LabelPR>Comprar mais</LabelPR>
+                        </ButtonPR>
+                    </Column>
+                    }
 
                 </Column>
 
