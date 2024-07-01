@@ -31,6 +31,7 @@ export default function HomeScreen({ navigation, }) {
     const [offers, setoffers] = useState();
     const [shops, setshops] = useState();
     const [services, setservices] = useState(); 
+    const [campaigns, setcampaigns] = useState();
     useEffect(() => {
         getOffers().then((res) => {
             setoffers(res)
@@ -41,6 +42,10 @@ export default function HomeScreen({ navigation, }) {
         getServices().then((res) => {
             setservices(res)
         })
+        getCampaigns().then((res) => {
+            setcampaigns(res)
+        })
+
     }, [])
 
     return (
@@ -153,7 +158,7 @@ export default function HomeScreen({ navigation, }) {
                 </MotiView>
 
                 <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1000}>
-                    <Campanhas data={campanhas} />
+                    <Campanhas data={campaigns} />
                 </MotiView>
 
                 <OffersCards data={offers} />
@@ -188,25 +193,25 @@ const Campanhas = ({ data }) => {
         <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32, }}>
             <Title style={{ marginTop: 8, fontSize: 22, }}>Campanhas</Title>
             <FlatList
-                style={{ marginVertical: 12, marginHorizontal: - margin.h, }}
+                style={{ marginTop: 12, }}
                 data={data}
-                ListFooterComponent={<Column style={{ width: 24 }} />}
-                ListHeaderComponent={<Column style={{ width: 24 }} />}
-                showsHorizontalScrollIndicator={false}
                 horizontal
-                renderItem={({ item }) => (
-                    <Button style={{ backgroundColor: "#fff", borderRadius: 24, marginRight: 12, }} onPress={() => { navigation.navigate('Shop') }}>
-                        <Column>
-                            <MotiImage source={item?.img} style={{ width: 300, height: 400, borderRadius: 24, }} />
-                            <Column style={{ backgroundColor: '#fff', marginHorizontal: 24, padding: 12, borderRadius: 24, position: 'absolute', bottom: 20, }}>
-                                <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 20, lineHeight: 20, }}>{item.title}</Title>
-                                <Label style={{ textAlign: 'center', marginTop: 6,  color: color.secundary+99, fontFamily: font.medium, fontSize: 14, marginBottom: 12, }}>{item.label}</Label>
-                                <Title style={{ backgroundColor: color.primary, borderRadius: 100, fontSize: 14, paddingVertical: 4, paddingHorizontal: 12, textAlign: 'center', alignSelf: 'center', color: '#fff', }}>Ver estabelecimentos</Title>
-                            </Column>
+                ListHeaderComponent={<Column style={{ width: margin.h, }} />}
+                ListFooterComponent={<Column style={{ width: margin.h, }} />}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => 
+                <Button onPress={() => {navigation.navigate('CampaignsSingle', {id: item?.id})}}  style={{ width: 280,  borderRadius: 12, marginRight: 12, }}>
+                    <Column>
+                        <Label style={{ fontSize: 12, lineHeight: 12, textAlign: 'right', alignSelf: 'flex-end', padding: 5, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 8, borderTopRightRadius: 8, paddingVertical: 5, paddingHorizontal: 10, backgroundColor: color.primary, color: '#fff', zIndex: 99,}}>{item?.date} até {item?.finish}</Label>
+                        <MotiImage source={{ uri: item?.img}} style={{ width: 280, height: 150, borderRadius: 12, marginRight: 12, }} />
+                        <Column style={{ width: 260, paddingHorizontal: 10, paddingVertical: 10, marginHorizontal: 12, backgroundColor: '#fff', borderBottomLeftRadius: 12, borderBottomRightRadius: 12,}}>
+                            <Title style={{ fontSize: 18, lineHeight: 20, marginTop: -2, marginBottom: 4, }}>{item?.name}</Title>
+                            <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc?.slice(0,72)}...</Label>
                         </Column>
-                    </Button>
-                )}
-                keyExtractor={item => item.id}
+                    </Column>
+                </Button>
+                }
             />
 
         </Column>
