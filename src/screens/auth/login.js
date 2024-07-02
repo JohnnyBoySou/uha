@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import Octicons from '@expo/vector-icons/Octicons';
 import BottomSheet from '@gorhom/bottom-sheet'
 import { createPreferences } from '../../api/user/preferences';
+import { StatusBar } from 'expo-status-bar';
 
 export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -99,7 +100,8 @@ export default function AuthLoginScreen({ navigation, }) {
     }
 
     return (
-        <Main style={{ backgroundColor: color.secundary, paddingTop: 40, }}>
+        <Main style={{ backgroundColor: color.secundary, paddingTop: 60, }}>
+            <StatusBar style="light"  backgroundColor={color.secundary} animated/>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
                 <Button onPress={() => { navigation.goBack() }} style={{ width: 46, height: 32, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}>
                     <ArrowLeft color={color.secundary} />

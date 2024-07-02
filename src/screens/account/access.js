@@ -11,16 +11,15 @@ export default function AccountAccessInfoScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
 
     return (
-        <Main>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
-            <Header title="Acesso à informação"/>
+            <Header title="Acesso à informação" rose/>
             <FlatList
                         style={{ marginTop: 24, marginHorizontal: margin.h, }}
                         data={Configs}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => <Card item={item} />}
                     />
-                   <Title style={{ textAlign: 'center', fontSize: 18, marginVertical: 12, }}>Você também pode nos encontrar em: </Title>
             </Scroll>
         </Main>
     )

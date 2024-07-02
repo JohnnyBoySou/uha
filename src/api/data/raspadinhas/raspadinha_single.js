@@ -37,6 +37,49 @@ const raspadinha_single = [
             img: '',
         },
     },
+    {
+        id: 'rasp-2',
+        date: '10/10/2024',
+        value: 7,
+        finish: 7,
+        type: 'Básica',
+        name: 35,
+        status: 'Já utilizada',
+        icon: 'used',
+        user: {
+            name: 'Ana Silva',
+            cpf: '123.456.789-01',
+            img: '',
+        },
+    },
+    {
+        id: 'rasp-3',
+        date: '10/10/2024',
+        value: 6,
+        type: 'Básica',
+        name: 30,
+        status: 'Em espera',
+        icon: 'await',
+        user: {
+            name: 'Ana Silva',
+            cpf: '123.456.789-01',
+            img: '',
+        },
+    },
+    {
+        id: 'rasp-4',
+        date: '10/10/2024',
+        value: 3,
+        name: 15,
+        type: 'Básica',
+        status: 'Expirada',
+        icon: 'dimiss',
+        user: {
+            name: 'Ana Silva',
+            cpf: '123.456.789-01',
+            img: '',
+        },
+    },
 
 ]
 export default raspadinha_single

@@ -4,6 +4,8 @@ import { Main, Column, Label, Title, Row, Button, Scroll, LabelLI, ButtonOut, Di
 import { ThemeContext } from 'styled-components/native';
 import { Delete , ArrowLeft } from 'lucide-react-native';
 import { MotiView } from 'moti';
+import { StatusBar } from 'expo-status-bar';
+import Header from '@components/header';
 
 export default function DonateScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -21,12 +23,12 @@ export default function DonateScreen({ navigation, }) {
         }
     }
     const handleDelete = () => {
-        if(value.length === 1){
+        if (value.length === 1) {
             setvalue('0');
-        }else{
-            setvalue(value.slice(0, -1));
+        } else {
+            setvalue(value ? value.slice(0, -1) : '0');
         }
-    }
+    };
 
     const handleClean = () => {
         setvalue('0');
@@ -36,27 +38,20 @@ export default function DonateScreen({ navigation, }) {
         return parseInt(val).toLocaleString('pt-BR');
     };
 
-    const patinhas = value * 6;
+    const patinhas = value * 15;
 
     return (
-        <Main style={{  }}>
+        <Main>
+            <StatusBar style="dark" backgroundColor={color.background} animated={true}/>
             <Scroll>
-
-             <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
-                <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: color.secundary, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                    <ArrowLeft color="#fff" />
-                </Button>
-                <Title style={{ color: color.secundary, marginTop: 8, }}>Doação</Title>
-                <Column style={{ width: 35, height: 35, justifyContent: 'center', alignItems: 'center', }}>
-                </Column>
-            </Row>
+            <Header title="Doação" />
 
             <Column style={{ backgroundColor: "#fff", marginTop: 20, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
                 <Title style={{ fontSize: 24, color: color.secundary, lineHeight: 28,}}>R$</Title>
                 <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{formatValue(value)},00</Title>
             </Column>
 
-            <Column style={{  alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, paddingBottom: 100,  }}>
+            <Column style={{  alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, paddingBottom: 150,  }}>
                <Row style={{ justifyContent: 'center', alignItems: 'center',  marginBottom: 20, }}>
                 <Label style={{ color: '#fff', }}>Total em pontos: </Label>
                     <Button  style={{ borderRadius: 100, }} >
@@ -132,7 +127,7 @@ const Keyboard = ({handleClick, handleDelete, handleClean}) => {
                 <Button onPress={() => {handleClick('0')}} style={{ width: 64, height: 64,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', alignItems: 'center',  }}> 
                     <Digit style={{  color: "#fff", }}>0</Digit>
                 </Button>
-                <Pressable onPress={() => {handleDelete()}} onLongPress={() => {handleClean()}} style={{ width: 64, height: 64,  justifyContent: 'center', alignItems: 'center',  }}> 
+                <Pressable onPress={handleDelete} onLongPress={() => {handleClean()}} style={{ width: 64, height: 64,  justifyContent: 'center', alignItems: 'center',  }}> 
                     <Delete color="#ffffff99" size={32} />
                 </Pressable>
             </Row>

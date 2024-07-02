@@ -7,6 +7,7 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { MotiView } from 'moti';
 import QRCode from 'react-native-qrcode-svg';
 import * as Clipboard from 'expo-clipboard';
+import { StatusBar } from 'expo-status-bar';
 
 export default function RifasBuyScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -90,7 +91,9 @@ export default function RifasBuyScreen({ navigation, route }) {
     };
 
     return (
-        <Main style={{ backgroundColor: color.secundary, paddingTop: 30, }}>
+        <Main style={{ backgroundColor: color.secundary, paddingTop: 60, }}>
+            
+            <StatusBar style="light"  backgroundColor={color.secundary} animated={true}/>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
                 <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#ffffff20", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                     <ArrowLeft color="#fff" />

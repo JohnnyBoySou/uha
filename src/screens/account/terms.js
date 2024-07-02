@@ -10,9 +10,9 @@ export default function AccountTermsScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
 
     return (
-        <Main>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
-                <Header title="Termos e condições"/>
+                <Header title="Termos e condições" rose/>
                 <Column style={{ marginHorizontal: margin.h, paddingVertical: 20, }}>
                 <Label>Última alteração: 10/10/2024</Label>
                 <Title style={{  marginTop: 30, marginBottom: 6, }}>1. Termos Gerais de Uso</Title>

@@ -100,10 +100,12 @@ export default function AccountScreen({ navigation, }) {
                         renderItem={({ item }) => <CardRow item={item} />}
                     />
                     <Row style={{ alignItems: 'center', marginVertical: 8, justifyContent: 'space-between', }}>
+                       <Button onPress={() => {navigation.replace('AuthLogin')}} >
                         <Row style={{ alignItems: 'center', }}>
                             <LogOut size={24} color="#5C0D45" />
                             <Title style={{ fontSize: 18, marginLeft: 12, }}>Sair ou Trocar de conta</Title>
                         </Row>
+                       </Button>
                         <Pressable >
                             <Avatar />
                         </Pressable>

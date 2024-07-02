@@ -15,9 +15,10 @@ export default function RaspadinhasScreen({ navigation, }) {
     const { margin, color, font } = useContext(ThemeContext);
 
     const shop = useRef()
-    const bts = ['Hoje', '15 dias', 'Mensal', 'Anual',]
-    const [page, setpage] = useState('Hoje');
-
+    const bts = ['Tudo', 'Disponível', 'Em espera', 'Já utilizada', 'Expirada',]
+    const [page, setpage] = useState('Tudo');
+    
+    const data = raspadinhas.filter((item) => item.status === page)
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -83,11 +84,11 @@ export default function RaspadinhasScreen({ navigation, }) {
                 </Scroll>
 
                 <Title style={{ fontSize: 22, lineHeight: 22, marginHorizontal: margin.h, }}>Histórico de raspadinhas</Title>
-                <ScrollView horizontal style={{ paddingHorizontal: margin.h, }} showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12, }} showsHorizontalScrollIndicator={false}>
                     {bts.map((bt, index) => (
                         <Button key={index} onPress={() => setpage(bt)}
-                            style={{ color: bt === page ? color.primary : 'transparent', paddingVertical: 8, borderRadius: 100, marginRight: 10, paddingRight: 12, }}>
-                            <Label style={{ color: bt === page ? color.primary : color.secundary, fontFamily: font.medium, fontSize: 16, textAlign: 'left', }}>{bt}</Label>
+                            style={{  backgroundColor: bt === page ? color.primary : color.primary+20, paddingVertical: 8, borderRadius: 100, marginRight: 10, paddingHorizontal: 12, }}>
+                            <Label style={{ color: bt === page ? "#fff" : color.primary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', }}>{bt}</Label>
                         </Button>
                     ))}
                     <Column style={{ width: 60, height: 12, }} />
@@ -96,7 +97,7 @@ export default function RaspadinhasScreen({ navigation, }) {
                 <Column style={{ marginHorizontal: 12, }}>
                     <FlatList
                         style={{ marginBottom: 50, }}
-                        data={raspadinhas}
+                        data={page === 'Tudo' ? raspadinhas : data}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => (
                             <CardRaspadinha item={item} />
@@ -136,7 +137,7 @@ const CardRaspadinha = ({ item, index, onLong, type }) => {
 
                         <Feather name='loader' color="#000000" size={24} />
     return (
-        <Button onLongPress={onLong} onPress={() => { navigation.navigate('RaspadinhasSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
+        <Button onLongPress={onLong} onPress={() => { navigation.navigate('RaspadinhasSingle', { id: item.id, type: item.type, }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>

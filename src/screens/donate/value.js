@@ -12,6 +12,7 @@ import { Snackbar } from 'react-native-paper';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import DonateONGS from './ongs';
 import QRCode from 'react-native-qrcode-svg';
+import { StatusBar } from 'expo-status-bar';
 
 export default function DonateValueScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -20,7 +21,7 @@ export default function DonateValueScreen({ navigation, route }) {
     const [value, setvalue] = useState(valor ? valor : 30);
     const [type, settype] = useState(null);
     const [visible, setVisible] = useState(false);
-    const moedas = parseInt(value) * 6;
+    const moedas = parseInt(value) * 15;
 
     const bottomONGS = useRef(null);
     const [ong, setong] = useState(false);
@@ -38,9 +39,10 @@ export default function DonateValueScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: color.primary, }}>
+            <StatusBar style="light" backgroundColor={color.primary} animated={true} />
             <Scroll >
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
-                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 28, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <ArrowLeft color={color.secundary} />
                     </Button>
                     <Title style={{ color: '#fff', marginTop: 8, }}>Doação</Title>
@@ -50,8 +52,7 @@ export default function DonateValueScreen({ navigation, route }) {
                 </Row>
 
                 <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginBottom: -44, zIndex: 99, alignSelf: 'center' }} />
-                <Column style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: '#fff', paddingTop: 40, borderRadius: 24, paddingBottom:12,  }}>
-
+                <Column style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: '#fff', paddingTop: 40, borderRadius: 24, paddingBottom: 12, }}>
                     <Column style={{ marginHorizontal: 20, }}>
                         <Label style={{ textAlign: 'center', }}>Você está fazendo {'\n'}uma doação de</Label>
                         <Row style={{ justifyContent: 'center', alignItems: 'center', marginTop: 8, marginBottom: 6, }}>
@@ -80,7 +81,6 @@ export default function DonateValueScreen({ navigation, route }) {
 
                     </Button>}
 
-
                     {!ong && <ButtonOut onPress={() => { bottomONGS.current.expand() }} style={{ borderColor: color.primary, alignSelf: 'flex-start', paddingVertical: 8, alignSelf: 'center', borderStyle: 'dashed', }}>
                         <LabelLI style={{ color: color.primary, fontSize: 18, }}>Escolher ONG</LabelLI>
                     </ButtonOut>
@@ -89,7 +89,7 @@ export default function DonateValueScreen({ navigation, route }) {
                     <Row style={{ marginHorizontal: - 24, justifyContent: 'center', alignItems: 'center', marginTop: 10, }}>
                         <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
                         <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
-                            <Column style={{ width: '100%', height: 5, borderTopWidth: 2, borderColor: '#00000030', borderStyle: 'dashed', }} />
+                            
                         </Column>
                         <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
                     </Row>
@@ -101,10 +101,7 @@ export default function DonateValueScreen({ navigation, route }) {
                         </Button>}
                     </Row>
 
-
                     <AnimatePresence>
-
-
                         {type == null && <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} style={{ marginHorizontal: 24, marginBottom: 20, }}>
                             <Button onPress={() => { settype('pix') }} style={{ borderBottomWidth: 1, borderBottomColor: color.off, marginTop: 12, paddingBottom: 12, }}>
                                 <Row>
@@ -179,9 +176,9 @@ export default function DonateValueScreen({ navigation, route }) {
 
                 </Column>
 
-                <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginTop: -20 , marginBottom: 50, zIndex: 99, alignSelf: 'center' }} />
+                <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginTop: -20, marginBottom: 50, zIndex: 99, alignSelf: 'center' }} />
             </Scroll>
-            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 600]} backgroundStyle={{ backgroundColor: '#f7f7f7' }}>
+            <BottomSheet ref={bottomONGS} snapPoints={[0.4, 650]} backgroundStyle={{ backgroundColor: '#f7f7f7' }}>
                 <BottomSheetScrollView>
                     <DonateONGS handleOng={handleOng} value={value} />
                 </BottomSheetScrollView>
@@ -250,9 +247,6 @@ const ContextCredit = ({ item, navigation }) => {
     const [val, setval] = useState();
     return (
         <Column style={{ justifyContent: 'center', }}>
-
-
-
             <Column style={{ marginTop: 20, }}>
                 <SubLabel style={{ fontSize: 14, color: color.secundary, }}>NÚMERO DO CARTÃO</SubLabel>
                 <TextInput value={number} onChangeText={(e) => setnumber(e)} style={{ borderBottomWidth: 2, borderBottomColor: color.off, fontFamily: 'Font_Medium', marginTop: 10, fontSize: 20, flexGrow: 1, }} placeholder='0000 0000 0000 0000' />
@@ -278,68 +272,6 @@ const ContextCredit = ({ item, navigation }) => {
             <ButtonPR style={{ paddingHorizontal: 24, marginTop: 40, }} onPress={() => { navigation.navigate('BuyServiceSuccess') }} >
                 <LabelLI style={{ color: '#fff', }}>Continuar</LabelLI>
             </ButtonPR>
-
-
-
-
-        </Column>
-    )
-}
-
-
-
-const listOngs = [
-    {
-        id: 1,
-        name: 'ONG 1',
-        desc: 'Descrição da ONG 1',
-        about: 'Fundado em fevereiro de 2015, a partir da união de um grupo de pessoas em prol do propósito de cuidar bem e adotar bem cada animal, o Instituto Caramelo atua principalmente no resgate de animais feridos ou em situação de risco, recuperação e adoção. Mantemos um abrigo com cerca de 300 animais, entre cães e gatos, todos resgatados das ruas, onde eles são protegidos, tratados, alimentados e aguardam pela chance de serem adotados.'
-
-    },
-    {
-        id: 2,
-        name: 'ONG 2',
-        desc: 'Descrição da ONG 2',
-        about: 'Fundado em fevereiro de 2015, a partir da união de um grupo de pessoas em prol do propósito de cuidar bem e adotar bem cada animal, o Instituto Caramelo atua principalmente no resgate de animais feridos ou em situação de risco, recuperação e adoção. Mantemos um abrigo com cerca de 300 animais, entre cães e gatos, todos resgatados das ruas, onde eles são protegidos, tratados, alimentados e aguardam pela chance de serem adotados.'
-
-    },
-    {
-        id: 3,
-        name: 'ONG 3',
-        desc: 'Descrição da ONG 3',
-        about: 'Fundado em fevereiro de 2015, a partir da união de um grupo de pessoas em prol do propósito de cuidar bem e adotar bem cada animal, o Instituto Caramelo atua principalmente no resgate de animais feridos ou em situação de risco, recuperação e adoção. Mantemos um abrigo com cerca de 300 animais, entre cães e gatos, todos resgatados das ruas, onde eles são protegidos, tratados, alimentados e aguardam pela chance de serem adotados.'
-
-    },
-]
-const ONGS = ({ navigation }) => {
-    const { color, font, margin } = useContext(ThemeContext);
-    const [type, settype] = useState(false);
-    return (
-        <Column style={{ paddingHorizontal: margin.h, paddingVertical: margin.v, }}>
-            <Title style={{ fontSize: 36, lineHeight: 40, marginBottom: 12, }}>Escolha qual ONG {'\n'}deseja beneficiar</Title>
-            <Label>Ao cadastrar sua nota o valor de R$00,00 será doado para a ONG abaixo de sua escolha</Label>
-            <ButtonOut onPress={() => { settype(!type) }} style={{ borderColor: type ? '#fff' : color.primary, paddingVertical: 8, marginVertical: 18, backgroundColor: type ? color.primary : 'transparent' }}>
-                <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                    <LabelLI style={{ color: type ? '#fff' : color.primary }}>Deixar escolha em aberto</LabelLI>
-                    <CheckCircle size={20} color='#fff' style={{ marginLeft: 12, }} />
-                </Row>
-            </ButtonOut>
-
-            <FlatList
-                data={listOngs}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                    <Button onPress={() => { navigation.navigate('ONGSingle', { item: item, }) }} key={item.id} style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginBottom: 12, paddingBottom: 12, }}>
-                        <Row style={{ alignItems: 'center', }}>
-                            <MotiImage style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: '#FFE0F6' }} />
-                            <Column style={{ marginLeft: 20, }}>
-                                <Title>{item?.name}</Title>
-                                <Label>{item?.desc}</Label>
-                            </Column>
-                        </Row>
-                    </Button>
-                )}
-            />
         </Column>
     )
 }

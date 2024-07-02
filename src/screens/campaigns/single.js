@@ -6,6 +6,7 @@ import { MotiImage } from 'moti';
 import { FlatList } from 'react-native';
 import Header from '@components/header';
 import { getCampaignSingle } from '@request/campaigns';
+import { StatusBar } from 'expo-status-bar';
 
 export default function CampaignsSingleScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -28,9 +29,9 @@ export default function CampaignsSingleScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll style={{ paddingTop: 20,  }}>
+            <StatusBar style="dark"  backgroundColor="#fff" animated={true}/>
+            <Scroll >
                 <Header rose title="Detalhes" />  
-
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <SubLabel style={{  marginTop: 12, fontFamily: 'Font_Medium' }}>{item?.status}</SubLabel>
                     <Title style={{ marginTop: 6,  }}>{item?.name}</Title>
@@ -102,7 +103,7 @@ export default function CampaignsSingleScreen({ navigation, route }) {
                   
 
 
-                    <Column style={{ height: 50, }} />
+                    <Column style={{ height: 100, }} />
                 </Column>
             </Scroll>
         </Main>

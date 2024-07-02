@@ -2,11 +2,12 @@ const raspadinhas = [
     {
         id: 'rasp-1',
         date: '10/10/2024',
-        value: 2,
-        type: 'Premium',
+        value: 7,
+        finish: 4,
+        type: 'Básica',
         status: 'Disponível',
         icon: 'check',
-        name: 26,
+        name: 91,
     },
     {
         id: 'rasp-2',
@@ -23,7 +24,7 @@ const raspadinhas = [
         value: 6,
         type: 'Básica',
         name: 30,
-        status: 'Pagamento em espera',
+        status: 'Em espera',
         icon: 'await',
     },
     {

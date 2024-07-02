@@ -7,6 +7,7 @@ import { FlatList, Animated, ScrollView } from 'react-native';
 import Header from '@components/header';
 import Pagination from '@components/pagination';
 import { getRifaSingle } from '@api/request/rifa';
+import { StatusBar } from 'expo-status-bar';
 
 
 

@@ -8,9 +8,9 @@ export default function AccountFAQScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
 
     return (
-        <Main>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll style={{  }}>
-                <Header title="Dúvidas frequentes"/>
+                <Header title="Dúvidas frequentes" rose/>
                 <Title style={{ marginHorizontal: margin.h, marginTop: 30, marginBottom: -12, }}>Categoria</Title>
                 <FlatList
                             style={{ marginTop: 24, marginHorizontal: margin.h, }}

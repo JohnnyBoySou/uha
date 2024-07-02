@@ -6,8 +6,8 @@ import Header from '@components/header';
 import { useNavigation } from '@react-navigation/native';
 import { CircleCheck, CircleX, AlarmClock, Info, Trophy, Clock, Magnet } from 'lucide-react-native';
 import Feather from '@expo/vector-icons/Feather';
-
 import rifas from '@data/rifas/rifas'
+import { StatusBar } from 'expo-status-bar';
 
 export default function RifasScreen({ navigation, }) {
     const { margin, color, font } = useContext(ThemeContext);
@@ -24,7 +24,8 @@ export default function RifasScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll  >
+            <StatusBar style="dark"  backgroundColor="#fff" animated={true}/>
+            <Scroll >
                 <Header rose title='Seus pedidos' />
 
                {a && <Row style={{ marginHorizontal: margin.h, justifyContent: 'space-between', alignItems: 'center',  }}>

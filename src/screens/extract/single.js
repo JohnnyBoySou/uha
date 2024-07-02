@@ -7,6 +7,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { getSingleExtract } from '@request/extract/gets';
 import { MotiImage, MotiView } from 'moti';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function ExtractSingleScreen({ navigation, route }) {
@@ -34,6 +35,7 @@ export default function ExtractSingleScreen({ navigation, route }) {
    
     return (
         <Main style={{ backgroundColor: '#f7f7f7', }}>
+            <StatusBar style="dark"  backgroundColor="#f7f7f7" animated={true}/>
             <Scroll style={{  }}>
                 <Column style={{  marginHorizontal: margin.h, borderRadius: 24,  }}>
 

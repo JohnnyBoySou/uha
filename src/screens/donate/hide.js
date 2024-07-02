@@ -22,12 +22,12 @@ export default function DonateHideScreen({ navigation,  }) {
         }
     }
     const handleDelete = () => {
-        if(value.length === 1){
+        if (value.length === 1) {
             setvalue('0');
-        }else{
-            setvalue(value.slice(0, -1));
+        } else {
+            setvalue(value ? value.slice(0, -1) : '0');
         }
-    }
+    };
 
     const handleClean = () => {
         setvalue('0');
@@ -139,7 +139,7 @@ const Keyboard = ({handleClick, handleDelete, handleClean}) => {
                 <Button onPress={() => {handleClick('0')}} style={{ width: 64, height: 64, borderRadius: 12,  color: "#fff", marginHorizontal: 40,  justifyContent: 'center', alignItems: 'center',  }}> 
                     <Digit style={{  color: "#fff", }}>0</Digit>
                 </Button>
-                    <Pressable onPress={() => {handleDelete()}} onLongPress={() => {handleClean()}} style={{ width: 64, height: 64,  justifyContent: 'center', alignItems: 'center',  }}> 
+                    <Pressable onPress={handleDelete} onLongPress={() => {handleClean()}} style={{ width: 64, height: 64,  justifyContent: 'center', alignItems: 'center',  }}> 
                         <Delete color="#ffffff99" size={32} />
                     </Pressable>
             </Row>
