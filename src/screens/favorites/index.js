@@ -7,6 +7,7 @@ import { AnimatePresence, MotiImage, MotiView } from 'moti';
 import Octicons from '@expo/vector-icons/Octicons';
 import { useNavigation } from '@react-navigation/native';
 import { getFavs } from '@api/user/favorites';
+import Header from '@components/header';
 
 export default function FavoritesScreen({ navigation, }) {
     const { color, font, margin} = useContext(ThemeContext);
@@ -23,16 +24,14 @@ export default function FavoritesScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll style={{ paddingTop: 50, }}>
-                <Row style={{ marginHorizontal: margin.h, justifyContent: 'space-between', alignItems: 'center',  }}>
-                        <Title>Favoritos</Title>
-                        <Button onPress={() => navigation.navigate('Tabs', { screen: 'Search',})} style={{ borderRadius: 100, backgroundColor: "#30303020", paddingVertical: 10, paddingHorizontal: 20, opacity: 0.6,  }}>
+            <Scroll >
+                <Header title="Favoritos" rose/>
+                        <Button onPress={() => navigation.navigate('Tabs', { screen: 'Search',})} style={{ borderRadius: 100, backgroundColor: "#30303020", alignSelf: 'center', marginVertical: 12, paddingVertical: 10, paddingHorizontal: 32, opacity: 0.6,  }}>
                             <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
                             <Label>Pesquisar</Label>
                                 <Search color={color.label} size={18} style={{ marginLeft: 8, }}/>
                             </Row>
                         </Button>
-                    </Row>
                     {data?.length > 0 ? <Offers data={data} /> : 
                 <Empty />}
 

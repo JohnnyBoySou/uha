@@ -2,11 +2,11 @@ import React, { useContext, useRef, useState, useEffect } from 'react';
 import {Animated,  ScrollView, Dimensions } from 'react-native';
 import { Main, Column, Row, Title, Label, ButtonPR, ButtonSE, LabelSE, ButtonLI, LabelLI, Scroll, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ImagePlus } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
 const { height, width } = Dimensions.get('window');
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
+import { StatusBar } from 'expo-status-bar'
 
 export default function OnboardingScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -29,6 +29,8 @@ export default function OnboardingScreen({ navigation, }) {
 
     return (
         <Main>
+            
+            <StatusBar style="dark" translucent animated={true}/>
             <Column style={{ flex: 1, }}>
                 <Row style={{ position: 'absolute', top: 50, left: 10, right: 10, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
                     <MotiImage source={require('@imgs/logo.png')} style={{ objectFit: 'contain', width: 100, }} />

@@ -185,14 +185,12 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                                     <Label style={{ fontSize: 12, lineHeight: 16, }}>{shop?.address.slice(0, 24)}</Label>
                                 </Column>
                             </Row>
-                            <Button onPress={toggleMap} style={{ backgroundColor: showmap ? color.primary : '#FFE0F6', marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <Button onPress={() => navigation.navigate('ShopSingle', { id: shop?.id }) } style={{ backgroundColor: showmap ? color.primary : '#FFE0F6', marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                                 <Feather name="map-pin" size={24} color={showmap ? "#fff" : color.primary} />
                             </Button>
                         </Row>
                     </Column>
-                    <MotiView state={map} style={{ backgroundColor: '#f7f7f7', borderRadius: 12, marginHorizontal: 12, }} transition={{ type: 'timing' }}>
-                        <MotiImage source={require('@imgs/map.png')} style={{ width: '100%', height: '100%', borderRadius: 12, }} />
-                    </MotiView>
+                  
                     {others?.length > 0 && <>
                         <Title style={{ fontSize: 20, marginTop: -8, }}>Aproveite também</Title>
                         <FlatList

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 
-import { FlatList, View, Image, Text, Dimensions, Platform, Linking } from 'react-native';
-import { Main, Column, Label, Title, Row, SubLabel, Button } from '@theme/global';
+import { FlatList,  Image, Text, Dimensions, Platform, Linking } from 'react-native';
+import { Main, Column, Label, Scroll, Title, Row, SubLabel, Button } from '@theme/global';
 
 import { ThemeContext } from 'styled-components/native';
 
@@ -17,7 +17,9 @@ import BottomSheet from '@gorhom/bottom-sheet'
 //request
 import { getSingleShop } from '@request/service';
 
-import { ScrollView } from 'react-native-gesture-handler';
+import { StatusBar } from 'expo-status-bar';
+
+
 const { width } = Dimensions.get('window');
 
 export default function ShopSingleScreen({ navigation, route }) {
@@ -53,25 +55,27 @@ export default function ShopSingleScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-
-            <Column style={{ position: 'absolute', top: 0, zIndex: 99, }}>
+            <StatusBar style="light" backgroundColor={color.secundary} />
+            <Column style={{ position: 'absolute', top: 20, zIndex: 99, }}>
                 <AnimatePresence >
                     {fixedMenu &&
-                        <MotiView from={{ opacity: 0, translateY: -120, }} animate={{ translateY: 0, opacity: 1, }} exit={{ translateY: -120, opacity: 0, }} transition={{ type: 'timing' }} style={{ flexDirection: 'row', paddingTop: 40, paddingBottom: 18, paddingHorizontal: margin.h, alignItems: 'center', backgroundColor: color.secundary, width: width, justifyContent: 'space-between' }}>
+                        <MotiView from={{ opacity: 0, translateY: -120, }} animate={{ translateY: 0, opacity: 1, }} exit={{ translateY: -120, opacity: 0, }} transition={{ type: 'timing' }} style={{ flexDirection: 'row', paddingTop: 40, paddingBottom: 18, paddingHorizontal: margin.h, alignItems: 'center', backgroundColor: color.secundary, width: width, justifyContent: 'space-between', borderBottomLeftRadius: 16, borderBottomRightRadius: 16, }}>
 
                             <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                                 <Column style={{ padding: 2, borderRadius: 100, backgroundColor: '#fff', }}>
                                     <MotiImage source={{ uri: item?.img }} style={{ borderRadius: 100, width: 56, height: 56, }} />
                                 </Column>   
-                                <MaterialIcons style={{ marginLeft: -20, marginTop: 34,  }} name="verified" size={24} color={color.blue} />
+                                <Column style={{ width: 28, height: 28, borderRadius: 100, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', marginTop: 32, marginLeft: -20, }}>
+                                    <MaterialIcons style={{  }} name="verified" size={24} color={color.blue} />
+                                </Column>
                                 
                                 
                                 <MotiView style={{ marginLeft: 18, }} >
                                     <Title style={{ fontSize: 18, color: "#fff" }}>{item?.name}</Title>
-                                    <Label style={{ fontSize: 14, color: "#f7f7f7" }}>{item?.address.length >= 32 ? item?.address.slice(0, 32) + '...' : item?.address}</Label>
+                                    <Label style={{ fontSize: 14, color: "#f7f7f7" }}>{item?.address.length >= 28 ? item?.address.slice(0, 28) + '...' : item?.address}</Label>
                                 </MotiView>
                             </Row>
-                            <Button onPress={() => { }} style={{ backgroundColor: color.primary, marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <Button onPress={() => {map.current?.expand()}}  style={{ backgroundColor: color.primary, marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                                 <MapPin color='#fff' />
                             </Button>
                         </MotiView>}
@@ -79,10 +83,10 @@ export default function ShopSingleScreen({ navigation, route }) {
             </Column>
 
 
-            <ScrollView style={{ paddingTop: 0 }}
+            <Scroll
                 onScroll={(event) => {
                     const scrolling = event.nativeEvent.contentOffset.y;
-                    if (scrolling > 280) {
+                    if (scrolling > 220) {
                         setFixedMenu(true);
                     } else {
                         setFixedMenu(false);
@@ -110,10 +114,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                         />
                     </Column>
                 </Column>
-
-
                 <Column style={{ flex: 1, marginTop: 12, }} >
-
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
                         <Row>
                             <Title>{item?.name}</Title>
@@ -128,8 +129,10 @@ export default function ShopSingleScreen({ navigation, route }) {
                         </Button>
                     </Column>
 
+
+                   {offers && offers.length > 0 && <>
                     <Column style={{ marginHorizontal: margin.h, }}>
-                        <Title>Ofertas relâmpago</Title>
+                        <Title>Ofertas</Title>
                     </Column>
                     <FlatList
                         horizontal
@@ -154,6 +157,13 @@ export default function ShopSingleScreen({ navigation, route }) {
                             </Button>
                         )}
                     />
+                    </>}
+
+
+
+
+
+
                     {item?.banners?.length > 0 && <Banners data={item?.banners} />}
 
 
@@ -187,9 +197,10 @@ export default function ShopSingleScreen({ navigation, route }) {
                     </>}
 
                 </Column>
+                <Column style={{ height: 70, }} />
 
 
-            </ScrollView>
+            </Scroll>
 
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
                 <AnimatePresence>

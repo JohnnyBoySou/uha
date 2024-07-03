@@ -224,7 +224,7 @@ export default function RifasSingleScreen({ navigation, route }) {
                         </Column>
                         <Title style={{ marginTop: 12, textAlign:'center', fontSize: 20, lineHeight: 22, }}>A rifa solidaria está em andamento.</Title>
                         <Label style={{ textAlign: 'center', fontSize: 15, lineHeight: 16, marginTop: 6, marginBottom: 12, color: color.secundary+99, }}>Essa rifa se encerra em {item?.date}, aguarde para que o sorteio seja realizado.</Label>
-                        <ButtonPR onPress={() => {navigation.navigate('Rifas')}} >
+                        <ButtonPR onPress={() => {navigation.navigate('Campaigns')}} >
                             <LabelPR>Comprar mais</LabelPR>
                         </ButtonPR>
                     </Column>

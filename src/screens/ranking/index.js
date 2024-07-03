@@ -2,11 +2,11 @@ import React, { useContext, useRef, useState } from 'react';
 import { FlatList, ScrollView } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import Header from '@components/header';
 import { ArrowLeft, UserRoundSearch } from 'lucide-react-native';
 import { MotiImage, MotiView, AnimatePresence } from 'moti';
 import BottomSheet, { } from '@gorhom/bottom-sheet'
 import Avatar from '@components/avatar';
+import { StatusBar } from'expo-status-bar';
 
 export default function RankingScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -20,21 +20,20 @@ export default function RankingScreen({ navigation, }) {
         avatar: 'localAvatar',
     }
 
-
-
     return (
         <Main style={{ backgroundColor: '#fff' }}>
+            <StatusBar backgroundColor={color.primary} style="light" animated={true}/>
 
-        <AnimatePresence>
-            {actionButton &&
-                <MotiView from={{opacity: 0, scale: .6, rotate: '32deg', }} animate={{opacity: 1, rotate: '0deg', scale: 1,}} transition={{type: 'spring'}} exit={{opacity: 0, rotate: '-32deg', scale: 0.6, }} style={{ position: 'absolute', bottom: 30,  right: 30, zIndex: 99, }}>
-                    <Button onPress={() => {modalUser.current?.expand()}}  style={{  width: 52, height: 52, borderRadius: 100, backgroundColor: "#00A3FF",  justifyContent: 'center', alignItems: 'center',  }}><UserRoundSearch size={24} color="#fff" /></Button>
-                </MotiView>
-            }
-        </AnimatePresence>
+            <AnimatePresence>
+                {actionButton &&
+                    <MotiView from={{opacity: 0, scale: .6, rotate: '32deg', }} animate={{opacity: 1, rotate: '0deg', scale: 1,}} transition={{type: 'spring'}} exit={{opacity: 0, rotate: '-32deg', scale: 0.6, }} style={{ position: 'absolute', bottom: 30,  right: 30, zIndex: 99, }}>
+                        <Button onPress={() => {modalUser.current?.expand()}}  style={{  width: 52, height: 52, borderRadius: 100, backgroundColor: "#00A3FF",  justifyContent: 'center', alignItems: 'center',  }}><UserRoundSearch size={24} color="#fff" /></Button>
+                    </MotiView>
+                }
+            </AnimatePresence>
 
-            <Scroll style={{ paddingTop: 0,  }} onScroll={(event) => {  const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 5) { setactionButton(true); } else {  setactionButton(false); } }}>
-                <Column style={{ paddingVertical: 30, backgroundColor: color.primary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, }}>
+            <Scroll style={{  }} onScroll={(event) => {  const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 5) { setactionButton(true); } else {  setactionButton(false); } }}>
+                <Column style={{ paddingBottom: 30, backgroundColor: color.primary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, marginVertical: 16, }}>
                         <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                             <ArrowLeft color={color.secundary} />

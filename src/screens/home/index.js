@@ -11,7 +11,6 @@ import { useNavigation } from '@react-navigation/native';
 import { getOffers, getShops, getServices, getCampaigns } from '@request/service';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import campanhas from '@data/campanhas';
 import { StatusBar } from 'expo-status-bar';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
@@ -321,7 +320,7 @@ export const Carrousel = () => {
     const render = ({ item }) => {
         const link = item.img;
         return (
-            <Button onPress={() => { navigation.navigate(item?.route) }} >
+            <Button onPress={() => { navigation.navigate(item?.route) }}  style={{ borderRadius: 24, }}>
                 <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
             </Button>
         );
@@ -409,7 +408,7 @@ const OffersCards = ({ data }) => {
                 horizontal
                 style={{ backgroundColor: color.background, }}
                 renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                    <Button style={{ marginRight: 12, borderRadius: 8,}} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                         <Column style={{ justifyContent: 'center', width: 124, }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
                             <Row style={{ backgroundColor: '#d7d7d7', }}>
@@ -452,7 +451,7 @@ const Queridinhos = ({ data }) => {
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
+                    <Button style={{ marginRight: 12, borderRadius: 8,}} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
@@ -484,7 +483,7 @@ const Servicos = ({ data }) => {
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                    <Button style={{ marginRight: 12, borderRadius: 12,}} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item.title.length > 10 ? item.title.slice(0, 11) + '...' : item.title}</Title>
@@ -528,8 +527,8 @@ const Donate = () => {
     const render = ({ item }) => {
         const link = item.img;
         return (
-            <Button onPress={() => { navigation.navigate(item?.route) }} >
-                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
+            <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, marginRight: 12 }}>
+                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24,  }} />
             </Button>
         );
     };

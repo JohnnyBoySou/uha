@@ -293,7 +293,8 @@ const CardExtrato = ({ item, index, onLong, type }) => {
     const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : '#ffffff'
     const icon = item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> : item?.icon === 'await' ? <Info color={color.blue} size={24} /> : item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> : <Feather name='loader' color="#000000" size={24} />
     return (
-        <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
+        <MotiView from={{opacity: 0, translateX: 20,}} animate={{opacity: 1, translateX: 0,}} delay={(index) * 300}>
+            <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
@@ -317,6 +318,8 @@ const CardExtrato = ({ item, index, onLong, type }) => {
                     <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{item?.type}</Label>
                 </Column>
             </Row>
-        </Button>
+            </Button>
+        </MotiView>
+
     )
 }

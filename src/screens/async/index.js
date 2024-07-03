@@ -22,7 +22,7 @@ export default function AsyncStaticScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: "#FE25BD", flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-            <StatusBar style="light" backgroundColor="#FE25BD"/>
+            <StatusBar style="light" backgroundColor="#FE25BD" animated={true}/>
             <Row>
                 <MotiImage source={require('@imgs/u.png')} style={{ width: 100, objectFit: 'contain' }} 
                     transition={{duration: 600, type: 'timing',  delay: 200,}}

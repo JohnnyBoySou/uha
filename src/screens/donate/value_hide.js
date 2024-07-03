@@ -9,6 +9,7 @@ import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
+import { StatusBar } from 'expo-status-bar'
 import QRCode from 'react-native-qrcode-svg';
 import DonateONGS from './ongs';
 
@@ -36,9 +37,11 @@ export default function DonateValueHideScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: color.primary, }}>
+            
+            <StatusBar style="dark" backgroundColor={color.primary} animated={true}/>
             <Scroll >
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
-                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 32, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <ArrowLeft color={color.secundary} />
                     </Button>
                     <Title style={{ color: '#fff', marginTop: 8, }}>Doação anônima</Title>
@@ -135,7 +138,7 @@ export default function DonateValueHideScreen({ navigation, route }) {
 
                 </Column>
                 </MotiView>
-
+                <Column style={{height: 40, }} />
 
             </Scroll>
 
@@ -145,7 +148,6 @@ export default function DonateValueHideScreen({ navigation, route }) {
                 </BottomSheetScrollView>
             </BottomSheet>
 
-            <Snackbar style={{ backgroundColor: "#fff", marginVertical: 12, marginHorizontal: margin.h, }} visible={visible} onDismiss={() => setVisible(false)} action={{ label: 'Pronto', onPress: () => setVisible(false), }}><Label>Copiado para a área de transferência</Label></Snackbar>
         </Main>
     )
 }

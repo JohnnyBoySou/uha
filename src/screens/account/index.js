@@ -24,7 +24,7 @@ export default function AccountScreen({ navigation, }) {
     const [dark, setdark] = useState(false);
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <StatusBar style="dark"  backgroundColor="#fff" animated/>
+            <StatusBar style="dark" backgroundColor="#fff" animated />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <Title>Olá, {data?.name}</Title>
@@ -46,41 +46,45 @@ export default function AccountScreen({ navigation, }) {
                     </ButtonSE>
                 </MotiView>
 
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
-                    <Button onPress={() => { navigation.navigate('Ranking') }} style={{ flexGrow: 1, }}>
-                        <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                <MotiImage source={require('@icons/rank.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
-                            </Column>
-                            <SubLabel>Ranking</SubLabel>
-                        </Column>
-                    </Button>
-                    <Button onPress={() => { navigation.navigate('Extract', { type: 'Doações' }) }} style={{ flexGrow: 1, }}>
-                        <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20, }}>
-                            <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                <MotiImage source={require('@icons/pontos.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
-                            </Column>
-                            <SubLabel>Doações</SubLabel>
-                        </Column>
-                    </Button>
-                    <Button onPress={() => { navigation.navigate('Favorites') }} style={{ flexGrow: 1, }}>
-                        <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
-                            <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                <MotiImage source={require('@icons/heart.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
-                            </Column>
-                            <SubLabel>Favoritos</SubLabel>
-                        </Column>
-                    </Button>
-                </Row>
+                <MotiView from={{ opacity: 0, translateY: 20 }} animate={{ opacity: 1, translateY: 0, }} delay={600}>
 
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
+                        <Button onPress={() => { navigation.navigate('Ranking') }} style={{ flexGrow: 1, }}>
+                            <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                                <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
+                                    <MotiImage source={require('@icons/rank.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
+                                </Column>
+                                <SubLabel>Ranking</SubLabel>
+                            </Column>
+                        </Button>
+                        <Button onPress={() => { navigation.navigate('Extract', { type: 'Doações' }) }} style={{ flexGrow: 1, }}>
+                            <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20, }}>
+                                <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
+                                    <MotiImage source={require('@icons/pontos.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
+                                </Column>
+                                <SubLabel>Doações</SubLabel>
+                            </Column>
+                        </Button>
+                        <Button onPress={() => { navigation.navigate('Favorites') }} style={{ flexGrow: 1, }}>
+                            <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
+                                <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
+                                    <MotiImage source={require('@icons/heart.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
+                                </Column>
+                                <SubLabel>Favoritos</SubLabel>
+                            </Column>
+                        </Button>
+                    </Row>
+                </MotiView>
 
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 24, }}>
-                    <Title style={{ fontSize: 18, }}>Configurações</Title>
+                    <MotiView from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={1000}>
+                        <Title style={{ fontSize: 18, }}>Configurações</Title>
+                    </MotiView>
                     <FlatList
                         style={{ marginTop: 12, }}
                         data={Configs}
                         keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item }) => <Card item={item} />}
+                        renderItem={({ item, index }) => <Card item={item} index={index} />}
                     />
 
 
@@ -100,42 +104,46 @@ export default function AccountScreen({ navigation, }) {
                         renderItem={({ item }) => <CardRow item={item} />}
                     />
                     <Row style={{ alignItems: 'center', marginVertical: 8, justifyContent: 'space-between', }}>
-                       <Button onPress={() => {navigation.replace('AuthLogin')}} >
-                        <Row style={{ alignItems: 'center', }}>
-                            <LogOut size={24} color="#5C0D45" />
-                            <Title style={{ fontSize: 18, marginLeft: 12, }}>Sair ou Trocar de conta</Title>
-                        </Row>
-                       </Button>
+                        <Button onPress={() => { navigation.replace('AuthLogin') }} >
+                            <Row style={{ alignItems: 'center', }}>
+                                <LogOut size={24} color="#5C0D45" />
+                                <Title style={{ fontSize: 18, marginLeft: 12, }}>Sair ou Trocar de conta</Title>
+                            </Row>
+                        </Button>
                         <Pressable >
                             <Avatar />
                         </Pressable>
                     </Row>
                 </Column>
+
+
                 <Column style={{ height: 120, width: 1, }} />
             </Scroll>
         </Main>
     )
 }
 
-const Card = ({ item }) => {
+const Card = ({ item, index }) => {
     const { color, font, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
     return (
-        <Button onPress={() => { navigation.navigate(item.screen) }} >
-            <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: "#00000012", alignItems: 'center', paddingBottom: 12, }}>
-                <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6", }}>
-                    <MotiImage source={item.img} style={{ width: 28, height: 28, objectFit: 'contain' }} />
-                </Column>
-                <Column style={{ marginHorizontal: 20, }}>
-                    <Row style={{ alignItems: 'center', }}>
-                        <Title style={{ fontSize: 16, marginRight: 6, }}>{item?.title}</Title>
-                        {item.check && <CircleCheck color={color.primary} size={18} />}
-                        {item.check == false && <CircleX color={color.red} size={18} />}
-                    </Row>
-                    <Label style={{ fontSize: 14, marginTop: -5, color: color.secundary+99, }}>{item?.description}</Label>
-                </Column>
-            </Row>
-        </Button>
+        <MotiView from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={(index + 3) * 300}>
+            <Button onPress={() => { navigation.navigate(item.screen) }} >
+                <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: "#00000012", alignItems: 'center', paddingBottom: 12, }}>
+                    <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6", }}>
+                        <MotiImage source={item.img} style={{ width: 28, height: 28, objectFit: 'contain' }} />
+                    </Column>
+                    <Column style={{ marginHorizontal: 20, }}>
+                        <Row style={{ alignItems: 'center', }}>
+                            <Title style={{ fontSize: 16, marginRight: 6, }}>{item?.title}</Title>
+                            {item.check && <CircleCheck color={color.primary} size={18} />}
+                            {item.check == false && <CircleX color={color.red} size={18} />}
+                        </Row>
+                        <Label style={{ fontSize: 14, marginTop: -5, color: color.secundary + 99, }}>{item?.description}</Label>
+                    </Column>
+                </Row>
+            </Button>
+        </MotiView>
     )
 }
 
@@ -184,7 +192,7 @@ const Configs = [
         screen: 'Rifas',
         img: require('@icons/ic4.png'),
     },
-   
+
     {
         title: 'Estabelecimentos',
         description: 'Descubra nossos parceiros',

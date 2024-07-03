@@ -1,10 +1,12 @@
 import React, { useContext, useState, } from 'react';
-import { FlatList, Pressable, ScrollView, ActivityIndicator } from 'react-native';
+import { FlatList, Pressable, ScrollView, ActivityIndicator, } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonLI, LabelLI, ButtonOut, Digit, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Delete, X } from 'lucide-react-native';
 import Header from '@components/header';
 import { MotiImage, MotiView } from 'moti';
+
+import { StatusBar } from 'expo-status-bar'
 
 export default function DonateHideScreen({ navigation,  }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -50,9 +52,11 @@ export default function DonateHideScreen({ navigation,  }) {
 
     return (
         <Main>
-            <Scroll style={{ paddingTop: 40, }}>
+            <Scroll >
+                
+            <StatusBar style="dark" backgroundColor={color.background} animated={true}/>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
-                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: color.secundary, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                    <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: color.secundary, width: 42, height: 32, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <ArrowLeft color="#fff" />
                     </Button>
                     <Title style={{ color: color.secundary, marginTop: 8, }}>Doação anônima</Title>
