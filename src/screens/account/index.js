@@ -8,7 +8,7 @@ import Check from '@components/check';
 import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
 import { useNavigation } from '@react-navigation/native';
-import { getUser } from '@api/request/user';
+import { getUser } from '@api/request/user/user';
 import { StatusBar } from 'expo-status-bar';
 
 export default function AccountScreen({ navigation, }) {

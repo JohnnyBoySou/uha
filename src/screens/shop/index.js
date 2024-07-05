@@ -7,7 +7,7 @@ import { ArrowLeft, Search, X } from 'lucide-react-native';
 import { MotiView } from 'moti';
 import { useIsFocused, useNavigation, } from '@react-navigation/native';
 
-import { getShops, getOffers } from '@request/service';
+import { getShops, getOffers } from '@request/shop/index';
 import { getCategory } from '@request/category';
 import Header from '@components/header';
 
@@ -18,13 +18,21 @@ export default function ShopScreen({ navigation, route }) {
     const [offers, setoffers] = useState();
     const a = false;
 
+    const [loading, setloading] = useState(true);
+    const [error, seterror] = useState();
+
     useEffect(() => {
-        getShops().then((res) => {
-            setdata(res)
-        })
-        getOffers().then((res) => {
-            setoffers(res)
-        })
+        const fecthData = async = () => {
+            setloading(true);
+            getShops().then((res) => {
+                setdata(res)
+                setloading(false);
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+
+        fecthData()
     }, [])
     const [fixedMenu, setFixedMenu] = useState(false);
 
@@ -40,7 +48,7 @@ export default function ShopScreen({ navigation, route }) {
             }} scrollEventThrottle={16}>
 
                
-                <Header  rose />
+                <Header rose/>
 
                 {type == null &&
                     <><Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
@@ -53,89 +61,18 @@ export default function ShopScreen({ navigation, route }) {
                 
                 {type != null && <Result value={type} />}
 
+
+
+                {!loading && <>
                 <Title style={{ marginHorizontal: margin.h, marginBottom: -20, marginTop: 20,}}>Promos incríveis</Title>
                 <Promos data={data} />
                 <Title style={{ marginHorizontal: margin.h, marginBottom: 10, marginTop: 20, }}>Ofertas relâmpago</Title>
                 <Offers data={offers} />
                 <Title style={{ marginHorizontal: margin.h, marginTop: 20, marginBottom: -20, }}>Lojas da sua região</Title>
                 <Promos data={data} />
+                </>}
 
-
-                {a && <Column style={{ marginHorizontal: margin.h, }}>
-
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 24, }}>
-                        <Title>Beleza</Title>
-                        <Button>
-                            <Label style={{ color: color.primary, fontFamily: 'Font_Bold' }}>Ver mais</Label>
-                        </Button>
-                    </Row>
-                    <FlatList
-                        data={produtos}
-                        ListFooterComponent={<Column style={{ width: 24 }} />}
-                        ListHeaderComponent={<Column style={{ width: 24 }} />}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        style={{ marginHorizontal: - margin.h, marginVertical: 12, }}
-                        renderItem={({ item }) => (
-                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopSingle', { item: item }) }}>
-                                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                    <MotiImage source={item.img} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                    <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.name}</Title>
-                                    <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium, marginBottom: 12, }}>{item.desc}</Label>
-                                </Column>
-                            </Button>
-                        )}
-                        keyExtractor={item => item.id}
-                    />
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 12, }}>
-                        <Title>Pets</Title>
-                        <Button>
-                            <Label style={{ color: color.primary, fontFamily: 'Font_Bold' }}>Ver mais</Label>
-                        </Button>
-                    </Row>
-                    <FlatList
-                        data={produtos}
-                        ListFooterComponent={<Column style={{ width: 24 }} />}
-                        ListHeaderComponent={<Column style={{ width: 24 }} />}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        style={{ marginHorizontal: - margin.h, marginVertical: 12, }}
-                        renderItem={({ item }) => (
-                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopSingle', { item: item }) }}>
-                                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                    <MotiImage source={item.img} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                    <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.name}</Title>
-                                    <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium, marginBottom: 12, }}>{item.desc}</Label>
-                                </Column>
-                            </Button>
-                        )}
-                        keyExtractor={item => item.id}
-                    />
-                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 12, }}>
-                        <Title>Gerais</Title>
-                        <Button>
-                            <Label style={{ color: color.primary, fontFamily: 'Font_Bold' }}>Ver mais</Label>
-                        </Button>
-                    </Row>
-                    <FlatList
-                        data={produtos}
-                        ListFooterComponent={<Column style={{ width: 24 }} />}
-                        ListHeaderComponent={<Column style={{ width: 24 }} />}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        style={{ marginHorizontal: - margin.h, marginVertical: 12, marginBottom: 70, }}
-                        renderItem={({ item }) => (
-                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopSingle', { item: item }) }}>
-                                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                    <MotiImage source={item.img} style={{ width: 92, height: 92, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                    <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, }}>{item.name}</Title>
-                                    <Label style={{ textAlign: 'center', width: 84, fontSize: 12, lineHeight: 16, color: color.title, fontFamily: font.medium, marginBottom: 12, }}>{item.desc}</Label>
-                                </Column>
-                            </Button>
-                        )}
-                        keyExtractor={item => item.id}
-                    />
-                </Column>}
+               
                 <Column style={{ height: 50, }} />
             </Scroll>
 
@@ -152,45 +89,6 @@ export default function ShopScreen({ navigation, route }) {
         </Main>
     )
 }
-
-
-const produtos = [
-    {
-        name: 'Natura',
-        desc: 'A partir de 40 Pontos',
-        product: 'Eudora',
-        img: require('@imgs/natura.png'),
-    },
-    {
-        name: 'Americanas',
-        desc: 'A partir de 40 Pontos',
-        product: '23ed',
-        img: require('@imgs/americanas.png'),
-    },
-    {
-        name: 'Oboticário',
-        product: '23e5',
-        desc: 'A partir de 40 Pontos',
-        img: require('@imgs/oboticario.png'),
-    },
-    {
-        name: 'Casas Bahia',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/casas_bahia.png'),
-    },
-    {
-        name: 'Amazon',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/amazon.png'),
-    },
-
-    {
-        name: 'Petiko',
-        desc: 'a partir de 40 Pontos',
-        img: require('@imgs/petiko.png'),
-    },
-
-]
 
 const Result = ({ value }) => {
     const [type, settype] = useState(value);
@@ -275,10 +173,10 @@ const Promos = ({ data }) => {
                     <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}>
                         <Row style={{}}>
                             <Column style={{ width: 220, justifyContent: 'center', }}>
-                                <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
-                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc.length > 80 ? item?.desc.slice(0, 80) + '...' : item?.desc }</Label>
+                                <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item?.name?.length > 18 ? item.name.slice(0, 18) + '...' : item?.name.slice(0, 18)}</Title>
+                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.descri?.length > 80 ? item?.descri?.slice(0, 80) + '...' : item?.descri }</Label>
                                 <Row style={{ marginTop: 8, }}>
-                                    {item.categories.map((cat) => (
+                                    {item?.categories?.slice(0, 2).map((cat) => (
                                         <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>
                                     ))}
                                 </Row>

@@ -99,14 +99,17 @@ import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
+import TestAPIScreen from '@screens/test/api';
+
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='ONGS'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Shop'>
             <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Redeem" component={RedeemScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="TestAPI" component={TestAPIScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Dev" component={DevScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>

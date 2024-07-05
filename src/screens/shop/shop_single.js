@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 
-import { FlatList,  Image, Text, Dimensions, Platform, Linking } from 'react-native';
+import { FlatList,  Image, Text, Dimensions, Platform, Linking, ActivityIndicator } from 'react-native';
 import { Main, Column, Label, Scroll, Title, Row, SubLabel, Button } from '@theme/global';
 
 import { ThemeContext } from 'styled-components/native';
@@ -15,7 +15,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import BottomSheet from '@gorhom/bottom-sheet'
 
 //request
-import { getSingleShop } from '@request/service';
+import { getSingleShop, getSingleOffers, getSingleServices } from '@request/shop/index';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -24,17 +24,41 @@ const { width } = Dimensions.get('window');
 
 export default function ShopSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const id = route.params?.id ? route.params?.id : 12345;
+    const id = route.params?.id ? route.params?.id : 1;
     const [item, setitem] = useState();
     const [offers, setoffers] = useState();
     const [services, setservices] = useState();
     const map = useRef(null)
+
+    const [loading, setloading] = useState(true);
+    const [error, seterror] = useState();
+
     useEffect(() => {
-        getSingleShop(id).then((res) => {
-            setitem(res)
-            setoffers(res?.offers)
-            setservices(res?.services)
-        })
+        const fecthData = () => {
+            setloading(true)
+            getSingleShop(id).then((res) => {
+                setitem(res)
+                getSingleOffers(id).then((res) => {
+                    console.log(res)
+                    setoffers(res)
+                }).catch((err) => {
+                    seterror(err)
+                    setloading(false)
+                })
+                getSingleServices(id).then((res) => {
+                    setservices(res)
+                }).catch((err) => {
+                    seterror(err)
+                    setloading(false)
+                })
+            }).catch((err) => {
+                seterror(err)
+                setloading(false)
+            }).finally(() => {
+                setloading(false)
+            })
+        }
+        fecthData()
     }, [])
 
     const [fixedMenu, setFixedMenu] = useState(false);
@@ -52,7 +76,9 @@ export default function ShopSingleScreen({ navigation, route }) {
 
 
     //borderBottomLeftRadius: 18, borderBottomRightRadius: 18,
-
+    if(loading){
+        return <Main style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}><ActivityIndicator size={52} color={color.primary} /></Main>
+    }
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style="light" backgroundColor={color.secundary} />
@@ -72,14 +98,14 @@ export default function ShopSingleScreen({ navigation, route }) {
                                 
                                 <MotiView style={{ marginLeft: 18, }} >
                                     <Title style={{ fontSize: 18, color: "#fff" }}>{item?.name}</Title>
-                                    <Label style={{ fontSize: 14, color: "#f7f7f7" }}>{item?.address.length >= 28 ? item?.address.slice(0, 28) + '...' : item?.address}</Label>
+                                    <Label style={{ fontSize: 14, color: "#f7f7f7" }}>{item?.address?.length >= 28 ? item?.address.slice(0, 28) + '...' : item?.address}</Label>
                                 </MotiView>
                             </Row>
                             <Button onPress={() => {map.current?.expand()}}  style={{ backgroundColor: color.primary, marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                                 <MapPin color='#fff' />
                             </Button>
                         </MotiView>}
-                </AnimatePresence>
+                    </AnimatePresence>
             </Column>
 
 
@@ -117,7 +143,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                 <Column style={{ flex: 1, marginTop: 12, }} >
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
                         <Row>
-                            <Title>{item?.name}</Title>
+                            <Title>{item?.name} </Title>
                             <MaterialIcons style={{ marginLeft: 5, }} name="verified" size={24} color={color.blue} />
                         </Row>
                         <Label style={{ textAlign: 'center', marginVertical: 5, }}>{item?.desc}</Label>
@@ -130,7 +156,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                     </Column>
 
 
-                   {offers && offers.length > 0 && <>
+                   {offers?.length > 0 && <>
                     <Column style={{ marginHorizontal: margin.h, }}>
                         <Title>Ofertas</Title>
                     </Column>
@@ -148,7 +174,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                                     <MotiImage source={{ uri: item?.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
                                     <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item?.name?.slice(0, 42)}</Title>
                                     <Row style={{}}>
-                                        <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>
+                                        <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value.toFixed(2)}</Title>
                                         <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
                                     </Row>
         
@@ -184,12 +210,11 @@ export default function ShopSingleScreen({ navigation, route }) {
                                     <Row>
                                         <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 12, }} />
                                         <Column style={{ justifyContent: 'center', marginLeft: 15, }}>
-                                            <SubLabel style={{ fontFamily: 'Font_Medium', color: color.secundary, }}>{item?.name}</SubLabel>
-                                            <Label style={{ width: 100, fontSize: 12, lineHeight: 16, color: color.primary, fontFamily: 'Font_Bold', }}>{item.value} pontos</Label>
+                                            <SubLabel style={{ fontFamily: 'Font_Medium', color: color.secundary, }}>{item?.title}</SubLabel>
+                                            <Label style={{ width: 100, fontSize: 12, lineHeight: 16, color: color.primary, fontFamily: 'Font_Bold', }}>{item?.label}</Label>
 
                                         </Column>
                                     </Row>
-                                    <SubLabel style={{ marginRight: 12, width: 80, fontSize: 12, lineHeight: 16, textAlign: 'right' }}>{item?.desc}</SubLabel>
                                 </Row>
                             </Button>
                         )}

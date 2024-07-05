@@ -13,7 +13,7 @@ import Avatar from '@components/avatar';
 
 import BottomSheet, {  BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { getExtractDonate, getExtractMoedas, getExtractPontos, getExtractRifas, getExtract } from '@request/extract/gets';
-import { getUser } from '@api/request/user';
+import { getUser } from '@api/request/user/user';
 import { StatusBar } from 'expo-status-bar';
 
 

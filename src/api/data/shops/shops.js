@@ -1,7 +1,4 @@
-
 const shops = [
-    
-    
     {
         name: "Burger King",
         id: 19,

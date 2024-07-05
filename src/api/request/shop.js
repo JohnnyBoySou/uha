@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const BASE_URL = 'https://api.com/'
 
-import shops from '@data/shops'
-import shop_single from '@data/shop_single'
+import shops from '@data/shops/shops'
+import shop_single from '@data/shops/shop_single'
 
 export async function getShops() {
     //const res = axios.get(BASE_URL + '/shops')

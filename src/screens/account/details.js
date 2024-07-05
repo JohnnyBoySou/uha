@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import Input from '@components/input';
 import { MotiView, AnimatePresence, MotiImage } from 'moti';
-import { getUser } from '@api/request/user';
+import { getUser } from '@api/request/user/user';
 import { Check, Pencil } from 'lucide-react-native';
 
 export default function AccountDetailsScreen({ navigation, }) {
