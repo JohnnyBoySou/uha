@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MotiImage } from 'moti';
 import { Button } from '@theme/global';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { getPreferences } from '@api/user/preferences';
 
 const Avatar = () => {
@@ -10,7 +10,6 @@ const Avatar = () => {
     useEffect(() => {
         const fecthData = async () => {
             const usr = await getPreferences();
-            console.log(usr)
             if (usr?.avatar != null){
                 setimg({uri: usr?.avatar});
             }else{
@@ -18,7 +17,8 @@ const Avatar = () => {
             }
         }
         fecthData();
-    }, []);
+    }, [isFocused]);
+    const isFocused = useIsFocused()
 
     return(     
         <Button onPress={() => {navigation.navigate('Account')}} style={{ borderRadius: 100, }} >

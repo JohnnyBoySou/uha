@@ -27,6 +27,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     useEffect(() => {
         getSingleService(id).then((res) => {
             setitem(res)
+            console.log(res)
             getSingleShop(res.shop.id).then((res) => {
                 setshop(res)
             })
@@ -82,6 +83,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         }
 
     }
+
 
    
 
@@ -164,6 +166,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         </Button>
                     </Row>
                 </Column>
+                
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Title style={{ fontSize: 20, }}>Onde encontrar</Title>
                     <Column style={{ borderRadius: 12, padding: 8, backgroundColor: '#fff', borderWidth: 1, borderColor: '#50505020', marginVertical: 12, zIndex: 9, }}>

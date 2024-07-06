@@ -66,11 +66,9 @@ export default function HomeScreen({ navigation, }) {
                 <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing' }} delay={300}>
                     <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                         <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
-
                             <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
                                 <Search strokeWidth={2} color="#fff" size={24} />
                             </MotiView>
-
                             <Column style={{ justifyContent: 'center', marginLeft: 16, }}>
                                 <Title style={{ fontSize: 18, fontFamily: font.medium, marginTop: 4, marginBottom: -2, lineHeight: 18, color: color.secundary, }}>Pesquisar</Title>
                                 <Label style={{ fontSize: 12, color: color.secundary + 99, }}>Serviços - Estabelecimentos - ONGs</Label>
@@ -157,11 +155,6 @@ export default function HomeScreen({ navigation, }) {
                 <MotiView from={{ opacity: 0, translateX: 40 }} animate={{ opacity: 1, translateX: 0, }} delay={800}>
                     <Carrousel color={color} type="home" />
                 </MotiView>
-
-                <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1000}>
-                    <Campanhas data={campaigns} />
-                </MotiView>
-
                 <OffersCards data={offers} />
 
                 <Queridinhos data={shops} />

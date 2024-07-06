@@ -117,12 +117,12 @@ export default function AccountDetailsScreen({ navigation, }) {
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
                         <MotiImage style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={profile} />
                         <Pressable onPress={handleImage}>
-                            <SubLabel style={{ color: color.primary, marginTop: 12, }}>Editar foto de perfil</SubLabel>
+                            <SubLabel style={{ color: color.primary, marginTop: 12, }}>Escolher foto de perfil</SubLabel>
                         </Pressable>
                     </Column>
 
                     <Column style={{ marginBottom: 20, }}>
-                        <Input label="E-mail" disabled={disabled} value={email} setValue={setemail} />
+                        <Input label="E-mail" disabled={true} value={email} setValue={setemail} />
                         <Input label="Nome completo" disabled={disabled} value={name} setValue={setname} />
                         <Input label="WhatsApp" disabled={disabled} value={whatsapp} setValue={setwhatsapp} />
                         <Input label="CEP" disabled={disabled} value={cep} setValue={setcep} />

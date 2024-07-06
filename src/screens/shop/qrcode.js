@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState, } from 'react';
-import { ActivityIndicator, FlatList, Pressable, Animated } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button } from '@theme/global';
+import { ActivityIndicator, Animated } from 'react-native';
+import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ImagePlus, CircleCheck, ArrowLeft, Info, ScrollText, Moon, CircleX, LogOut, Bell, ArrowRight } from 'lucide-react-native';
+import { ArrowLeft, Info, ArrowRight } from 'lucide-react-native';
 import { MotiImage, MotiView, useAnimationState } from 'moti';
 import QRCode from 'react-native-qrcode-svg';
 import * as Clipboard from 'expo-clipboard';
 import { Clipboard as Clip, } from 'lucide-react-native';
-import Svg, { G, Path, Defs, ClipPath, Rect } from 'react-native-svg';
 
 export default function ShopQRCodeScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);

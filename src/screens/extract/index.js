@@ -22,7 +22,7 @@ export default function ExtractScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     let type = route.params?.type
 
-    const [page, setpage] = useState('Extrato');
+    const [page, setpage] = useState('Notas fiscais');
     const [dateSelect, setdateSelect] = useState('Hoje');
 
     //bottomsheet
@@ -31,10 +31,12 @@ export default function ExtractScreen({ navigation, route }) {
     const snapPoints = useMemo(() => ["1%", "50%"], []);
 
     const scrollTags = useRef(null);
-    const bts = ['Extrato', 'Doações', 'Pontos', 'Rifas', 'Moedas']
+    const bts = ['Notas fiscais', 'Transações', 'Doações',  'Rifas',]
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     const isFocused = useIsFocused();
+
+    //trasacao troca por servico 
 
     useEffect(() => {
         if (type === page) {
@@ -65,17 +67,14 @@ export default function ExtractScreen({ navigation, route }) {
             getPreferences().then((res) => {
                 setuser(res)
             });
-            getExtract().then((res) => {
-               // setextrato(res)
-            });
             getExtractRifas().then((res) => {
-               // setrifas(res)
+                setrifas(res)
             });
             getExtractMoedas().then((res) => {
-               // setmoedas(res)
+                setmoedas(res)
             });
             getExtractPontos().then((res) => {
-              //  setpontos(res)
+                setpontos(res)
             });
             getExtractDonate().then(res => {
                // setdoacoes(res)
@@ -114,8 +113,8 @@ export default function ExtractScreen({ navigation, route }) {
                     <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Column>
-                                <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Moedas</Title>
-                                <Title style={{ color: "#fff" }}>R$ {user?.moedas}</Title>
+                                <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Notas fiscais</Title>
+                                <Title style={{ color: "#fff" }}>{user?.moedas}</Title>
                             </Column>
                             <Column>
                                 <Title style={{ color: "#fff", textAlign: 'right', fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
@@ -129,8 +128,8 @@ export default function ExtractScreen({ navigation, route }) {
                         <Column style={{ marginTop: 20, }}>
                             <Row style={{ justifyContent: 'space-between', }}>
                                 <Column style={{ borderWidth: 1, borderColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
-                                    <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Moedas</Title>
-                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>R$ {user?.moedas}</Title>
+                                    <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Notas fiscais</Title>
+                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>{user?.moedas}</Title>
                                 </Column>
                                 <Column style={{ width: 16, }} />
                                 <Column style={{ backgroundColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
@@ -177,17 +176,18 @@ export default function ExtractScreen({ navigation, route }) {
                                     <MaterialCommunityIcons name="qrcode-scan" size={24} color={color.secundary} />
                                 </Button>
                             </Row>
-                            <Title style={{ fontSize: 52, lineHeight: 68, fontFamily: font.book, color: color.primary, textAlign: 'center', letterSpacing: -3, marginTop: 24, }}>Balanço total</Title>
+                            <Title style={{ fontSize: 52, lineHeight: 68, fontFamily: font.book, color: color.primary, textAlign: 'center', letterSpacing: -3, marginTop: 24, }}>Resumo</Title>
 
-                            <Column style={{ marginTop: 70, }}>
-                                <Label>Moedas</Label>
-                                <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, }}>R$ {user?.moedas}</Title>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 40,  }}>
+                            <Column style={{ }}>
+                                <Label>Notas fiscais</Label>
+                                <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, }}>{user?.moedas}</Title>
                             </Column>
-                            <Column style={{ marginTop: 30, }}>
+                            <Column style={{ }}>
                                 <Label style={{ textAlign: 'right' }}>Pontos</Label>
                                 <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, textAlign: 'right' }}>{user?.pontos}</Title>
                             </Column>
-
+                            </Row>
 
                             <Column>
                                 <SubLabel style={{ color: color.secundary, marginTop: 12, marginBottom: 12, fontSize: 18, }}>Acesso rapído</SubLabel>

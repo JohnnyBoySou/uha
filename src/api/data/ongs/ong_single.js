@@ -32,4 +32,4 @@ const ong_single = [
         imgs: ['https://i.pinimg.com/236x/39/0d/3d/390d3dabf87a5c3e8aa1b394c6d4289c.jpg','https://i.pinimg.com/236x/4b/dd/c9/4bddc98d2fe9a699cd9aa134aa3d7994.jpg', 'https://i.pinimg.com/236x/f2/85/52/f28552352c58b62cde278a0b0ea1f17e.jpg']
     },
 ]
-export default ongs;
+export default ong_single;
