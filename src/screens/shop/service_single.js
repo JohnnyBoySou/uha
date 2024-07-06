@@ -14,6 +14,7 @@ import HeartAnim from '@anim/heart';
 
 import { getSingleService, getSingleShop } from '@request/shop/index';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
+import { Skeleton } from 'moti/skeleton';
 
 const { width, height } = Dimensions.get('window');
 
@@ -40,7 +41,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         })
 
         map.transitionTo('from')
-    }, [item])
+    }, [])
 
     const scrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -82,16 +83,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
 
     }
 
-    const [showmap, setshowmap] = useState(false);
-    const toggleMap = () => {
-        if (showmap) {
-            map.transitionTo('from')
-            setshowmap(false)
-        } else {
-            map.transitionTo('to')
-            setshowmap(true)
-        }
-    }
+   
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -106,12 +98,11 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     keyExtractor={(item, index) => index.toString()}
                     snapToAlignment='center'
                     decelerationRate={'fast'}
-                    onScroll={Animated.event(
-                        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                        {
-                            useNativeDriver: false,
-                        })}
+                    onScroll={Animated.event( [{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
                     pagingEnabled
+                    ListEmptyComponent={<Row style={{  marginHorizontal: margin.h, }}><Skeleton colorMode='light' width={width * 0.8} height={284} radius={24} />
+                    
+                    </Row>}
                     renderItem={({ item, index }) => (
                         <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item }} style={{ width: width * 0.8, height: 284, borderRadius: 24, backgroundColor: '#fff', }} />
@@ -130,9 +121,10 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         borderRadius: 5,
                         marginHorizontal: 5
                     }}
-                    activeDotColor={color.primary}
-                    inActiveDotColor={color.primary + 50}
+                    activeDotColor={color.secundary}
+                    inActiveDotColor={color.secundary + 50}
                 />
+
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                         <Column style={{ width: '80%' }}>
@@ -185,8 +177,8 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                                     <Label style={{ fontSize: 12, lineHeight: 16, }}>{shop?.address.slice(0, 24)}</Label>
                                 </Column>
                             </Row>
-                            <Button onPress={() => navigation.navigate('ShopSingle', { id: shop?.id }) } style={{ backgroundColor: showmap ? color.primary : '#FFE0F6', marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                                <Feather name="map-pin" size={24} color={showmap ? "#fff" : color.primary} />
+                            <Button onPress={() => navigation.navigate('ShopSingle', { id: shop?.id }) } style={{ backgroundColor: '#FFE0F6', marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                                <Feather name="map-pin" size={24} color={color.primary} />
                             </Button>
                         </Row>
                     </Column>

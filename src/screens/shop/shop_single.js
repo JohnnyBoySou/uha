@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 
-import { FlatList,  Image, Text, Dimensions, Platform, Linking, ActivityIndicator } from 'react-native';
+import { FlatList, Image, Text, Dimensions, Platform, Linking, ActivityIndicator } from 'react-native';
 import { Main, Column, Label, Scroll, Title, Row, SubLabel, Button } from '@theme/global';
 
 import { ThemeContext } from 'styled-components/native';
@@ -18,6 +18,8 @@ import BottomSheet from '@gorhom/bottom-sheet'
 import { getSingleShop, getSingleOffers, getSingleServices } from '@request/shop/index';
 
 import { StatusBar } from 'expo-status-bar';
+import CardOffers from '@components/cardOffers';
+import { Skeleton } from 'moti/skeleton';
 
 
 const { width } = Dimensions.get('window');
@@ -34,31 +36,29 @@ export default function ShopSingleScreen({ navigation, route }) {
     const [error, seterror] = useState();
 
     useEffect(() => {
-        const fecthData = () => {
-            setloading(true)
-            getSingleShop(id).then((res) => {
-                setitem(res)
-                getSingleOffers(id).then((res) => {
-                    console.log(res)
-                    setoffers(res)
-                }).catch((err) => {
-                    seterror(err)
-                    setloading(false)
-                })
-                getSingleServices(id).then((res) => {
-                    setservices(res)
-                }).catch((err) => {
-                    seterror(err)
-                    setloading(false)
-                })
+    const fecthData = () => {
+        setloading(true)
+        getSingleShop(id).then((res) => {
+            setitem(res)
+            getSingleOffers(id).then((res) => {
+                setoffers(res)
             }).catch((err) => {
                 seterror(err)
-                setloading(false)
-            }).finally(() => {
-                setloading(false)
             })
-        }
-        fecthData()
+            getSingleServices(id).then((res) => {
+                setservices(res)
+            }).catch((err) => {
+                seterror(err)
+            })
+        }).catch((err) => {
+            seterror(err)
+        }).finally(() => {
+            setTimeout(() => {
+                setloading(false)
+            }, 1200);
+        })
+    }
+    fecthData()
     }, [])
 
     const [fixedMenu, setFixedMenu] = useState(false);
@@ -66,58 +66,43 @@ export default function ShopSingleScreen({ navigation, route }) {
     const openMapWithCep = () => {
         const cep = item?.cep;
         const url = Platform.select({
-          ios: `http://maps.apple.com/?q=${cep}`,
-          android: `geo:0,0?q=${cep}`
+            ios: `http://maps.apple.com/?q=${cep}`,
+            android: `geo:0,0?q=${cep}`
         });
         Linking.openURL(url)
-          .catch(err => console.error('An error occurred', err));
-      };
-    
+            .catch(err => console.error('An error occurred', err));
+    };
 
-
-    //borderBottomLeftRadius: 18, borderBottomRightRadius: 18,
-    if(loading){
-        return <Main style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}><ActivityIndicator size={52} color={color.primary} /></Main>
-    }
+    if (loading) { return (<Main style={{ backgroundColor: '#fff', }}><StatusBar style="dark" translucent /><SkeletonLoading /></Main>) }
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <StatusBar style="light" backgroundColor={color.secundary} />
+            <StatusBar style="light" translucent />
             <Column style={{ position: 'absolute', top: 20, zIndex: 99, }}>
                 <AnimatePresence >
                     {fixedMenu &&
-                        <MotiView from={{ opacity: 0, translateY: -120, }} animate={{ translateY: 0, opacity: 1, }} exit={{ translateY: -120, opacity: 0, }} transition={{ type: 'timing' }} style={{ flexDirection: 'row', paddingTop: 40, paddingBottom: 18, paddingHorizontal: margin.h, alignItems: 'center', backgroundColor: color.secundary, width: width, justifyContent: 'space-between', borderBottomLeftRadius: 16, borderBottomRightRadius: 16, }}>
+                        <MotiView from={{ opacity: 0, translateY: -120, }} animate={{ translateY: -20, opacity: 1, }} exit={{ translateY: -120, opacity: 0, }} transition={{ type: 'timing' }} style={{ flexDirection: 'row', paddingTop: 50, paddingBottom: 18, paddingHorizontal: margin.h, alignItems: 'center', backgroundColor: color.secundary, width: width, justifyContent: 'space-between', borderBottomLeftRadius: 16, borderBottomRightRadius: 16, }}>
 
                             <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                                 <Column style={{ padding: 2, borderRadius: 100, backgroundColor: '#fff', }}>
                                     <MotiImage source={{ uri: item?.img }} style={{ borderRadius: 100, width: 56, height: 56, }} />
-                                </Column>   
-                                <Column style={{ width: 28, height: 28, borderRadius: 100, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', marginTop: 32, marginLeft: -20, }}>
-                                    <MaterialIcons style={{  }} name="verified" size={24} color={color.blue} />
                                 </Column>
-                                
-                                
+                                <Column style={{ width: 26, height: 26, borderRadius: 100, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', marginTop: 32, marginLeft: -20, }}>
+                                    <MaterialIcons style={{}} name="verified" size={24} color={color.blue} />
+                                </Column>
+
+
                                 <MotiView style={{ marginLeft: 18, }} >
                                     <Title style={{ fontSize: 18, color: "#fff" }}>{item?.name}</Title>
-                                    <Label style={{ fontSize: 14, color: "#f7f7f7" }}>{item?.address?.length >= 28 ? item?.address.slice(0, 28) + '...' : item?.address}</Label>
+                                    <Label style={{ fontSize: 12, color: "#f7f7f7" }}>{item?.address?.length > 24 ? item?.address.slice(0, 24) + '...' : item?.address}</Label>
                                 </MotiView>
                             </Row>
-                            <Button onPress={() => {map.current?.expand()}}  style={{ backgroundColor: color.primary, marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <Button onPress={() => { map.current?.expand() }} style={{ backgroundColor: color.primary, marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                                 <MapPin color='#fff' />
                             </Button>
                         </MotiView>}
-                    </AnimatePresence>
+                </AnimatePresence>
             </Column>
-
-
-            <Scroll
-                onScroll={(event) => {
-                    const scrolling = event.nativeEvent.contentOffset.y;
-                    if (scrolling > 220) {
-                        setFixedMenu(true);
-                    } else {
-                        setFixedMenu(false);
-                    }
-                }} scrollEventThrottle={16} > 
+            <Scroll onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 160) { setFixedMenu(true); } else { setFixedMenu(false); } }} scrollEventThrottle={16} style={{ paddingTop: 0, }}>
                 <Column>
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 28, position: 'absolute', top: 40, borderRadius: 100, left: 28, justifyContent: 'center', alignItems: 'center', zIndex: 99, }}>
                         <ArrowLeft color={color.secundary} />
@@ -130,6 +115,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                             borderBottomRightRadius: 32,
                             marginBottom: -72,
                             zIndex: -2,
+                            marginTop: 0,
                         }}
                     />
                     <Column style={{ padding: 6, backgroundColor: '#fff', borderRadius: 100, alignSelf: 'center', zIndex: -2, }}>
@@ -146,43 +132,30 @@ export default function ShopSingleScreen({ navigation, route }) {
                             <Title>{item?.name} </Title>
                             <MaterialIcons style={{ marginLeft: 5, }} name="verified" size={24} color={color.blue} />
                         </Row>
-                        <Label style={{ textAlign: 'center', marginVertical: 5, }}>{item?.desc}</Label>
-                        <Button style={{ borderRadius: 100,  }} onPress={() => {map.current?.expand()}} >
-                        <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFE0F6', borderRadius: 100, paddingHorizontal: 12, marginVertical: 6,}}>
-                            <MapPin color={color?.primary} size={16}/>
-                            <SubLabel style={{ textAlign: 'center', marginVertical: 5, marginHorizontal: 6, fontFamily: 'Font_Medium', color: color.primary, }}>{item?.address}</SubLabel>
-                        </Row>
+                        <Label style={{ textAlign: 'center', marginVertical: 5, fontSize: 14, color: color.secundary + 99, lineHeight: 16, }}>{item?.desc}</Label>
+                        <Button style={{ borderRadius: 100, }} onPress={() => { map.current?.expand() }} >
+                            <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFE0F6', borderRadius: 100, paddingHorizontal: 12, marginVertical: 6, }}>
+                                <MapPin color={color?.primary} size={16} />
+                                <SubLabel style={{ textAlign: 'center', fontSize: 14, marginVertical: 5, marginHorizontal: 6, fontFamily: 'Font_Medium', color: color.primary, }}>{item?.address}</SubLabel>
+                            </Row>
                         </Button>
                     </Column>
 
 
-                   {offers?.length > 0 && <>
-                    <Column style={{ marginHorizontal: margin.h, }}>
-                        <Title>Ofertas</Title>
-                    </Column>
-                    <FlatList
-                        horizontal
-                        data={offers}
-                        style={{ marginVertical: margin.v, marginBottom: 30, }}
-                        showsHorizontalScrollIndicator={false}
-                        ListHeaderComponent={<Column style={{ width: margin.h, }} />}
-                        ListFooterComponent={<Column style={{ width: margin.h  }} />}
-                        keyExtractor={(item) => item?.id.toString()}
-                        renderItem={({ item }) => (
-                            <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                                <Column style={{ justifyContent: 'center', width: 124, }}>
-                                    <MotiImage source={{ uri: item?.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                    <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item?.name?.slice(0, 42)}</Title>
-                                    <Row style={{}}>
-                                        <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value?.slice(0, 2)}</Title>
-                                        <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
-                                    </Row>
-        
-                                    <Title style={{ color: "#000", fontSize: 12, marginTop: -6, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value}</Title>
-                                </Column>
-                            </Button>
-                        )}
-                    />
+                    {offers?.length > 0 && <>
+                        <Column style={{ marginHorizontal: margin.h, }}>
+                            <Title>Ofertas</Title>
+                        </Column>
+                        <FlatList
+                            horizontal
+                            data={offers}
+                            style={{ marginVertical: margin.v, marginBottom: 30, }}
+                            showsHorizontalScrollIndicator={false}
+                            ListHeaderComponent={<Column style={{ width: margin.h, }} />}
+                            ListFooterComponent={<Column style={{ width: margin.h }} />}
+                            keyExtractor={(item) => item?.id.toString()}
+                            renderItem={({ item }) => <CardOffers item={item} />}
+                        />
                     </>}
 
 
@@ -193,32 +166,32 @@ export default function ShopSingleScreen({ navigation, route }) {
                     {item?.banners?.length > 0 && <Banners data={item?.banners} />}
 
 
-                   {services?.length > 0 && <>
-                    <Column style={{ marginHorizontal: margin.h, marginTop: 0, }}>
-                        <Title>Serviços</Title>
-                    </Column>
-                    <FlatList
-                        data={services}
-                        style={{ marginVertical: margin.v, marginBottom: 30, }}
-                        showsHorizontalScrollIndicator={false}
-                        ListHeaderComponent={<Column style={{ width: margin.h - 8, }} />}
-                        ListFooterComponent={<Column style={{ width: margin.h - 8, }} />}
-                        keyExtractor={(index) => index.toString()}
-                        renderItem={({ item }) => (
-                            <Button onPress={() => navigation.navigate('ShopServiceSingle', {id: item?.id})} style={{ borderRadius: 0, paddingBottom: 4, borderBottomWidth: 1, borderColor: '#60606020', marginHorizontal: margin.h, marginVertical: 6, }}>
-                                <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                    <Row>
-                                        <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 12, }} />
-                                        <Column style={{ justifyContent: 'center', marginLeft: 15, }}>
-                                            <SubLabel style={{ fontFamily: 'Font_Medium', color: color.secundary, }}>{item?.title}</SubLabel>
-                                            <Label style={{ width: 100, fontSize: 12, lineHeight: 16, color: color.primary, fontFamily: 'Font_Bold', }}>{item?.label}</Label>
+                    {services?.length > 0 && <>
+                        <Column style={{ marginHorizontal: margin.h, marginTop: 0, }}>
+                            <Title>Serviços</Title>
+                        </Column>
+                        <FlatList
+                            data={services}
+                            style={{ marginVertical: margin.v, marginBottom: 30, }}
+                            showsHorizontalScrollIndicator={false}
+                            ListHeaderComponent={<Column style={{ width: margin.h - 8, }} />}
+                            ListFooterComponent={<Column style={{ width: margin.h - 8, }} />}
+                            keyExtractor={(index) => index.toString()}
+                            renderItem={({ item }) => (
+                                <Button onPress={() => navigation.navigate('ShopServiceSingle', { id: item?.id })} style={{ borderRadius: 0, paddingBottom: 4, borderBottomWidth: 1, borderColor: '#60606020', marginHorizontal: margin.h, marginVertical: 6, }}>
+                                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                                        <Row>
+                                            <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 12, }} />
+                                            <Column style={{ justifyContent: 'center', marginLeft: 15, }}>
+                                                <SubLabel style={{ fontFamily: 'Font_Medium', color: color.secundary, }}>{item?.title}</SubLabel>
+                                                <Label style={{ width: 100, fontSize: 12, lineHeight: 16, color: color.primary, fontFamily: 'Font_Bold', }}>{item?.label}</Label>
 
-                                        </Column>
+                                            </Column>
+                                        </Row>
                                     </Row>
-                                </Row>
-                            </Button>
-                        )}
-                    />
+                                </Button>
+                            )}
+                        />
                     </>}
 
                 </Column>
@@ -231,7 +204,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                 <AnimatePresence>
                     {fixedMenu &&
                         <MotiView from={{ opacity: 0, scale: 0, }} animate={{ scale: 1, opacity: 1, }} exit={{ scale: 0, opacity: 0, }} transition={{ type: 'timing' }} >
-                            <Button onPress={() => {navigation.navigate('ShopSingleSearch', { shop: item, services: services })}}  style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <Button onPress={() => { navigation.navigate('ShopSingleSearch', { shop: item, services: services }) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                                 <Search size={24} color="#fff" />
                             </Button>
                         </MotiView>}
@@ -243,10 +216,10 @@ export default function ShopSingleScreen({ navigation, route }) {
                     <Title style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, }}>Horario de funcionamento</Title>
                     <Label>Seguda à Sexta</Label>
                     <SubLabel>{item?.open} - {item?.close}</SubLabel>
-                    <Button onPress={openMapWithCep} style={{ backgroundColor: color.primary, marginTop: 20, paddingVertical: 12, paddingHorizontal: 20, borderRadius: 100, justifyContent: 'center', alignItems: 'center',  }}>
-                        <Row style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                    <Button onPress={openMapWithCep} style={{ backgroundColor: color.primary, marginTop: 20, paddingVertical: 12, paddingHorizontal: 20, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Title style={{ fontSize: 18, color: '#fff', marginRight: 8, }}>Abrir no mapa</Title>
-                            <MapPin size={18} color="#fff"/>
+                            <MapPin size={18} color="#fff" />
                         </Row>
                     </Button>
                 </Column>
@@ -269,7 +242,7 @@ const Banners = ({ data }) => {
             decelerationRate={'fast'}
             scrollEventThrottle={16}
             data={data}
-            renderItem={render} 
+            renderItem={render}
             keyExtractor={(index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -278,5 +251,54 @@ const Banners = ({ data }) => {
             snapToAlignment='center'
             snapToOffsets={[0, 300, 600]}
         />
+    )
+}
+
+
+const SkeletonLoading = () => {
+    return (
+        <Column>
+            <Skeleton colorMode='light' width={width} height={300} radius={24} />
+            <Row style={{ alignSelf: 'center', marginTop: -76, padding: 12, backgroundColor: '#fff', borderRadius: 100, }}>
+                <Skeleton colorMode='light' width={132} height={132} radius={100} />
+            </Row>
+            <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                <Skeleton colorMode='light' width={200} height={34} radius={8} />
+                <Column style={{ height: 14, }} />
+                <Skeleton colorMode='light' width={240} height={20} radius={8} />
+                <Column style={{ height: 4, }} />
+                <Skeleton colorMode='light' width={220} height={20} radius={8} />
+
+                <Column style={{ height: 14, }} />
+                <Skeleton colorMode='light' width={280} height={36} radius={100} />
+            </Column>
+            <Column style={{ marginHorizontal: 28, marginTop: 30, }}>
+                <Skeleton colorMode='light' width={140} height={34} radius={8} />
+                <Row style={{ marginVertical: 12, }}>
+                    <Column style={{ marginRight: 14, }}>
+                        <Skeleton colorMode='light' width={124} height={124} radius={8} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode='light' width={100} height={28} radius={6} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode='light' width={80} height={20} radius={4} />
+                    </Column>
+                    <Column style={{ marginRight: 14, }}>
+                        <Skeleton colorMode='light' width={124} height={124} radius={8} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode='light' width={100} height={28} radius={6} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode='light' width={80} height={20} radius={4} />
+                    </Column>
+                    <Column style={{ marginRight: 14, }}>
+                        <Skeleton colorMode='light' width={124} height={124} radius={8} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode='light' width={100} height={28} radius={6} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode='light' width={80} height={20} radius={4} />
+                    </Column>
+                </Row>
+            </Column>
+            <Column style={{height: 70, }} />
+        </Column>
     )
 }

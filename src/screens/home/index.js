@@ -37,7 +37,6 @@ export default function HomeScreen({ navigation, }) {
                 setoffers(res)
             })
             getShops().then((res) => {
-                console.log(res)
                 setshops(res)
             })
             getServices().then((res) => {
@@ -417,13 +416,15 @@ const OffersCards = ({ data }) => {
                             <Row style={{ backgroundColor: '#d7d7d7', }}>
                                 <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
                             </Row>
-                            <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.slice(0, 42)}</Title>
+                            <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.length > 32 ? item?.name.slice(0, 42) + '...' : item?.name}</Title>
                             <Row style={{}}>
-                                <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>
+                                <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value.slice(0, -3)}</Title>
                                 <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
                             </Row>
-
-                            <Title style={{ color: "#000", fontSize: 12, marginTop: -6, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value}</Title>
+                        <Row>
+                            <Title style={{ color: "#000", fontSize: 12, marginTop: -6,  marginRight: 4, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value?.slice(0, -3)}</Title>
+                           <Title style={{ color:"#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>pontos</Title>
+                        </Row>            
                         </Column>
                     </Button>
                 )}
@@ -458,7 +459,7 @@ const Queridinhos = ({ data }) => {
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
-                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.desc?.length > 42 ? item?.desc.slice(0, 42) + '...' : item?.desc}</Label>
+                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.descri?.length > 42 ? item?.descri.slice(0, 42) + '...' : item?.descri}</Label>
                         </Column>
                     </Button>
                 )}
