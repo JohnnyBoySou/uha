@@ -38,7 +38,6 @@ const NotafiscalONGS = ({ navigation, route, }) => {
         const fecthData = () => {
             setloading(true);
             getONGs().then(res => {
-                console.log(res)
                 setongs(res);
                 setloading(false);
             })

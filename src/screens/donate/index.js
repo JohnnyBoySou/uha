@@ -11,7 +11,6 @@ export default function DonateScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [value, setvalue] = useState('30');
     const [loading, setloading] = useState(false);
-
     const handleClick = (digit) => {
         if(digit === '0' && value === '0'){
             return
@@ -29,17 +28,13 @@ export default function DonateScreen({ navigation, }) {
             setvalue(value ? value.slice(0, -1) : '0');
         }
     };
-
     const handleClean = () => {
         setvalue('0');
     }
-
     const formatValue = (val) => {
         return parseInt(val).toLocaleString('pt-BR');
     };
-
     const patinhas = value * 15;
-
     return (
         <Main>
             <StatusBar style="dark" backgroundColor={color.background} animated={true}/>
@@ -78,7 +73,6 @@ export default function DonateScreen({ navigation, }) {
                   </ButtonPR>
             </Column>
             </Scroll>
-
         </Main>
     )
 }

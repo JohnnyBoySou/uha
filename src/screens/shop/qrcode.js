@@ -7,18 +7,20 @@ import { MotiImage, MotiView, useAnimationState } from 'moti';
 import QRCode from 'react-native-qrcode-svg';
 import * as Clipboard from 'expo-clipboard';
 import { Clipboard as Clip, } from 'lucide-react-native';
+import { StatusBar } from 'expo-status-bar';
 
 export default function ShopQRCodeScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const item = route.params.item;
 
     const [clip, setclip] = useState(false);
-    const handleClipboard = async () => { await Clipboard.setStringAsync(code); setclip(true)};
+    const handleClipboard = async () => { await Clipboard.setStringAsync(item.code); setclip(true)};
 
 
     return (
         <Main style={{ backgroundColor: color.primary, }}>
-            <Scroll scrollEventThrottle={16} style={{ paddingTop: 15, borderRadius: 12 }}>
+            <StatusBar style="light" backgroundColor={color.primary}/>
+            <Scroll scrollEventThrottle={16} style={{  borderRadius: 12 }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, }}>
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <ArrowLeft color={color.secundary} />
@@ -31,7 +33,7 @@ export default function ShopQRCodeScreen({ navigation, route }) {
 
                 <MotiView from={{ opacity: 0, translateX: -40, }} animate={{ opacity: 1, translateX: 0, }} style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderRadius: 12, backgroundColor: '#ffffff', marginHorizontal: margin.h, marginTop: 20, display: 'flex' }} >
                     <Row style={{ padding: 8, }}>
-                        <MotiImage source={{ uri: item.product.img }} style={{ width: 56, height: 56, borderRadius: 8, marginLeft: 6, }} />
+                        <MotiImage source={{ uri: item.product.img }} style={{ width: 56, height: 56, borderRadius: 8,  }} />
                         <Column style={{ justifyContent: 'center', marginLeft: 20, }}>
                             <Title style={{ fontSize: 18, }}>{item.product.name} </Title>
                             <Title style={{ fontSize: 14, color: color.primary, marginTop: -5, }}>{item?.product?.value.slice(0, -3)} pontos</Title>
@@ -42,14 +44,12 @@ export default function ShopQRCodeScreen({ navigation, route }) {
                     </Button>
                 </MotiView>
 
-                <MotiView delay={800} transition={{ type: 'timing' }} from={{ opacity: 0, translateY: 100, }} animate={{ opacity: 1, translateY: 0, }} style={{ justifyContent: 'center', alignItems: 'center', }}>
+                <MotiView delay={800} transition={{ type: 'timing' }} from={{ opacity: 0, translateY: 100, }} animate={{ opacity: 1, translateY: 0, }} style={{ justifyContent: 'center', alignItems: 'center',  }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 20, }}>
 
                         <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginBottom: -24, zIndex: 99, }} />
                         <Column style={{ backgroundColor: '#fff', borderRadius: 32, padding: 32, }}>
-                            <Title style={{ marginVertical: 10, fontSize: 24, textAlign: 'center' }}>Aponte a câmera</Title>
-                            <Column style={{ width: 290, height: 5, borderTopWidth: 2, borderColor: '#00000030', borderStyle: 'dashed', marginTop: 20, marginBottom: 30, }} />
-                            <Column style={{ alignSelf: 'center', }}>
+                            <Column style={{ alignSelf: 'center', marginTop: 12, }}>
                                 <QRCode
                                     size={250}
                                     quietZone={10}
@@ -62,6 +62,8 @@ export default function ShopQRCodeScreen({ navigation, route }) {
                                     logoMargin={6}
                                 />
                             </Column>
+                            <Title style={{ marginVertical: 10, fontSize: 18, textAlign: 'center' }}>Aponte a câmera</Title>
+
                             <Row style={{ marginHorizontal: - 64, justifyContent: 'center', alignItems: 'center', marginTop: 10, }}>
                                 <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
                                 <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
@@ -80,8 +82,7 @@ export default function ShopQRCodeScreen({ navigation, route }) {
                                     <Clip size={22} color={color.primary} />
                                 </Row>
                             </Button>
-                            <Label style={{ textAlign: 'center', marginTop: 20, fontSize: 14, }}>role para saber mais</Label>
-                            <Column style={{ width: 290, height: 5, borderTopWidth: 2, borderColor: '#00000030', borderStyle: 'dashed', marginTop: 20, }} />
+                            <Column style={{ width: 260, alignSelf: 'center', height: 5, borderTopWidth: 2, borderColor: '#00000030', borderStyle: 'dashed', marginTop: 20, }} />
                             <Column style={{ marginTop: 12, marginBottom: 20, }}>
                                 <Title style={{ fontSize: 18, }}>Detalhes</Title>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>

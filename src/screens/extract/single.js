@@ -3,10 +3,9 @@ import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LabelSE, SubLabel, Button, U, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Info, ClipboardPen, CircleX, KeyRound, AlarmClock, Shirt, X, Plus, ArrowRight } from 'lucide-react-native';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { getSingleExtract } from '@request/extract/gets';
+import { getExtractSingle } from '@request/extract/gets';
 import { MotiImage, MotiView } from 'moti';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 
 
@@ -14,23 +13,27 @@ export default function ExtractSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const id = route?.params?.id ? route?.params?.id : 'rifa-1';
     const type = route?.params?.type ? route?.params?.type : 'Rifas';
+
     const [item, setitem] = useState();
     const [steps, setsteps] = useState();
     const [ong, setong] = useState();
-    const size = 46;
-    const icon = item?.icon === 'check' ? <MaterialIcons name="check-circle" size={size} color={color.green} /> : item?.icon === 'await' ? <Info color={color.blue} size={size} /> : item?.icon === 'uncheck' ? <CircleX color={color.red} size={size} /> : item?.icon === 'dimiss' ? <AlarmClock color="#000" size={size} /> : null;
-    const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item?.icon === 'dimiss' ? "#303030" : color.red;
-    const bg = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? "#fa8484" : item?.icon === 'dimiss' ? "#606060" : color.red;
+
+
     useEffect(() => {
         const fetchData = async () => {
-            await getSingleExtract(id).then((res) => {
+            await getExtractSingle(type, id).then((res) => {
+                console.log(res)
                 setitem(res);
-                setsteps(res.steps);
-                setong(res.ong);
             });
         }
         fetchData()
     }, []);
+
+    
+    const cl = item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Cancelado' ? color.red : item?.status === 'Expirado' ? '#000000' : '#ffffff'
+    const icon = item?.status === 'Confirmado' ? <Feather color={color.green} name='check' size={46} /> : item?.status === 'Aguardando' ? <Info color={color.blue} size={46} /> : item?.status === 'Cancelado' ? <Feather name='x' size={46} color={color.red} /> : item?.status === 'Expirado' ? <Feather name='loader' color="#000000" size={46} /> : null;
+     const bg = item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Cancelado' ? color.red : item?.status === 'Expirado' ? '#000000' : '#ffffff'
+
     const disable = item?.icon === 'check' || item?.icon === 'await' ? false : item?.icon === 'uncheck' || item?.icon === 'dimiss' ? true : false;
    
     return (
@@ -44,7 +47,7 @@ export default function ExtractSingleScreen({ navigation, route }) {
                             <Button onPress={() => {navigation.goBack()}}  style={{ backgroundColor: color.secundary, padding: 12, borderRadius: 100, }}>
                                 <X color="#fff" size={24} />
                             </Button>
-                            <Label style={{ color: color.secundary, fontSize: 14, textAlign: 'center', marginBottom: 5,  }}>{item?.date}{'\n'}{item?.hours ? item?.hours : '14:32'}</Label>
+                            <Label style={{ color: color.secundary, fontSize: 14, textAlign: 'center', marginBottom: 5,  }}>{item?.date}</Label>
                         </Row>
                         
                         <MotiView from={{opacity: 0, scale: 0,}} animate={{opacity: 1, scale: 1,}} delay={200} transition={{duration: 600,}} style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: bg+20, width: 102, height: 102, borderRadius: 100,  alignSelf: 'center', }}>

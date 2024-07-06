@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { ScrollView, FlatList, Animated, Dimensions } from 'react-native';
+import { Vibration, FlatList, Animated, Dimensions } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, ButtonOut, LabelLI, U } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState } from 'moti';
@@ -51,9 +51,8 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
 
     const digit = useAnimationState({
         from: { opacity: 0, width: 0, },
-        to: { opacity: 1, width: 200, },
+        to: { opacity: 1, width: 220, },
     })
-
     const nowdate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     const itm = {
         date: nowdate,
@@ -67,7 +66,6 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
             id: item?.id,
         },
     }
-
     const [like, setlike] = useState();
     const toggleLike = async () => {
         if (like) {
@@ -79,14 +77,12 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         }
 
     }
-
     const [loading, setloading] = useState();
     const [error, seterror] = useState()
 
     const handleBuyService = async () => {
         setloading(true)
         sendCodeService(item?.id).then(res => {
-            console.log(res)
             const itm = {
                 date: res.create,
                 code: res?.token,
@@ -104,8 +100,8 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
             }
             navigation.navigate('ShopQRCode', { item: itm })
         }).catch((err) => {
-            console.log(err)
             seterror(err.message)
+            Vibration.vibrate(300);
             setloading(false)
         })
         setloading(false)
@@ -125,33 +121,26 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     decelerationRate={'fast'}
                     onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
                     pagingEnabled
-                    ListEmptyComponent={<Row style={{ marginHorizontal: margin.h, }}><Skeleton colorMode='light' width={width * 0.8} height={284} radius={24} />
-
-                    </Row>}
-                    renderItem={({ item, index }) => (
-                        <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
-                            <MotiImage source={{ uri: item }} style={{ width: width * 0.8, height: 284, borderRadius: 24, backgroundColor: '#fff', }} />
-                        </Column>
-                    )}
+                    ListEmptyComponent={<Row style={{ marginHorizontal: margin.h, }}><Skeleton colorMode='light' width={width * 0.85} height={284} radius={24} /></Row>}
+                    renderItem={({ item, index }) => <CardImage item={item} index={index} />}
                 />
                 {item?.imgs?.length > 0 &&
-                <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center',}}>
-                    <ExpandingDot
-                        data={item?.imgs}
-                        expandingDotWidth={20}
-                        scrollX={scrollX}
-                        containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
-                        dotStyle={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: 5,
-                            marginHorizontal: 2,
-                        }}
-                        activeDotColor={color.secundary}
-                        inActiveDotColor={color.secundary + 50}
-                    />
-                </Column>}
-               
+                    <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: -14, marginBottom: 10, }}>
+                        <ExpandingDot
+                            data={item?.imgs}
+                            expandingDotWidth={20}
+                            scrollX={scrollX}
+                            containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                            dotStyle={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                marginHorizontal: 2,
+                            }}
+                            activeDotColor={color.secundary}
+                            inActiveDotColor={color.secundary + 50}
+                        />
+                    </Column>}
 
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
@@ -240,14 +229,23 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
 
             <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', bottom: 0, left: 20, zIndex: 99, }}>
                 <Row style={{ marginVertical: 20, }}>
-                    <Button onPress={handleBuyService} disabled={loading} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0  ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                    <Button onPress={handleBuyService} disabled={loading || error?.length > 0} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
                         <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />
                     </Button>
-                    <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: error?.length > 0  ? color.red : '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
-                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>{error}</Label>
+                    <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: error?.length > 0 ? "#850505" : '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
+                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, textAlign: 'right', }}>{error ? error.slice(5) : 'Gerar QRCODE'}    </Label>
                     </MotiView>
                 </Row>
             </MotiView>
         </Main>
+    )
+}
+
+
+const CardImage = ({ item }) => {
+    return (
+        <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
+            <MotiImage source={{ uri: item }} style={{ width: width * 0.8, height: 284, borderRadius: 24, backgroundColor: '#fff', }} />
+        </Column>
     )
 }

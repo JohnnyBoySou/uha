@@ -7,15 +7,13 @@ import { AnimatePresence, MotiView } from 'moti';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-
 import TopSheet from '@components/topsheet';
 import Avatar from '@components/avatar';
 
-import BottomSheet, {  BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { getExtractDonate, getExtractMoedas, getExtractPontos, getExtractRifas, getExtract } from '@request/extract/gets';
-import { getUser } from '@api/request/user/user';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { getExtractDonate, getExtractRifas, getExtractNotas, getExtractTransacao } from '@request/extract/gets';
 import { StatusBar } from 'expo-status-bar';
-import { getPreferences } from '@api/user/preferences';
+import { listUser } from '@api/request/user/user';
 
 
 export default function ExtractScreen({ navigation, route }) {
@@ -31,91 +29,92 @@ export default function ExtractScreen({ navigation, route }) {
     const snapPoints = useMemo(() => ["1%", "50%"], []);
 
     const scrollTags = useRef(null);
-    const bts = ['Notas fiscais', 'Transações', 'Doações',  'Rifas',]
+    const bts = ['Notas fiscais', 'Transações', 'Doações', 'Rifas',]
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     const isFocused = useIsFocused();
 
     //trasacao troca por servico 
-
-    useEffect(() => {
-        if (type === page) {
-            return
-        } else if (type?.length > 0) {
-            setpage(type);
-        } 
-    }, [isFocused]);
+ 
 
     useEffect(() => {
         const handleScroll = () => {
-            if (page === 'Moedas' || page === 'Rifas') { scrollTags.current.scrollToEnd({ animated: true }); }
-            else if (page === 'Extrato' || page === 'Doações') { scrollTags.current.scrollTo({ x: 0, y: 0, animated: true }); }
+            if (page === 'Doações') { scrollTags.current.scrollToEnd({ animated: true }); }
+            else if (page === 'Notas fiscais') { scrollTags.current.scrollTo({ x: 0, y: 0, animated: true }); }
         }
         handleScroll()
     }, [page]);
 
 
-    const [extrato, setextrato] = useState();
+    const [transacao, settransacao] = useState();
+    const [notas, setnotas] = useState();
     const [doacoes, setdoacoes] = useState();
-    const [pontos, setpontos] = useState();
-    const [moedas, setmoedas] = useState();
     const [rifas, setrifas] = useState();
     const [user, setuser] = useState();
 
+    const selectData = page === 'Doações' ? doacoes : page === 'Transações' ? transacao : page === 'Notas fiscais' ? notas : page === 'Rifas' ? rifas : []
+
     useEffect(() => {
-        const fetchData  = async () => {
-            getPreferences().then((res) => {
-                setuser(res)
-            });
-            getExtractRifas().then((res) => {
-                setrifas(res)
-            });
-            getExtractMoedas().then((res) => {
-                setmoedas(res)
-            });
-            getExtractPontos().then((res) => {
-                setpontos(res)
-            });
+        listUser().then((res) => {
+            setuser(res)
+        });
+        getExtractNotas().then((res) => {
+            setnotas(res)
+        });
+        getExtractTransacao().then((res) => {
+            settransacao(res)
+        });
+        const handleType = () => {
+            if (type === page) {
+                return
+            } else if (type?.length > 0) {
+                setpage(type);
+            }
+        }
+        handleType()
+    }, [isFocused]);
+
+
+    const fetchData = async (type) => {
+        if (type === 'Doações') {
+            if(doacoes.length > 0) return
             getExtractDonate().then(res => {
                 setdoacoes(res)
             })
-        };
-        fetchData();
-    }, []);
-
-    const Header = () => {
-        return (
-            <Column>
-                <Row style={{ justifyContent: 'flex-end', alignItems: 'center', backgroundColor: "#f7f7f7", borderBottomLeftRadius: 12, borderBottomRightRadius: 12, marginHorizontal: margin.h, paddingHorizontal: 12, }}>
-                {dates.map((date, i) => (
-                    <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} key={i}>
-                        <Button onPress={() => { setdateSelect(date) }} style={{ paddingVertical: 10, paddingHorizontal: 6, borderRadius: 100, }}>
-                            <Label style={{ color: date === dateSelect ? color.primary : color.secundary + 99, fontFamily: font.medium, fontSize: 14, }}>{date}</Label>
-                        </Button>
-                    </MotiView>
-                ))}
-                </Row>
-            </Column>
-        )
-    }
+        } else if (type === 'Rifas') {
+            if(rifas.length > 0) return
+            getExtractRifas().then((res) => {
+                setrifas(res)
+            });
+        } else if (type === 'Notas fiscais') {
+            if(notas.length > 0) return
+            getExtractNotas().then((res) => {
+                setnotas(res)
+            });
+        } else if (type === 'Transações') {
+            if(transacao.length > 0) return
+            getExtractTransacao().then((res) => {
+                settransacao(res)
+            });
+        }
+    };
 
     const [actionButton, setactionButton] = useState(false);
     const scrollMain = useRef()
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            {isFocused  && <StatusBar style="light"  backgroundColor={color.primary} animated={true}/>}
-
+            {isFocused && <StatusBar style="light" backgroundColor={color.primary} animated={true} />}
             <TopSheet
                 min={
                     <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Column>
                                 <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Notas fiscais</Title>
-                                <Title style={{ color: "#fff" }}>{user?.moedas}</Title>
+                                <Title style={{ color: "#fff" }}>{user?.NotasDoadas}</Title>
                             </Column>
                             <Column>
                                 <Title style={{ color: "#fff", textAlign: 'right', fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user?.pontos}</Title>
+                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user?.PontosAtuais}</Title>
                             </Column>
                         </Row>
                     </MotiView>
@@ -126,12 +125,12 @@ export default function ExtractScreen({ navigation, route }) {
                             <Row style={{ justifyContent: 'space-between', }}>
                                 <Column style={{ borderWidth: 1, borderColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
                                     <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Notas fiscais</Title>
-                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>{user?.moedas}</Title>
+                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>{user?.NotasDoadas}</Title>
                                 </Column>
                                 <Column style={{ width: 16, }} />
                                 <Column style={{ backgroundColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
                                     <Title style={{ color: color.secundary, fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                    <Title style={{ color: color.secundary, }}>{user?.pontos}</Title>
+                                    <Title style={{ color: color.secundary, }}>{user?.PontosAtuais}</Title>
                                 </Column>
                             </Row>
                             <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', }}>
@@ -175,15 +174,15 @@ export default function ExtractScreen({ navigation, route }) {
                             </Row>
                             <Title style={{ fontSize: 52, lineHeight: 68, fontFamily: font.book, color: color.primary, textAlign: 'center', letterSpacing: -3, marginTop: 24, }}>Resumo</Title>
 
-                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 40,  }}>
-                            <Column style={{ }}>
-                                <Label>Notas fiscais</Label>
-                                <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, }}>{user?.moedas}</Title>
-                            </Column>
-                            <Column style={{ }}>
-                                <Label style={{ textAlign: 'right' }}>Pontos</Label>
-                                <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, textAlign: 'right' }}>{user?.pontos}</Title>
-                            </Column>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 40, }}>
+                                <Column style={{}}>
+                                    <Label>Notas fiscais</Label>
+                                    <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, }}>{user?.NotasDoadas}</Title>
+                                </Column>
+                                <Column style={{}}>
+                                    <Label style={{ textAlign: 'right' }}>Pontos</Label>
+                                    <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, textAlign: 'right' }}>{user?.PontosAtuais}</Title>
+                                </Column>
                             </Row>
 
                             <Column>
@@ -221,45 +220,51 @@ export default function ExtractScreen({ navigation, route }) {
                     </MotiView>
                 }
             </AnimatePresence>
-
-            <Column style={{ height: 150, }} />
-            <Column>
-                <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12,  }} showsHorizontalScrollIndicator={false}>
-                    {bts.map((bt, index) => (
-                        <Button key={index} onPress={() => setpage(bt)} 
-                        style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0,}}>
-                            <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16,  textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
-                        </Button>
-                    ))}
-                    <Column style={{ width: 60, height: 12, }} />
-                </ScrollView>
-            </Column>
+            <NavBar bts={bts} page={page} setpage={setpage} fetchData={fetchData} scrollTags={scrollTags} margin={margin} color={color} font={font} />
 
             <FlatList
-                ListHeaderComponent={Header}
-                data={page === 'Doações' ? doacoes : page === 'Pontos' ? pontos : page === 'Rifas' ? rifas : page === 'Moedas' ? moedas : page === 'Extrato' ? extrato : []}
+                ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
+                data={selectData}
                 keyExtractor={(item) => item.id}
-                ListEmptyComponent={<Empty type={page}/>}
+                ListEmptyComponent={<Empty type={page} />}
                 ref={scrollMain}
                 initialNumToRender={5}
                 showsVerticalScrollIndicator={false}
                 onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
                 ListFooterComponent={<Column style={{ height: 100, }} />}
-                renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} onLong={(item) => {setcache(item); edit.current?.expand()}}/>}
+                renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} onLong={(item) => { setcache(item); edit.current?.expand() }} />}
             />
 
-            <BottomSheet ref={edit} snapPoints={snapPoints} 
+            <BottomSheet ref={edit} snapPoints={snapPoints}
                 modalStyle={{ borderTopLeftRadius: 24, borderTopRightRadius: 24, }} >
                 <BottomSheetScrollView style={{ borderTopLeftRadius: 24, borderTopRightRadius: 24, }}>
                     <Column style={{ padding: 24, }}>
                     </Column>
                 </BottomSheetScrollView>
             </BottomSheet>
+
         </Main>
     )
 }
 
-const Empty = ({type}) => {
+const NavBar = ({ bts, page, setpage, fetchData, scrollTags, margin, color, font }) => {
+    return (
+        <Column>
+            <Column style={{ height: 150, }} />
+            <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12, }} showsHorizontalScrollIndicator={false}>
+                {bts.map((bt, index) => (
+                    <Button key={index} onPress={() => { setpage(bt); fetchData(bt) }}
+                        style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0, }}>
+                        <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
+                    </Button>
+                ))}
+                <Column style={{ width: 60, height: 12, }} />
+            </ScrollView>
+        </Column>
+    )
+}
+
+const Empty = ({ type }) => {
     const { color, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
     const msg = type === 'Doações' ? 'Começe a dor agora mesmo!' : type === 'Pontos' ? 'Começe a utilizar seus \npontos agora mesmo!' : type === 'Rifas' ? 'Participe de nossas rifas \ne ganhe prêmios!' : type === 'Moedas' ? 'Começe a utilizar suas \nmoedas agora mesmo!' : 'Nada por aqui, cadastre \numa nota fiscal!'
@@ -291,36 +296,56 @@ const Empty = ({type}) => {
 const CardExtrato = ({ item, index, onLong, type }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext);
-    const cl = item?.icon === 'check' ? color.green : item?.icon === 'await' ? color.blue : item?.icon === 'uncheck' ? color.red : item.icon === 'dimiss' ? '#000000' : '#ffffff'
-    const icon = item?.icon === 'check' ? <Feather color={color.green} name='check' size={24} /> : item?.icon === 'await' ? <Info color={color.blue} size={24} /> : item?.icon === 'uncheck' ? <Feather name='x' size={24} color={color.red} /> : <Feather name='loader' color="#000000" size={24} />
+    const hour = item?.created_at.slice(11, 16)
+    const cl = item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Cancelado' ? color.red : item.status === 'Expirado' ? '#000000' : '#ffffff'
+    const icon = item?.status === 'Confirmado' ? <Feather color={color.green} name='check' size={24} /> : item?.status === 'Aguardando' ? <Info color={color.blue} size={24} /> : item?.status === 'Cancelado' ? <Feather name='x' size={24} color={color.red} /> : item?.status === 'Expirado' ? <Feather name='loader' color="#000000" size={24} /> : null;
     return (
-        <MotiView from={{opacity: 0, translateX: 20,}} animate={{opacity: 1, translateX: 0,}} delay={(index) * 300}>
+        <MotiView from={{ opacity: 0, translateX: 20, }} animate={{ opacity: 1, translateX: 0, }} delay={(index) * 300}>
             <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
-            <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
-                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                    <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                        {icon}
+                <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
+                    <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            {icon}
+                        </Column>
+                        <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', textAlign: 'center'}}>{item?.date} </SubLabel>
                     </Column>
-                    <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', }}>{item?.date}</SubLabel>
-                </Column>
 
-                <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
-                    <Title style={{
-                        color: cl,
-                        fontSize: 24, lineHeight: 24, textAlign: 'right',
-                        textDecoration: item?.type === 'dimiss' ? 'underline' : 'none',
-                        textDecorationLine: item?.icon === 'dimiss' ? "line-through" : "none",
-                        textDecorationStyle: item?.icon === 'dimiss' ? "solid" : "none",
-                        textDecorationColor: item?.icon === 'dimiss' ? "#000" : 'transparent',
-                    }}>
-                        {type == 'Pontos' ? item?.value : `R$ ${item?.value},00` }
+                    <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
+                        <Title style={{
+                            color: cl,
+                            fontSize: 24, lineHeight: 24, textAlign: 'right',
+                            textDecoration: item?.type === 'Expirado' ? 'underline' : 'none',
+                            textDecorationLine: item?.status === 'Expirado' ? "line-through" : "none",
+                            textDecorationStyle: item?.status === 'Expirado' ? "solid" : "none",
+                            textDecorationColor: item?.status === 'Expirado' ? "#000" : 'transparent',
+                        }}>
+                            {type == 'Notas fiscais' && item?.value}
+                            {type == 'Transações' && item?.value + ' pontos'}
+                            {type == 'Doações' && 'R$ ' + item?.value}
                         </Title>
-                    <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -4, }}>{item?.status}</SubLabel>
-                    <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{item?.type}</Label>
-                </Column>
-            </Row>
+                        <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -2, }}>{item?.label}</SubLabel>
+                        <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{item?.type} - {hour}</Label>
+                    </Column>
+                </Row>
             </Button>
         </MotiView>
 
+    )
+}
+
+const Header = ({ dates, dateSelect, setdateSelect, }) => {
+    const { color, margin, font } = useContext(ThemeContext);
+    return (
+        <Column>
+            <Row style={{ justifyContent: 'flex-end', alignItems: 'center', backgroundColor: "#f7f7f7", borderBottomLeftRadius: 12, borderBottomRightRadius: 12, marginHorizontal: margin.h, paddingHorizontal: 12, }}>
+                {dates.map((date, i) => (
+                    <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} key={i}>
+                        <Button onPress={() => { setdateSelect(date) }} style={{ paddingVertical: 10, paddingHorizontal: 6, borderRadius: 100, }}>
+                            <Label style={{ color: date === dateSelect ? color.primary : color.secundary + 99, fontFamily: font.medium, fontSize: 14, }}>{date}</Label>
+                        </Button>
+                    </MotiView>
+                ))}
+            </Row>
+        </Column>
     )
 }

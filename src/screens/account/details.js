@@ -32,6 +32,8 @@ export default function AccountDetailsScreen({ navigation, }) {
         const fecthData = async () => {
             setloading(true);
             await listUser().then(res => {
+                console.log('list sistem')
+                console.log(res.avatar)
                 setavatar(res.avatar);
                 setold_avatar(res.avatar);
                 setemail(res.email);
@@ -77,26 +79,26 @@ export default function AccountDetailsScreen({ navigation, }) {
 
         setloading(true);
         const params = {
-            "avatar": avatar,
             "name": name,
             "email": email,
             "whatsapp": whatsapp,
             "cep": cep
         };
+        if(avatar !== old_avatar){
+            params.avatar = avatar
+        }
 
         await updateUser(params).then(async res => {
             if (res) {
-                console.log(res)
                 const pr = {
                     "avatar": res.avatar,
                     "name": res.name,
-                    "email": res.email,
                     "whatsapp": res.whatsapp,
                     "cep": res.cep
                 };
                 await updatePreferences(pr).then(res => {
                     if (res) {
-                        setdisabled(true);
+                        console.log(res)
                         setloading(false);
                     }
                 })
@@ -104,7 +106,6 @@ export default function AccountDetailsScreen({ navigation, }) {
                 setloading(false);
             }
         })
-        
     }
     
     const profile = temporaryImg ? { uri: `file://${temporaryImg}` } : avatar ? { uri: avatar } : require('@imgs/user_placeholder.png')
