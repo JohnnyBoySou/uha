@@ -1,23 +1,22 @@
 import axios from 'axios';
-
 import getToken from '@hooks/getToken';
 import getBaseURL from '@hooks/getBaseUrl';
 
-export async function sendNotafiscal( params ){
-    const token = await getToken();
-    const BASE_URL = await getBaseURL();
+
+export const sendCodeService = async ( id ) => {
+    console.log('aq')
+    const token = await getToken()
+    const BASE_URL = await getBaseURL()
     try {
-        const response = await axios.post(`${BASE_URL}/usuarios/doar/nota`, 
-        {
-            instituicao_id: params.id,
-            nota: params.nota,
-        },
-         {
+        const res = await axios.post(`${BASE_URL}/usuarios/gerarcode`, {
+            idservico: id,
+        }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.message;
+        console.log(res.data)
+        return res.data;
     } catch (error) {
         let errMsg;
         try {

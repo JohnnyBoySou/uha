@@ -1,21 +1,31 @@
-
-
 const pontos = [
     {
-        id: 'pontos-1',
+        id: 'transacoes-1',
         value: 1,
-        type: 'Nota fiscal',
+        type: 'Transações',
         date: '10/10/2024',
-        status: 'Pontos em análise',
-        icon: 'await',
+        label: 'Transação em análise',
+        status: 'Aguardando',
+        service: {
+            id: 'servico-1',
+            img: '...',
+            name: 'Serviço 1',
+            pontos: 30,
+        },
+        shop: {
+            id: 'estabelecimento-1',
+            name: 'Estabelecimento 1',
+            img: '...',
+        },
+        code: '123456',
     },
     {
         value: 1,
-        id: 'pontos-2',
-        type: 'Nota fiscal',
+        id: 'transacoes-1',
+        type: 'Transações',
         date: '10/10/2024',
-        status: 'Pontos confirmado',
-        icon: 'check',
+        status: 'Aguardando',
+        label: 'Transação em análise',
     },
     {
         

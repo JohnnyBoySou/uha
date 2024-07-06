@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { MotiImage } from "moti";
-import { Button, Column, Row, Title } from "@theme/global";
+import { Button, Column, Row, Title, Label } from "@theme/global";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "styled-components/native";
-import { MotiImage } from 'moti';
 import { ArrowUpRight, } from 'lucide-react-native';
 import CheckBox from '@components/checkbox';
 
@@ -20,8 +19,8 @@ const CardOngs = ({ item, setselectOng, selectOng }) => {
                     </Column>
                 </Button>
                 <Column style={{ marginLeft: 20, }}>
-                    <Title style={{ fontSize: 18, }}>{item?.name.length >= 20 ? item?.name.slice(0, 20) + '...' : item?.name}</Title>
-                    <Label style={{ fontSize: 14, }}>{item?.desc.length >= 26 ? item?.desc.slice(0, 26) + '...' : item?.desc}</Label>
+                    <Title style={{ fontSize: 18, }}>{item?.name?.length >= 20 ? item?.name.slice(0, 20) + '...' : item?.name}</Title>
+                    <Label style={{ fontSize: 14, }}>{item?.descri?.length >= 26 ? item?.descri.slice(0, 26) + '...' : item?.descri}</Label>
                 </Column>
             </Row>
             <Button onPress={() => { setselectOng(item.id) }} style={{ marginRight: 6, borderRadius: 5, }} >

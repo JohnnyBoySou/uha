@@ -1,14 +1,14 @@
 import React, { useContext, } from 'react';
-import { Main, Scroll, Column, Label, Title, Row, Button, ButtonOut } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button, ButtonOut, ButtonPR, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft } from 'lucide-react-native';
 
 
 import SucessAnim from '@anim/sucess';
 
-export default function NotafiscalSuccessScreen({ navigation, }) {
+export default function NotafiscalSuccessScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-
+    const status = route.params?.status;
     return (
         <Main style={{ backgroundColor: "#fff", paddingTop: 15,  }}>
 
@@ -24,20 +24,20 @@ export default function NotafiscalSuccessScreen({ navigation, }) {
 
             <Column style={{ marginHorizontal: margin.h, marginVertical: 20, justifyContent: 'center', alignItems: 'center', flex: 1, }}>
                 <SucessAnim />
-                <Title style={{ fontSize: 32, lineHeight: 34, textAlign: 'center', marginVertical: 24, }}>Nota fiscal {'\n'}cadastrada {'\n'}com sucesso!</Title>
-                <Label style={{ textAlign: 'center', }}>Desfrute de serviços em estabelecimentos {'\n'}parceiros acumulando mais pontos!</Label>
+                <Title style={{ fontSize: 32, lineHeight: 34, textAlign: 'center', marginVertical: 24, }}>{status}</Title>
+                <Label style={{ textAlign: 'center', }}>Desfrute de serviços em estabelecimentos parceiros acumulando mais pontos!</Label>
 
             </Column>
 
-            <Row style={{ padding: 32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center', }}>
-                <ButtonOut onPress={() => {navigation.navigate('NotafiscalSend', {type: 'clean'})}}  style={{ paddingHorizontal: 24, borderColor: color.primary, }}>
-                    <Label style={{ color: color.primary, fontFamily: font.bold, }}>Cadastrar nova</Label>
+            <Column style={{ padding: 32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center', }}>
+                <ButtonPR onPress={() => {navigation.navigate('NotafiscalSend', {type: 'clean'})}}  style={{ paddingHorizontal: 24, borderColor: color.primary, }}>
+                    <LabelPR style={{  fontFamily: font.bold, }}>Nova nota fiscal</LabelPR>
+                </ButtonPR>
+                <Column style={{ height: 12, }} />
+                <ButtonOut onPress={() => {navigation.navigate('Extract', {type: 'Notas fiscais'})}} style={{ paddingHorizontal: 24, borderColor: color.secundary, }}>
+                    <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Ver minhas notas</Label>
                 </ButtonOut>
-                <Column style={{ width: 24, }} />
-                <ButtonOut onPress={() => {navigation.navigate('Extract', {type: 'Nota fiscal'})}} style={{ paddingHorizontal: 24, borderColor: "#111", }}>
-                    <Label style={{ color: "#111", fontFamily: font.bold, }}>Minhas notas</Label>
-                </ButtonOut>
-            </Row>
+            </Column>
 
         </Main>
     )

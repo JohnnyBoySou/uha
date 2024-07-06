@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
-import { Button, ButtonOut, Scroll, Column, Label, Row, Title, LabelPR, SubLabel } from '@theme/global';
+import { Main, Button, ButtonOut, Scroll, Column, Label, Row, Title, LabelPR, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import { StatusBar } from 'expo-status-bar';
 import { getONGs } from '@api/request/ongs/ongs';
-import { sendNotafiscal } from '@api/request/nota/nota';
+import { sendNotafiscal } from '@api/request/notafiscal/nota';
 import CardOngs from '@components/cardOngs';
 
 const NotafiscalONGS = ({ navigation, route, }) => {
@@ -23,12 +23,12 @@ const NotafiscalONGS = ({ navigation, route, }) => {
             id: selectOng,
         }
         sendNotafiscal(params).then((res) => {
-            console.log(res)
             if(res){
                 setloading(false)
-                navigation.navigate('NotafiscalSuccess')
+                navigation.navigate('NotafiscalSuccess', {status: res})
             }
-        }).catch(() => {
+        }).catch(err => {
+            navigation.navigate('NotafiscalError', {status: err.message})
             setloading(false)
         })
     }
@@ -48,6 +48,8 @@ const NotafiscalONGS = ({ navigation, route, }) => {
 
 
     return (
+        <Main style={{ backgroundColor: '#fff', }}>
+
         <Scroll >
             <StatusBar style='dark' />
             <Header rose />
@@ -73,6 +75,7 @@ const NotafiscalONGS = ({ navigation, route, }) => {
                 </ButtonOut>
             </Column>
         </Scroll>
+        </Main>
     )
 }
 export default NotafiscalONGS;

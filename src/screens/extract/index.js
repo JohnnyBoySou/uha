@@ -77,14 +77,11 @@ export default function ExtractScreen({ navigation, route }) {
                 setpontos(res)
             });
             getExtractDonate().then(res => {
-               // setdoacoes(res)
+                setdoacoes(res)
             })
         };
         fetchData();
     }, []);
-
-
-
 
     const Header = () => {
         return (

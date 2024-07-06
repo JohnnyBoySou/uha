@@ -19,7 +19,7 @@ const SCREEN_HEIGHT = 1.2 * height;
 export default function NotafiscalSendScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const bottomEnviar = useRef(null);
-    const [value, setvalue] = useState('https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?p=35240731035833000111650290000470161900751830|2|1|1|CFABEF6081DF90E5365DE0C24201C3477C9DA664');
+    const [value, setvalue] = useState(null);
     const type = route.params?.type;
 
     const isFocused = useIsFocused();
