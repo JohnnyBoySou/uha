@@ -8,11 +8,8 @@ const Error = ({ msg, dimiss, show }) => {
     return (
         <AnimatePresence>
             {visible &&
-                <MotiView from={{ opacity: 0, transformX: 20, }} animate={{ opacity: 1, transformX: 0, }} exit={{ opacity: 0, transformX: 20, }} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 8, borderRadius: 6, backgroundColor: '#D90000',   }}>
-                    <Title style={{ fontSize: 14, color: '#fff', }}>{msg}</Title>
-                    <Button onPress={() => setvisible(false)}>
-                        <X size={20} color="#fff" />
-                    </Button>
+                <MotiView from={{ opacity: 0, transformX: 20, }} animate={{ opacity: 1, transformX: 0, }} exit={{ opacity: 0, transformX: 20, }} style={{  alignItems: 'center', marginTop: 12, padding: 8, borderRadius: 6, backgroundColor: '#D90000',   }}>
+                    <Title style={{ fontSize: 14, color: '#fff', textAlign: 'center',}}>{msg}</Title>
                 </MotiView>}
         </AnimatePresence>
     )

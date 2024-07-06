@@ -12,7 +12,7 @@ import Feather from '@expo/vector-icons/Feather';
 
 import HeartAnim from '@anim/heart';
 
-import { getSingleService, getSingleShop } from '@request/service';
+import { getSingleService, getSingleShop } from '@request/shop/index';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
 
 const { width, height } = Dimensions.get('window');
@@ -95,7 +95,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll scrollEventThrottle={16} onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 120) { digit.transitionTo('to') } else { digit.transitionTo('from') } }} style={{ paddingTop: 15, }} >
+            <Scroll scrollEventThrottle={16} onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 120) { digit.transitionTo('to') } else { digit.transitionTo('from') } }}  >
                 <Header title="Detalhes" rose />
 
                 <FlatList
@@ -141,7 +141,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         </Column>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', width: '20%' }}>
                             <Column style={{ marginTop: 0, justifyContent: 'center', alignItems: 'center', }}>
-                                <Title style={{ color: color.primary }}>{item?.value}</Title>
+                                <Title style={{ color: color.primary }}>{item?.value.slice(0, -3)}</Title>
                                 <Label style={{ color: color.primary, fontSize: 14, marginTop: -6, }}>pontos</Label>
                             </Column>
                         </Column>

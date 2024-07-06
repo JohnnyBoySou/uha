@@ -7,6 +7,7 @@ import { MotiImage } from 'moti';
 import { ArrowBigDown, ArrowUpRight, CheckCircle } from 'lucide-react-native';
 import Header from '@components/header';
 import CheckBox from '@components/checkbox';
+import { StatusBar } from 'expo-status-bar';
 
 
 const NotafiscalONGS = ({ navigation, route, }) => {
@@ -31,15 +32,18 @@ const NotafiscalONGS = ({ navigation, route, }) => {
 
 
     return (
-        <Scroll style={{ paddingTop: 10, }} >
+        <Scroll >
+            <StatusBar style='dark' />
             <Header rose />
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 5, }}>
-                <Title style={{ fontSize: 28, lineHeight: 28, marginBottom: 12, }}>Escolha qual ONG deseja beneficiar</Title>
-                <Label>Ao cadastrar sua nota, o valor de <B>R$ {item?.value},00</B> será doado para a ONG abaixo de sua escolha.</Label>
+                <Title style={{ fontSize: 24, lineHeight: 26, marginBottom: 8, }}>Escolha qual ONG deseja beneficiar</Title>
+                <Label style={{ color: color.secundary+99, }}>Ao cadastrar sua nota, o valor será doado para a ONG abaixo de sua escolha.</Label>
                
-                <Row>
+                <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
                     <SubLabel style={{ fontSize: 24, color: color.secundary, marginVertical: 12, marginTop: 20, }}>ONGs recentes</SubLabel>
-
+                    <Button>
+                        <Title style={{ color: color.primary, fontSize: 18, }}>Ver todas</Title>
+                    </Button>
                 </Row>
                 
                 <FlatList

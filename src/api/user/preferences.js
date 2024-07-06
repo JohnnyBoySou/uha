@@ -23,6 +23,25 @@ async function editPreferences(updatedPreferences) {
   }
 }
 
+async function updatePreferences(updatedPreferences) {
+  try {
+    // Obter as preferências atuais
+    const currentPreferences = await getPreferences();
+    
+    // Atualizar apenas os parâmetros enviados, mantendo os outros intactos
+    const newPreferences = { ...currentPreferences, ...updatedPreferences };
+    
+    // Salvar as novas preferências
+    await AsyncStorage.setItem("@settings", JSON.stringify(newPreferences));
+    return true;
+  } catch (error) {
+    console.error("Error updating preferences:", error);
+    return false;
+  }
+}
+
+
+
 async function createPreferences(preferences) {
   try {
     await AsyncStorage.setItem("@settings", JSON.stringify(preferences));
@@ -216,6 +235,7 @@ export {
   getPreferences,
   editPreferences,
   excludePreferences, 
+  updatePreferences,
   
   addLike,
   removeLike,

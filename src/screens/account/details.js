@@ -1,48 +1,113 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { FlatList, Pressable, ScrollView, TextInput } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, ScrollView, TextInput } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel, ButtonOut } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import Input from '@components/input';
 import { MotiView, AnimatePresence, MotiImage } from 'moti';
-import { getUser } from '@api/request/user/user';
 import { Check, Pencil } from 'lucide-react-native';
+import validator from 'validator';
+import { updateUser, listUser} from '@api/request/user/user';
+
+import * as ImagePicker from 'expo-image-picker';
+import { updatePreferences } from '@api/user/preferences';
 
 export default function AccountDetailsScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
+
+    const [error, setError] = useState();
+    const [loading, setloading] = useState(true);
 
     const [email, setemail] = useState();
     const [whatsapp, setwhatsapp] = useState();
     const [cep, setcep] = useState();
     const [name, setname] = useState();
     const [cpf, setcpf] = useState();
+    const [avatar, setavatar] = useState();
+    const [old_avatar, setold_avatar] = useState();
+
     const [disabled, setdisabled] = useState(true);
-
-
-    const [focusEmail, setfocusEmail] = useState(false);
-    const [focusWhatsapp, setfocusWhatsapp] = useState(false);
-    const [focusCep, setfocusCep] = useState(false);
-    const [focusName, setfocusName] = useState(false);
-    const [focusCpf, setfocusCpf] = useState(false)
-
 
     useEffect(() => {
         const fecthData = async () => {
-            const usr = await getUser();
-            setemail(usr.email);
-            setname(usr.name);
-            setcpf(usr.cpf);
-            setcep(usr.cep);
-            setwhatsapp(usr.whatsapp);
+            setloading(true);
+            await listUser().then(res => {
+                setavatar(res.avatar);
+                setold_avatar(res.avatar);
+                setemail(res.email);
+                setname(res.name);
+                setcpf(res.cpf);
+                setcep(res.cep);
+                setwhatsapp(res.whatsapp);
+                setloading(false);
+            });
         }
         fecthData();
     }, []);
 
 
-    const handleSave = () => {
-        // save data
+    const [temporaryImg, settemporaryImg] = useState();
+    const handleImage = async () => {
+        const responsey = await ImagePicker.launchImageLibraryAsync({ base64: true, quality: 1, });
+        if (!responsey.canceled) {
+            setavatar(responsey.assets[0].base64);
+            settemporaryImg(responsey.assets[0].uri);
+            setdisabled(false);
+        } else {
+            setavatar(old_avatar?.length > 0 ? old_avatar : null)
+        }
     }
 
+    const handleSave = async () => {
+        setError('')
+        //prenchimento obrigatório
+
+        if (!name || name.length < 5) {
+            return setError('Nome completo deve ter pelo menos 5 caracteres');
+        }
+        if (!validateWhatsapp(whatsapp)) {
+            return setError('WhatsApp inválido');
+        }
+        if (!validateCEP(cep)) {
+            return setError('CEP inválido');
+        }
+        if (!validateEmail(email)) {
+            return setError('E-mail inválido');
+        }
+
+        setloading(true);
+        const params = {
+            "avatar": avatar,
+            "name": name,
+            "email": email,
+            "whatsapp": whatsapp,
+            "cep": cep
+        };
+
+        await updateUser(params).then(async res => {
+            if (res) {
+                console.log(res)
+                const pr = {
+                    "avatar": res.avatar,
+                    "name": res.name,
+                    "email": res.email,
+                    "whatsapp": res.whatsapp,
+                    "cep": res.cep
+                };
+                await updatePreferences(pr).then(res => {
+                    if (res) {
+                        setdisabled(true);
+                        setloading(false);
+                    }
+                })
+                setdisabled(true);
+                setloading(false);
+            }
+        })
+        
+    }
+    
+    const profile = temporaryImg ? { uri: `file://${temporaryImg}` } : avatar ? { uri: avatar } : require('@imgs/user_placeholder.png')
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -50,18 +115,18 @@ export default function AccountDetailsScreen({ navigation, }) {
                 <Header title='Dados cadastrais' rose />
                 <Column style={{ paddingHorizontal: margin.h, marginTop: 20, }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
-                        <MotiImage style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={require('@icons/avatar.png')} />
-                        <Pressable>
+                        <MotiImage style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={profile} />
+                        <Pressable onPress={handleImage}>
                             <SubLabel style={{ color: color.primary, marginTop: 12, }}>Editar foto de perfil</SubLabel>
                         </Pressable>
                     </Column>
 
                     <Column style={{ marginBottom: 20, }}>
-                        <Input label="Nome completo" disabled={disabled} value={name} setValue={setname}  />
                         <Input label="E-mail" disabled={disabled} value={email} setValue={setemail} />
-                        <Input label="CPF" disabled={disabled} value={cpf} setValue={setcpf} />
+                        <Input label="Nome completo" disabled={disabled} value={name} setValue={setname} />
                         <Input label="WhatsApp" disabled={disabled} value={whatsapp} setValue={setwhatsapp} />
                         <Input label="CEP" disabled={disabled} value={cep} setValue={setcep} />
+                        <Input label="CPF" disabled={true} value={cpf} setValue={setcpf} />
                     </Column>
 
                     <Column style={{ marginBottom: 20, }}>
@@ -77,19 +142,36 @@ export default function AccountDetailsScreen({ navigation, }) {
                         As alterações podem levar alguns minutos para serem processadas
                     </Label>
                 </Column>
-                <Column style={{height: 40, }} />
+                <Column style={{ height: 120, }} />
             </Scroll>
             <AnimatePresence>
-                    <MotiView from={{ opacity: 0, scale: .6, rotate: '32deg', }} animate={{ opacity: 1, rotate: '0deg', scale: 1, }} transition={{ type: 'timing' }} exit={{ opacity: 0, rotate: '32deg', scale: .7, }} style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
-                        <Button onPress={() => { setdisabled(!disabled)}} style={{ width: 52, height: 52, borderRadius: 100, backgroundColor: disabled ? color.primary : color.green, justifyContent: 'center', alignItems: 'center', }}>
-                            <Row>
-                                {disabled ?
-                                <Pencil size={24} color="#fff" />:
-                                <Check size={24} color="#fff" />  }                  
-                            </Row>
-                        </Button>
-                    </MotiView>
+                <MotiView from={{ opacity: 0, scale: .6, rotate: '32deg', }} animate={{ opacity: 1, rotate: '0deg', scale: 1, }} transition={{ type: 'timing' }} exit={{ opacity: 0, rotate: '32deg', scale: .7, }} style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
+                    <Button onPress={() => {
+                        if (disabled) {
+                            setdisabled(false)
+                        }
+                        else {
+                            handleSave()
+                            setdisabled(true)
+                        }
+                    }} disabled={loading} style={{ width: 52, height: 52, borderRadius: 100, backgroundColor: disabled ? color.primary : color.green, justifyContent: 'center', alignItems: 'center', }}>
+                        <Row>
+                            {loading ? <ActivityIndicator size="small" color="#fff" />
+                            : disabled ?
+                                <Pencil size={24} color="#fff" /> :
+                                <Check size={24} color="#fff" />}
+                        </Row>
+                    </Button>
+                </MotiView>
             </AnimatePresence>
         </Main>
     )
 }
+
+
+
+
+
+const validateEmail = (email) => validator.isEmail(email);
+const validateCEP = (cep) => validator.isPostalCode(cep, 'BR');
+const validateWhatsapp = (whatsapp) => validator.isMobilePhone(whatsapp, 'pt-BR');

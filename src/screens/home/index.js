@@ -8,7 +8,7 @@ import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Internet from '@components/internet';
 import { useNavigation } from '@react-navigation/native';
-import { getOffers, getShops, getServices, getCampaigns } from '@request/service';
+import { getOffers, getShops, getServices, getCampaigns } from '@request/shop/index';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
@@ -29,28 +29,31 @@ export default function HomeScreen({ navigation, }) {
 
     const [offers, setoffers] = useState();
     const [shops, setshops] = useState();
-    const [services, setservices] = useState(); 
+    const [services, setservices] = useState();
     const [campaigns, setcampaigns] = useState();
     useEffect(() => {
-        getOffers().then((res) => {
-            setoffers(res)
-        })
-        getShops().then((res) => {
-            setshops(res)
-        })
-        getServices().then((res) => {
-            setservices(res)
-        })
-        getCampaigns().then((res) => {
-            setcampaigns(res)
-        })
-
+        const fetchData = async () => {
+            await getOffers().then((res) => {
+                setoffers(res)
+            })
+            getShops().then((res) => {
+                console.log(res)
+                setshops(res)
+            })
+            getServices().then((res) => {
+                setservices(res)
+            })
+            getCampaigns().then((res) => {
+                setcampaigns(res)
+            })
+        }
+        fetchData()
     }, [])
 
     return (
         <Main style={{ backgroundColor: "#fff" }}>
             <Internet />
-            <StatusBar style="dark"  backgroundColor="#fff" animated={true}/>
+            <StatusBar style="dark" backgroundColor="#fff" animated={true} />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
                     <MotiImage delay={300} from={{ opacity: 0, translateX: -40, scale: 0, }} animate={{ opacity: 1, translateX: 0, scale: 1, }} transition={{ type: 'spring' }} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
@@ -62,10 +65,10 @@ export default function HomeScreen({ navigation, }) {
                 </Row>
 
                 <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing' }} delay={300}>
-                    <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search'}) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                    <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                         <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
 
-                            <MotiView from={{opacity: 0, scale: 0,}} animate={{opacity: 1, scale: 1,}} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
+                            <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
                                 <Search strokeWidth={2} color="#fff" size={24} />
                             </MotiView>
 
@@ -97,7 +100,7 @@ export default function HomeScreen({ navigation, }) {
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={() => { navigation.navigate('Shop') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
-                                <ShoppingBag color={color.primary} size={32}  strokeWidth={2}/>
+                                <ShoppingBag color={color.primary} size={32} strokeWidth={2} />
                             </Button>
                             <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Shop</Label>
                         </Column>
@@ -117,7 +120,7 @@ export default function HomeScreen({ navigation, }) {
                             <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} exit={{ opacity: 0, translateY: 20, }} transition={{ type: 'timing', duration: 300, }}>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
 
-                                    
+
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Raspadinhas') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                             <FontAwesome5 name="hand-sparkles" size={30} color={color.primary} />
@@ -131,16 +134,16 @@ export default function HomeScreen({ navigation, }) {
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Ranking</Label>
                                     </Column>
-                                    
+
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                        <Button onPress={() => { navigation.navigate('Favorites') }} rippleColor={color.secundary} style={{  padding: 18, borderRadius: 12, backgroundColor: color.primary + 20,}}>
+                                        <Button onPress={() => { navigation.navigate('Favorites') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, backgroundColor: color.primary + 20, }}>
                                             <MotiImage source={require('@icons/heart.png')} style={{ width: 34, objectFit: 'contain', height: 34, }} />
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Favoritos</Label>
                                     </Column>
 
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                        <Button onPress={() => { navigation.navigate('Rifas') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12,  backgroundColor: color.primary + 20, }}>
+                                        <Button onPress={() => { navigation.navigate('Rifas') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, backgroundColor: color.primary + 20, }}>
                                             <Ionicons name="ticket-outline" size={28} color={color.primary} />
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Rifas</Label>
@@ -164,7 +167,7 @@ export default function HomeScreen({ navigation, }) {
 
                 <Queridinhos data={shops} />
 
-                <Donate/>
+                <Donate />
 
                 <Servicos data={services} />
 
@@ -199,17 +202,17 @@ const Campanhas = ({ data }) => {
                 ListFooterComponent={<Column style={{ width: margin.h, }} />}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => 
-                <Button onPress={() => {navigation.navigate('CampaignsSingle', {id: item?.id})}}  style={{ width: 280,  borderRadius: 12, marginRight: 12, }}>
-                    <Column>
-                        <Label style={{ fontSize: 12, lineHeight: 12, textAlign: 'right', alignSelf: 'flex-end', padding: 5, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 8, borderTopRightRadius: 8, paddingVertical: 5, paddingHorizontal: 10, backgroundColor: color.primary, color: '#fff', zIndex: 99,}}>{item?.date} até {item?.finish}</Label>
-                        <MotiImage source={{ uri: item?.img}} style={{ width: 280, height: 150, borderRadius: 12, marginRight: 12, }} />
-                        <Column style={{ width: 260, paddingHorizontal: 10, paddingVertical: 10, marginHorizontal: 12, backgroundColor: '#fff', borderBottomLeftRadius: 12, borderBottomRightRadius: 12,}}>
-                            <Title style={{ fontSize: 18, lineHeight: 20, marginTop: -2, marginBottom: 4, }}>{item?.name}</Title>
-                            <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc?.slice(0,72)}...</Label>
+                renderItem={({ item }) =>
+                    <Button onPress={() => { navigation.navigate('CampaignsSingle', { id: item?.id }) }} style={{ width: 280, borderRadius: 12, marginRight: 12, }}>
+                        <Column>
+                            <Label style={{ fontSize: 12, lineHeight: 12, textAlign: 'right', alignSelf: 'flex-end', padding: 5, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 8, borderTopRightRadius: 8, paddingVertical: 5, paddingHorizontal: 10, backgroundColor: color.primary, color: '#fff', zIndex: 99, }}>{item?.date} até {item?.finish}</Label>
+                            <MotiImage source={{ uri: item?.img }} style={{ width: 280, height: 150, borderRadius: 12, marginRight: 12, }} />
+                            <Column style={{ width: 260, paddingHorizontal: 10, paddingVertical: 10, marginHorizontal: 12, backgroundColor: '#fff', borderBottomLeftRadius: 12, borderBottomRightRadius: 12, }}>
+                                <Title style={{ fontSize: 18, lineHeight: 20, marginTop: -2, marginBottom: 4, }}>{item?.name}</Title>
+                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc?.slice(0, 72)}...</Label>
+                            </Column>
                         </Column>
-                    </Column>
-                </Button>
+                    </Button>
                 }
             />
 
@@ -320,7 +323,7 @@ export const Carrousel = () => {
     const render = ({ item }) => {
         const link = item.img;
         return (
-            <Button onPress={() => { navigation.navigate(item?.route) }}  style={{ borderRadius: 24, }}>
+            <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, }}>
                 <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
             </Button>
         );
@@ -408,7 +411,7 @@ const OffersCards = ({ data }) => {
                 horizontal
                 style={{ backgroundColor: color.background, }}
                 renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, borderRadius: 8,}} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                    <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                         <Column style={{ justifyContent: 'center', width: 124, }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
                             <Row style={{ backgroundColor: '#d7d7d7', }}>
@@ -451,11 +454,11 @@ const Queridinhos = ({ data }) => {
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, borderRadius: 8,}} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
+                    <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
                             <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
-                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.desc.length > 42 ? item?.desc.slice(0, 42) + '...' : item?.desc}</Label>
+                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.desc?.length > 42 ? item?.desc.slice(0, 42) + '...' : item?.desc}</Label>
                         </Column>
                     </Button>
                 )}
@@ -483,10 +486,10 @@ const Servicos = ({ data }) => {
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, borderRadius: 12,}} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                    <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <MotiImage source={{ uri: item.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item.title.length > 10 ? item.title.slice(0, 11) + '...' : item.title}</Title>
+                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item.title?.length > 10 ? item?.title?.slice(0, 11) + '...' : item?.title}</Title>
                             <Label style={{ textAlign: 'center', width: 84, fontSize: 14, lineHeight: 15, marginTop: 3, color: color.secundary + 99, fontFamily: font.medium, marginBottom: 12, }}>{item.label}</Label>
                         </Column>
                     </Button>
@@ -528,7 +531,7 @@ const Donate = () => {
         const link = item.img;
         return (
             <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, marginRight: 12 }}>
-                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24,  }} />
+                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, }} />
             </Button>
         );
     };
@@ -539,7 +542,7 @@ const Donate = () => {
     ];
 
     return (
-        <Column style={{ backgroundColor: color.background, paddingTop: 30,}}>
+        <Column style={{ backgroundColor: color.background, paddingTop: 30, }}>
             <Title style={{ marginLeft: 28, marginBottom: 14, fontSize: 22, }}>Doe anonimamente</Title>
             <FlatList
                 ref={flatListRef}

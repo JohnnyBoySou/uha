@@ -15,6 +15,7 @@ import BottomSheet, {  BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { getExtractDonate, getExtractMoedas, getExtractPontos, getExtractRifas, getExtract } from '@request/extract/gets';
 import { getUser } from '@api/request/user/user';
 import { StatusBar } from 'expo-status-bar';
+import { getPreferences } from '@api/user/preferences';
 
 
 export default function ExtractScreen({ navigation, route }) {
@@ -61,24 +62,24 @@ export default function ExtractScreen({ navigation, route }) {
 
     useEffect(() => {
         const fetchData  = async () => {
-            getUser().then((res) => {
+            getPreferences().then((res) => {
                 setuser(res)
             });
             getExtract().then((res) => {
-                setextrato(res)
+               // setextrato(res)
             });
             getExtractRifas().then((res) => {
-                setrifas(res)
+               // setrifas(res)
             });
             getExtractMoedas().then((res) => {
-                setmoedas(res)
+               // setmoedas(res)
             });
             getExtractPontos().then((res) => {
-                setpontos(res)
+              //  setpontos(res)
             });
-            getExtractDonate().then((res) => {
-                setdoacoes(res)
-            });
+            getExtractDonate().then(res => {
+               // setdoacoes(res)
+            })
         };
         fetchData();
     }, []);
@@ -118,7 +119,7 @@ export default function ExtractScreen({ navigation, route }) {
                             </Column>
                             <Column>
                                 <Title style={{ color: "#fff", textAlign: 'right', fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user?.points}</Title>
+                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user?.pontos}</Title>
                             </Column>
                         </Row>
                     </MotiView>
@@ -134,7 +135,7 @@ export default function ExtractScreen({ navigation, route }) {
                                 <Column style={{ width: 16, }} />
                                 <Column style={{ backgroundColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
                                     <Title style={{ color: color.secundary, fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                    <Title style={{ color: color.secundary, }}>{user?.points}</Title>
+                                    <Title style={{ color: color.secundary, }}>{user?.pontos}</Title>
                                 </Column>
                             </Row>
                             <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', }}>
@@ -184,7 +185,7 @@ export default function ExtractScreen({ navigation, route }) {
                             </Column>
                             <Column style={{ marginTop: 30, }}>
                                 <Label style={{ textAlign: 'right' }}>Pontos</Label>
-                                <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, textAlign: 'right' }}>{user?.points}</Title>
+                                <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, textAlign: 'right' }}>{user?.pontos}</Title>
                             </Column>
 
 
@@ -241,7 +242,7 @@ export default function ExtractScreen({ navigation, route }) {
                 ListHeaderComponent={Header}
                 data={page === 'Doações' ? doacoes : page === 'Pontos' ? pontos : page === 'Rifas' ? rifas : page === 'Moedas' ? moedas : page === 'Extrato' ? extrato : []}
                 keyExtractor={(item) => item.id}
-                ListEmptyComponent={<Empty />}
+                ListEmptyComponent={<Empty type={page}/>}
                 ref={scrollMain}
                 initialNumToRender={5}
                 showsVerticalScrollIndicator={false}
@@ -261,9 +262,12 @@ export default function ExtractScreen({ navigation, route }) {
     )
 }
 
-const Empty = () => {
+const Empty = ({type}) => {
     const { color, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
+    const msg = type === 'Doações' ? 'Começe a dor agora mesmo!' : type === 'Pontos' ? 'Começe a utilizar seus \npontos agora mesmo!' : type === 'Rifas' ? 'Participe de nossas rifas \ne ganhe prêmios!' : type === 'Moedas' ? 'Começe a utilizar suas \nmoedas agora mesmo!' : 'Nada por aqui, cadastre \numa nota fiscal!'
+    const screen = type === 'Doações' ? 'Donate' : type === 'Pontos' ? 'Shop' : type === 'Rifas' ? 'Rifas' : type === 'Moedas' ? 'Shop' : 'NotafiscalSend'
+    const btmessage = type === 'Doações' ? 'Fazer doação' : type === 'Pontos' ? 'Comprar' : type === 'Rifas' ? 'Participar' : type === 'Moedas' ? 'Comprar' : 'Nota Fiscal'
     return (
         <Column style={{ backgroundColor: '#f9f9f9', marginHorizontal: margin.h, marginVertical: 20, borderRadius: 24, overflow: 'hidden', }}>
             <Row style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 30, }}>
@@ -274,10 +278,10 @@ const Empty = () => {
                     <Smartphone size={24} color="#fff" />
                 </Column>
             </Row>
-            <Title style={{ fontSize: 20, textAlign: 'center', marginTop: 8, }}>Comece a utilizar {'\n'}seus pontos</Title>
+            <Title style={{ fontSize: 20, textAlign: 'center', marginTop: 8, }}>{msg}</Title>
 
-            <ButtonPR style={{ marginHorizontal: 24, marginVertical: 12, }} onPress={() => { navigation.navigate('Shop') }} >
-                <LabelLI style={{ color: '#fff', }}>Ver estabelecimentos</LabelLI>
+            <ButtonPR style={{ marginHorizontal: 24, marginVertical: 12, }} onPress={() => { navigation.navigate(screen) }} >
+                <LabelLI style={{ color: '#fff', }}>{btmessage}</LabelLI>
             </ButtonPR>
 
             <LinearGradient

@@ -1,13 +1,28 @@
+import React, { useEffect, useState } from 'react';
 import { MotiImage } from 'moti';
 import { Button } from '@theme/global';
 import { useNavigation } from '@react-navigation/native';
+import { getPreferences } from '@api/user/preferences';
 
-const Avatar = ({ url }) => {
+const Avatar = () => {
     const navigation = useNavigation();
-    const img = url ? url : 'https://i.pinimg.com/736x/c5/e4/6f/c5e46f1afb9214486b57526a34705c7f.jpg';
+    const [img, setimg] = useState();
+    useEffect(() => {
+        const fecthData = async () => {
+            const usr = await getPreferences();
+            console.log(usr)
+            if (usr?.avatar != null){
+                setimg({uri: usr?.avatar});
+            }else{
+                setimg(require('@imgs/user_placeholder.png'))
+            }
+        }
+        fecthData();
+    }, []);
+
     return(     
         <Button onPress={() => {navigation.navigate('Account')}} style={{ borderRadius: 100, }} >
-            <MotiImage from={{opacity: 0, scale: .6,}} animate={{opacity: 1, scale: 1,}} transition={{delay: 400,}} source={require('@icons/avatar.png')} style={{width: 40, height: 40, borderRadius: 100}} />
+            <MotiImage from={{opacity: 0, scale: .6,}} animate={{opacity: 1, scale: 1,}} transition={{delay: 400,}} source={img} style={{width: 40, height: 40, borderRadius: 100}} />
         </Button>
         )}
 

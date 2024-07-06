@@ -12,6 +12,7 @@ import Octicons from '@expo/vector-icons/Octicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Check, NotepadText, Trash, } from 'lucide-react-native';
 import { useIsFocused } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 const { width, height } = Dimensions.get('window');
 const SCREEN_HEIGHT = 1.2 * height;
 
@@ -71,15 +72,16 @@ export default function NotafiscalSendScreen({ navigation, route}) {
 
     return (
         <Main style={{ backgroundColor: "#fff", }}>
+            <StatusBar style="light" translucent/>
             <MotiView state={bg} style={{ flex: 1,  }}>
-            {value == null && 
+                {value == null && 
                 <CameraView
                     barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
                     style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
                     facing="back"
-                    onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200) }}  >
+                    onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200); console.log(data.data) }}  >
                 </CameraView>}
-            <Scroll >
+                <Scroll >
                 <Header />
                 <Button onPress={() => {setvalue(null)}}  style={{ position: 'absolute', top: 0, right: 20, padding: 12, borderRadius: 12, width: 44, height: 44, backgroundColor: '#ffffff', justifyContent: 'center', alignItems: 'center',   }}>
                     <Trash size={24} color={color.secundary}/>
@@ -98,7 +100,6 @@ export default function NotafiscalSendScreen({ navigation, route}) {
                 </AnimatePresence>
                 
                 <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, flex: 1, }}>
-                    
                     
                     {value == null &&
                     <Column style={{ width: 250, height: 250, justifyContent: 'space-between', marginTop: 100, }}>
@@ -137,15 +138,10 @@ export default function NotafiscalSendScreen({ navigation, route}) {
                     {value != null &&
                             <MotiView style={{  borderRadius: 12, overflow: 'hidden', marginTop: 270, marginBottom: 50,  }} from={{opacity: 0, translateY:-30, }} animate={{opacity: 1,  translateY: 0, }} exit={{opacity: 0,  translateY: -30,}}>
                                 <Title style={{ color: '#fff', padding: 20, textAlign: 'center' }}>Quem você deseja beneficiar?</Title>
-                                <Row>
-                                <Button onPress={() => {navigation.navigate('NotafiscalONGS', {item:itm})}}  style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: '#fff', borderRadius: 100, }}>
+                                <Button onPress={() => {navigation.navigate('NotafiscalONGS', {item:itm})}}  style={{ flexGrow: 1, paddingVertical: 12, alignSelf: 'center', paddingHorizontal: 30, justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: '#fff', borderRadius: 100, }}>
                                     <LabelLI style={{ color: '#fff', }}>ONG</LabelLI>
                                 </Button>
-                                <Column style={{width: 12, }} />
-                                <Button style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center',  paddingVertical: 12, borderWidth: 2, borderColor: '#fff', borderRadius: 100, }}>
-                                    <LabelLI style={{ color: '#fff', }}>Causa</LabelLI>
-                                </Button>
-                                </Row>
+                              
                             </MotiView>}
                 
 
@@ -197,7 +193,6 @@ export default function NotafiscalSendScreen({ navigation, route}) {
                 </BottomSheetView>
             </BottomSheet>
             </MotiView>
-
         </Main>
     )
 }

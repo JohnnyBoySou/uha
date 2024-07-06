@@ -1,6 +1,4 @@
 const user = {  
-    moedas: '10,00',
-    points: 300,
     name: 'Ana Silva',
     email: 'email@example.com',
     cpf: '123.456.789-00',

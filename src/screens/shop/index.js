@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { ScrollView, FlatList, Pressable, ScrollViewComponent } from 'react-native';
+import { ScrollView, FlatList, Dimensions, ScrollViewComponent } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
@@ -9,7 +9,10 @@ import { useIsFocused, useNavigation, } from '@react-navigation/native';
 
 import { getShops, getOffers } from '@request/shop/index';
 import { getCategory } from '@request/category';
+import { StatusBar } from 'expo-status-bar'
 import Header from '@components/header';
+
+const { width, height } = Dimensions.get('window');
 
 export default function ShopScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -30,6 +33,12 @@ export default function ShopScreen({ navigation, route }) {
             }).catch(err => {
                 console.log(err)
             })
+            getOffers().then((res) => {
+                setoffers(res)
+                setloading(false);
+            }).catch(err => {
+                console.log(err)
+            })
         }
 
         fecthData()
@@ -38,6 +47,7 @@ export default function ShopScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
+            <StatusBar style='dark' backgroundColor="#fff" />
             <Scroll onScroll={(event) => {
                 const scrolling = event.nativeEvent.contentOffset.y;
                 if (scrolling > 80) {
@@ -141,17 +151,20 @@ const Offers = ({ data }) => {
             renderItem={({ item }) => (
                 <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                     <Column style={{ justifyContent: 'center', width: 124, }}>
-                        <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
+                        <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 12, borderTopRightRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                         <Row style={{ backgroundColor: '#d7d7d7', }}>
                             <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
                         </Row>
                         <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.slice(0, 42)}</Title>
                         <Row style={{}}>
-                            <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value}</Title>
+                            <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value.slice(0, -3)}</Title>
                             <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
                         </Row>
 
-                        <Title style={{ color: "#000", fontSize: 12, marginTop: -6, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value}</Title>
+                        <Row>
+                            <Title style={{ color: "#000", fontSize: 12, marginTop: -6,  marginRight: 4, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value?.slice(0, -3)}</Title>
+                           <Title style={{ color:"#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>pontos</Title>
+                        </Row>
                     </Column>
                 </Button>
             )}
@@ -163,6 +176,9 @@ const Offers = ({ data }) => {
 const Promos = ({ data }) => {
     const { color } = useContext(ThemeContext);
     const navigation = useNavigation();
+
+
+
     return (
         <Scroll horizontal showsHorizontalScrollIndicator={false} pagingEnabled >
             <FlatList
@@ -172,7 +188,7 @@ const Promos = ({ data }) => {
                 renderItem={({ item }) => (
                     <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}>
                         <Row style={{}}>
-                            <Column style={{ width: 220, justifyContent: 'center', }}>
+                            <Column style={{width: width * 0.5, justifyContent: 'center', }}>
                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item?.name?.length > 18 ? item.name.slice(0, 18) + '...' : item?.name.slice(0, 18)}</Title>
                                 <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.descri?.length > 80 ? item?.descri?.slice(0, 80) + '...' : item?.descri }</Label>
                                 <Row style={{ marginTop: 8, }}>
@@ -196,7 +212,7 @@ const Promos = ({ data }) => {
                 renderItem={({ item }) => (
                     <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}  >
                         <Row style={{}}>
-                            <Column style={{ width: 220, justifyContent: 'center', }}>
+                            <Column style={{ width: width * 0.5, justifyContent: 'center', }}>
                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
                                 <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
                                 <Row style={{ marginTop: 8, }}>
@@ -220,7 +236,7 @@ const Promos = ({ data }) => {
                 renderItem={({ item }) => (
                     <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}  >
                         <Row style={{}}>
-                            <Column style={{ width: 220, justifyContent: 'center', }}>
+                            <Column style={{ width: width * 0.5, justifyContent: 'center', }}>
                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
                                 <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
                                 <Row style={{ marginTop: 8, }}>

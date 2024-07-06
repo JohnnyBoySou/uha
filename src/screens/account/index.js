@@ -8,7 +8,7 @@ import Check from '@components/check';
 import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
 import { useNavigation } from '@react-navigation/native';
-import { getUser } from '@api/request/user/user';
+import { getPreferences } from '@api/user/preferences';
 import { StatusBar } from 'expo-status-bar';
 
 export default function AccountScreen({ navigation, }) {
@@ -16,7 +16,7 @@ export default function AccountScreen({ navigation, }) {
     const [data, setdata] = useState();
     useEffect(() => {
         const fecthData = async () => {
-            const usr = await getUser();
+            const usr = await getPreferences();
             setdata(usr);
         }
         fecthData();
@@ -37,7 +37,7 @@ export default function AccountScreen({ navigation, }) {
 
                 <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} delay={200} style={{ backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: "#fff", }}>Pontos em conta</Label>
-                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{data?.points}</Title>
+                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{data?.pontos}</Title>
                     <LineL />
                     <Label style={{ color: "#fff", marginTop: 12, }}>Saldo em moedas resgatadas</Label>
                     <Label style={{ color: "#fff", }}>R$ {data?.moedas}</Label>

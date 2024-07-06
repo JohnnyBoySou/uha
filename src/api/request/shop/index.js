@@ -1,13 +1,13 @@
 import axios from 'axios';
+import getToken  from '@hooks/getToken';
+import getBaseURL from '@hooks/getBaseUrl';
 
-const BASE_URL = 'https://gestao.uha.digital/api';
 
-const getToken = () => {
-  return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dlc3Rhby51aGEuZGlnaXRhbC9hcGkvYXV0aCIsImlhdCI6MTcyMDE3ODA3NiwiZXhwIjoxNzI1NDM0MDc2LCJuYmYiOjE3MjAxNzgwNzYsImp0aSI6ImNkY2dHNDkyUlVDT3NUR3ciLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.umdtgYapqpty67kxX_Y7BENEEC9eA7GloC6QwHKxfr0' 
-}
+import campaigns from '@data/campaigns/campaigns'
 
 export const getShops = async () => {
-  const token = getToken()
+  const token = await getToken()
+  const BASE_URL = await getBaseURL()
   try {
     const response = await axios.post(`${BASE_URL}/usuarios/estabelecimentos`, {}, {
         headers: {
@@ -21,11 +21,11 @@ export const getShops = async () => {
   }
 }
 
-
 export const getOffers = async () => {
-  const token = getToken()
+  const token = await getToken()
+  const BASE_URL = await getBaseURL()
   try {
-    const response = await axios.post(`${BASE_URL}/usuarios/estabelecimentos`, {}, {
+    const response = await axios.get(`${BASE_URL}/usuarios/estabelecimentos/get-ofertas-geral`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -37,9 +37,41 @@ export const getOffers = async () => {
   }
 }
 
+export const getServices = async () => {
+  const token = await getToken()
+  const BASE_URL = await getBaseURL()
+  try {
+    const res = await axios.get(`${BASE_URL}/usuarios/estabelecimentos/get-servicos-geral`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+} catch (error) {
+    const err = JSON.parse(error.request.response);
+    throw new Error(err.message)
+  }
+}
+
+export async function getSingleService(id) {
+  const token = await getToken()
+  const BASE_URL = await getBaseURL()
+  try {
+    const res = await axios.get(`${BASE_URL}/usuarios/estabelecimentos/get-servico-sigle/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+} catch (error) {
+    const err = JSON.parse(error.request.response);
+    throw new Error(err.message)
+  }
+}
 
 export async function getSingleShop(id) {
-  const token = getToken()
+  const token = await getToken()
+  const BASE_URL = await getBaseURL()
   try {
     const res = await axios.get(`${BASE_URL}/usuarios/estabelecimentos/get-single/${id}`, {
         headers: {
@@ -53,16 +85,15 @@ export async function getSingleShop(id) {
   }
 }
 
-
 export async function getSingleServices(id) {
-  const token = getToken()
+  const token = await getToken()
+  const BASE_URL = await getBaseURL()
   try {
     const res = await axios.get(`${BASE_URL}/usuarios/estabelecimentos/get-servicos/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
-    console.log(res.data)
     return res.data;
 } catch (error) {
     const err = JSON.parse(error.request.response);
@@ -70,9 +101,9 @@ export async function getSingleServices(id) {
   }
 }
 
-
 export async function getSingleOffers(id) {
-  const token = getToken()
+  const token = await getToken()
+  const BASE_URL = await getBaseURL()
   try {
     const res = await axios.get(`${BASE_URL}/usuarios/estabelecimentos/get-ofertas/${id}`, {
         headers: {
@@ -85,3 +116,15 @@ export async function getSingleOffers(id) {
     throw new Error(err.message)
   }
 }
+
+export async function getCampaigns() {
+  //const res = axios.get(BASE_URL + '/services')
+  return campaigns
+  //data = res.data
+}
+
+/*
+https://gestao.uha.digital/api/usuarios/estabelecimentos/get-servico-sigle/1 -- GET
+https://gestao.uha.digital/api/usuarios/estabelecimentos/get-ofertas-geral   -- GET
+https://gestao.uha.digital/api/usuarios/estabelecimentos/get-servicos-geral   -- GET
+*/

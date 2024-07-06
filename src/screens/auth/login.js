@@ -3,69 +3,22 @@ import { ActivityIndicator, Pressable, Alert, TextInput, KeyboardAvoidingView, S
 import { Main, Column, Title, Row, Label, Button, ButtonPR, LabelPR, U, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView } from 'moti';
-import { Eye, EyeOff, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser } from 'lucide-react-native'
+import { Eye, EyeOff, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser, Gift } from 'lucide-react-native'
 import CheckBox from '@components/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import Octicons from '@expo/vector-icons/Octicons';
 import BottomSheet from '@gorhom/bottom-sheet'
 import { createPreferences } from '@api/user/preferences';
 import { StatusBar } from 'expo-status-bar';
-import { getUser } from '@api/request/user/user';
-import Error from '../../components/error';
+import { getUser, registerUser } from '@api/request/user/user';
+import Error from '@components/error';
+import validator from 'validator';
+
 
 export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
-    const [pass, setpass] = useState(true);
-
-    const [focusEmail, setfocusEmail] = useState(false);
-    const [focusPass, setfocusPass] = useState(false);
-    const [focusName, setfocusName] = useState();
-    const [focusCPF, setfocusCPF] = useState();
-    const [focusCEP, setfocusCEP] = useState();
-    const [focusWhatsapp, setfocusWhatsapp] = useState();
-
-    const [loading, setloading] = useState(false);
-
-    const [email, setemail] = useState('ana.silva2000@gmail.com');
-    const [password, setpassword] = useState('@N@1956bt');
-    const [whatsapp, setwhatsapp] = useState('(45) 9 9193-5657');
-    const [cpf, setcpf] = useState('123.456.890-04');
-    const [cep, setcep] = useState('89251-300');
-    const [name, setname] = useState('Ana Silva Bastos');
-    const passStrong = useRef()
-
-    const checkPasswordStrength = (password) => {
-        const criteria = {
-            length: password?.length >= 8,
-            upperCase: /[A-Z]/.test(password),
-            lowerCase: /[a-z]/.test(password),
-            number: /\d/.test(password),
-        };
-        return criteria;
-    };
-
-    const passwordCriteria = checkPasswordStrength(password);
-    const porcentagePassword = Object.values(passwordCriteria).filter((e) => e).length / Object.values(passwordCriteria).length * 100;
-    const messagePassword = porcentagePassword < 50 ? 'Fraca' : porcentagePassword < 80 ? 'Razoável' : 'Forte';
-    const colorPassword = porcentagePassword < 50 ? color.red : porcentagePassword < 80 ? '#f5ad42' : color.green;
-   
-
-    const handleRegister = () => {
-        setloading(true)
-        setTimeout(() => {
-            setloading(false)
-            navigation.replace('Tabs')
-        }, 3000);
-    }
-
-    const handleFacebook = () => {
-    }
-    const handleGoogle = () => {
-    }
-    const handleAppleID = () => {
-    }
+    const [loading, setloading] = useState();
     const [type, settype] = useState('Entrar');
-    const [remember, setremember] = useState(true);
 
     const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Seja bem-vindo ao nosso aplicativo, esperamos que tenha uma ótima experiência.' } : { title: 'Escolha uma nova senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
 
@@ -89,138 +42,269 @@ export default function AuthLoginScreen({ navigation, }) {
             </Column>
 
             <ScrollView keyboardShouldPersistTaps="handled" style={{ paddingTop: 10, marginTop: 20, paddingHorizontal: margin.h, paddingVertical: 12, backgroundColor: "#fff", borderTopLeftRadius: 24, borderTopRightRadius: 24, }}>
-                <Column style={{}}>
                     <Pressable onPress={() => { navigation.goBack() }} style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#30303030", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
-                    {type == 'Entrar' && <Entrar type={type} settype={settype} loading={loading}/>}
+                    {type == 'Entrar' && <Entrar type={type} settype={settype} loading={loading} />}
 
-
-                    {type == 'Registrar' &&
-                        <MotiView from={{ translateX: 20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
-                            <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
-                                <Button onPress={() => { settype('Entrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Entrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                                    <Label style={{ color: type === 'Entrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Entrar</Label>
-                                </Button>
-                                <Column style={{ width: 12, }} />
-                                <Button onPress={() => { settype('Registrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Registrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                                    <Label style={{ color: type === 'Registrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Registrar</Label>
-                                </Button>
-                            </Row>
-                            <KeyboardAvoidingView behavior="padding"  >
-
-                                <Row style={{ borderRadius: 8, marginTop: 30, borderWidth: 2, borderColor: focusName ? color.primary : color.off, }}>
-                                    <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
-                                        <User color={focusName ? color.primary : color.secundary} size={22} />
-                                    </Column>
-                                    <TextInput
-                                        onFocus={() => setfocusName(true)}
-                                        onBlur={() => setfocusName(false)}
-                                        onChangeText={(e) => setname(e)}
-                                        value={name}
-                                        style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='Nome completo' placeholderTextColor="#11111190" />
-                                </Row>
-
-                                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCPF ? color.primary : color.off, }}>
-                                    <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
-                                        <BookUser color={focusCPF ? color.primary : color.secundary} size={22} />
-                                    </Column>
-                                    <TextInput
-                                        onFocus={() => setfocusCPF(true)}
-                                        onBlur={() => setfocusCPF(false)}
-                                        onChangeText={(e) => setcpf(e)}
-                                        value={cpf}
-                                        style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='CPF' placeholderTextColor="#11111190" />
-                                </Row>
-                                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusWhatsapp ? color.primary : color.off, }}>
-                                    <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
-                                        <Phone color={focusWhatsapp ? color.primary : color.secundary} size={22} />
-                                    </Column>
-                                    <TextInput
-                                        onFocus={() => setfocusWhatsapp(true)}
-                                        onBlur={() => setfocusWhatsapp(false)}
-                                        value={whatsapp}
-                                        onChangeText={(e) => setfocusWhatsapp(e)}
-                                        keyboardType='tel' style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='WhatsApp' placeholderTextColor="#11111190" />
-                                </Row>
-                                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCEP ? color.primary : color.off, }}>
-                                    <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
-                                        <MapPinned color={focusCEP ? color.primary : color.secundary} size={22} />
-                                    </Column>
-                                    <TextInput
-                                        onFocus={() => setfocusCEP(true)}
-                                        onBlur={() => setfocusCEP(false)}
-                                        value={cep}
-                                        onChangeText={(e) => setfocusCEP(e)}
-                                        keyboardType='email-address' style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='CEP (Código Postal)' placeholderTextColor="#11111190" />
-                                </Row>
-                                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
-                                    <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
-                                        <Mail color={focusEmail ? color.primary : color.secundary} size={22} />
-                                    </Column>
-                                    <TextInput
-                                        onFocus={() => setfocusEmail(true)}
-                                        onBlur={() => setfocusEmail(false)}
-                                        value={email}
-                                        onChangeText={(e) => setemail(e)}
-                                        keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='E-mail' placeholderTextColor="#11111190" />
-                                </Row>
-                                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusPass ? color.primary : color.off }}>
-                                    <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, borderColor: focusPass ? color.secundary : "#ffffff50", }}>
-                                        <Lock color={focusPass ? color.primary : color.secundary} size={22} />
-                                    </Column>
-                                    <TextInput
-                                        onFocus={() => setfocusPass(true)}
-                                        onBlur={() => setfocusPass(false)}
-                                        value={password}
-                                        onChangeText={(e) => setpassword(e)}
-                                        keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='Senha (8 digitos)' secureTextEntry={pass} placeholderTextColor="11111140" />
-
-                                    <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, borderRadius: 40, flexDirection: 'row', position: 'absolute', right: 18, top: 10, }}>
-                                        {pass ? <Eye size={20} color={color.primary} /> : <EyeOff size={20} color={color.primary} />}
-                                    </Pressable>
-                                </Row>
-
-
-                                <AnimatePresence>
-                                    {password?.length >= 1 &&
-                                        <MotiView from={{ opacity: 0, translateX: -20, }} animate={{ opacity: 1, translateX: 0, }} exit={{ opacity: 0, translateX: -20, }} transition={{ type: 'timing', duration: 200, }}>
-                                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 8, marginBottom: -10, }}>
-                                                <Column style={{ backgroundColor: color.off, height: 10, borderRadius: 30, width: 100, }}>
-                                                    <Column style={{ width: porcentagePassword, height: 10, borderRadius: 100, backgroundColor: colorPassword, }} />
-                                                </Column>
-                                                <Button onPress={() => { passStrong.current.expand() }} >
-                                                    <U>
-                                                        <SubLabel style={{ color: colorPassword }}>{messagePassword}</SubLabel>
-                                                    </U>
-                                                </Button>
-                                            </Row>
-                                        </MotiView>
-                                    }
-                                </AnimatePresence>
-
-                                <Pressable style={{ alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20, }} onPress={() => { setremember(!remember) }} >
-                                    <CheckBox status={remember} />
-                                    <Label style={{ fontFamily: font.bold, fontSize: 14, marginLeft: 6, }}>Permito se contatado por WhatsApp</Label>
-                                </Pressable>
-
-                                <ButtonPR onPress={handleRegister} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
-                                    <Row>
-                                        {loading ?
-                                            <ActivityIndicator animating={loading} color="#fff" size={27} />
-                                            :
-                                            <LabelPR>Registrar</LabelPR>
-                                        }
-                                    </Row>
-                                </ButtonPR>
-
-                                <Label style={{ fontFamily: font.medium, fontSize: 16, textAlign: 'center', marginHorizontal: 6, marginBottom: 30, }}>Ao registrar-se você concorda com os <U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
-
-                            </KeyboardAvoidingView>
-                        </MotiView>}
+                    {type == 'Registrar' && <Registrar type={type} settype={settype} />}
 
                     {type == 'ForgetPassword' && <ForgetPassword handleExit={handleExit} />}
-                </Column>
             </ScrollView>
 
+
+        </Main>
+    )
+}
+
+
+const Registrar = ({ type, settype }) => {
+    const passStrong = useRef()
+    const navigation = useNavigation();
+    const [pass, setpass] = useState(true);
+    const [remember, setremember] = useState(true);
+    const { color, font, margin, } = useContext(ThemeContext);
+    const [focusEmail, setfocusEmail] = useState(false);
+    const [focusPass, setfocusPass] = useState(false);
+    const [focusName, setfocusName] = useState();
+    const [focusCPF, setfocusCPF] = useState();
+    const [focusCEP, setfocusCEP] = useState();
+    const [focusCode, setfocusCode] = useState();
+    const [focusWhatsapp, setfocusWhatsapp] = useState();
+
+    const [loading, setloading] = useState(false);
+
+    const [email, setemail] = useState('email@gmail.com');
+    const [password, setpassword] = useState('12211jFFFd');
+    const [whatsapp, setwhatsapp] = useState('49991935657');
+    const [cpf, setcpf] = useState('123.456.890-01');
+    const [cep, setcep] = useState('89251-300');
+    const [name, setname] = useState('Joao Sousa');
+    const [code, setcode] = useState('9092');
+    const [error, setError] = useState();
+
+    const checkPasswordStrength = (password) => {
+        const criteria = {
+            length: password?.length >= 8,
+            upperCase: /[A-Z]/.test(password),
+            lowerCase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+        };
+        return criteria;
+    };
+
+    const passwordCriteria = checkPasswordStrength(password);
+    const porcentagePassword = Object.values(passwordCriteria).filter((e) => e).length / Object.values(passwordCriteria).length * 100;
+    const messagePassword = porcentagePassword < 50 ? 'Fraca' : porcentagePassword < 80 ? 'Razoável' : 'Forte';
+    const colorPassword = porcentagePassword < 50 ? color.red : porcentagePassword < 80 ? '#f5ad42' : color.green;
+
+    const validateEmail = (email) => validator.isEmail(email);
+    const validateCPF = (cpf) => validator.isLength(cpf, { min: 11, max: 14 });
+    const validateCEP = (cep) => validator.isPostalCode(cep, 'BR');
+    const validateWhatsapp = (whatsapp) => validator.isMobilePhone(whatsapp, 'pt-BR');
+
+
+    const handleRegister = async () => {
+
+        setError('')
+        //prenchimento obrigatório
+
+        if (!name || name.length < 5) {
+            return setError('Nome completo deve ter pelo menos 5 caracteres');
+        }
+
+        if (!validateCPF(cpf)) {
+            return setError('CPF inválido');
+        }
+        if (!validateWhatsapp(whatsapp)) {
+            return setError('WhatsApp inválido');
+        }
+        if (!validateCEP(cep)) {
+            return setError('CEP inválido');
+        }
+        if (!validateEmail(email)) {
+            return setError('E-mail inválido');
+        }
+        if (porcentagePassword < 50) {
+            return setError('Senha fraca, tente uma senha mais forte');
+        }
+
+        setloading(true);
+        const params = {
+            "name": name,
+            "email": email,
+            "password": password,
+            "cpf": cpf,
+            "whatsapp": whatsapp,
+            "cep": cep,
+            "code": code,
+            "is_whatsapp_send": remember == true ? 1 : 0,
+        };
+
+        //request api
+        await registerUser(params).then(async (res) => {
+            if (res.token) {
+                const saveUser = {
+                    "avatar": null,
+                    "name": res.name,
+                    "email": res.email,
+                    "password": password,
+                    "token": res.token,
+                    "remember": remember,
+                    "moedas": res.moedas,
+                    "pontos": res.points,
+                    "cpf": cpf,
+                    "whatsapp": whatsapp,
+                    "cep": cep,
+                };
+                await createPreferences(saveUser).then(res => {
+                    if (res) {
+                        navigation.replace('Tabs')
+                        setloading(false)
+                    }
+                })
+                setloading(false)
+            }
+
+        }).catch(err => {
+            console.log(err.message)
+            setError(err.message)
+            setloading(false)
+        }).finally(() => {
+            setloading(false)
+        })
+    }
+    return (
+
+        <Column>
+            <MotiView from={{ translateX: 20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
+                <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
+                    <Button onPress={() => { settype('Entrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Entrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
+                        <Label style={{ color: type === 'Entrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Entrar</Label>
+                    </Button>
+                    <Column style={{ width: 12, }} />
+                    <Button onPress={() => { settype('Registrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Registrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
+                        <Label style={{ color: type === 'Registrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Registrar</Label>
+                    </Button>
+                </Row>
+                <KeyboardAvoidingView >
+                    {error && <Error msg={error} show={error.length > 0} />}
+                    <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusName ? color.primary : color.off, }}>
+                        <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
+                            <User color={focusName ? color.primary : color.secundary} size={22} />
+                        </Column>
+                        <TextInput
+                            onFocus={() => setfocusName(true)}
+                            onBlur={() => setfocusName(false)}
+                            onChangeText={(e) => setname(e)}
+                            value={name}
+                            style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='Nome completo *' placeholderTextColor="#11111190" />
+                    </Row>
+
+                    <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCPF ? color.primary : color.off, }}>
+                        <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
+                            <BookUser color={focusCPF ? color.primary : color.secundary} size={22} />
+                        </Column>
+                        <TextInput
+                            onFocus={() => setfocusCPF(true)}
+                            onBlur={() => setfocusCPF(false)}
+                            onChangeText={(e) => setcpf(e)}
+                            value={cpf}
+                            style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='CPF *' placeholderTextColor="#11111190" />
+                    </Row>
+                    <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusWhatsapp ? color.primary : color.off, }}>
+                        <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
+                            <Phone color={focusWhatsapp ? color.primary : color.secundary} size={22} />
+                        </Column>
+                        <TextInput
+                            onFocus={() => setfocusWhatsapp(true)}
+                            onBlur={() => setfocusWhatsapp(false)}
+                            value={whatsapp}
+                            onChangeText={(e) => setwhatsapp(e)}
+                            keyboardType='tel' style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='WhatsApp *' placeholderTextColor="#11111190" />
+                    </Row>
+                    <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCEP ? color.primary : color.off, }}>
+                        <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
+                            <MapPinned color={focusCEP ? color.primary : color.secundary} size={22} />
+                        </Column>
+                        <TextInput
+                            onFocus={() => setfocusCEP(true)}
+                            onBlur={() => setfocusCEP(false)}
+                            value={cep}
+                            onChangeText={(e) => setcep(e)}
+                            keyboardType='email-address' style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='CEP (Código Postal) *' placeholderTextColor="#11111190" />
+                    </Row>
+                    <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
+                        <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
+                            <Mail color={focusEmail ? color.primary : color.secundary} size={22} />
+                        </Column>
+                        <TextInput
+                            onFocus={() => setfocusEmail(true)}
+                            onBlur={() => setfocusEmail(false)}
+                            value={email}
+                            onChangeText={(e) => setemail(e)}
+                            keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='E-mail *' placeholderTextColor="#11111190" />
+                    </Row>
+                    <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusPass ? color.primary : color.off }}>
+                        <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, borderColor: focusPass ? color.secundary : "#ffffff50", }}>
+                            <Lock color={focusPass ? color.primary : color.secundary} size={22} />
+                        </Column>
+                        <TextInput
+                            onFocus={() => setfocusPass(true)}
+                            onBlur={() => setfocusPass(false)}
+                            value={password}
+                            onChangeText={(e) => setpassword(e)}
+                            keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='Senha (8 digitos)' secureTextEntry={pass} placeholderTextColor="11111140" />
+
+                        <Pressable onPress={() => { setpass(!pass) }} style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 8, borderRadius: 40, flexDirection: 'row', position: 'absolute', right: 18, top: 10, }}>
+                            {pass ? <Eye size={20} color={color.primary} /> : <EyeOff size={20} color={color.primary} />}
+                        </Pressable>
+                    </Row>
+                    <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCode ? color.primary : color.off }}>
+                        <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, borderColor: focusCode ? color.secundary : "#ffffff50", }}>
+                            <Gift color={focusCode ? color.primary : color.secundary} size={22} />
+                        </Column>
+                        <TextInput
+                            onFocus={() => setfocusCode(true)}
+                            onBlur={() => setfocusCode(false)}
+                            value={code}
+                            onChangeText={(e) => setcode(e)}
+                            style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='Código de indicação' placeholderTextColor="11111140" />
+                    </Row>
+
+                    <AnimatePresence>
+                        {password?.length >= 1 &&
+                            <MotiView from={{ opacity: 0, translateX: -20, }} animate={{ opacity: 1, translateX: 0, }} exit={{ opacity: 0, translateX: -20, }} transition={{ type: 'timing', duration: 200, }}>
+                                <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 8, marginBottom: -10, }}>
+                                    <Column style={{ backgroundColor: color.off, height: 10, borderRadius: 30, width: 100, }}>
+                                        <Column style={{ width: porcentagePassword, height: 10, borderRadius: 100, backgroundColor: colorPassword, }} />
+                                    </Column>
+                                    <Button onPress={() => { passStrong.current.expand() }} >
+                                        <U>
+                                            <SubLabel style={{ color: colorPassword }}>{messagePassword}</SubLabel>
+                                        </U>
+                                    </Button>
+                                </Row>
+                            </MotiView>
+                        }
+                    </AnimatePresence>
+
+                    <Pressable style={{ alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20, }} onPress={() => { setremember(!remember) }} >
+                        <CheckBox status={remember} />
+                        <Label style={{ fontFamily: font.bold, fontSize: 14, marginLeft: 6, }}>Permito se contatado por WhatsApp</Label>
+                    </Pressable>
+
+                    <ButtonPR disabled={loading} onPress={handleRegister} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
+                        <Row>
+                            {loading ?
+                                <ActivityIndicator animating={loading} color="#fff" size={27} />
+                                :
+                                <LabelPR>Registrar</LabelPR>
+                            }
+                        </Row>
+                    </ButtonPR>
+
+                    <Label style={{ fontFamily: font.medium, fontSize: 16, textAlign: 'center', marginHorizontal: 6, marginBottom: 30, }}>Ao registrar-se você concorda com os <U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
+                </KeyboardAvoidingView>
+            </MotiView>
             <BottomSheet ref={passStrong} snapPoints={[0.1, 200]}>
                 <Column style={{ marginHorizontal: margin.h, marginVertical: margin.v, }}>
                     <SubLabel style={{ color: color.secundary, fontSize: 18, }}>Requisitos para a senha</SubLabel>
@@ -240,22 +324,23 @@ export default function AuthLoginScreen({ navigation, }) {
                         {passwordCriteria?.number ? <Octicons name="check-circle-fill" size={18} color={color.green} /> : <Octicons name="x-circle-fill" size={18} color={color.red} />}
                         <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111', }}>Um número.</Label>
                     </Row>
-
                 </Column>
             </BottomSheet>
-        </Main>
+        </Column>
+
     )
 }
 
 
-const Entrar = ({ type, settype,  }) => {
+
+const Entrar = ({ type, settype, }) => {
     const navigation = useNavigation();
-    const { color, font, margin} = useContext(ThemeContext)
+    const { color, font, margin } = useContext(ThemeContext)
     const a = false;
-    
+
     const [focusEmail, setfocusEmail] = useState(false);
     const [focusPass, setfocusPass] = useState(true);
-    
+
     const [email, setemail] = useState('admin@admin.com');
     const [password, setpassword] = useState('123457');
     const [pass, setpass] = useState();
@@ -314,7 +399,7 @@ const Entrar = ({ type, settype,  }) => {
             <KeyboardAvoidingView behavior="padding"  >
                 {error && <Error msg={error} show={error.length > 0} />}
 
-                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, marginTop: 30, }}>
+                <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
                     <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                         <Mail color={focusEmail ? color.primary : color.secundary} size={22} />
                     </Column>
@@ -364,40 +449,40 @@ const Entrar = ({ type, settype,  }) => {
 
 
             {a &&
-            <>
-            <Row style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center', }}>
-                <Column style={{ flexGrow: 1, height: 2, backgroundColor: color.off, }} />
-                <Label style={{ fontFamily: font.medium, textAlign: 'center', marginHorizontal: 6, }}>ou entre com</Label>
-                <Column style={{ flexGrow: 1, height: 2, backgroundColor: color.off, }} />
-            </Row>
+                <>
+                    <Row style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center', }}>
+                        <Column style={{ flexGrow: 1, height: 2, backgroundColor: color.off, }} />
+                        <Label style={{ fontFamily: font.medium, textAlign: 'center', marginHorizontal: 6, }}>ou entre com</Label>
+                        <Column style={{ flexGrow: 1, height: 2, backgroundColor: color.off, }} />
+                    </Row>
 
-            <Row style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 24, }}>
-                <Button  style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6, }} >
-                    <Column>
-                        <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/facebook.png')} style={{ width: 28, height: 28, }} />
-                        </Column>
-                        <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Facebook</Label>
-                    </Column>
-                </Button>
-                <Button  style={{ justifyContent: 'center', marginHorizontal: 20, alignItems: 'center', borderRadius: 6, }} >
-                    <Column>
-                        <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/google.png')} style={{ width: 28, height: 28, }} />
-                        </Column>
-                        <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Google</Label>
-                    </Column>
-                </Button>
-                <Button style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6, }} >
-                    <Column>
-                        <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/apple.png')} style={{ width: 28, height: 28, }} />
-                        </Column>
-                        <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Apple ID</Label>
-                    </Column>
-                </Button>
-            </Row>
-            </>
+                    <Row style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 24, }}>
+                        <Button style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6, }} >
+                            <Column>
+                                <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
+                                    <MotiImage source={require('@icons/facebook.png')} style={{ width: 28, height: 28, }} />
+                                </Column>
+                                <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Facebook</Label>
+                            </Column>
+                        </Button>
+                        <Button style={{ justifyContent: 'center', marginHorizontal: 20, alignItems: 'center', borderRadius: 6, }} >
+                            <Column>
+                                <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
+                                    <MotiImage source={require('@icons/google.png')} style={{ width: 28, height: 28, }} />
+                                </Column>
+                                <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Google</Label>
+                            </Column>
+                        </Button>
+                        <Button style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6, }} >
+                            <Column>
+                                <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
+                                    <MotiImage source={require('@icons/apple.png')} style={{ width: 28, height: 28, }} />
+                                </Column>
+                                <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Apple ID</Label>
+                            </Column>
+                        </Button>
+                    </Row>
+                </>
             }
 
         </MotiView>
