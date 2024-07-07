@@ -7,27 +7,35 @@ import Notify from '@components/notify';
 import Check from '@components/check';
 import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
-import { useNavigation } from '@react-navigation/native';
-import { getPreferences } from '@api/user/preferences';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
+import { listUser } from '@api/request/user/user';
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const [data, setdata] = useState();
+    const [user, setuser] = useState();
+    const isFocused = useIsFocused();
+
     useEffect(() => {
         const fecthData = async () => {
-            const usr = await getPreferences();
-            setdata(usr);
+            listUser().then((res) => {
+                console.log(res)
+                setuser(res);
+            });
         }
         fecthData();
-    }, []);
+    }, [isFocused]);
+
     const [dark, setdark] = useState(false);
+
+
+
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style="dark" backgroundColor="#fff" animated />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
-                    <Title>Olá, {data?.name}</Title>
+                    <Title>Olá, {user?.name.length > 12 ? user?.name.slice(0,12) + '...' : user?.name }</Title>
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <Notify />
                         <Column style={{ width: 16, }} />
@@ -37,10 +45,10 @@ export default function AccountScreen({ navigation, }) {
 
                 <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} delay={200} style={{ backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: "#fff", }}>Pontos em conta</Label>
-                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{data?.pontos}</Title>
+                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{user?.PontosAtuais}</Title>
                     <LineL />
-                    <Label style={{ color: "#fff", marginTop: 12, }}>Saldo em moedas resgatadas</Label>
-                    <Label style={{ color: "#fff", }}>R$ {data?.moedas}</Label>
+                    <Label style={{ color: "#fff", marginTop: 12, }}>Notas fiscais</Label>
+                    <Label style={{ color: "#fff", }}>{user?.NotasDoadas}</Label>
                     <ButtonSE onPress={() => { navigation.navigate('Shop') }} style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 32, }}  >
                         <LabelSE style={{ color: color.background, }}>Utilizar pontos</LabelSE>
                     </ButtonSE>

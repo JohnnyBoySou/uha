@@ -32,8 +32,6 @@ export default function AccountDetailsScreen({ navigation, }) {
         const fecthData = async () => {
             setloading(true);
             await listUser().then(res => {
-                console.log('list sistem')
-                console.log(res.avatar)
                 setavatar(res.avatar);
                 setold_avatar(res.avatar);
                 setemail(res.email);
@@ -67,7 +65,7 @@ export default function AccountDetailsScreen({ navigation, }) {
         if (!name || name.length < 5) {
             return setError('Nome completo deve ter pelo menos 5 caracteres');
         }
-        if (!validateWhatsapp(whatsapp)) {
+        if (whatsapp.length < 10) {
             return setError('WhatsApp inválido');
         }
         if (!validateCEP(cep)) {

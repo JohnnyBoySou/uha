@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { Vibration, FlatList, Animated, Dimensions } from 'react-native';
+import { Vibration, FlatList, Animated, Dimensions, Pressable } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, ButtonOut, LabelLI, U } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState } from 'moti';
@@ -243,9 +243,33 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
 
 
 const CardImage = ({ item }) => {
+    const [open, setopen] = useState(false);
+    const scaleIn = useAnimationState({
+        from: {
+            width: width * 0.8, height: 284,
+        },
+        to: {
+            width: width, height: 484,
+        },
+    });
+
+    const handleImg = () => {
+        if (open) {
+            scaleIn.transitionTo('to');
+            setopen(false);
+        } else {
+            scaleIn.transitionTo('from');
+            setopen(true);
+        }
+    }
+
+    useEffect(() => {
+        handleImg();
+    }, [])
+
     return (
-        <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
-            <MotiImage source={{ uri: item }} style={{ width: width * 0.8, height: 284, borderRadius: 24, backgroundColor: '#fff', }} />
-        </Column>
+        <Pressable onLongPress={handleImg} style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
+            <MotiImage state={scaleIn} source={{ uri: item }} style={{ borderRadius: 24,}} />
+        </Pressable>
     )
 }

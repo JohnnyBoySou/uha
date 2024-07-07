@@ -21,8 +21,8 @@ export const getUser = async (email, password) => {
 };
 
 export const registerUser = async (params) => {
+  console.log(params)
   const BASE_URL = await getBaseURL();
-  const token = await getToken();
   const sanitizedEmail = validator.normalizeEmail(params.email);
   const sanitizedPassword = validator.escape(params.password);
   const sanitizedName = validator.escape(params.name);

@@ -15,8 +15,9 @@ export default function ONGSingleScreen({ navigation, route }) {
      
     const [showDesc, setshowDesc] = useState(false);
     return (
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll >
-                <Header title="Detalhes" />
+                <Header title="Detalhes" rose />
                 
                 <Column style={{ justifyContent: 'center', alignItems: 'center',  marginVertical: 24,  }}>
                     <MotiImage source={{uri: item?.img}} from={{opacity: 0, scale: 0.6,}} animate={{opacity: 1, scale: 1,}} style={{ width: 200, height: 200, borderRadius: 12, backgroundColor: '#FFE0F6', marginBottom: 30,}}/>
@@ -34,16 +35,9 @@ export default function ONGSingleScreen({ navigation, route }) {
 
                 </Column>
                 <Banners data={item?.imgs} />
-                <Column style={{ marginHorizontal: margin.h, }}>
-                    <Title style={{ marginBottom: 6, fontSize: 18, }}>Onde encontrar</Title>
-
-                    <Button style={{ alignSelf: 'flex-start', marginVertical: 12, backgroundColor:'#FFE0F6', paddingVertical: 8, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24, borderRadius: 100,  }}>
-                        <LabelLI style={{ color: color.primary, fontSize: 15,  }}>Abrir no mapa</LabelLI>
-                    </Button>
-
-                </Column>
-
+                <Column style={{height: 60, }} />
             </Scroll>
+        </Main>
     )
 } 
 

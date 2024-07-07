@@ -75,15 +75,12 @@ export default function ShopScreen({ navigation, route }) {
 
                 {type != null && <Result value={type} />}
 
-
-
-                {!loading && <>
+                {!loading && <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
                     <Promos data={data} title="Promos incríveis" />
                     <Title style={{ marginHorizontal: margin.h, marginBottom: 10, marginTop: 20, }}>Ofertas relâmpago</Title>
                     <Offers data={offers} />
                     <Promos data={data} title="Lojas da sua região" />
-                </>}
-
+                </MotiView>}
 
                 <Column style={{ height: 100, }} />
             </Scroll>

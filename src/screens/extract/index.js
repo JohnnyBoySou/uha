@@ -14,12 +14,13 @@ import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { getExtractDonate, getExtractRifas, getExtractNotas, getExtractTransacao } from '@request/extract/gets';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
+import { Skeleton } from 'moti/skeleton';
 
 
 export default function ExtractScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     let type = route.params?.type
-
+    const [loading, setloading] = useState(true);
     const [page, setpage] = useState('Notas fiscais');
     const [dateSelect, setdateSelect] = useState('Hoje');
 
@@ -35,7 +36,7 @@ export default function ExtractScreen({ navigation, route }) {
     const isFocused = useIsFocused();
 
     //trasacao troca por servico 
- 
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -55,46 +56,55 @@ export default function ExtractScreen({ navigation, route }) {
     const selectData = page === 'Doações' ? doacoes : page === 'Transações' ? transacao : page === 'Notas fiscais' ? notas : page === 'Rifas' ? rifas : []
 
     useEffect(() => {
-        listUser().then((res) => {
-            setuser(res)
-        });
-        getExtractNotas().then((res) => {
-            setnotas(res)
-        });
-        getExtractTransacao().then((res) => {
-            settransacao(res)
-        });
-        const handleType = () => {
+        const fetchData = () => {
+            listUser().then((res) => {
+                setuser(res)
+            });
+            getExtractNotas().then((res) => {
+                setnotas(res)
+            });
+            getExtractTransacao().then((res) => {
+                settransacao(res)
+            });
             if (type === page) {
                 return
             } else if (type?.length > 0) {
                 setpage(type);
             }
+            setloading(false);
         }
-        handleType()
+        fetchData()
     }, [isFocused]);
 
 
     const fetchData = async (type) => {
         if (type === 'Doações') {
-            if(doacoes.length > 0) return
+            if (doacoes?.length > 0) return
+            setloading(true)
             getExtractDonate().then(res => {
                 setdoacoes(res)
+                setloading(false)
             })
         } else if (type === 'Rifas') {
-            if(rifas.length > 0) return
+            if (rifas?.length > 0) return
+            setloading(true)
             getExtractRifas().then((res) => {
                 setrifas(res)
+                setloading(false)
             });
         } else if (type === 'Notas fiscais') {
-            if(notas.length > 0) return
+            if (notas?.length > 0) return
+            setloading(true)
             getExtractNotas().then((res) => {
                 setnotas(res)
+                setloading(false)
             });
         } else if (type === 'Transações') {
-            if(transacao.length > 0) return
+            if (transacao?.length > 0) return
+            setloading(true)
             getExtractTransacao().then((res) => {
                 settransacao(res)
+                setloading(false)
             });
         }
     };
@@ -220,20 +230,22 @@ export default function ExtractScreen({ navigation, route }) {
                     </MotiView>
                 }
             </AnimatePresence>
+
             <NavBar bts={bts} page={page} setpage={setpage} fetchData={fetchData} scrollTags={scrollTags} margin={margin} color={color} font={font} />
 
-            <FlatList
-                ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
-                data={selectData}
-                keyExtractor={(item) => item.id}
-                ListEmptyComponent={<Empty type={page} />}
-                ref={scrollMain}
-                initialNumToRender={5}
-                showsVerticalScrollIndicator={false}
-                onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
-                ListFooterComponent={<Column style={{ height: 100, }} />}
-                renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} onLong={(item) => { setcache(item); edit.current?.expand() }} />}
-            />
+            {loading ? <SkeletonList /> :
+                <FlatList
+                    ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
+                    data={selectData}
+                    keyExtractor={(item) => item.id}
+                    ListEmptyComponent={<Empty type={page} />}
+                    ref={scrollMain}
+                    initialNumToRender={5}
+                    showsVerticalScrollIndicator={false}
+                    onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
+                    ListFooterComponent={<Column style={{ height: 100, }} />}
+                    renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} onLong={(item) => { setcache(item); edit.current?.expand() }} />}
+                />}
 
             <BottomSheet ref={edit} snapPoints={snapPoints}
                 modalStyle={{ borderTopLeftRadius: 24, borderTopRightRadius: 24, }} >
@@ -242,7 +254,6 @@ export default function ExtractScreen({ navigation, route }) {
                     </Column>
                 </BottomSheetScrollView>
             </BottomSheet>
-
         </Main>
     )
 }
@@ -267,9 +278,9 @@ const NavBar = ({ bts, page, setpage, fetchData, scrollTags, margin, color, font
 const Empty = ({ type }) => {
     const { color, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
-    const msg = type === 'Doações' ? 'Começe a dor agora mesmo!' : type === 'Pontos' ? 'Começe a utilizar seus \npontos agora mesmo!' : type === 'Rifas' ? 'Participe de nossas rifas \ne ganhe prêmios!' : type === 'Moedas' ? 'Começe a utilizar suas \nmoedas agora mesmo!' : 'Nada por aqui, cadastre \numa nota fiscal!'
-    const screen = type === 'Doações' ? 'Donate' : type === 'Pontos' ? 'Shop' : type === 'Rifas' ? 'Rifas' : type === 'Moedas' ? 'Shop' : 'NotafiscalSend'
-    const btmessage = type === 'Doações' ? 'Fazer doação' : type === 'Pontos' ? 'Comprar' : type === 'Rifas' ? 'Participar' : type === 'Moedas' ? 'Comprar' : 'Nota Fiscal'
+    const msg = type === 'Doações' ? 'Começe a dor agora mesmo!' : type === 'Transações' ? 'Começe a utilizar seus \npontos agora mesmo!' : type === 'Rifas' ? 'Participe de nossas rifas \ne ganhe prêmios!' : type === 'Moedas' ? 'Começe a utilizar suas \nmoedas agora mesmo!' : 'Nada por aqui, cadastre \numa nota fiscal!'
+    const screen = type === 'Doações' ? 'Donate' : type === 'Transações' ? 'Shop' : type === 'Rifas' ? 'Rifas' : type === 'Moedas' ? 'Shop' : 'NotafiscalSend'
+    const btmessage = type === 'Doações' ? 'Fazer doação' : type === 'Transações' ? 'Comprar' : type === 'Rifas' ? 'Participar' : type === 'Moedas' ? 'Comprar' : 'Nota Fiscal'
     return (
         <Column style={{ backgroundColor: '#f9f9f9', marginHorizontal: margin.h, marginVertical: 20, borderRadius: 24, overflow: 'hidden', }}>
             <Row style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 30, }}>
@@ -300,14 +311,14 @@ const CardExtrato = ({ item, index, onLong, type }) => {
     const cl = item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Cancelado' ? color.red : item.status === 'Expirado' ? '#000000' : '#ffffff'
     const icon = item?.status === 'Confirmado' ? <Feather color={color.green} name='check' size={24} /> : item?.status === 'Aguardando' ? <Info color={color.blue} size={24} /> : item?.status === 'Cancelado' ? <Feather name='x' size={24} color={color.red} /> : item?.status === 'Expirado' ? <Feather name='loader' color="#000000" size={24} /> : null;
     return (
-        <MotiView from={{ opacity: 0, translateX: 20, }} animate={{ opacity: 1, translateX: 0, }} delay={(index) * 300}>
+        <MotiView from={{ opacity: 0, translateX: 20, }} animate={{ opacity: 1, translateX: 0, }} delay={(index) * 200} transition={{ type: 'timing', duration: 300 }}>
             <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
                 <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                             {icon}
                         </Column>
-                        <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', textAlign: 'center'}}>{item?.date} </SubLabel>
+                        <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', textAlign: 'center' }}>{item?.date} </SubLabel>
                     </Column>
 
                     <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
@@ -345,6 +356,83 @@ const Header = ({ dates, dateSelect, setdateSelect, }) => {
                         </Button>
                     </MotiView>
                 ))}
+            </Row>
+        </Column>
+    )
+}
+
+const SkeletonList = () => {
+    return (
+        <Column style={{ marginHorizontal: 28, marginVertical: 12, }}>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Skeleton colorMode="light" radius="round" height={75} width={75} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={85} />
+                </Column>
+                <Column style={{ alignItems: 'flex-end' }}>
+                    <Skeleton colorMode="light" radius={8} height={42} width={180} />
+                    <Column style={{ height: 10, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={150} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                </Column>
+            </Row>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 24, }}>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Skeleton colorMode="light" radius="round" height={75} width={75} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={85} />
+                </Column>
+                <Column style={{ alignItems: 'flex-end' }}>
+                    <Skeleton colorMode="light" radius={8} height={42} width={180} />
+                    <Column style={{ height: 10, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={150} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                </Column>
+            </Row>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Skeleton colorMode="light" radius="round" height={75} width={75} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={85} />
+                </Column>
+                <Column style={{ alignItems: 'flex-end' }}>
+                    <Skeleton colorMode="light" radius={8} height={42} width={180} />
+                    <Column style={{ height: 10, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={150} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                </Column>
+            </Row>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 24, }}>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Skeleton colorMode="light" radius="round" height={75} width={75} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={85} />
+                </Column>
+                <Column style={{ alignItems: 'flex-end' }}>
+                    <Skeleton colorMode="light" radius={8} height={42} width={180} />
+                    <Column style={{ height: 10, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={150} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                </Column>
+            </Row>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Skeleton colorMode="light" radius="round" height={75} width={75} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={85} />
+                </Column>
+                <Column style={{ alignItems: 'flex-end' }}>
+                    <Skeleton colorMode="light" radius={8} height={42} width={180} />
+                    <Column style={{ height: 10, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={150} />
+                    <Column style={{ height: 4, }} />
+                    <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                </Column>
             </Row>
         </Column>
     )

@@ -13,6 +13,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Skeleton } from 'moti/skeleton';
 
 
 export default function HomeScreen({ navigation, }) {
@@ -30,10 +31,12 @@ export default function HomeScreen({ navigation, }) {
     const [offers, setoffers] = useState();
     const [shops, setshops] = useState();
     const [services, setservices] = useState();
-    const [campaigns, setcampaigns] = useState();
+    const [loading, setloading] = useState(true);
+
     useEffect(() => {
         const fetchData = async () => {
-            await getOffers().then((res) => {
+            setloading(true)
+            getOffers().then((res) => {
                 setoffers(res)
             })
             getShops().then((res) => {
@@ -42,9 +45,7 @@ export default function HomeScreen({ navigation, }) {
             getServices().then((res) => {
                 setservices(res)
             })
-            getCampaigns().then((res) => {
-                setcampaigns(res)
-            })
+            setloading(false)
         }
         fetchData()
     }, [])
@@ -155,13 +156,14 @@ export default function HomeScreen({ navigation, }) {
                 <MotiView from={{ opacity: 0, translateX: 40 }} animate={{ opacity: 1, translateX: 0, }} delay={800}>
                     <Carrousel color={color} type="home" />
                 </MotiView>
-                <OffersCards data={offers} />
 
-                <Queridinhos data={shops} />
+                <OffersCards data={offers} loading={loading} />
+
+                <Queridinhos data={shops} loading={loading} />
 
                 <Donate />
 
-                <Servicos data={services} />
+                <Servicos data={services} loading={loading}/>
 
                 <Categorias />
 
@@ -378,60 +380,86 @@ export const Carrousel = () => {
     );
 };
 
-const OffersCards = ({ data }) => {
+const OffersCards = ({ data, loading }) => {
     const { color, margin, font } = useContext(ThemeContext);
     const navigation = useNavigation();
     return (
-        <>
-            <Row style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 16, justifyContent: 'space-between', alignItems: 'center', }}>
+        <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, }}>
+            <Row style={{ paddingHorizontal: margin.h,  paddingVertical: 16, paddingTop: 30, justifyContent: 'space-between', alignItems: 'center', }}>
                 <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
                 <Pressable onPress={() => { navigation.navigate('ShopOffers') }} >
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                 </Pressable>
             </Row>
-            <FlatList
-                data={data}
-                ListFooterComponent={
-                    <Column style={{ marginRight: 28, backgroundColor: color.primary + 20, paddingBottom: 12, borderTopLeftRadius: 20, borderTopRightRadius: 20, }} >
-                        <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, backgroundColor: color.primary, width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
-                            <Label style={{ color: '#fff', fontFamily: font.bold, fontSize: 16, textAlign: 'center', }}>Ver mais {'\n'}Ofertas</Label>
-                        </Button>
+
+            {loading ?
+                <Row style={{ marginHorizontal: margin.h, }}>
+                    <Column style={{ marginRight: 12, }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
                     </Column>
-                }
-                ListHeaderComponent={<Column style={{ width: 24 }} />}
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                style={{ backgroundColor: color.background, }}
-                renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                        <Column style={{ justifyContent: 'center', width: 124, }}>
-                            <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
-                            <Row style={{ backgroundColor: '#d7d7d7', }}>
-                                <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
-                            </Row>
-                            <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.length > 32 ? item?.name.slice(0, 42) + '...' : item?.name}</Title>
-                            <Row style={{}}>
-                                <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value.slice(0, -3)}</Title>
-                                <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
-                            </Row>
-                        <Row>
-                            <Title style={{ color: "#000", fontSize: 12, marginTop: -6,  marginRight: 4, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value?.slice(0, -3)}</Title>
-                           <Title style={{ color:"#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>pontos</Title>
-                        </Row>            
+                    <Column style={{ marginRight: 12, }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
+                    </Column>
+                    <Column style={{ marginRight: 12, }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
+                    </Column>
+                </Row>
+                :
+                <FlatList
+                    data={data}
+                    ListFooterComponent={
+                        <Column style={{ marginRight: 28, backgroundColor: color.primary + 20, paddingBottom: 12, borderTopLeftRadius: 20, borderTopRightRadius: 20, }} >
+                            <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, backgroundColor: color.primary, width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
+                                <Label style={{ color: '#fff', fontFamily: font.bold, fontSize: 16, textAlign: 'center', }}>Ver mais {'\n'}Ofertas</Label>
+                            </Button>
                         </Column>
-                    </Button>
-                )}
-                keyExtractor={item => item.id}
-            />
-        </>
+                    }
+                    ListHeaderComponent={<Column style={{ width: 24 }} />}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    style={{ backgroundColor: color.background, }}
+                    renderItem={({ item }) => (
+                        <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                            <Column style={{ justifyContent: 'center', width: 124, }}>
+                                <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                <Row style={{ backgroundColor: '#d7d7d7', }}>
+                                    <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
+                                </Row>
+                                <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.length > 32 ? item?.name.slice(0, 42) + '...' : item?.name}</Title>
+                                <Row style={{}}>
+                                    <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value.slice(0, -3)}</Title>
+                                    <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
+                                </Row>
+                                <Row>
+                                    <Title style={{ color: "#000", fontSize: 12, marginTop: -6, marginRight: 4, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value?.slice(0, -3)}</Title>
+                                    <Title style={{ color: "#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>pontos</Title>
+                                </Row>
+                            </Column>
+                        </Button>
+                    )}
+                    keyExtractor={item => item.id}
+                />}
+        </Column>
     )
 }
 
-const Queridinhos = ({ data }) => {
+const Queridinhos = ({ data, loading }) => {
     const navigation = useNavigation()
     const { color, margin, font } = useContext(ThemeContext);
     return (
-        <>
+        <Column style={{ backgroundColor: color.background,  }}>
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background, }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                     <Title style={{ fontSize: 22, }}>Estabelecimentos</Title>
@@ -441,28 +469,41 @@ const Queridinhos = ({ data }) => {
                 </Row>
             </Column>
 
-            <FlatList style={{ backgroundColor: color.background, }}
-                data={data}
-                ListFooterComponent={<Column style={{ width: 24 }} />}
-                ListHeaderComponent={<Column style={{ width: 24 }} />}
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
-                        <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
-                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
-                            <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.descri?.length > 42 ? item?.descri.slice(0, 42) + '...' : item?.descri}</Label>
-                        </Column>
-                    </Button>
-                )}
-                keyExtractor={item => item.id}
-            />
-        </>
+            {loading ?
+                <Row style={{ marginHorizontal: margin.h, }}>
+                    <Column style={{ marginRight: 12, justifyContent: 'center', alignItems: 'center', }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={240} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                    </Column>
+                    <Column style={{ marginRight: 12, justifyContent: 'center', alignItems: 'center', }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={240} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                    </Column>
+                </Row> :
+                <FlatList style={{ backgroundColor: color.background, }}
+                    data={data}
+                    ListFooterComponent={<Column style={{ width: 24 }} />}
+                    ListHeaderComponent={<Column style={{ width: 24 }} />}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    renderItem={({ item }) => (
+                        <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
+                            <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                                <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
+                                <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
+                                <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.descri?.length > 42 ? item?.descri.slice(0, 42) + '...' : item?.descri}</Label>
+                            </Column>
+                        </Button>
+                    )}
+                    keyExtractor={item => item.id}
+                />}
+        </Column>
     )
 }
 
-const Servicos = ({ data }) => {
+const Servicos = ({ data, loading }) => {
     const navigation = useNavigation()
     const { color, margin, font } = useContext(ThemeContext);
     return (
@@ -473,6 +514,31 @@ const Servicos = ({ data }) => {
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                 </Pressable>
             </Row>
+            {loading ?
+                <Row style={{ marginHorizontal: margin.h, }}>
+                    <Column style={{ marginRight: 12, }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
+                    </Column>
+                    <Column style={{ marginRight: 12, }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
+                    </Column>
+                    <Column style={{ marginRight: 12, }}>
+                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
+                        <Column style={{ height: 6, }} />
+                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
+                    </Column>
+                </Row>
+                :
             <FlatList
                 data={data}
                 ListFooterComponent={<Column style={{ width: 24 }} />}
@@ -489,7 +555,7 @@ const Servicos = ({ data }) => {
                     </Button>
                 )}
                 keyExtractor={item => item.id}
-            />
+            />}
         </Column>
     )
 }

@@ -65,15 +65,14 @@ export default function DonateHideScreen({ navigation,  }) {
                     </Column>
                 </Row>
 
-                <Column style={{ backgroundColor: "#fff", marginTop: 50, paddingVertical: 24, alignSelf: 'center', paddingHorizontal: 42, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
+                <Column style={{ backgroundColor: "#fff", marginTop: 20, paddingVertical: 20, alignSelf: 'center', paddingHorizontal: 32, borderRadius: 14, marginBottom: -70, zIndex: 99, }}>
                     <Title style={{ fontSize: 24, color: color.secundary, lineHeight: 28, }}>R$</Title>
                     <Title style={{ fontSize: 52, color: color.secundary, lineHeight: 56, }}>{formatValue(value)},00</Title>
                 </Column>
 
-
                 <Column style={{  flexGrow: 1, alignItems: 'center', backgroundColor: color.secundary,  borderTopLeftRadius: 32, borderTopRightRadius: 32,  paddingBottom: 60,  }}>
                 
-                    <Row style={{ paddingTop: 100, paddingBottom: 80, }}>
+                    <Row style={{ paddingTop: 100, paddingBottom: 40, }}>
                         <MotiView from={{opacity: 0, translateY: 30,}} animate={{opacity: 1, translateY: 0,}} delay={300} transition={{type: 'timing'}}>
                             <Button onPress={() => {setvalue(10)}}  style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor:"#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 10,00</Label></Button>
                         </MotiView>

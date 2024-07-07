@@ -16,7 +16,6 @@ export default function ShopQRCodeScreen({ navigation, route }) {
     const [clip, setclip] = useState(false);
     const handleClipboard = async () => { await Clipboard.setStringAsync(item.code); setclip(true)};
 
-
     return (
         <Main style={{ backgroundColor: color.primary, }}>
             <StatusBar style="light" backgroundColor={color.primary}/>
@@ -25,18 +24,18 @@ export default function ShopQRCodeScreen({ navigation, route }) {
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <ArrowLeft color={color.secundary} />
                     </Button>
-                    <Title style={{ color: '#fff', marginTop: 8, }}>Pagar</Title>
+                    <Title style={{ color: '#fff', marginTop: 8, }}>Resgatar</Title>
                     <Column style={{ width: 42, height: 42, justifyContent: 'center', alignItems: 'center', }}>
                         <Info color="#fff" size={32} />
                     </Column>
                 </Row>
 
-                <MotiView from={{ opacity: 0, translateX: -40, }} animate={{ opacity: 1, translateX: 0, }} style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderRadius: 12, backgroundColor: '#ffffff', marginHorizontal: margin.h, marginTop: 20, display: 'flex' }} >
+                <MotiView from={{ opacity: 0, translateY: -40, }} animate={{ opacity: 1, translateY: 0, }} delay={200} style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderRadius: 12, backgroundColor: '#ffffff', marginHorizontal: margin.h, marginTop: 20, display: 'flex' }} >
                     <Row style={{ padding: 8, }}>
                         <MotiImage source={{ uri: item.product.img }} style={{ width: 56, height: 56, borderRadius: 8,  }} />
                         <Column style={{ justifyContent: 'center', marginLeft: 20, }}>
-                            <Title style={{ fontSize: 18, }}>{item.product.name} </Title>
-                            <Title style={{ fontSize: 14, color: color.primary, marginTop: -5, }}>{item?.product?.value.slice(0, -3)} pontos</Title>
+                            <Title style={{ fontSize: 18, }}>{item?.product?.name?.length > 14 ? item?.product?.name?.slice(0, 14) + '...' : item?.product?.name} </Title>
+                            <Title style={{ fontSize: 14, color: color.primary, marginTop: -5, }}>{item?.product?.value?.slice(0, -3)} pontos</Title>
                         </Column>
                     </Row>
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, marginRight: 12, }}>
@@ -44,7 +43,7 @@ export default function ShopQRCodeScreen({ navigation, route }) {
                     </Button>
                 </MotiView>
 
-                <MotiView delay={800} transition={{ type: 'timing' }} from={{ opacity: 0, translateY: 100, }} animate={{ opacity: 1, translateY: 0, }} style={{ justifyContent: 'center', alignItems: 'center',  }}>
+                <MotiView delay={500} transition={{ type: 'spring' }} from={{ opacity: 0, translateY: 100, }} animate={{ opacity: 1, translateY: 0, }} style={{ justifyContent: 'center', alignItems: 'center',  }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 20, }}>
 
                         <Column style={{ width: 42, height: 42, borderRadius: 100, backgroundColor: color.primary, marginBottom: -24, zIndex: 99, }} />
@@ -109,16 +108,3 @@ export default function ShopQRCodeScreen({ navigation, route }) {
         </Main>
     )
 }
-
-/**
- *   <Column style={{ marginHorizontal: margin.h - 8, }}>
-                    <Column style={{ backgroundColor: '#fff',  paddingTop: 20,  paddingHorizontal: 28, borderTopLeftRadius: 24, borderTopRightRadius: 24, paddingBottom: 40, marginBottom: -8,}}>
-                        <Title>Status do Pedido</Title>
-                        <Column style={{ backgroundColor: '#FFE0F6', borderRadius: 12, paddingVertical: 10, marginTop: 12, borderWidth: 2, borderColor: color.primary, }}>
-                            <Title style={{ color: color.primary,  fontSize: 16, justifyContent: 'center', alignItems: 'center', textAlign: 'center', }}>Aguardando confirmação</Title>
-                        </Column>
-                    </Column>
-                    <Svg style={{ marginTop: -11, }} width="100%" height="85" viewBox="0 0 589 85" fill="none" xmlns="http://www.w3.org/2000/svg"><G clipPath="url(#clip0_407_84)"><Path d="M49 85L-0.363442 -0.500009L98.3635 -0.500001L49 85Z" fill="white"/><Path d="M147 85L97.6366 -0.500009L196.363 -0.500001L147 85Z" fill="white"/><Path d="M245 85L195.637 -0.500009L294.363 -0.500001L245 85Z" fill="white"/><Path d="M343 85L293.637 -0.500009L392.363 -0.500001L343 85Z" fill="white"/><Path d="M442 85L392.637 -0.500009L491.363 -0.500001L442 85Z" fill="white"/><Path d="M540 85L490.637 -0.500009L589.363 -0.500001L540 85Z" fill="white"/></G><Defs><ClipPath id="clip0_407_84"><Rect width="589" height="85" fill="white"/></ClipPath></Defs></Svg>
-                </Column>
-                
- */

@@ -34,7 +34,7 @@ export default function NotafiscalSuccessScreen({ navigation, route }) {
                         <LabelPR style={{ fontFamily: font.bold, }}>Nova nota fiscal</LabelPR>
                     </ButtonPR>
                     <Column style={{ height: 12, }} />
-                    <ButtonOut onPress={() => { navigation.navigate('Extract', { type: 'Notas fiscais' }) }} style={{ paddingHorizontal: 24, borderColor: color.secundary, }}>
+                    <ButtonOut onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', type: 'Notas fiscais' }) }} style={{ paddingHorizontal: 24, borderColor: color.secundary, }}>
                         <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Ver minhas notas</Label>
                     </ButtonOut>
                 </Column>

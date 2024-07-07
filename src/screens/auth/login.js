@@ -13,6 +13,7 @@ import { StatusBar } from 'expo-status-bar';
 import { getUser, registerUser } from '@api/request/user/user';
 import Error from '@components/error';
 import validator from 'validator';
+import { TextInputMask } from 'react-native-masked-text'
 
 
 export default function AuthLoginScreen({ navigation, }) {
@@ -42,12 +43,12 @@ export default function AuthLoginScreen({ navigation, }) {
             </Column>
 
             <ScrollView keyboardShouldPersistTaps="handled" style={{ paddingTop: 10, marginTop: 20, paddingHorizontal: margin.h, paddingVertical: 12, backgroundColor: "#fff", borderTopLeftRadius: 24, borderTopRightRadius: 24, }}>
-                    <Pressable onPress={() => { navigation.goBack() }} style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#30303030", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
-                    {type == 'Entrar' && <Entrar type={type} settype={settype} loading={loading} />}
+                <Pressable onPress={() => { navigation.goBack() }} style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#30303030", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
+                {type == 'Entrar' && <Entrar type={type} settype={settype} loading={loading} />}
 
-                    {type == 'Registrar' && <Registrar type={type} settype={settype} />}
+                {type == 'Registrar' && <Registrar type={type} settype={settype} />}
 
-                    {type == 'ForgetPassword' && <ForgetPassword handleExit={handleExit} />}
+                {type == 'ForgetPassword' && <ForgetPassword handleExit={handleExit} />}
             </ScrollView>
 
 
@@ -72,13 +73,13 @@ const Registrar = ({ type, settype }) => {
 
     const [loading, setloading] = useState(false);
 
-    const [email, setemail] = useState('email@gmail.com');
-    const [password, setpassword] = useState('12211jFFFd');
-    const [whatsapp, setwhatsapp] = useState('49991935657');
-    const [cpf, setcpf] = useState('123.456.890-01');
-    const [cep, setcep] = useState('89251-300');
-    const [name, setname] = useState('Joao Sousa');
-    const [code, setcode] = useState('9092');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
+    const [whatsapp, setwhatsapp] = useState('');
+    const [cpf, setcpf] = useState('');
+    const [cep, setcep] = useState('');
+    const [name, setname] = useState('');
+    const [code, setcode] = useState('');
     const [error, setError] = useState();
 
     const checkPasswordStrength = (password) => {
@@ -99,11 +100,8 @@ const Registrar = ({ type, settype }) => {
     const validateEmail = (email) => validator.isEmail(email);
     const validateCPF = (cpf) => validator.isLength(cpf, { min: 11, max: 14 });
     const validateCEP = (cep) => validator.isPostalCode(cep, 'BR');
-    const validateWhatsapp = (whatsapp) => validator.isMobilePhone(whatsapp, 'pt-BR');
-
 
     const handleRegister = async () => {
-
         setError('')
         //prenchimento obrigatório
 
@@ -114,7 +112,7 @@ const Registrar = ({ type, settype }) => {
         if (!validateCPF(cpf)) {
             return setError('CPF inválido');
         }
-        if (!validateWhatsapp(whatsapp)) {
+        if (whatsapp.length < 10) {
             return setError('WhatsApp inválido');
         }
         if (!validateCEP(cep)) {
@@ -165,7 +163,6 @@ const Registrar = ({ type, settype }) => {
             }
 
         }).catch(err => {
-            console.log(err.message)
             setError(err.message)
             setloading(false)
         }).finally(() => {
@@ -203,34 +200,45 @@ const Registrar = ({ type, settype }) => {
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                             <BookUser color={focusCPF ? color.primary : color.secundary} size={22} />
                         </Column>
-                        <TextInput
+                        <TextInputMask
+                            type={'cpf'}
                             onFocus={() => setfocusCPF(true)}
                             onBlur={() => setfocusCPF(false)}
                             onChangeText={(e) => setcpf(e)}
                             value={cpf}
+                            keyboardType='number-pad'
                             style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='CPF *' placeholderTextColor="#11111190" />
                     </Row>
                     <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusWhatsapp ? color.primary : color.off, }}>
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                             <Phone color={focusWhatsapp ? color.primary : color.secundary} size={22} />
                         </Column>
-                        <TextInput
+                        <TextInputMask
+                            type={'custom'}
+                            options={{
+                                mask: '(99) 9 9999-9999'
+                            }}
                             onFocus={() => setfocusWhatsapp(true)}
                             onBlur={() => setfocusWhatsapp(false)}
                             value={whatsapp}
                             onChangeText={(e) => setwhatsapp(e)}
-                            keyboardType='tel' style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='WhatsApp *' placeholderTextColor="#11111190" />
+                            keyboardType='number-pad'  style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='WhatsApp *' placeholderTextColor="#11111190" />
                     </Row>
                     <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCEP ? color.primary : color.off, }}>
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                             <MapPinned color={focusCEP ? color.primary : color.secundary} size={22} />
                         </Column>
-                        <TextInput
+                        <TextInputMask
+                            type={'custom'}
+                            options={{
+                                mask: '99999-999'
+                            }}
                             onFocus={() => setfocusCEP(true)}
                             onBlur={() => setfocusCEP(false)}
                             value={cep}
+                            keyboardType='number-pad'
                             onChangeText={(e) => setcep(e)}
-                            keyboardType='email-address' style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='CEP (Código Postal) *' placeholderTextColor="#11111190" />
+                             style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='CEP (Código Postal) *' placeholderTextColor="#11111190" />
                     </Row>
                     <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -341,8 +349,8 @@ const Entrar = ({ type, settype, }) => {
     const [focusEmail, setfocusEmail] = useState(false);
     const [focusPass, setfocusPass] = useState(true);
 
-    const [email, setemail] = useState('admin@admin.com');
-    const [password, setpassword] = useState('123457');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
     const [pass, setpass] = useState();
     const [remember, setremember] = useState();
     const [loading, setloading] = useState();
@@ -351,12 +359,12 @@ const Entrar = ({ type, settype, }) => {
         seterror('')
         //prenchimento obrigatório
         if (!email || email?.length < 5) {
-            return Alert.alert('Campo incompleto', 'Preencha o campo de e-mail', [
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
-            ]);
+            seterror('Preencha o campo de e-mail');
+            return
         }
         if (!password || password?.length < 6) {
-            return alert('Preencha o campo de senha');
+            seterror('Preencha o campo de senha');
+            return
         }
         setloading(true);
         //request api
@@ -378,7 +386,6 @@ const Entrar = ({ type, settype, }) => {
                 }
             })
         }).catch(err => {
-            console.log(err.message)
             seterror(err.message)
             setloading(false)
         }).finally(() => {

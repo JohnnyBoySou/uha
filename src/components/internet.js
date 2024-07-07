@@ -12,15 +12,20 @@ export default function Internet() {
     const [messageConnection, setMessageConnection] = useState(false);
 
     useEffect(() => {
-        if (netInfo?.isConnected) {
-            setMessageConnection(false);
-        } else {
-            setMessageConnection(true);
+        const fecthData = () => {
+            if (netInfo?.isConnected) {
+                setMessageConnection(false);
+            } else {
+                setMessageConnection(true);
+            }
         }
+        fecthData()
     }, [netInfo]);
 
+    if (!messageConnection) {
+        return null}
     return (<AnimatePresence>
-        {messageConnection &&
+     
         <MotiView from={{opacity:0, translateY: -50,}} animate={{opacity: 1, translateY: 0,}} exit={{translateY: 0, opacity: 0,}} style={{ position: 'absolute', top: 0, width: '100%', zIndex: 99, }}>
             <Row style={{ paddingTop: 40, backgroundColor: '#f7f7f7', justifyContent: 'center',  paddingBottom: 12, }}>
                 <Button style={{ backgroundColor: color?.secundary+10, padding: 12,  borderRadius: 100,}}>
@@ -32,7 +37,6 @@ export default function Internet() {
                 </Column>
             </Row>
         </MotiView>
-        }
     </AnimatePresence>
     )
 }
