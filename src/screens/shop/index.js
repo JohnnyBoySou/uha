@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef, useMemo } from 'react';
-import {  FlatList, Dimensions, Animated } from 'react-native';
+import { FlatList, Dimensions, Animated } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
@@ -23,10 +23,7 @@ export default function ShopScreen({ navigation, route }) {
     const [type, settype] = useState(route.params?.type);
     const [data, setdata] = useState();
     const [offers, setoffers] = useState();
-    const a = false;
-
     const [loading, setloading] = useState(true);
-    const [error, seterror] = useState();
 
     useEffect(() => {
         const fecthData = async = () => {
@@ -44,7 +41,6 @@ export default function ShopScreen({ navigation, route }) {
                 console.log(err)
             })
         }
-
         fecthData()
     }, [])
     const [fixedMenu, setFixedMenu] = useState(false);
@@ -52,39 +48,30 @@ export default function ShopScreen({ navigation, route }) {
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style='dark' backgroundColor="#fff" />
-            <Scroll onScroll={(event) => {
-                const scrolling = event.nativeEvent.contentOffset.y;
-                if (scrolling > 80) {
-                    setFixedMenu(true);
-                } else {
-                    setFixedMenu(false);
-                }
-            }} scrollEventThrottle={16}>
-
-
+            <Scroll onScroll={(event) => {const scrolling = event.nativeEvent.contentOffset.y;if (scrolling > 80) {setFixedMenu(true);} else {setFixedMenu(false);}}} scrollEventThrottle={16}>
                 <Header rose />
-
                 {type == null &&
-                    <><Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
+                    <>
+                    <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
                         <Title style={{ fontSize: 28, lineHeight: 28, }}>Estabelecimentos parceiros </Title>
                         <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
                     </Column>
-                        <Cards />
-                    </>}
-
+                    <Cards />
+                </>}
 
                 {type != null && <Result value={type} />}
-
-                {!loading && <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
+                
+                {!loading && <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={600}>
                     <Promos data={data} title="Promos incríveis" />
                     <Title style={{ marginHorizontal: margin.h, marginBottom: 10, marginTop: 20, }}>Ofertas relâmpago</Title>
                     <Offers data={offers} />
                     <Promos data={data} title="Lojas da sua região" />
                 </MotiView>}
-
+                
+                
+                
                 <Column style={{ height: 100, }} />
             </Scroll>
-
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
                 <AnimatePresence>
                     {fixedMenu &&
@@ -102,7 +89,6 @@ export default function ShopScreen({ navigation, route }) {
 const Result = ({ value }) => {
     const [type, settype] = useState(value);
     const [data, setdata] = useState();
-    const { isFocused } = useIsFocused();
     const { color, margin } = useContext(ThemeContext);
     useEffect(() => {
         const fecthData = async () => {
@@ -147,7 +133,7 @@ const Offers = ({ data }) => {
             showsHorizontalScrollIndicator={false}
             horizontal
             style={{ marginVertical: 12, }}
-            renderItem={({ item }) =>  <CardOffers item={item} />}
+            renderItem={({ item }) => <CardOffers item={item} />}
             keyExtractor={item => item.id}
         />
     )
@@ -165,7 +151,7 @@ const Promos = ({ data, title }) => {
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                         <Column style={{ justifyContent: 'center', paddingLeft: 20, height: 124, width: width * 0.5, }}>
                             <Title style={{ marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item?.name?.length > 18 ? item.name.slice(0, 18) + '...' : item?.name.slice(0, 18)}</Title>
-                            <Label style={{ fontSize: 12, lineHeight: 14, marginTop: 2, color: color.secundary+99, }}>{item?.descri?.length > 40 ? item?.descri?.slice(0, 40) + '...' : item?.descri}</Label>
+                            <Label style={{ fontSize: 12, lineHeight: 14, marginTop: 2, color: color.secundary + 99, }}>{item?.descri?.length > 40 ? item?.descri?.slice(0, 40) + '...' : item?.descri}</Label>
                             <Row style={{ marginTop: 8, }}>
                                 {item?.categories?.slice(0, 2).map((cat) => (
                                     <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>

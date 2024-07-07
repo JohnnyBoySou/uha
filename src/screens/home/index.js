@@ -14,7 +14,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Skeleton } from 'moti/skeleton';
+import { ExpandingDot } from "react-native-animated-pagination-dots";
 
+const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -163,15 +165,15 @@ export default function HomeScreen({ navigation, }) {
 
                 <Donate />
 
-                <Servicos data={services} loading={loading}/>
+                <Servicos data={services} loading={loading} />
 
                 <Categorias />
 
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100, paddingTop: 10, }}>
-                    <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: '#111', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
-                        <Label style={{ fontFamily: font.bold, color: '#111', fontSize: 16, }}>Central de ajuda</Label>
+                    <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: color.secundary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
+                        <Label style={{ fontFamily: font.bold, color: color.secundary, fontSize: 16, }}>Central de ajuda</Label>
                     </Button>
-                    <Button onPress={() => { navigation.navigate('Donate',) }} style={{ borderWidth: 2, borderColor: color.primary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
+                    <Button onPress={() => { navigation.navigate('Donate',) }} style={{ backgroundColor: color.primary+20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, }}>
                         <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
                     </Button>
                 </Row>
@@ -290,41 +292,23 @@ const Categorias = () => {
 
 export const Carrousel = () => {
     const navigation = useNavigation();
-    const [activeIndex, setActiveIndex] = useState(0);
+    const { color, margin, font, } = useContext(ThemeContext);
     const flatListRef = useRef(null);
-    const windowWidth = 300;
     const scrollX = useRef(new Animated.Value(0)).current;
 
-    const activyColor = '#5C0D45';
-    const inactivyColor = '#5C0D4570';
-
-    useEffect(() => {
-        const listener = scrollX.addListener(({ value }) => {
-            const index = Math.round(value / windowWidth);
-            setActiveIndex(index);
-        });
-
-        return () => {
-            scrollX.removeListener(listener);
-        };
-    }, [scrollX, windowWidth]);
-
-    const handleScroll = Animated.event(
-        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-        { useNativeDriver: false }
-    );
 
     const render = ({ item }) => {
         const link = item.img;
         return (
-            <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, }}>
-                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
-            </Button>
+            <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
+                <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, }}>
+                    <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
+                </Button>
+            </Column>
         );
     };
 
     const home = [
-        { id: '1', title: '1', img: require('@imgs/carrousel1.png'), route: 'Share' },
         { id: '2', title: '2', img: require('@imgs/carrousel2.png'), route: 'Notafiscal' },
         { id: '3', title: '3', img: require('@imgs/carrousel3.png'), route: 'ShopOffers' },
     ];
@@ -340,42 +324,26 @@ export const Carrousel = () => {
                 keyExtractor={item => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                ListHeaderComponent={<View style={{ width: 28 }} />}
-                ListFooterComponent={<View style={{ width: 0 }} />}
                 snapToAlignment='center'
                 pagingEnabled
-                onScroll={handleScroll}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
             />
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 16, marginBottom: 24, }}>
-                {home.map((_, index) => {
-                    const inputRange = [
-                        (index - 1) * windowWidth,
-                        index * windowWidth,
-                        (index + 1) * windowWidth
-                    ];
-
-                    const dotWidth = scrollX.interpolate({
-                        inputRange,
-                        outputRange: [8, 30, 8],
-                        extrapolate: 'clamp',
-                    });
-
-                    return (
-                        <>
-                            <Animated.View
-                                key={index}
-                                style={{
-                                    width: dotWidth,
-                                    height: 8,
-                                    borderRadius: 4,
-                                    backgroundColor: index == activeIndex ? activyColor : inactivyColor,
-                                    marginHorizontal: 4,
-                                }}
-                            />
-                        </>
-                    );
-                })}
-            </View>
+            <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: 10, marginBottom: 14, }}>
+                <ExpandingDot
+                    data={home}
+                    expandingDotWidth={20}
+                    scrollX={scrollX}
+                    containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5,
+                        marginHorizontal: 2,
+                    }}
+                    activeDotColor={color.secundary}
+                    inActiveDotColor={color.secundary + 50}
+                />
+            </Column>
         </Column>
     );
 };
@@ -385,7 +353,7 @@ const OffersCards = ({ data, loading }) => {
     const navigation = useNavigation();
     return (
         <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, }}>
-            <Row style={{ paddingHorizontal: margin.h,  paddingVertical: 16, paddingTop: 30, justifyContent: 'space-between', alignItems: 'center', }}>
+            <Row style={{ paddingHorizontal: margin.h, paddingVertical: 16, paddingTop: 30, justifyContent: 'space-between', alignItems: 'center', }}>
                 <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
                 <Pressable onPress={() => { navigation.navigate('ShopOffers') }} >
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
@@ -459,7 +427,7 @@ const Queridinhos = ({ data, loading }) => {
     const navigation = useNavigation()
     const { color, margin, font } = useContext(ThemeContext);
     return (
-        <Column style={{ backgroundColor: color.background,  }}>
+        <Column style={{ backgroundColor: color.background, }}>
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background, }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                     <Title style={{ fontSize: 22, }}>Estabelecimentos</Title>
@@ -539,23 +507,23 @@ const Servicos = ({ data, loading }) => {
                     </Column>
                 </Row>
                 :
-            <FlatList
-                data={data}
-                ListFooterComponent={<Column style={{ width: 24 }} />}
-                ListHeaderComponent={<Column style={{ width: 24 }} />}
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                renderItem={({ item }) => (
-                    <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                        <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <MotiImage source={{ uri: item.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                            <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item.title?.length > 10 ? item?.title?.slice(0, 11) + '...' : item?.title}</Title>
-                            <Label style={{ textAlign: 'center', width: 84, fontSize: 14, lineHeight: 15, marginTop: 3, color: color.secundary + 99, fontFamily: font.medium, marginBottom: 12, }}>{item.label}</Label>
-                        </Column>
-                    </Button>
-                )}
-                keyExtractor={item => item.id}
-            />}
+                <FlatList
+                    data={data}
+                    ListFooterComponent={<Column style={{ width: 24 }} />}
+                    ListHeaderComponent={<Column style={{ width: 24 }} />}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    renderItem={({ item }) => (
+                        <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+                            <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                                <MotiImage source={{ uri: item.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item.title?.length > 10 ? item?.title?.slice(0, 11) + '...' : item?.title}</Title>
+                                <Label style={{ textAlign: 'center', width: 84, fontSize: 14, lineHeight: 15, marginTop: 3, color: color.secundary + 99, fontFamily: font.medium, marginBottom: 12, }}>{item.label}</Label>
+                            </Column>
+                        </Button>
+                    )}
+                    keyExtractor={item => item.id}
+                />}
         </Column>
     )
 }
@@ -590,9 +558,11 @@ const Donate = () => {
     const render = ({ item }) => {
         const link = item.img;
         return (
-            <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, marginRight: 12 }}>
-                <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, }} />
-            </Button>
+            <Column style={{ width: width, justifyContent: 'center', alignItems: 'center',  }}>
+                <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, marginRight: 12 }}>
+                    <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, }} />
+                </Button>
+            </Column>
         );
     };
 
@@ -613,42 +583,27 @@ const Donate = () => {
                 keyExtractor={item => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                ListHeaderComponent={<View style={{ width: 28 }} />}
-                ListFooterComponent={<View style={{ width: 0 }} />}
                 snapToAlignment='center'
                 pagingEnabled
                 onScroll={handleScroll}
             />
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 14, marginBottom: 0, }}>
-                {home.map((_, index) => {
-                    const inputRange = [
-                        (index - 1) * windowWidth,
-                        index * windowWidth,
-                        (index + 1) * windowWidth
-                    ];
 
-                    const dotWidth = scrollX.interpolate({
-                        inputRange,
-                        outputRange: [8, 30, 8],
-                        extrapolate: 'clamp',
-                    });
-
-                    return (
-                        <>
-                            <Animated.View
-                                key={index}
-                                style={{
-                                    width: dotWidth,
-                                    height: 8,
-                                    borderRadius: 4,
-                                    backgroundColor: index == activeIndex ? activyColor : inactivyColor,
-                                    marginHorizontal: 4,
-                                }}
-                            />
-                        </>
-                    );
-                })}
-            </View>
+            <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: 10, }}>
+                    <ExpandingDot
+                        data={[1, 2]}
+                        expandingDotWidth={20}
+                        scrollX={scrollX}
+                        containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                        dotStyle={{
+                            width: 10,
+                            height: 10,
+                            borderRadius: 5,
+                            marginHorizontal: 2,
+                        }}
+                        activeDotColor={color.secundary}
+                        inActiveDotColor={color.secundary + 50}
+                    />
+                </Column>
         </Column>
     );
 };

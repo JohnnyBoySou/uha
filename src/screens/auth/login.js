@@ -347,7 +347,7 @@ const Entrar = ({ type, settype, }) => {
     const a = false;
 
     const [focusEmail, setfocusEmail] = useState(false);
-    const [focusPass, setfocusPass] = useState(true);
+    const [focusPass, setfocusPass] = useState(false);
 
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');

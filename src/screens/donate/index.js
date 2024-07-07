@@ -47,12 +47,17 @@ export default function DonateScreen({ navigation, }) {
                 </MotiView>
 
                 <Column style={{ alignItems: 'center', backgroundColor: color.secundary, borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, paddingBottom: 150, }}>
+                    
+                    
+                    <MotiView  from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={300}>
                     <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
                         <Label style={{ color: '#fff', }}>Total em pontos: </Label>
                         <Button style={{ borderRadius: 100, }} >
                             <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary + 20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12, }}>{patinhas}</Label>
                         </Button>
                     </Row>
+                    </MotiView>
+
                     <Row style={{ paddingTop: 0, paddingBottom: 40, }}>
                         <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={300} transition={{ type: 'timing' }}>
                             <Button onPress={() => { setvalue(10) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 10,00</Label></Button>
@@ -64,7 +69,9 @@ export default function DonateScreen({ navigation, }) {
                             <Button onPress={() => { setvalue(50) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 50,00</Label></Button>
                         </MotiView>
                     </Row>
+                    <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={500}>
                     <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean} />
+                    </MotiView>
 
                     <ButtonPR style={{ paddingHorizontal: 24, marginTop: 30, width: '68%', marginHorizontal: 28, }} disabled={loading} onPress={() => { navigation.navigate('DonateValue', { valor: value }) }} >
                         <>

@@ -146,21 +146,14 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                         <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', bottom: 30, left: 30, }}>
                             <Column style={{}}>
                                 <Row style={{ marginVertical: 20, }}>
-                                    <Button onPress={() => { navigation.navigate('Extract', { type: 'Pontos' }) }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                                    <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', type: 'Notas fiscais' }) }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
                                         <NotepadText size={32} color="#fff" />
                                     </Button>
                                     <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
                                         <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Minhas notas</Label>
                                     </MotiView>
                                 </Row>
-                                <Row>
-                                    <Button onPress={() => { bottomEnviar.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
-                                        <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
-                                    </Button>
-                                    <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#0d8cd4', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
-                                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Digitar o código</Label>
-                                    </MotiView>
-                                </Row>
+                               
                             </Column>
                         </MotiView>}
                 </AnimatePresence>
@@ -186,3 +179,13 @@ export default function NotafiscalSendScreen({ navigation, route }) {
         </Main>
     )
 }
+/**
+ *  <Row>
+                                    <Button onPress={() => { bottomEnviar.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
+                                        <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
+                                    </Button>
+                                    <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#0d8cd4', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
+                                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Digitar o código</Label>
+                                    </MotiView>
+                                </Row>
+ */

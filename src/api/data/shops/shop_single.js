@@ -30,7 +30,7 @@ const shop_single = [
     {
         name: "Movida",
         id: 18,
-        desc: 'Aluguel de carros e veículos utilitários com a Movida Rent a Car. Reserve online e economize! ',
+        desc: 'Aluguel de carros e veículos utilitários com a Movida Rent a Car. Reserve online e economize!',
         cep: '89260665',
         address: "Rua Josival Lourenço, N. 12 - Centro - PR",
         phone: "11999999999",
