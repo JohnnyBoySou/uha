@@ -73,11 +73,13 @@ export default function DonateScreen({ navigation, }) {
                     <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean} />
                     </MotiView>
 
-                    <ButtonPR style={{ paddingHorizontal: 24, marginTop: 30, width: '68%', marginHorizontal: 28, }} disabled={loading} onPress={() => { navigation.navigate('DonateValue', { valor: value }) }} >
+                    <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={700} style={{ flexGrow: 1,  width: '78%', }}>
+                    <ButtonPR style={{ paddingHorizontal: 24, marginTop: 30, width: '88%', marginHorizontal: 28, }} disabled={loading} onPress={() => { navigation.navigate('DonateValue', { valor: value }) }} >
                         <>
                             {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal: 31, marginVertical: 1 }} /> : <LabelLI style={{ color: '#fff', }}>Continuar</LabelLI>}
                         </>
                     </ButtonPR>
+                    </MotiView>
                 </Column>
 
             </Scroll>

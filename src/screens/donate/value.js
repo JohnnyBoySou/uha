@@ -86,10 +86,11 @@ export default function DonateValueScreen({ navigation, route }) {
                     </ButtonOut>
                     }
 
+
                     <Row style={{ marginHorizontal: - 24, justifyContent: 'center', alignItems: 'center', marginTop: 10, }}>
                         <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
                         <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
-                            
+                        <Column style={{ width: '100%', borderBottomWidth: 4, borderColor: '#d7d7d7', borderStyle: 'dashed', }} />
                         </Column>
                         <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
                     </Row>
