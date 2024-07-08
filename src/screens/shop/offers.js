@@ -20,11 +20,9 @@ export default function ShopOffersScreen({ navigation, route }) {
             setloading(true)
             getOffers().then((res) => {
                 setoffers(res)
-            })
-           
-            setTimeout(() => {
+            }).finally(() => {
                 setloading(false)
-            }, 400);
+            });
         }
         fecthData()
     }, [])

@@ -11,7 +11,7 @@ export default function AsyncStaticScreen({ navigation, }) {
             if (user?.email) {
                 setTimeout(() => {
                     navigation.replace('Tabs')
-                }, 2000);
+                }, 1200);
             }
             else{
                navigation.replace('Onboarding')

@@ -54,9 +54,7 @@ export default function ShopSingleScreen({ navigation, route }) {
         }).catch((err) => {
             seterror(err)
         }).finally(() => {
-            setTimeout(() => {
-                setloading(false)
-            }, 1200);
+            setloading(false)
         })
     }
     fecthData()

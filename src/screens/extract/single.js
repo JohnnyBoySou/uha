@@ -28,9 +28,8 @@ export default function ExtractSingleScreen({ navigation, route }) {
                 setshop(res?.shop);
                 setong(res?.ong);
                 setitem(res);
-                setTimeout(() => {
-                    setloading(false);
-                }, 600);
+            }).finally(() => {
+                setloading(false);
             });
         }
         fetchData()
