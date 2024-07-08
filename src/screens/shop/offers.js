@@ -21,9 +21,7 @@ export default function ShopOffersScreen({ navigation, route }) {
             getOffers().then((res) => {
                 setoffers(res)
             })
-            getServices().then((res) => {
-                setservices(res)
-            })
+           
             setTimeout(() => {
                 setloading(false)
             }, 400);
@@ -53,9 +51,7 @@ export default function ShopOffersScreen({ navigation, route }) {
 
                 <Title style={{ marginHorizontal: margin.h, marginBottom: 5, marginTop: 0, }}>⚡ Relâmpago</Title>
                 <Rain data={offers} loading={loading} />
-                <Title style={{ marginHorizontal: margin.h, marginBottom: 5, marginTop: 10, }}>Todas as ofertas</Title>
-                <Offers data={offers} loading={loading} />
-                <Column style={{ height: 50, }} />
+                
             </Scroll>
 
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>

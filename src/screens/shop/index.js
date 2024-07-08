@@ -25,28 +25,24 @@ export default function ShopScreen({ navigation, route }) {
     const [offers, setoffers] = useState();
     const [loading, setloading] = useState(true);
     const [services, setservices] = useState();
+    
     useEffect(() => {
         const fecthData = async = () => {
             setloading(true);
             getShops().then((res) => {
                 setdata(res)
-            }).catch(err => {
-                console.log(err)
             })
             getOffers().then((res) => {
                 setoffers(res)
-            }).catch(err => {
-                console.log(err)
             })
             getServices().then((res) => {
                 setservices(res)
-            }).catch(err => {
-                console.log(err)
             })
             setloading(false);
         }
         fecthData()
     }, [])
+
     const [fixedMenu, setFixedMenu] = useState(false);
 
     return (
@@ -56,19 +52,17 @@ export default function ShopScreen({ navigation, route }) {
                 <Header rose />
                 {type == null &&
                     <>
-                        <MotiView from={{ translateY: -20, opacity: 0, }} animate={{ translateY: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={400} style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
+                        <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
                             <Title style={{ fontSize: 28, lineHeight: 28, letterSpacing: -1,}}>Estabelecimentos parceiros </Title>
                             <Label style={{ marginVertical: 6, fontSize: 16,  }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
-                        </MotiView>
+                        </Column>
                         <Cards />
                     </>}
-                {type != null && <Result value={type} />}
-                {!loading && <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={700}>
-                    <Promos data={data} title="Promos incríveis" />
-                    <Offers data={offers} />
-                    <Promos data={data} title="Lojas da sua região" />
-                    <Services data={services} title="Veja mais serviços" />
-                </MotiView>}
+                <Column>
+                    <Promos data={data} loading={loading} title="Promos incríveis" />
+                    <Offers data={offers} loading={loading}/>
+                    <Services data={services} title="Veja mais serviços" loading={loading}/>
+                </Column>
                 <Column style={{ height: 100, }} />
             </Scroll>
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
@@ -82,42 +76,6 @@ export default function ShopScreen({ navigation, route }) {
                 </AnimatePresence>
             </Column>
         </Main>
-    )
-}
-
-const Result = ({ value }) => {
-    const [type, settype] = useState(value);
-    const [data, setdata] = useState();
-    const { color, margin } = useContext(ThemeContext);
-    useEffect(() => {
-        const fecthData = async () => {
-            getCategory(value.id).then((res) => {
-                setdata(res)
-            })
-        }
-        fecthData()
-    }, [value])
-    if (type == null) return null;
-    return (
-        <MotiView from={{ opacity: 0, }} animate={{ opacity: 1 }} exit={{ opacity: 0, }} style={{ marginBottom: 0, }}>
-            <Title style={{ marginHorizontal: margin.h, marginVertical: 12, }}>Estabelecimentos que oferecem</Title>
-            <Row style={{ marginHorizontal: margin.h, marginBottom: -40, }}>
-                <AnimatePresence>
-                    {type != null &&
-                        <Button onPress={() => settype(null)} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: -4, marginBottom: 14, borderRadius: 8, }} >
-                            <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                <Title style={{ color: color.primary, fontSize: 18, marginRight: 6, }}>{type?.name}</Title>
-                                <X color={color.primary} />
-                            </Row>
-                        </Button>}
-                </AnimatePresence>
-            </Row>
-            {data?.length > 0 && <Promos data={data} />}
-            {data?.length == 0 && <Column style={{ marginHorizontal: margin.h, marginTop: 50, marginBottom: 20, }}>
-                <Title style={{ fontSize: 22, lineHeight: 22, marginBottom: 6, }}>Não conseguimos encontrar nada...</Title>
-                <Label style={{ fontSize: 16, }}>Tente buscar por outro termo</Label>
-            </Column>}
-        </MotiView>
     )
 }
 
@@ -168,9 +126,9 @@ const Promos = ({ data, title }) => {
                     </Row>
                 </Button>
             </Column>
-
         )
-    }, [color, navigation, width]);
+    }, []);
+    
     return (
         <>
             <Row style={{ justifyContent: 'space-between', marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
@@ -228,7 +186,7 @@ const Cards = () => {
     return (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10, }}>
             <Button onPress={() => { navigation.navigate('NotafiscalSend') }} >
-                <MotiView from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1200, }} style={{ width: 240, height: 300, backgroundColor: color.primary, borderRadius: 18, marginRight: 20, marginLeft: 28, overflow: 'hidden', }}>
+                <Column from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1200, }} style={{ width: 240, height: 300, backgroundColor: color.primary, borderRadius: 18, marginRight: 20, marginLeft: 28, overflow: 'hidden', }}>
                     <Column style={{ margin: 20, }}>
                         <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ganhe +</Title>
                         <Title style={{ fontSize: 32, lineHeight: 34, marginTop: -5, }}>Moedas</Title>
@@ -237,11 +195,11 @@ const Cards = () => {
                     </Column>
                     <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: -20, scale: 1.3, }} source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', objectFit: 'cover', }} />
                     <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: 0, scale: 1.3, }} source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
-                </MotiView>
+                </Column>
             </Button>
 
             <Button onPress={() => { navigation.navigate('ShopOffers') }} >
-                <MotiView from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1600, }} style={{ width: 240, height: 300, backgroundColor: color.secundary, borderRadius: 18, marginRight: 20, overflow: 'hidden', }}>
+                <Column from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1600, }} style={{ width: 240, height: 300, backgroundColor: color.secundary, borderRadius: 18, marginRight: 20, overflow: 'hidden', }}>
                     <Column style={{ margin: 20, }}>
                         <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ofertas</Title>
                         <Title style={{ fontSize: 32, lineHeight: 34, marginTop: -5, color: color.primary, }}>relâmpago</Title>
@@ -251,7 +209,7 @@ const Cards = () => {
                     </Column>
                     <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: -50, scale: 1.2, }} source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', objectFit: 'contain', marginRight: -20, }} />
                     <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: 0, scale: 1.1, }} source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
-                </MotiView>
+                </Column>
             </Button>
 
         </ScrollView>

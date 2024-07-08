@@ -4,18 +4,21 @@ import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
 import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, Ticket } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Internet from '@components/internet';
-import { useNavigation } from '@react-navigation/native';
-import { getOffers, getShops, getServices, getCampaigns } from '@request/shop/index';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StatusBar } from 'expo-status-bar';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+
+
+import { getOffers, getShops, getServices, } from '@request/shop/index';
+import { getListCategory } from '@api/request/category';
+
+import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign} from '@expo/vector-icons'
 import { Skeleton } from 'moti/skeleton';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
-import AntDesign from '@expo/vector-icons/AntDesign';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -48,7 +51,9 @@ export default function HomeScreen({ navigation, }) {
             getServices().then((res) => {
                 setservices(res)
             })
-            setloading(false)
+            setTimeout(() => {
+                setloading(false)
+            }, 500);
         }
         fetchData()
     }, [])
@@ -59,7 +64,7 @@ export default function HomeScreen({ navigation, }) {
             <StatusBar style="dark" backgroundColor="#fff" animated={true} />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
-                    <MotiImage delay={300} from={{ opacity: 0, translateX: -40, scale: 0, }} animate={{ opacity: 1, translateX: 0, scale: 1, }} transition={{ type: 'spring' }} source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
+                    <MotiImage source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <Notify />
                         <Column style={{ width: 16, }} />
@@ -67,21 +72,19 @@ export default function HomeScreen({ navigation, }) {
                     </Row>
                 </Row>
 
-                <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing' }} delay={300}>
                     <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                         <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
-                            <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
+                            <Column from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
                                 <Search strokeWidth={2} color="#fff" size={24} />
-                            </MotiView>
+                            </Column>
                             <Column style={{ justifyContent: 'center', marginLeft: 16, }}>
                                 <Title style={{ fontSize: 18, fontFamily: font.medium, marginTop: 4, marginBottom: -2, lineHeight: 18, color: color.secundary, }}>Pesquisar</Title>
                                 <Label style={{ fontSize: 12, color: color.secundary + 99, }}>Serviços - Estabelecimentos - ONGs</Label>
                             </Column>
                         </Row>
                     </Button>
-                </MotiView>
 
-                <MotiView state={menu} transition={{ type: 'timing', duration: 500, }} from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ overflow: 'hidden' }} delay={400}>
+                <MotiView state={menu} style={{ overflow: 'hidden' }}>
 
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
 
@@ -156,17 +159,11 @@ export default function HomeScreen({ navigation, }) {
 
                 </MotiView>
 
-                <MotiView from={{ opacity: 0, translateX: 40 }} animate={{ opacity: 1, translateX: 0, }} delay={800} transition={{ type: 'timing', duration: 300, }}>
                     <Carrousel color={color} type="home" />
-                </MotiView>
 
-                <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1200}>
                     <OffersCards data={offers} loading={loading} />
-                </MotiView>
 
-                <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1500}>
                     <Queridinhos data={shops} loading={loading} />
-                </MotiView>
 
                 <Donate />
 
@@ -189,85 +186,42 @@ export default function HomeScreen({ navigation, }) {
     )
 }
 
-const Campanhas = ({ data }) => {
-    const navigation = useNavigation()
-    const { color, margin, font } = useContext(ThemeContext);
-    return (
-        <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingVertical: 20, borderTopLeftRadius: 32, }}>
-            <Title style={{ marginTop: 8, fontSize: 22, }}>Campanhas</Title>
-            <FlatList
-                style={{ marginTop: 12, }}
-                data={data}
-                horizontal
-                ListHeaderComponent={<Column style={{ width: margin.h, }} />}
-                ListFooterComponent={<Column style={{ width: margin.h, }} />}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) =>
-                    <Button onPress={() => { navigation.navigate('CampaignsSingle', { id: item?.id }) }} style={{ width: 280, borderRadius: 12, marginRight: 12, }}>
-                        <Column>
-                            <Label style={{ fontSize: 12, lineHeight: 12, textAlign: 'right', alignSelf: 'flex-end', padding: 5, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 8, borderTopRightRadius: 8, paddingVertical: 5, paddingHorizontal: 10, backgroundColor: color.primary, color: '#fff', zIndex: 99, }}>{item?.date} até {item?.finish}</Label>
-                            <MotiImage source={{ uri: item?.img }} style={{ width: 280, height: 150, borderRadius: 12, marginRight: 12, }} />
-                            <Column style={{ width: 260, paddingHorizontal: 10, paddingVertical: 10, marginHorizontal: 12, backgroundColor: '#fff', borderBottomLeftRadius: 12, borderBottomRightRadius: 12, }}>
-                                <Title style={{ fontSize: 18, lineHeight: 20, marginTop: -2, marginBottom: 4, }}>{item?.name}</Title>
-                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc?.slice(0, 72)}...</Label>
-                            </Column>
-                        </Column>
-                    </Button>
-                }
-            />
-
-        </Column>
-    )
-}
 
 const Categorias = () => {
-    const categories = [
-        {
-            id: 12,
-            name: 'Serviços Pet',
-            desc: '30 estabelecimentos parceiros',
-            icon: <Bone size={28} color="#FFF2E3" />,
-        },
-        {
-            id: 2,
-            name: 'Vestuário',
-            desc: '43 estabelecimentos parceiros',
-            icon: <Shirt size={28} color="#FFF2E3" />,
-        },
-        {
-            id: 3,
-            name: 'Esportivo',
-            desc: '15 estabelecimentos parceiros',
-            icon: <Bike size={28} color="#FFF2E3" />,
-        },
-        {
-            id: 4,
-            name: 'Farmácia',
-            desc: '27 estabelecimentos parceiros',
-            icon: <Hospital size={28} color="#FFF2E3" />,
-        },
-        {
-            id: 5,
-            name: 'Cuidados estéticos',
-            desc: '29 estabelecimentos parceiros',
-            icon: <Brush size={28} color="#FFF2E3" />,
-        },
-        {
-            id: 15,
-            name: 'Comida',
-            desc: '12 estabelecimentos parceiros',
-            icon: <Pizza size={28} color="#FFF2E3" />,
-        },
-        {
-            id: 16,
-            name: 'Veículos',
-            desc: '8 estabelecimentos parceiros',
-            icon: <Car size={28} color="#FFF2E3" />,
-        },
-    ]
-    const navigation = useNavigation()
-    const { color, margin, font } = useContext(ThemeContext);
+    const iconComponents = {
+        "<Bone size={28} color=\"#FFF2E3\" />": <Bone size={28} color="#FFF2E3" />,
+        "<Brush size={28} color=\"#FFF2E3\" />": <Brush size={28} color="#FFF2E3" />,
+        "<Pizza size={28} color=\"#FFF2E3\" />": <Pizza size={28} color="#FFF2E3" />,
+        "<Car size={28} color=\"#FFF2E3\" \/>": <Car size={28} color="#FFF2E3" />,
+        "<Shirt size={28} color=\"#FFF2E3\" />": <Shirt size={28} color="#FFF2E3" />,
+        "<Bike size={28} color=\"#FFF2E3\" />": <Bike size={28} color="#FFF2E3" />,
+        "<Hospital size={28} color=\"#FFF2E3\" \/>": <Hospital size={28} color="#FFF2E3" />
+      };
+    
+      const transformIcon = (iconString) => {
+        return iconComponents[iconString] || null;
+      };
+    
+      const [categories, setCategories] = useState([]);
+      const navigation = useNavigation();
+      const { color, margin, font } = useContext(ThemeContext);
+    
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const res = await getListCategory();
+            const transformedData = res.map(item => ({
+              ...item,
+              icon: transformIcon(item.icon)
+            }));
+            setCategories(transformedData);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        fetchData();
+      }, []);
+
     return (
         <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 20, }}>
             <Title style={{ fontSize: 22, }}>Categorias</Title>
@@ -278,14 +232,14 @@ const Categorias = () => {
                 keyExtractor={item => item.id}
                 style={{ marginVertical: margin.v, marginTop: 0, }}
                 renderItem={({ item }) => (
-                    <Button style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('Shop', { type: item, }) }}>
+                    <Button  style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('CategorySingle', { item: item, id: item.id, icon: item.icon,}) }}>
                         <Row style={{ alignItems: 'center', }}>
                             <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
-                                {item.icon}
+                                {item?.icon}
                             </Column>
                             <Column style={{ justifyContent: 'center', }}>
                                 <Title style={{ fontSize: 18, lineHeight: 20, }}>{item.name}</Title>
-                                <Label style={{ marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 14, }}>{item.desc}</Label>
+                                <Label style={{ marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 14, }}>{item.estabelecimentos} estabelecimentos parceiros</Label>
                             </Column>
                         </Row>
                     </Button>

@@ -90,6 +90,8 @@ import RaspadinhasSingleScreen from '@screens/raspadinhas/single';
 import RaspadinhasRasparScreen from '@screens/raspadinhas/raspar';
 import RaspadinhasShopScreen from '@screens/raspadinhas/shop';
 
+import CategorySingleScreen from '@screens/search/category';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -115,6 +117,8 @@ export default function Router() {
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="CategorySingle" component={CategorySingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
 
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>

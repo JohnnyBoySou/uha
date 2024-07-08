@@ -1,14 +1,27 @@
 import axios from "axios";
-import shops from '@data/shops/shops';
-import services from '@data/services/services';
+import getToken from '@hooks/getToken';
+import getBaseURL from '@hooks/getBaseUrl';
+
 
 export async function getSearch(query) {
-    //const res = await axios.get(`https://api.github.com/search/repositories?q=${query}`);
-    //return res.data.items;
-    const shop = shops.filter(shop => shop.name?.includes(query));
-    const serv = services.filter(service => service.title?.includes(query));
-    return res = {
-        shop: shop,
-        service: serv
+    const token = await getToken()
+    const BASE_URL = await getBaseURL()
+    try {
+        const response = await axios.post(`${BASE_URL}/usuarios/busca/geral`, {
+            busca: query,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        const res = {
+            shop: response.data.estabelecimentos.data,
+            service: response.data.servicos.data,
+            ongs: response.data.instituicao.data,
+        }
+        return res
+    } catch (error) {
+        const err = JSON.parse(error.request.response);
+        throw new Error(err.message)
     }
 }

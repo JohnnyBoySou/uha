@@ -1,32 +1,37 @@
-import axios from 'axios'
+import axios from "axios";
+import getToken from '@hooks/getToken';
+import getBaseURL from '@hooks/getBaseUrl';
 
-const BASE_URL = 'https://api.com/'
 
-import shops from '@data/shops/shops'
-
-export async function getCategory(id = 12) {
-    //const res = axios.get(BASE_URL + '/shops')
-    const data = shops.filter(shop => shop.categories.some(category => category.id === id)  );
-    return data
-    //data = res.data
+export async function getListCategory() {
+    const token = await getToken()
+    const BASE_URL = await getBaseURL()
+    try {
+        const response = await axios.get(`${BASE_URL}/usuarios/categorias`,  {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data
+    } catch (error) {
+        const err = JSON.parse(error.request.response);
+        throw new Error(err.message)
+    }
 }
 
-/**
- * const shops = [
-    {
-        name: "Pet",
-        id: 20,
-        desc: 'Aqui você encontra tudo para seu pet',
-        cep: '89260665',
-        img: 'https://i.pinimg.com/564x/08/f6/3d/08f63d42e41667f518127da812cfe654.jpg',
-        categories: [
-            {
-                id: 14,
-                name: "Pets"
+export async function getSingleCategory(id) {
+    const token = await getToken()
+    const BASE_URL = await getBaseURL()
+    try {
+        const response = await axios.get(`${BASE_URL}/usuarios/estabelecimentos/categoria/${id}`,  {
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
-            {
-                id: 12,
-                name: "Cuidados"
-            }
-        ],
- */
+        });
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        const err = JSON.parse(error.request.response);
+        throw new Error(err.message)
+    }
+}
