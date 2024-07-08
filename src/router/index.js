@@ -221,8 +221,6 @@ function Tabs (){
                   left: 15, right: 15,
                 },
               }}
-              
-              
               >
               <Tab.Screen name="Home" component={HomeScreen} options={{
               backBehavior: 'initialRoute',
@@ -234,17 +232,15 @@ function Tabs (){
                 <Octicons name="home" size={routeName === 'Home' ? size+3 : size} color={color} />
               ),
           }}/>
-             
               <Tab.Screen name="Notafiscal" component={NotafiscalScreen}  options={{
               tabBarLabel: 'Nota Fiscal',
               tabBarLabelStyle: {
                 fontFamily: routeName === 'Notafiscal' ? 'Font_Bold' : 'Font_Book',
               },
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="note-edit-outline" size={routeName === 'Notafiscal' ? size+3 : size} color={color}/>
+                <MaterialCommunityIcons name="clipboard-edit-outline" size={routeName === 'Notafiscal' ? size+3 : size} color={color}/>
               ),
           }}/>
-             
              <Tab.Screen name="Search" component={SearchScreen}  options={{
               tabBarLabel: 'Buscar',
               tabBarLabelStyle: {
@@ -254,7 +250,6 @@ function Tabs (){
                 <Octicons name="search" size={routeName === 'Seach' ? size+3 : size} color={color} />
               ),
           }}/>
-          
            <Tab.Screen name="Extract" component={ExtractScreen}  
               options={{
               tabBarLabel: 'Histórico',

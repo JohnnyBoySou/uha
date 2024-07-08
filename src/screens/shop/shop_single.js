@@ -20,6 +20,7 @@ import { getSingleShop, getSingleOffers, getSingleServices } from '@request/shop
 import { StatusBar } from 'expo-status-bar';
 import CardOffers from '@components/cardOffers';
 import { Skeleton } from 'moti/skeleton';
+import  CardServices from '@components/cardServices';
 
 
 const { width } = Dimensions.get('window');
@@ -144,7 +145,7 @@ export default function ShopSingleScreen({ navigation, route }) {
 
                     {offers?.length > 0 && <>
                         <Column style={{ marginHorizontal: margin.h, }}>
-                            <Title>Ofertas</Title>
+                            <Title style={{ letterSpacing: -1, fontSize: 22, }}>Ofertas</Title>
                         </Column>
                         <FlatList
                             horizontal
@@ -158,46 +159,24 @@ export default function ShopSingleScreen({ navigation, route }) {
                         />
                     </>}
 
-
-
-
-
-
                     {item?.banners?.length > 0 && <Banners data={item?.banners} />}
 
-
                     {services?.length > 0 && <>
-                        <Column style={{ marginHorizontal: margin.h, marginTop: 0, }}>
-                            <Title>Serviços</Title>
+                        <Column style={{ marginHorizontal: margin.h, marginTop: 0, marginBottom: 10, }}>
+                            <Title style={{ letterSpacing: -1, fontSize: 22, }}>Serviços</Title>
                         </Column>
                         <FlatList
                             data={services}
-                            style={{ marginVertical: margin.v, marginBottom: 30, }}
+                            horizontal
+                            ListHeaderComponent={<Column style={{ width: margin.h, }} />}
+                            ListFooterComponent={<Column style={{ width: margin.h }} />}
                             showsHorizontalScrollIndicator={false}
-                            ListHeaderComponent={<Column style={{ width: margin.h - 8, }} />}
-                            ListFooterComponent={<Column style={{ width: margin.h - 8, }} />}
                             keyExtractor={(index) => index.toString()}
-                            renderItem={({ item }) => (
-                                <Button onPress={() => navigation.navigate('ShopServiceSingle', { id: item?.id })} style={{ borderRadius: 0, paddingBottom: 4, borderBottomWidth: 1, borderColor: '#60606020', marginHorizontal: margin.h, marginVertical: 6, }}>
-                                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                        <Row>
-                                            <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 12, }} />
-                                            <Column style={{ justifyContent: 'center', marginLeft: 15, }}>
-                                                <SubLabel style={{ fontFamily: 'Font_Medium', color: color.secundary, }}>{item?.title}</SubLabel>
-                                                <Label style={{ width: 100, fontSize: 12, lineHeight: 16, color: color.primary, fontFamily: 'Font_Bold', }}>{item?.label}</Label>
-
-                                            </Column>
-                                        </Row>
-                                    </Row>
-                                </Button>
-                            )}
+                            renderItem={({ item }) => <CardServices item={item} />}
                         />
                     </>}
-
                 </Column>
                 <Column style={{ height: 70, }} />
-
-
             </Scroll>
 
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>

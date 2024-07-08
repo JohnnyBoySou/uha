@@ -15,6 +15,7 @@ import { StatusBar } from 'expo-status-bar';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Skeleton } from 'moti/skeleton';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const { width, height } = Dimensions.get('window');
 
@@ -80,13 +81,13 @@ export default function HomeScreen({ navigation, }) {
                     </Button>
                 </MotiView>
 
-                <MotiView state={menu} transition={{ type: 'timing', duration: 500, }} from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ overflow: 'hidden' }}>
+                <MotiView state={menu} transition={{ type: 'timing', duration: 500, }} from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ overflow: 'hidden' }} delay={400}>
 
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={() => { navigation.navigate('Notafiscal') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
-                                <MaterialCommunityIcons name="note-edit-outline" size={34} color={color.primary} />
+                                <MaterialCommunityIcons name="clipboard-edit-outline" size={34} color={color.primary} />
                             </Button>
                             <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
                         </Column>
@@ -130,14 +131,14 @@ export default function HomeScreen({ navigation, }) {
 
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Ranking') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
-                                            <MotiImage source={require('@icons/rank.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                                            <AntDesign name="staro" size={32} color={color.primary} />
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Ranking</Label>
                                     </Column>
 
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Favorites') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, backgroundColor: color.primary + 20, }}>
-                                            <MotiImage source={require('@icons/heart.png')} style={{ width: 34, objectFit: 'contain', height: 34, }} />
+                                            <AntDesign name="hearto" size={32} color={color.primary} />
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Favoritos</Label>
                                     </Column>
@@ -155,7 +156,7 @@ export default function HomeScreen({ navigation, }) {
 
                 </MotiView>
 
-                <MotiView from={{ opacity: 0, translateX: 40 }} animate={{ opacity: 1, translateX: 0, }} delay={800}>
+                <MotiView from={{ opacity: 0, translateX: 40 }} animate={{ opacity: 1, translateX: 0, }} delay={800} transition={{ type: 'timing', duration: 300, }}>
                     <Carrousel color={color} type="home" />
                 </MotiView>
 

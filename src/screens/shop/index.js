@@ -6,7 +6,7 @@ import { AnimatePresence, MotiImage } from 'moti';
 import { Search, X } from 'lucide-react-native';
 import { MotiView } from 'moti';
 import { useNavigation, } from '@react-navigation/native';
-import { getShops, getOffers } from '@request/shop/index';
+import { getShops, getOffers, getServices } from '@request/shop/index';
 import { getCategory } from '@request/category';
 import { StatusBar } from 'expo-status-bar'
 import Header from '@components/header';
@@ -16,6 +16,7 @@ const { width, height } = Dimensions.get('window');
 
 import { ScrollView } from 'react-native-gesture-handler';
 import CardOffers from '@components/cardOffers';
+import CardServices from '@components/cardServices';
 
 export default function ShopScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -23,22 +24,26 @@ export default function ShopScreen({ navigation, route }) {
     const [data, setdata] = useState();
     const [offers, setoffers] = useState();
     const [loading, setloading] = useState(true);
-
+    const [services, setservices] = useState();
     useEffect(() => {
         const fecthData = async = () => {
             setloading(true);
             getShops().then((res) => {
                 setdata(res)
-                setloading(false);
             }).catch(err => {
                 console.log(err)
             })
             getOffers().then((res) => {
                 setoffers(res)
-                setloading(false);
             }).catch(err => {
                 console.log(err)
             })
+            getServices().then((res) => {
+                setservices(res)
+            }).catch(err => {
+                console.log(err)
+            })
+            setloading(false);
         }
         fecthData()
     }, [])
@@ -52,22 +57,17 @@ export default function ShopScreen({ navigation, route }) {
                 {type == null &&
                     <>
                         <MotiView from={{ translateY: -20, opacity: 0, }} animate={{ translateY: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={400} style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
-                            <Title style={{ fontSize: 28, lineHeight: 28, }}>Estabelecimentos parceiros </Title>
-                            <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
+                            <Title style={{ fontSize: 28, lineHeight: 28, letterSpacing: -1,}}>Estabelecimentos parceiros </Title>
+                            <Label style={{ marginVertical: 6, fontSize: 16,  }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
                         </MotiView>
                         <Cards />
                     </>}
                 {type != null && <Result value={type} />}
                 {!loading && <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={700}>
                     <Promos data={data} title="Promos incríveis" />
-                    <Row style={{ justifyContent: 'space-between',  marginBottom: 10, marginTop: 20,  alignItems: 'center', marginHorizontal: margin.h, }}>
-                        <Title style={{ }}>Ofertas relâmpago</Title>
-                        <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16, }}>
-                            <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14, }}>Ver mais</Label>
-                        </Button>
-                    </Row>
                     <Offers data={offers} />
                     <Promos data={data} title="Lojas da sua região" />
+                    <Services data={services} title="Veja mais serviços" />
                 </MotiView>}
                 <Column style={{ height: 100, }} />
             </Scroll>
@@ -122,19 +122,26 @@ const Result = ({ value }) => {
 }
 
 const Offers = ({ data }) => {
-    const { color } = useContext(ThemeContext);
+    const { color, margin, font } = useContext(ThemeContext);
     const navigation = useNavigation();
     return (
-        <FlatList
-            data={data}
-            ListFooterComponent={<Column style={{ width: 24 }} />}
-            ListHeaderComponent={<Column style={{ width: 24 }} />}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            style={{ marginVertical: 12, }}
-            renderItem={({ item }) => <CardOffers item={item} />}
-            keyExtractor={item => item.id}
-        />
+        <Column>
+            <Row style={{ justifyContent: 'space-between', marginBottom: 16, marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
+                <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
+                <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16, }}>
+                    <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14, }}>Ver mais</Label>
+                </Button>
+            </Row>
+            <FlatList
+                data={data}
+                ListFooterComponent={<Column style={{ width: 28 }} />}
+                ListHeaderComponent={<Column style={{ width: 28 }} />}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                renderItem={({ item }) => <CardOffers item={item} />}
+                keyExtractor={item => item.id}
+            />
+        </Column>
     )
 }
 
@@ -166,8 +173,8 @@ const Promos = ({ data, title }) => {
     }, [color, navigation, width]);
     return (
         <>
-            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
-                <Title>{title}</Title>
+            <Row style={{ justifyContent: 'space-between', marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
+                <Title style={{ fontSize: 22, letterSpacing: -1 }}>{title}</Title>
                 <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, }}>
                     <ExpandingDot
                         data={[1, 2, 3]}
@@ -219,7 +226,7 @@ const Cards = () => {
     const { color, margin, } = useContext(ThemeContext);
     const navigation = useNavigation()
     return (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 40, }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10, }}>
             <Button onPress={() => { navigation.navigate('NotafiscalSend') }} >
                 <MotiView from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1200, }} style={{ width: 240, height: 300, backgroundColor: color.primary, borderRadius: 18, marginRight: 20, marginLeft: 28, overflow: 'hidden', }}>
                     <Column style={{ margin: 20, }}>
@@ -248,5 +255,25 @@ const Cards = () => {
             </Button>
 
         </ScrollView>
+    )
+}
+
+
+const Services = ({ data, title }) => {
+    const { color } = useContext(ThemeContext);
+    const navigation = useNavigation();
+    return (
+        <Column>
+            <Title style={{ marginHorizontal: 28, marginTop: 12, marginBottom: 12, fontSize: 22, lineHeight: 22, letterSpacing: -1 }}>{title}</Title>
+            <FlatList
+                data={data}
+                ListFooterComponent={<Column style={{ width: 24 }} />}
+                ListHeaderComponent={<Column style={{ width: 24 }} />}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                renderItem={({ item }) => <CardServices item={item} />}
+                keyExtractor={item => item.id}
+            />
+        </Column>
     )
 }
