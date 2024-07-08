@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect, useRef, useMemo } from 'react';
 import { FlatList, Dimensions, Animated } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, LabelLI } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
-import { ArrowLeft, Search, X } from 'lucide-react-native';
+import { Search, X } from 'lucide-react-native';
 import { MotiView } from 'moti';
-import { useIsFocused, useNavigation, } from '@react-navigation/native';
-
+import { useNavigation, } from '@react-navigation/native';
 import { getShops, getOffers } from '@request/shop/index';
 import { getCategory } from '@request/category';
 import { StatusBar } from 'expo-status-bar'
@@ -48,28 +47,28 @@ export default function ShopScreen({ navigation, route }) {
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style='dark' backgroundColor="#fff" />
-            <Scroll onScroll={(event) => {const scrolling = event.nativeEvent.contentOffset.y;if (scrolling > 80) {setFixedMenu(true);} else {setFixedMenu(false);}}} scrollEventThrottle={16}>
+            <Scroll onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 80) { setFixedMenu(true); } else { setFixedMenu(false); } }} scrollEventThrottle={16}>
                 <Header rose />
                 {type == null &&
                     <>
-                    <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
-                        <Title style={{ fontSize: 28, lineHeight: 28, }}>Estabelecimentos parceiros </Title>
-                        <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
-                    </Column>
-                    <Cards />
-                </>}
-
+                        <MotiView from={{ translateY: -20, opacity: 0, }} animate={{ translateY: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={400} style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
+                            <Title style={{ fontSize: 28, lineHeight: 28, }}>Estabelecimentos parceiros </Title>
+                            <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
+                        </MotiView>
+                        <Cards />
+                    </>}
                 {type != null && <Result value={type} />}
-                
-                {!loading && <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={600}>
+                {!loading && <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }} delay={700}>
                     <Promos data={data} title="Promos incríveis" />
-                    <Title style={{ marginHorizontal: margin.h, marginBottom: 10, marginTop: 20, }}>Ofertas relâmpago</Title>
+                    <Row style={{ justifyContent: 'space-between',  marginBottom: 10, marginTop: 20,  alignItems: 'center', marginHorizontal: margin.h, }}>
+                        <Title style={{ }}>Ofertas relâmpago</Title>
+                        <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16, }}>
+                            <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14, }}>Ver mais</Label>
+                        </Button>
+                    </Row>
                     <Offers data={offers} />
                     <Promos data={data} title="Lojas da sua região" />
                 </MotiView>}
-                
-                
-                
                 <Column style={{ height: 100, }} />
             </Scroll>
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>

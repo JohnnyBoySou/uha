@@ -15,7 +15,6 @@ export default function RaspadinhasSingleScreen({ navigation, route }) {
     const id = route.params.id ? route.params.id : 'ras-1';
     const type = route.params?.type
     const value_raspadinha = type === 'Básica' ? 5 : type === 'Pro' ? 9 : type === 'Premium' ? 13 : type === 'Plus' ? 17 : 0
-    console.log(type)
 
     useEffect(() => {
         const fetchData = () => {

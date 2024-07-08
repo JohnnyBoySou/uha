@@ -95,13 +95,10 @@ async function editFavorites(updatedPreferences) {
 }
 
 async function addLike(array) {
-  console.log(array)
 
 
   try {
     const favorites = await getFavorites();
-    console.log(favorites)
-  
   
   
   /*  let updatedFavorites;
@@ -121,7 +118,6 @@ async function addLike(array) {
 async function verifyLiked(id) {
   try {
     const favorites = await getFavorites();
-    console.log(favorites)  
     return favorites && favorites.some((item) => item.id === id);
   } catch (error) {
     console.error("Error verifying liked manga:", error);

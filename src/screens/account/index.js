@@ -19,7 +19,6 @@ export default function AccountScreen({ navigation, }) {
     useEffect(() => {
         const fecthData = async () => {
             listUser().then((res) => {
-                console.log(res)
                 setuser(res);
             });
         }

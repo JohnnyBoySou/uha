@@ -4,8 +4,6 @@ const windowWidth = Dimensions.get('window').width;
 
 const Pagination = ({ dots, scrollX, activeIndex, activyColor, inactivyColor }) => {
     const itemsArray = Array.from({ length: dots }, (_, i) => i + 1);
-    console.log(itemsArray)
-
     if(itemsArray.length > 1){
     return (
         <Row style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 14, marginBottom: 20, }}>

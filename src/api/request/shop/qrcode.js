@@ -4,7 +4,6 @@ import getBaseURL from '@hooks/getBaseUrl';
 
 
 export const sendCodeService = async ( id ) => {
-    console.log('aq')
     const token = await getToken()
     const BASE_URL = await getBaseURL()
     try {
@@ -15,7 +14,6 @@ export const sendCodeService = async ( id ) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(res.data)
         return res.data;
     } catch (error) {
         let errMsg;

@@ -70,7 +70,7 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                         barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
                         style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
                         facing="back"
-                        onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200); console.log(data.data) }}  >
+                        onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200); }}  >
                 </CameraView>}
             
                 <Scroll >

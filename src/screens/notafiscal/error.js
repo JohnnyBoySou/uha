@@ -10,7 +10,6 @@ import { MotiView } from 'moti';
 export default function NotafiscalErrorScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const status  = route.params?.status
-    console.log(status)
 
     return (
         <Main style={{ backgroundColor: "#fff", }}>

@@ -160,10 +160,12 @@ export default function HomeScreen({ navigation, }) {
                 </MotiView>
 
                 <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1200}>
-                <OffersCards data={offers} loading={loading} />
+                    <OffersCards data={offers} loading={loading} />
                 </MotiView>
 
-                <Queridinhos data={shops} loading={loading} />
+                <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1500}>
+                    <Queridinhos data={shops} loading={loading} />
+                </MotiView>
 
                 <Donate />
 
@@ -175,7 +177,7 @@ export default function HomeScreen({ navigation, }) {
                     <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: color.secundary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
                         <Label style={{ fontFamily: font.bold, color: color.secundary, fontSize: 16, }}>Central de ajuda</Label>
                     </Button>
-                    <Button onPress={() => { navigation.navigate('Donate',) }} style={{ backgroundColor: color.primary+20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, }}>
+                    <Button onPress={() => { navigation.navigate('Donate',) }} style={{ backgroundColor: color.primary + 20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, }}>
                         <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
                     </Button>
                 </Row>
@@ -355,11 +357,11 @@ const OffersCards = ({ data, loading }) => {
     const navigation = useNavigation();
     return (
         <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, }}>
-            <Row style={{ paddingHorizontal: margin.h, paddingVertical: 16, paddingTop: 30, justifyContent: 'space-between', alignItems: 'center', }}>
+            <Row style={{ paddingHorizontal: margin.h, paddingVertical: 16, justifyContent: 'space-between', alignItems: 'center', }}>
                 <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
-                <Pressable onPress={() => { navigation.navigate('ShopOffers') }} >
-                    <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
-                </Pressable>
+                <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16, }}>
+                    <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14, }}>Ver mais</Label>
+                </Button>
             </Row>
 
             {loading ?
@@ -433,9 +435,9 @@ const Queridinhos = ({ data, loading }) => {
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background, }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                     <Title style={{ fontSize: 22, }}>Estabelecimentos</Title>
-                    <Pressable onPress={() => { navigation.navigate('Shop') }} style={{}}>
-                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
-                    </Pressable>
+                    <Button onPress={() => { navigation.navigate('Shop') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16, }}>
+                        <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14, }}>Ver mais</Label>
+                    </Button>
                 </Row>
             </Column>
 
@@ -560,7 +562,7 @@ const Donate = () => {
     const render = ({ item }) => {
         const link = item.img;
         return (
-            <Column style={{ width: width, justifyContent: 'center', alignItems: 'center',  }}>
+            <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
                 <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, marginRight: 12 }}>
                     <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, }} />
                 </Button>
@@ -591,21 +593,21 @@ const Donate = () => {
             />
 
             <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: 10, }}>
-                    <ExpandingDot
-                        data={[1, 2]}
-                        expandingDotWidth={20}
-                        scrollX={scrollX}
-                        containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
-                        dotStyle={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: 5,
-                            marginHorizontal: 2,
-                        }}
-                        activeDotColor={color.secundary}
-                        inActiveDotColor={color.secundary + 50}
-                    />
-                </Column>
+                <ExpandingDot
+                    data={[1, 2]}
+                    expandingDotWidth={20}
+                    scrollX={scrollX}
+                    containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5,
+                        marginHorizontal: 2,
+                    }}
+                    activeDotColor={color.secundary}
+                    inActiveDotColor={color.secundary + 50}
+                />
+            </Column>
         </Column>
     );
 };

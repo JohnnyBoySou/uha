@@ -214,7 +214,7 @@ export default function ShopSingleScreen({ navigation, route }) {
             <BottomSheet ref={map} snapPoints={[0.1, 180,]}>
                 <Column style={{ padding: 0, justifyContent: 'center', alignItems: 'center', }}>
                     <Title style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, }}>Horario de funcionamento</Title>
-                    <Label>Seguda à Sexta</Label>
+                    <Label>Segunda à Sexta</Label>
                     <SubLabel>{item?.open} - {item?.close}</SubLabel>
                     <Button onPress={openMapWithCep} style={{ backgroundColor: color.primary, marginTop: 20, paddingVertical: 12, paddingHorizontal: 20, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <Row style={{ justifyContent: 'center', alignItems: 'center', }}>

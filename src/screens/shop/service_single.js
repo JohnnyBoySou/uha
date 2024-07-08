@@ -124,7 +124,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     ListEmptyComponent={<Row style={{ marginHorizontal: margin.h, }}><Skeleton colorMode='light' width={width * 0.85} height={284} radius={24} /></Row>}
                     renderItem={({ item, index }) => <CardImage item={item} index={index} />}
                 />
-                {item?.imgs?.length > 0 &&
+                {item?.imgs?.length > 1 &&
                     <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: -14, marginBottom: 10, }}>
                         <ExpandingDot
                             data={item?.imgs}
@@ -170,14 +170,12 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
 
                         />
 
-                        <Button onPress={toggleLike} style={{ alignSelf: 'center', width: 42, height: 42, borderRadius: 12, backgroundColor: color.primary + 20, justifyContent: 'center', alignItems: 'center', }}>
-                            <Row>
+                        <Button onPress={toggleLike} style={{ alignSelf: 'center', width: 42, height: 42, marginRight: 12, borderRadius: 12, backgroundColor: color.primary + 20, justifyContent: 'center', alignItems: 'center', }}>
                                 <AnimatePresence>
                                     {like ? <HeartAnim w={52} h={52} play={like} />
                                         :
                                         <AntDesign name="hearto" size={24} color={color.primary} />}
                                 </AnimatePresence>
-                            </Row>
                         </Button>
                     </Row>
                 </Column>
