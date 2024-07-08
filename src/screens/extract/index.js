@@ -11,7 +11,7 @@ import TopSheet from '@components/topsheet';
 import Avatar from '@components/avatar';
 
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { getExtractDonate, getExtractRifas, getExtractNotas, getExtractTransacao } from '@request/extract/gets';
+import { getExtractDonate,  getExtractNotas, getExtractTransacao } from '@request/extract/gets';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
 import { Skeleton } from 'moti/skeleton';
@@ -50,7 +50,7 @@ export default function ExtractScreen({ navigation, route }) {
     const [transacao, settransacao] = useState();
     const [notas, setnotas] = useState();
     const [doacoes, setdoacoes] = useState();
-    const [rifas, setrifas] = useState();
+    const [rifas, setrifas] = useState([]);
     const [user, setuser] = useState();
 
     const selectData = page === 'Doações' ? doacoes : page === 'Transações' ? transacao : page === 'Notas fiscais' ? notas : page === 'Rifas' ? rifas : []
@@ -88,10 +88,8 @@ export default function ExtractScreen({ navigation, route }) {
         } else if (type === 'Rifas') {
             if (rifas?.length > 0) return
             setloading(true)
-            getExtractRifas().then((res) => {
-                setrifas(res)
+                setrifas([])
                 setloading(false)
-            });
         } else if (type === 'Notas fiscais') {
             if (notas?.length > 0) return
             setloading(true)

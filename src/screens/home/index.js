@@ -159,7 +159,9 @@ export default function HomeScreen({ navigation, }) {
                     <Carrousel color={color} type="home" />
                 </MotiView>
 
+                <MotiView from={{ opacity: 0, translateY: 40 }} animate={{ opacity: 1, translateY: 0, }} delay={1200}>
                 <OffersCards data={offers} loading={loading} />
+                </MotiView>
 
                 <Queridinhos data={shops} loading={loading} />
 
