@@ -5,11 +5,12 @@ import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Check from '@components/check';
-import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut } from 'lucide-react-native';
+import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, HeartHandshake } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -56,12 +57,12 @@ export default function AccountScreen({ navigation, }) {
                 <MotiView from={{ opacity: 0, translateY: 20 }} animate={{ opacity: 1, translateY: 0, }} delay={600}>
 
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
-                        <Button onPress={() => { navigation.navigate('Ranking') }} style={{ flexGrow: 1, }}>
+                        <Button onPress={() => { navigation.navigate('ONGList') }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                    <MotiImage source={require('@icons/rank.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
+                                    <HeartHandshake color={color.primary} size={42} />
                                 </Column>
-                                <SubLabel>Ranking</SubLabel>
+                                <SubLabel>ONGS</SubLabel>
                             </Column>
                         </Button>
                         <Button onPress={() => { navigation.navigate('Extract', { type: 'Doações' }) }} style={{ flexGrow: 1, }}>
@@ -75,7 +76,7 @@ export default function AccountScreen({ navigation, }) {
                         <Button onPress={() => { navigation.navigate('Favorites') }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                    <MotiImage source={require('@icons/heart.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
+                                    <AntDesign name="hearto" size={32} color={color.primary} />
                                 </Column>
                                 <SubLabel>Favoritos</SubLabel>
                             </Column>

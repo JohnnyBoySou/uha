@@ -81,7 +81,7 @@ export default function ExtractSingleScreen({ navigation, route }) {
                         </MotiView>
 
                         <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={500} >
-                            <Label style={{ color: cl, fontSize: 18, textAlign: 'center', marginTop: 16, fontFamily: 'Font_Bold', letterSpacing: -0.5, }}>{item?.label}</Label>
+                            <Label style={{ color: cl, fontSize: 18, textAlign: 'center', marginTop: 16, fontFamily: 'Font_Bold', letterSpacing: -0.5, }}>{item?.status}</Label>
                             <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: cl, textAlign: 'center', paddingHorizontal: 14, paddingVertical: 8, backgroundColor: cl + 10, alignSelf: 'center', textAlign: 'center', borderRadius: 12, marginVertical: 12, }}>{type == 'Notas fiscais' ? item?.value + ' ponto' : type == 'Transações' ? item?.value + ' pontos' : `R$ ${item?.value},00`}</Title>
                         </MotiView>
 

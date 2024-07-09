@@ -16,7 +16,6 @@ import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
 import { Skeleton } from 'moti/skeleton';
 
-
 export default function ExtractScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     let type = route.params?.type
@@ -102,6 +101,7 @@ export default function ExtractScreen({ navigation, route }) {
             setloading(true)
             getExtractTransacao().then((res) => {
                 settransacao(res)
+                console.log(res)
                 setloading(false)
             });
         }
@@ -333,7 +333,11 @@ const CardExtrato = ({ item, index, onLong, type }) => {
                             {type == 'Doações' && 'R$ ' + item?.value}
                         </Title>
                         <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -2, }}>{item?.label}</SubLabel>
-                        <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{item?.type} - {hour}</Label>
+                        <Row style={{ alignSelf: 'flex-end', alignItems: 'flex-end' }}>
+                        {item?.name?.length > 0 && 
+                            <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right', fontFamily: 'Font_Bold', color: color.secundary, }}>{item?.name.slice(0, 24)} - </Label>
+                            }<Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{hour}</Label>
+                        </Row>
                     </Column>
                 </Row>
             </Button>

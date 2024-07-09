@@ -3,22 +3,47 @@ import { Main, Row } from '@theme/global';
 import { MotiImage } from 'moti';
 import { getPreferences } from '../../api/user/preferences';
 import { StatusBar } from 'expo-status-bar';
+import { jwtDecode } from "jwt-decode";
 
 export default function AsyncStaticScreen({ navigation, }) {
     useEffect(() => {
         const fetchData = async () => {
-            const user = await getPreferences()
-            if (user?.email) {
-                setTimeout(() => {
-                    navigation.replace('Tabs')
-                }, 1200);
-            }
-            else{
-               navigation.replace('Onboarding')
-            }
+          const user = await getPreferences();
+          if (user?.token && !isTokenExpired(user.token)) {
+            setTimeout(() => {
+              navigation.replace('Tabs');
+            }, 1200);
+          } else if(isTokenExpired(user.token)) {
+            navigation.replace('AuthLogin');
+          }else{
+            navigation.replace('Onboarding');
+          }
+        };
+        fetchData();
+      }, [navigation]);
+    
+      function getTokenExpirationDate(token) {
+        const decoded = jwtDecode(token);
+    
+        if (decoded.exp === undefined) {
+          return null;
         }
-        fetchData()
-    }, []);
+    
+        const date = new Date(0);
+        date.setUTCSeconds(decoded.exp);
+        return date;
+      }
+    
+      function isTokenExpired(token) {
+        if (!token) {
+          return true;
+        }
+        const date = getTokenExpirationDate(token);
+        if (date === null) {
+          return false;
+        }
+        return date.valueOf() <= new Date().valueOf();
+      }
 
     return (
         <Main style={{ backgroundColor: "#FE25BD", flex: 1, justifyContent: 'center', alignItems: 'center', }}>

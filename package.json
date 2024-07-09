@@ -32,6 +32,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.6",
     "expo-web-browser": "~13.0.3",
+    "jwt-decode": "^4.0.0",
     "lottie-react-native": "6.7.0",
     "lucide-react-native": "^0.365.0",
     "moti": "^0.28.1",

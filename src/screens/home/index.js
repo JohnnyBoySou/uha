@@ -436,7 +436,7 @@ const Servicos = ({ data, loading }) => {
     return (
         <Column style={{ backgroundColor: color.background, paddingTop: 10, }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Serviços</Title>
+                <Title style={{ paddingHorizontal: margin.h, paddingVertical: 12, fontSize: 22, }}>Troque seus pontos</Title>
                 <Pressable onPress={() => { navigation.navigate('Shop') }} style={{ marginRight: 28, }}>
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                 </Pressable>
