@@ -46,7 +46,6 @@ export async function getExtractNotas() {
 export async function getExtractTransacao() {
     const BASE_URL = await getBaseURL()
     const token = await getToken()
-    console.log(token)
     try {
         const res = await axios.get(`${BASE_URL}/usuarios/transacoes`, {
             headers: {

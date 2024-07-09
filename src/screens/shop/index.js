@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
 import { Search, X } from 'lucide-react-native';
 import { MotiView } from 'moti';
-import { useNavigation, } from '@react-navigation/native';
+import { useIsFocused, useNavigation, } from '@react-navigation/native';
 import { getShops, getOffers, getServices } from '@request/shop/index';
 import { getCategory } from '@request/category';
 import { StatusBar } from 'expo-status-bar'
@@ -26,22 +26,28 @@ export default function ShopScreen({ navigation, route }) {
     const [loading, setloading] = useState(true);
     const [services, setservices] = useState();
     
+    const isFocused = useIsFocused();
     useEffect(() => {
         const fecthData = async = () => {
             setloading(true);
-            getShops().then((res) => {
-                setdata(res)
-            })
-            getOffers().then((res) => {
-                setoffers(res)
-            })
-            getServices().then((res) => {
-                setservices(res)
-            })
-            setloading(false);
+            try {
+                getShops().then((res) => {
+                    setdata(res)
+                })
+                getOffers().then((res) => {
+                    setoffers(res)
+                })
+                getServices().then((res) => {
+                    setservices(res)
+                })
+            } catch (err) {
+                console.log(err)
+            } finally {
+                setloading(false)
+            }
         }
         fecthData()
-    }, [])
+    }, [isFocused])
 
     const [fixedMenu, setFixedMenu] = useState(false);
 

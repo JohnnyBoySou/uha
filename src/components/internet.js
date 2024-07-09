@@ -3,10 +3,8 @@ import { Feather, } from '@expo/vector-icons';
 import { ThemeContext } from 'styled-components/native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { Column, Row, Title, Label, Button } from '@theme/global';
-import { AnimatePresence, MotiView } from 'moti';
 
 export default function Internet() {
-    
     const { color } = useContext(ThemeContext)
     const netInfo = useNetInfo();
     const [messageConnection, setMessageConnection] = useState(false);
@@ -20,13 +18,12 @@ export default function Internet() {
             }
         }
         fecthData()
-    }, [netInfo]);
+    }, []);
 
     if (!messageConnection) {
         return null}
-    return (<AnimatePresence>
-     
-        <MotiView from={{opacity:0, translateY: -50,}} animate={{opacity: 1, translateY: 0,}} exit={{translateY: 0, opacity: 0,}} style={{ position: 'absolute', top: 0, width: '100%', zIndex: 99, }}>
+    return (
+        <Column from={{opacity:0, translateY: -50,}} animate={{opacity: 1, translateY: 0,}} exit={{translateY: 0, opacity: 0,}} style={{ position: 'absolute', top: 0, width: '100%', zIndex: 99, }}>
             <Row style={{ paddingTop: 40, backgroundColor: '#f7f7f7', justifyContent: 'center',  paddingBottom: 12, }}>
                 <Button style={{ backgroundColor: color?.secundary+10, padding: 12,  borderRadius: 100,}}>
                     <Feather style={{ textAlign: 'center', }} name="wifi-off" size={24} color={color?.secundary} />
@@ -36,7 +33,6 @@ export default function Internet() {
                     <Label style={{ fontSize: 14, color: color.secundary+99, }}>Tente novamente mais tarde.</Label>
                 </Column>
             </Row>
-        </MotiView>
-    </AnimatePresence>
+        </Column>
     )
 }

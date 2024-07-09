@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { MotiImage } from "moti";
-import { Button, Column, Row, Title } from "@theme/global";
+import { Button, Column,  Title } from "@theme/global";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "styled-components/native";
 

@@ -7,7 +7,6 @@ import HomeScreen from '@screens/home';
 import OnboardingScreen from '@screens/onboarding/index';
 
 import AuthLoginScreen from '@screens/auth/login';
-import AuthResetScreen from '@screens/auth/reset';
 
 import NotifyScreen from '@screens/notify';
 import RedeemScreen from '@screens/redeem';
@@ -15,8 +14,6 @@ import ShareScreen from '@screens/share';
 import AsyncStaticScreen from '@screens/async';
 import ReciboScreen from '@screens/recibo';
 import SearchScreen from '@screens/search';
-
-import DevScreen from '@screens/dev';
 
 import BuyServiceScreen from '@screens/buyservice';
 import BuyServiceSuccessScreen from '@screens/buyservice/success';
@@ -58,7 +55,6 @@ import CampaignsRifasScreen from '@screens/campaigns/rifa';
 import CampaignsScreen from '@screens/campaigns';
 import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
 import CampaignsProgressScreen from '@screens/campaigns/progress';
-import CampaignsPontosScreen from '@screens/campaigns/points';
 import CampaignsSingleScreen from '@screens/campaigns/single';
 import CampaignsSingleFinishScreen from '@screens/campaigns/finish';
 
@@ -87,7 +83,6 @@ import RifasBuyScreen from '@screens/rifas/buy';
 
 import RaspadinhasScreen from '@screens/raspadinhas';
 import RaspadinhasSingleScreen from '@screens/raspadinhas/single';
-import RaspadinhasRasparScreen from '@screens/raspadinhas/raspar';
 import RaspadinhasShopScreen from '@screens/raspadinhas/shop';
 
 import CategorySingleScreen from '@screens/search/category';
@@ -100,7 +95,6 @@ import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-import TestAPIScreen from '@screens/test/api';
 
 export default function Router() {
   return (
@@ -110,8 +104,6 @@ export default function Router() {
             <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Redeem" component={RedeemScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="TestAPI" component={TestAPIScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Dev" component={DevScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -119,10 +111,8 @@ export default function Router() {
             <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CategorySingle" component={CategorySingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
-
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
             <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
-            <Stack.Screen name="AuthReset" component={AuthResetScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
 
             <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
             <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -174,7 +164,6 @@ export default function Router() {
             <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsProgress" component={CampaignsProgressScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="CampaignsPontos" component={CampaignsPontosScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsSingle" component={CampaignsSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CampaignsSingleFinish" component={CampaignsSingleFinishScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
@@ -188,7 +177,6 @@ export default function Router() {
 
             <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RaspadinhasRaspar" component={RaspadinhasRasparScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="RaspadinhasShop" component={RaspadinhasShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -290,8 +278,6 @@ function Tabs (){
       ScaleFromCenterAndroid 
       DefaultTransition 
       ModalTransition
-
-
 
 
   */

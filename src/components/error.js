@@ -1,9 +1,8 @@
 import React from "react";
 import { AnimatePresence, MotiView } from "moti"
-import { Title, Button } from '@theme/global';
-import { X } from "lucide-react-native";
+import { Title,  } from '@theme/global';
 
-const Error = ({ msg, dimiss, show }) => {
+const Error = ({ msg, show }) => {
     const [visible, setvisible] = React.useState(show ? true : false);
     return (
         <AnimatePresence>

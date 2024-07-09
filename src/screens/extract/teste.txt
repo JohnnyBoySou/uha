@@ -8,13 +8,6 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import doacoes from '@data/doacoes';
-import extrato from '@data/extrato';
-import coins from '@data/coins';
-import moedas from '@data/moedas';
-import rifas from '@data/rifas';
-import user from '@data/user';
-
 import TopSheet from '@components/topsheet';
 import Avatar from '@components/avatar';
 

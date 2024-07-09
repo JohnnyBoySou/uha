@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, U } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from './../../components/header';
-import { TextInput, FlatList, Dimensions } from 'react-native';
-import { Search, CircleHelp, X } from 'lucide-react-native';
-import { MotiView, AnimatePresence, MotiImage } from 'moti';
+import { TextInput, FlatList, Dimensions, ActivityIndicator } from 'react-native';
+import { Search, CircleHelp } from 'lucide-react-native';
+import { MotiImage } from 'moti';
 import { getSearch } from '@api/request/search';
 
 const { width } = Dimensions.get('window');
@@ -13,7 +13,6 @@ export default function SearchScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [query, setquery] = useState('');
     const [focus, setfocus] = useState();
-    const [type, settype] = useState();
 
     const [shops, setshops] = useState();
     const [services, setservices] = useState();
@@ -26,20 +25,21 @@ export default function SearchScreen({ navigation, route }) {
         await getSearch(query).then(res => {
             setshops(res.shop);
             setservices(res.service);
-            console.log(res.ongs)
             setongs(res.ongs);
-            setloading(false)
-        })
+        }).finally(() => setloading(false))
     }
 
     return (
         <Main style={{ backgroundColor: "#fff", }}>
             <Scroll>
                 <Header title="Pesquisar" rose />
+                {loading && <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 24, }} />}
 
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 20, flex: 1, }}>
                     <Row style={{ marginBottom: 24, justifyContent: 'center', alignItems: 'center', }}>
-                        <TextInput value={query} onChangeText={e => setquery(e)}
+                        <TextInput 
+                            value={query} 
+                            onChangeText={e => setquery(e)}
                             onFocus={() => setfocus(true)}
                             onBlur={() => setfocus(false)}
                             placeholder='Buscar'
@@ -133,17 +133,3 @@ export default function SearchScreen({ navigation, route }) {
         </Main>
     )
 }
-
-/**
- * 
-                    <Row>
-                        <AnimatePresence>
-                            {type != null && <MotiView transition={{ duration: 300, }} from={{ opacity: 0, translateX: -30, }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: -4, marginBottom: 14, borderRadius: 8, }} >
-                                <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                    <Title style={{ color: color.primary, fontSize: 18, marginRight: 6, }}>{type}</Title>
-                                    <X color={color.primary} />
-                                </Row>
-                            </Button></MotiView>}
-                        </AnimatePresence>
-                    </Row>
- */

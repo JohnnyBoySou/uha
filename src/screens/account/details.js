@@ -11,6 +11,7 @@ import { updateUser, listUser} from '@api/request/user/user';
 
 import * as ImagePicker from 'expo-image-picker';
 import { updatePreferences } from '@api/user/preferences';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function AccountDetailsScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -25,7 +26,7 @@ export default function AccountDetailsScreen({ navigation, }) {
     const [cpf, setcpf] = useState();
     const [avatar, setavatar] = useState();
     const [old_avatar, setold_avatar] = useState();
-
+    const isFocused = useIsFocused();
     const [disabled, setdisabled] = useState(true);
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function AccountDetailsScreen({ navigation, }) {
             });
         }
         fecthData();
-    }, []);
+    }, [isFocused]);
 
 
     const [temporaryImg, settemporaryImg] = useState();
@@ -60,7 +61,6 @@ export default function AccountDetailsScreen({ navigation, }) {
 
     const handleSave = async () => {
         setError('')
-        //prenchimento obrigatório
 
         if (!name || name.length < 5) {
             return setError('Nome completo deve ter pelo menos 5 caracteres');
@@ -96,7 +96,6 @@ export default function AccountDetailsScreen({ navigation, }) {
                 };
                 await updatePreferences(pr).then(res => {
                     if (res) {
-                        console.log(res)
                         setloading(false);
                     }
                 })
@@ -168,9 +167,5 @@ export default function AccountDetailsScreen({ navigation, }) {
 }
 
 
-
-
-
 const validateEmail = (email) => validator.isEmail(email);
 const validateCEP = (cep) => validator.isPostalCode(cep, 'BR');
-const validateWhatsapp = (whatsapp) => validator.isMobilePhone(whatsapp, 'pt-BR');

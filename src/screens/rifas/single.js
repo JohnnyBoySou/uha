@@ -5,10 +5,7 @@ import { ArrowLeft, Clock, Info, Phone, Plus, X } from 'lucide-react-native';
 import { MotiImage } from 'moti';
 import { FlatList, Animated, ScrollView } from 'react-native';
 import Header from '@components/header';
-import Pagination from '@components/pagination';
 import { getRifaSingle } from '@api/request/rifa';
-import { StatusBar } from 'expo-status-bar';
-
 
 
 export default function RifasSingleScreen({ navigation, route }) {
@@ -82,7 +79,6 @@ export default function RifasSingleScreen({ navigation, route }) {
                     <MotiImage source={{ uri: item?.camp?.img }} style={{ width: 300, marginRight: 24, borderRadius: 24, backgroundColor: '#303030', height: 180, }} from={{ opacity: 0, translateY: -20, }} animate={{ opacity: 1, translateY: 0, }} />
                     <Column style={{ width: 32, }} />
                 </ScrollView>
-                <Pagination dots={2} scrollX={scrollX} activeIndex={activeIndex} activyColor={color.secundary} inactivyColor={color.secundary + 20} />
 
                 <Column style={{ marginHorizontal: 24, backgroundColor: color.primary, borderRadius: 24, }}>
                     <Row style={{ marginBottom: -13, justifyContent: 'center', alignItems: 'center', marginTop: 30, zIndex: 9, }}>

@@ -1,10 +1,10 @@
-import { Column, Row } from '@theme/global';
+import { Row } from '@theme/global';
 import { MotiView, useAnimationState } from 'moti';
 import { useContext, useEffect } from 'react';
 import { ThemeContext } from 'styled-components/native';
 
 const Check = ({status}) => {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color } = useContext(ThemeContext);
     const animationState = useAnimationState({
         closed: {
           translateX: 0,

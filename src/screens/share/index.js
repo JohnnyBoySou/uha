@@ -4,7 +4,6 @@ import { ThemeContext } from 'styled-components/native';
 import { MotiImage } from 'moti';
 import QRCode from 'react-native-qrcode-svg';
 import Header from '@components/header';
-import user from '@data/user/user'
 
 export default function ShareScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);

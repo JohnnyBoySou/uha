@@ -37,7 +37,7 @@ export default function QRCodeScreen({ navigation, }) {
             <Label style={{  alignSelf: 'center', textAlign: 'center', marginTop: 100, marginBottom: 30,}}>Aponte sua camerâ para o {'\n'}QR Code da nota fiscal</Label>
             <Column style={{ justifyContent: 'center', alignItems: 'center',  marginHorizontal: margin.h,}}>
             <Column style={{ width: 300, height: 300, backgroundColor: '#303030', borderRadius: 12, overflow: 'hidden', }}>
-                <CameraView barcodeScannerSettings={{ barcodeTypes: ["qr"], }}  style={{ flex: 1, borderRadius: 12, overflow: 'hidden',}} facing="back"  onBarcodeScanned={(data) => {setvalue(data.data); console.log(data)}}  >
+                <CameraView barcodeScannerSettings={{ barcodeTypes: ["qr"], }}  style={{ flex: 1, borderRadius: 12, overflow: 'hidden',}} facing="back"  onBarcodeScanned={(data) => {setvalue(data.data);}}  >
                 </CameraView>
             </Column>
 

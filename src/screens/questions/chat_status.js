@@ -5,13 +5,11 @@ import { ThemeContext } from 'styled-components/native';
 import { CircleCheck, Info, ClipboardPen, CircleX, KeyRound, AlarmClock } from 'lucide-react-native';
 import Header from '@components/header';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import registros_chat from '@data/registros_chat';
 
 
 export default function QuestionsChatStatusScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const item = registros_chat[0];
-    const user = { balance: 550, cashback: 100, }
+    const item = [];
     const icon = item?.icon === 'check' ? <MaterialIcons name="check-circle" size={24} color={color.blue} /> : item?.icon === 'await' ? <Info color={color.primary} size={24} /> : item?.icon === 'uncheck' ? <CircleX color={color.red} size={24} /> : item?.icon === 'dimiss' ? <AlarmClock color="#000" size={24} /> : null;
     const road = item.road.reverse();
 

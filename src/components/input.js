@@ -1,7 +1,6 @@
 import { useRef, useState, useContext } from 'react';
-import { MotiImage, MotiView, AnimatePresence, useAnimationState, MotiText } from 'moti';
-import { Button, Column, Row, Label } from '@theme/global';
-import { useNavigation } from '@react-navigation/native';
+import { useAnimationState, MotiText } from 'moti';
+import { Column } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { TextInput } from 'react-native';
 
@@ -15,7 +14,6 @@ const Input = ({ value, setValue, disabled, label }) => {
       to: { translateY: -12, fontSize: 14, backgroundColor: '#fff', paddingHorizontal: 6 },
     });
   
-  //  inputAnimation.transitionTo(focus ? 'to' : 'from');
     return (
       <Column style={{ borderColor: disabled ? '#f1f1f1' : focus ? color.primary : '#d7d7d7', borderWidth: 2, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, marginVertical: 10, }}>
         <MotiText

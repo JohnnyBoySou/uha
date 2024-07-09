@@ -28,7 +28,6 @@ export async function getSingleCategory(id) {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(response.data)
         return response.data
     } catch (error) {
         const err = JSON.parse(error.request.response);
