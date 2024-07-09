@@ -32,14 +32,12 @@ export default function NotafiscalErrorScreen({ navigation, route }) {
                 </MotiView>
                 <Title style={{ fontSize: 32, lineHeight: 34, textAlign: 'center', marginVertical: 24, }}>{status}</Title>
                 <Label style={{ textAlign: 'center', color: color.secundary+99, }}>Verifique sua nota fiscal</Label>
-                <ButtonOut onPress={() => { navigation.goBack() }} style={{ paddingHorizontal: 24, borderColor: color.secundary, marginTop: 32, }}>
+                <ButtonOut onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ paddingHorizontal: 24, borderColor: color.secundary, marginTop: 32, }}>
                     <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Tentar novamente</Label>
                 </ButtonOut>
-
             </Column>
 
             </Scroll>
-
         </Main>
     )
 }

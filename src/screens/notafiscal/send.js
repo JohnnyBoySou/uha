@@ -23,30 +23,6 @@ export default function NotafiscalSendScreen({ navigation, route }) {
     const type = route.params?.type;
 
     const isFocused = useIsFocused();
-    useEffect(() => {
-        if (type?.length > 0) {
-            setvalue(null);
-            bg.transitionTo('from');
-            digit.transitionTo('from');
-        }
-    }, [isFocused]);
-
-    useEffect(() => {
-        if (value?.length > 0) {
-            bg.transitionTo('from');
-            digit.transitionTo('from');
-        }
-        else if (value === null) {
-            digit.transitionTo('to');
-            bg.transitionTo('to');
-        }
-
-    }, [value]);
-
-    const bg = useAnimationState({
-        from: { backgroundColor: color.green, },
-        to: { backgroundColor: color.secundary, },
-    });
     const digit = useAnimationState({
         from: { opacity: 0, width: 0, },
         to: { opacity: 1, width: 180, },
@@ -60,107 +36,77 @@ export default function NotafiscalSendScreen({ navigation, route }) {
         }
     }, [isFocused]);
 
-
     return (
         <Main style={{ backgroundColor: "#fff", }}>
             <StatusBar style="light" translucent />
-            <MotiView state={bg} style={{ flex: 1, }}>
-                {value == null &&
+            <MotiView style={{ flex: 1, }}>
                 <CameraView
-                        barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
-                        style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
-                        facing="back"
-                        onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200); }}  >
-                </CameraView>}
-            
+                    barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
+                    style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
+                    facing="back"
+                    onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200); navigation.navigate('NotafiscalONGS', { value: value }) }}  >
+                </CameraView>
+
                 <Scroll >
                     <Header />
                     <Button onPress={() => { setvalue(null) }} style={{ position: 'absolute', top: 0, right: 20, padding: 12, borderRadius: 12, width: 44, height: 44, backgroundColor: '#ffffff', justifyContent: 'center', alignItems: 'center', }}>
                         <Trash size={24} color={color.secundary} />
                     </Button>
-                    <AnimatePresence>
 
-                        {value == null &&
-                            <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} exit={{ opacity: 0, translateX: 20, display: 'none', }}>
-                                <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 20, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
-                                    <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua camerâ para o {'\n'}QR Code da nota fiscal</Label>
-                                    <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
-                                    <Octicons name="question" size={22} color="#fff" />
-                                </Row>
-                            </MotiView>}
-                    </AnimatePresence>
+                    <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 20, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
+                        <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua camerâ para o {'\n'}QR Code da nota fiscal</Label>
+                        <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
+                        <Octicons name="question" size={22} color="#fff" />
+                    </Row>
 
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, flex: 1, }}>
-                        {value == null &&
-                            <Column style={{ width: 250, height: 250, justifyContent: 'space-between', marginTop: 100, }}>
-                                <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                    <Column>
-                                        <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                        <Column style={{ width: 6, height: 80, backgroundColor: '#fff', }} />
-                                    </Column>
-                                    <Column>
-                                        <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                        <Column style={{ width: 6, height: 80, backgroundColor: '#fff', alignSelf: 'flex-end' }} />
-                                    </Column>
-                                </Row>
-                                <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                    <Column>
-                                        <Column style={{ width: 6, height: 80, backgroundColor: '#fff', }} />
-                                        <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                    </Column>
-                                    <Column>
-                                        <Column style={{ width: 6, height: 80, backgroundColor: '#fff', alignSelf: 'flex-end' }} />
-                                        <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                    </Column>
-                                </Row>
-                            </Column>}
-
-                        <AnimatePresence >
-                            <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} exit={{ opacity: 0, scale: 0, }} style={{ flex: 1, borderRadius: 12, }}>
-
-                                {value != null && <MotiView delay={200} from={{ opacity: 0, translateY: 120, }} animate={{ opacity: 1, translateY: 0, }} style={{ justifyContent: 'center', alignItems: 'center', width: 200, height: 200, backgroundColor: "#0c8a4e90", borderRadius: 100, position: 'absolute', top: 50, alignSelf: 'center', }}>
-                                    <Check size={130} color="#fff" style={{ alignSelf: 'center', textAlign: 'center' }} />
-                                </MotiView>}
-
-                            </MotiView>
-                        </AnimatePresence>
-
-                        {value != null &&
-                            <MotiView style={{ borderRadius: 12, overflow: 'hidden', marginTop: 270, marginBottom: 50, }} from={{ opacity: 0, translateY: -30, }} animate={{ opacity: 1, translateY: 0, }} exit={{ opacity: 0, translateY: -30, }}>
-                                <Title style={{ color: '#fff', padding: 20, textAlign: 'center' }}>Quem você deseja beneficiar?</Title>
-                                <Button onPress={() => { navigation.navigate('NotafiscalONGS', { value: value }) }} style={{ flexGrow: 1, paddingVertical: 12, alignSelf: 'center', paddingHorizontal: 30, justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: '#fff', borderRadius: 100, }}>
-                                    <LabelLI style={{ color: '#fff', }}>Escolher</LabelLI>
-                                </Button>
-
-                            </MotiView>}
-
-
-
-
+                        <Column style={{ width: 250, height: 250, justifyContent: 'space-between', marginTop: 100, }}>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                                <Column>
+                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
+                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', }} />
+                                </Column>
+                                <Column>
+                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
+                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', alignSelf: 'flex-end' }} />
+                                </Column>
+                            </Row>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                                <Column>
+                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', }} />
+                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
+                                </Column>
+                                <Column>
+                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', alignSelf: 'flex-end' }} />
+                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
+                                </Column>
+                            </Row>
+                        </Column>
                     </Column>
                 </Scroll>
 
-                <AnimatePresence>
+                <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', bottom: 30, left: 30, }}>
+                    <Column style={{}}>
+                        <Row style={{ marginVertical: 20, }}>
+                            <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', type: 'Notas fiscais' }) }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                                <NotepadText size={32} color="#fff" />
+                            </Button>
+                            <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
+                                <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Minhas notas</Label>
+                            </MotiView>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => { bottomEnviar.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
+                                <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
+                            </Button>
+                            <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#0d8cd4', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
+                                <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Digitar o código</Label>
+                            </MotiView>
+                        </Row>
+                    </Column>
+                </MotiView>
 
-                    {value === null &&
-                        <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', bottom: 30, left: 30, }}>
-                            <Column style={{}}>
-                                <Row style={{ marginVertical: 20, }}>
-                                    <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', type: 'Notas fiscais' }) }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
-                                        <NotepadText size={32} color="#fff" />
-                                    </Button>
-                                    <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
-                                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Minhas notas</Label>
-                                    </MotiView>
-                                </Row>
-                               
-                               
-                            </Column>
-                        </MotiView>}
-                </AnimatePresence>
-                
-
-                <BottomSheet ref={bottomEnviar} snapPoints={[0.1, 340]}>
+                <BottomSheet ref={bottomEnviar} snapPoints={[0.1, 280]}>
                     <BottomSheetView style={{ marginHorizontal: margin.h, }}>
                         <Title style={{ textAlign: 'center', marginVertical: 12, }}>Digite o código da nota fiscal</Title>
                         <Column style={{ width: 300, alignSelf: 'center', }}>
@@ -169,10 +115,8 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                                 placeholder='12345678909876543212345678909876543211234'
                                 maxLength={44}
                             />
-                            <Label style={{ marginTop: -40, marginBottom: 24, marginRight: 10, alignSelf: 'flex-end', fontSize: 16, fontFamily: font.bold, color: "#111", }}>{value?.length}/44</Label>
                         </Column>
-                        <Label style={{ textAlign: 'center', }}>Sequência de 44 números</Label>
-                        <ButtonOut onPress={() => { bottomEnviar.current?.close() }} style={{ borderColor: color.secundary, marginVertical: 24, marginHorizontal: 32, }}>
+                        <ButtonOut onPress={() => { navigation.navigate('NotafiscalONGS', { value: value }) }} style={{ borderColor: color.secundary, marginVertical: 24, marginHorizontal: 32, }}>
                             <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Cadastrar nota</Label>
                         </ButtonOut>
                     </BottomSheetView>
@@ -182,13 +126,5 @@ export default function NotafiscalSendScreen({ navigation, route }) {
     )
 }
 /**
- *  <Row>
-
-                                <Button onPress={() => { bottomEnviar.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
-                                        <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
-                                    </Button>
-                                    <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#0d8cd4', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
-                                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Digitar o código</Label>
-                                    </MotiView>
-                                </Row>                                 
+ *                            
  */

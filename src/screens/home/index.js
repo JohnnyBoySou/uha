@@ -79,7 +79,7 @@ export default function HomeScreen({ navigation, }) {
                         </Column>
                         <Column style={{ justifyContent: 'center', marginLeft: 16, }}>
                             <Title style={{ fontSize: 18, fontFamily: font.medium, marginTop: 4, marginBottom: -2, lineHeight: 18, color: color.secundary, }}>Pesquisar</Title>
-                            <Label style={{ fontSize: 12, color: color.secundary + 99, }}>Serviços - Estabelecimentos - ONGs</Label>
+                            <Label style={{ fontSize: 12, color: color.secundary + 99, }}>Ofertas - Estabelecimentos - ONGs</Label>
                         </Column>
                     </Row>
                 </Button>

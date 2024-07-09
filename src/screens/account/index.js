@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Check from '@components/check';
-import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, HeartHandshake } from 'lucide-react-native';
+import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, HeartHandshake, ShoppingBag } from 'lucide-react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
@@ -41,10 +41,10 @@ export default function AccountScreen({ navigation, }) {
                 </Row>
 
                 <Column from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} delay={200} style={{ backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
-                    <Label style={{ color: "#fff", }}>Pontos em conta</Label>
+                    <Label style={{ color: "#fff", }}>Pontos disponíveis para uso</Label>
                     <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{user?.PontosAtuais}</Title>
                     <LineL />
-                    <Label style={{ color: "#fff", marginTop: 12, }}>Notas fiscais</Label>
+                    <Label style={{ color: "#fff", marginTop: 12, }}>Notas fiscais doadas</Label>
                     <Label style={{ color: "#fff", }}>{user?.NotasDoadas}</Label>
                     <ButtonSE onPress={() => { navigation.navigate('Shop') }} style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 32, }}  >
                         <LabelSE style={{ color: color.background, }}>Utilizar pontos</LabelSE>
@@ -57,17 +57,17 @@ export default function AccountScreen({ navigation, }) {
                         <Button onPress={() => { navigation.navigate('ONGList') }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                    <HeartHandshake color={color.primary} size={42} />
+                                    <HeartHandshake color={color.primary} size={36} />
                                 </Column>
-                                <SubLabel>ONGS</SubLabel>
+                                <SubLabel>ONGs</SubLabel>
                             </Column>
                         </Button>
                         <Button onPress={() => { navigation.navigate('Extract', { type: 'Doações' }) }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20, }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                    <Image source={require('@icons/pontos.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
+                                <ShoppingBag color={color.primary} size={32} strokeWidth={2} />
                                 </Column>
-                                <SubLabel>Doações</SubLabel>
+                                <SubLabel>Shop</SubLabel>
                             </Column>
                         </Button>
                         <Button onPress={() => { navigation.navigate('Favorites') }} style={{ flexGrow: 1, }}>
@@ -181,31 +181,8 @@ const Configs = [
         screen: 'AccountNotify',
         img: require('@icons/ic2.png'),
     },
-    {
-        title: 'Pontos',
-        description: 'Desfrute de serviços parceiros',
-        icon: 'lock',
-        check: null,
-        screen: 'Shop',
-        img: require('@icons/ic3.png'),
-    },
-    {
-        title: 'Rifas',
-        description: 'Concorra a premios diversos',
-        icon: 'file-text',
-        check: null,
-        screen: 'Rifas',
-        img: require('@icons/ic4.png'),
-    },
-
-    {
-        title: 'Estabelecimentos',
-        description: 'Descubra nossos parceiros',
-        icon: 'log-out',
-        check: null,
-        screen: 'Shop',
-        img: require('@icons/ic6.png'),
-    },
+  
+    
     {
         title: 'Indique e ganhe',
         description: 'Participe da campanha',

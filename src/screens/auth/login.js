@@ -20,9 +20,7 @@ export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState();
     const [type, settype] = useState('Entrar');
-
-    const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Seja bem-vindo ao nosso aplicativo, esperamos que tenha uma ótima experiência.' } : { title: 'Escolha uma nova senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
-
+    const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Graças a pessoas generosas como você, levamos conforto e segurança a quem mais precisa.' } : { title: 'Escolha uma nova senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
     const handleExit = (value) => {
         settype(value)
     }
@@ -339,8 +337,6 @@ const Registrar = ({ type, settype }) => {
     )
 }
 
-
-
 const Entrar = ({ type, settype, }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext)
@@ -495,7 +491,6 @@ const Entrar = ({ type, settype, }) => {
         </MotiView>
     )
 }
-
 
 
 const ForgetPassword = ({ handleExit }) => {

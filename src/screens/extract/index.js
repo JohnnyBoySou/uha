@@ -105,17 +105,12 @@ export default function ExtractScreen({ navigation, route }) {
                                 </Column>
                             </Row>
                             <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', }}>
-                                <Column>
-                                    <Button onPress={() => { navigation.navigate('Shop') }} style={{ backgroundColor: "#ffffff40", borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
-                                        <MaterialCommunityIcons name="shopping-outline" size={24} color="#fff" />
-                                    </Button>
-                                    <Label style={{ fontSize: 16, color: "#fff", fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Comprar</Label>
-                                </Column>
-                                <Column>
+                               
+                                <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
                                     <Button onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ backgroundColor: "#ffffff40", borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
-                                        <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />
+                                        <MaterialCommunityIcons name="clipboard-edit-outline" size={24} color="#fff" />
                                     </Button>
-                                    <Label style={{ fontSize: 16, color: "#fff", fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>QR Code</Label>
+                                    <Label style={{ fontSize: 16, color: "#fff", fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Nota fiscal</Label>
                                 </Column>
                                 <Column>
                                     <Button onPress={() => { navigation.navigate('Account') }} style={{ backgroundColor: "#ffffff40", borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
@@ -232,7 +227,7 @@ const Empty = ({ type }) => {
     const navigation = useNavigation();
     const msg = type === 'Doações' ? 'Começe a dor agora mesmo!' : type === 'Transações' ? 'Começe a utilizar seus \npontos agora mesmo!' : type === 'Rifas' ? 'Participe de nossas rifas \ne ganhe prêmios!' : type === 'Moedas' ? 'Começe a utilizar suas \nmoedas agora mesmo!' : 'Nada por aqui, cadastre \numa nota fiscal!'
     const screen = type === 'Doações' ? 'Donate' : type === 'Transações' ? 'Shop' : type === 'Rifas' ? 'Rifas' : type === 'Moedas' ? 'Shop' : 'NotafiscalSend'
-    const btmessage = type === 'Doações' ? 'Fazer doação' : type === 'Transações' ? 'Comprar' : type === 'Rifas' ? 'Participar' : type === 'Moedas' ? 'Comprar' : 'Nota Fiscal'
+    const btmessage = type === 'Doações' ? 'Fazer doação' : type === 'Transações' ? 'Ver ofertas' : type === 'Rifas' ? 'Participar' : type === 'Moedas' ? 'Comprar' : 'Cadastrar'
     return (
         <Column style={{ backgroundColor: '#f9f9f9', marginHorizontal: margin.h, marginVertical: 20, borderRadius: 24, overflow: 'hidden', }}>
             <Row style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 30, }}>

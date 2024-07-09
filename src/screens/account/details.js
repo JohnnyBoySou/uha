@@ -114,13 +114,7 @@ export default function AccountDetailsScreen() {
     }
     const profile = temporaryImg ? { uri: `file://${temporaryImg}` } : avatar ? { uri: avatar } : require('@imgs/user_placeholder.png')
 
-
-    if(loading)return(
-        <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll>
-                <SkeletonLoading />
-            </Scroll>
-        </Main>)
+    if(loading) return(<Main style={{ backgroundColor: '#fff', }}><Scroll><SkeletonLoading /></Scroll></Main>)
     
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -247,8 +241,6 @@ export default function AccountDetailsScreen() {
 
 const validateEmail = (email) => validator.isEmail(email);
 const validateCEP = (cep) => validator.isPostalCode(cep, 'BR');
-
-
 
 const SkeletonLoading = () => {
     return (
