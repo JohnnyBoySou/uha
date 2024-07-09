@@ -40,8 +40,7 @@ export default function AccountDetailsScreen({ navigation, }) {
                 setcpf(res.cpf);
                 setcep(res.cep);
                 setwhatsapp(res.whatsapp);
-                setloading(false);
-            });
+            }).catch(error => console.log(error)).finally(() => setloading(false));
         }
         fecthData();
     }, [isFocused]);
@@ -109,10 +108,9 @@ export default function AccountDetailsScreen({ navigation, }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll >
-                <Row>
-                    <Title>Dados Cadastrais</Title>
-                </Row>
+            <Scroll>
+                <Header title='Dados cadastrais' rose />
+                {loading ? <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 160, }} /> :
                 <Column style={{ paddingHorizontal: margin.h, marginTop: 20, }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
                         <MotiImage style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={profile} />
@@ -141,7 +139,7 @@ export default function AccountDetailsScreen({ navigation, }) {
                     <Label style={{ backgroundColor: color.primary + 20, color: color.primary, borderRadius: 12, paddingHorizontal: 24, paddingVertical: 12, textAlign: 'center', }}>
                         As alterações podem levar alguns minutos para serem processadas
                     </Label>
-                </Column>
+                </Column>}
                 <Column style={{ height: 120, }} />
             </Scroll>
             <AnimatePresence>

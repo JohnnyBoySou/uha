@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect, useMemo } from 'react';
+import React, { useContext, useState, useRef, useEffect, } from 'react';
 import { FlatList, ScrollView } from 'react-native';
 import { Main, Column, Label, Title, Row, SubLabel, Button, ButtonPR, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
@@ -10,8 +10,7 @@ import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import TopSheet from '@components/topsheet';
 import Avatar from '@components/avatar';
 
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { getExtractDonate,  getExtractNotas, getExtractTransacao } from '@request/extract/gets';
+import { getExtractNotas, getExtractTransacao } from '@request/extract/gets';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
 import { Skeleton } from 'moti/skeleton';
@@ -22,20 +21,11 @@ export default function ExtractScreen({ navigation, route }) {
     const [loading, setloading] = useState(true);
     const [page, setpage] = useState('Notas fiscais');
     const [dateSelect, setdateSelect] = useState('Hoje');
-
-    //bottomsheet
-    const edit = useRef(null);
-    const [cache, setcache] = useState();
-    const snapPoints = useMemo(() => ["1%", "50%"], []);
-
     const scrollTags = useRef(null);
     const bts = ['Notas fiscais', 'Transações', 'Doações', 'Rifas',]
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     const isFocused = useIsFocused();
-
-    //trasacao troca por servico 
-
 
     useEffect(() => {
         const handleScroll = () => {
@@ -45,10 +35,9 @@ export default function ExtractScreen({ navigation, route }) {
         handleScroll()
     }, [page]);
 
-
     const [transacao, settransacao] = useState();
     const [notas, setnotas] = useState();
-    const [doacoes, setdoacoes] = useState();
+    const [doacoes, setdoacoes] = useState([]);
     const [rifas, setrifas] = useState([]);
     const [user, setuser] = useState();
 
@@ -56,21 +45,27 @@ export default function ExtractScreen({ navigation, route }) {
 
     useEffect(() => {
         const fetchData = () => {
-            listUser().then((res) => {
-                setuser(res)
-            });
-            getExtractNotas().then((res) => {
-                setnotas(res)
-            });
-            getExtractTransacao().then((res) => {
-                settransacao(res)
-            });
             if (type === page) {
                 return
             } else if (type?.length > 0) {
                 setpage(type);
             }
-            setloading(false);
+            try {
+                listUser().then((res) => {
+                    setuser(res)
+                });
+                getExtractNotas().then((res) => {
+                    setnotas(res)
+                });
+                getExtractTransacao().then((res) => {
+                    settransacao(res)
+                });    
+            } catch (error) {
+                console.log(error)
+            } finally{
+                setloading(false)
+            }
+          
         }
         fetchData()
     }, [isFocused]);
@@ -208,16 +203,9 @@ export default function ExtractScreen({ navigation, route }) {
                     showsVerticalScrollIndicator={false}
                     onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
                     ListFooterComponent={<Column style={{ height: 100, }} />}
-                    renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} onLong={(item) => { setcache(item); edit.current?.expand() }} />}
+                    renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} />}
                 />}
 
-            <BottomSheet ref={edit} snapPoints={snapPoints}
-                modalStyle={{ borderTopLeftRadius: 24, borderTopRightRadius: 24, }} >
-                <BottomSheetScrollView style={{ borderTopLeftRadius: 24, borderTopRightRadius: 24, }}>
-                    <Column style={{ padding: 24, }}>
-                    </Column>
-                </BottomSheetScrollView>
-            </BottomSheet>
         </Main>
     )
 }
@@ -228,7 +216,7 @@ const NavBar = ({ bts, page, setpage,  scrollTags, margin, color, font }) => {
             <Column style={{ height: 150, }} />
             <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12, }} showsHorizontalScrollIndicator={false}>
                 {bts.map((bt, index) => (
-                    <Button key={index} onPress={() => { setpage(bt)}}
+                    <Button disabled={bt === page} key={index} onPress={() => { setpage(bt)}}
                         style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0, }}>
                         <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
                     </Button>

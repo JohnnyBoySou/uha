@@ -3,10 +3,9 @@ import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
-import { ArrowLeft, Cpu, Search } from 'lucide-react-native';
-import { MotiView } from 'moti';
+import { ArrowLeft, Search } from 'lucide-react-native';
 import { useIsFocused, useNavigation, } from '@react-navigation/native';
-import { getOffers, getServices } from '@request/shop/index';
+import { getOffers, } from '@request/shop/index';
 import { Skeleton } from 'moti/skeleton';
 
 export default function ShopOffersScreen({ navigation, route }) {
@@ -48,7 +47,7 @@ export default function ShopOffersScreen({ navigation, route }) {
 
                 <Title style={{ marginHorizontal: margin.h, marginBottom: 5, marginTop: 0, }}>⚡ Relâmpago</Title>
                 <Rain data={offers} loading={loading} />
-                
+                <Column style={{ height: 100, }} />
             </Scroll>
 
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>

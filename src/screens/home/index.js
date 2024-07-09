@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { FlatList, View, Dimensions, Pressable, Animated } from 'react-native';
+import { FlatList,  Dimensions, Pressable, Animated } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
@@ -9,7 +9,6 @@ import { StatusBar } from 'expo-status-bar';
 
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
-import Internet from '@components/internet';
 
 import { getOffers, getShops, getServices, } from '@request/shop/index';
 import { getListCategory } from '@api/request/category';
@@ -18,8 +17,7 @@ import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign } from '@expo
 import { Skeleton } from 'moti/skeleton';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
-
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
@@ -86,7 +84,7 @@ export default function HomeScreen({ navigation, }) {
                     </Row>
                 </Button>
 
-                <MotiView state={menu} style={{ overflow: 'hidden' }}>
+                <MotiView state={menu} style={{ overflow: 'hidden' }} transition={{type: 'timing'}}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>

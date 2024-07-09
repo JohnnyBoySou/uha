@@ -23,7 +23,7 @@ export default function AccountScreen({ navigation, }) {
             });
         }
         fecthData();
-    }, [isFocused]);
+    }, []);
 
     const [dark, setdark] = useState(false);
 
