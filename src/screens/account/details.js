@@ -16,7 +16,6 @@ import { Skeleton } from 'moti/skeleton';
 
 export default function AccountDetailsScreen() {
     const { color, font, margin } = useContext(ThemeContext);
-
     const [error, setError] = useState();
     const [loading, setloading] = useState(true);
     const [email, setemail] = useState();
@@ -35,7 +34,6 @@ export default function AccountDetailsScreen() {
     useEffect(() => {
         const fecthData = async () => {
             try {
-                setloading(true);
                 const res = await listUser();
                 setavatar(res.avatar);
                 setold_avatar(res.avatar);
@@ -50,7 +48,9 @@ export default function AccountDetailsScreen() {
                 setloading(false);
             }
         }
-        fecthData();
+        setTimeout(() => {
+            fecthData();
+        }, 200);
     }, []);
 
     const [temporaryImg, settemporaryImg] = useState(false);
@@ -114,7 +114,7 @@ export default function AccountDetailsScreen() {
     }
     const profile = temporaryImg ? { uri: `file://${temporaryImg}` } : avatar ? { uri: avatar } : require('@imgs/user_placeholder.png')
 
-    if(loading) return(<Main style={{ backgroundColor: '#fff', }}><Scroll><SkeletonLoading /></Scroll></Main>)
+    if(loading) return(<Main style={{ backgroundColor: '#fff', flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 120, }}><SkeletonLoading/></Main>)
     
     return (
         <Main style={{ backgroundColor: '#fff', }}>

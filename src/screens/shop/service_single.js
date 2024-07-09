@@ -26,26 +26,28 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     const [item, setitem] = useState();
     const [shop, setshop] = useState();
     const id = route.params?.id
-    const [loading, setloading] = useState();
-    const [error, seterror] = useState()
+    const [loading, setloading] = useState(true);
+    const [error, seterror] = useState(null)
 
     useEffect(() => {
         const fetchData = async () => {
-            setloading(true);
             try {
                 const service = await getSingleService(id);
-                const fav = await veriFav(item?.id)
+                const fav = await veriFav(service?.id)
                 setlike(fav)
                 setitem(service);
                 setshop(service.shop);
             } catch (err) {
+                console.log(err)
                 seterror(err);
             } finally {
                 setloading(false);
             }
         };
-        fetchData();
-    }, [id]);
+        setTimeout(() => {
+            fetchData();
+        }, 200);
+    }, []);
 
     const nowdate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     const itm = {
@@ -100,7 +102,6 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         })
         setloading(false)
     }
-
     if (loading) return <Main style={{ backgroundColor: '#fff', }}><Scroll><SkeletonList /></Scroll></Main>
     return (
         <Main style={{ backgroundColor: '#fff', }}>

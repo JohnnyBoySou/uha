@@ -24,7 +24,6 @@ export default function ExtractScreen({ navigation, route }) {
     const scrollTags = useRef(null);
     const bts = ['Notas fiscais', 'Transações', 'Doações', 'Rifas',]
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
-
     const isFocused = useIsFocused();
 
     useEffect(() => {
@@ -44,28 +43,25 @@ export default function ExtractScreen({ navigation, route }) {
     const selectData = page === 'Doações' ? doacoes : page === 'Transações' ? transacao : page === 'Notas fiscais' ? notas : page === 'Rifas' ? rifas : []
 
     useEffect(() => {
-        const fetchData = () => {
-            if (type === page) {
-                return
-            } else if (type?.length > 0) {
-                setpage(type);
-            }
+        const fetchData = async () => {
             try {
-                listUser().then((res) => {
-                    setuser(res)
-                });
-                getExtractNotas().then((res) => {
-                    setnotas(res)
-                });
-                getExtractTransacao().then((res) => {
-                    settransacao(res)
-                });    
+                const us = await listUser();
+                const tr = await getExtractTransacao();
+                const nt = await getExtractNotas();
+                setuser(us)
+                setnotas(nt)
+                settransacao(tr)
+
             } catch (error) {
                 console.log(error)
             } finally{
                 setloading(false)
             }
-          
+        }
+        if (type === page) {
+            return
+        } else if (type?.length > 0) {
+            setpage(type);
         }
         fetchData()
     }, [isFocused]);
@@ -74,7 +70,7 @@ export default function ExtractScreen({ navigation, route }) {
     const scrollMain = useRef()
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            {isFocused && <StatusBar style="light" backgroundColor={color.primary} animated={true} />}
+            {isFocused && <StatusBar style="light" backgroundColor={color.primary} animated={true} duration={100} />}
             <TopSheet
                 min={
                     <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }}>
@@ -200,7 +196,6 @@ export default function ExtractScreen({ navigation, route }) {
                     ListFooterComponent={<Column style={{ height: 100, }} />}
                     renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} />}
                 />}
-
         </Main>
     )
 }

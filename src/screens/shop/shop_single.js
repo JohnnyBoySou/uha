@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, } from 'react';
 import { FlatList, Image, Platform, Linking, Dimensions} from 'react-native';
 import { Main, Column, Label, Scroll, Title, Row, SubLabel, Button } from '@theme/global';
 
@@ -44,11 +44,12 @@ export default function ShopSingleScreen({ navigation, route }) {
                 setloading(false);
             }
         };
-        fetchData();
-    }, [id]);
+        setTimeout(() => {
+            fetchData();
+        }, 200);
+    }, []);
 
     const [fixedMenu, setFixedMenu] = useState(false);
-
     const openMapWithCep = () => {
         const cep = item?.cep;
         const url = Platform.select({

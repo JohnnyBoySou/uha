@@ -1,13 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, U } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import Header from './../../components/header';
-import { TextInput, FlatList, Dimensions, ActivityIndicator } from 'react-native';
-import { Search, CircleHelp } from 'lucide-react-native';
-import { MotiImage } from 'moti';
+import Header from '@components/header';
+import { TextInput, FlatList, Image, ActivityIndicator } from 'react-native';
+import { Search, CircleHelp } from 'lucide-react-native'; 
 import { getSearch } from '@api/request/search';
-
-const { width } = Dimensions.get('window');
 
 export default function SearchScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -21,14 +18,18 @@ export default function SearchScreen({ navigation, route }) {
 
     const handleSearch = async () => {
         if (query.length === 0) return;
-        setloading(true)
-        await getSearch(query).then(res => {
+        try {
+            setloading(true)
+            const res = await getSearch(query);
             setshops(res.shop);
             setservices(res.service);
             setongs(res.ongs);
-        }).finally(() => setloading(false))
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setloading(false)
+        }
     }
-
     return (
         <Main style={{ backgroundColor: "#fff", }}>
             <Scroll>
@@ -38,7 +39,7 @@ export default function SearchScreen({ navigation, route }) {
                     <Row style={{ marginBottom: 24, justifyContent: 'center', alignItems: 'center', }}>
                         <TextInput 
                             value={query} 
-                            onChangeText={e => setquery(e)}
+                            onChangeText={e => {setquery(e); query.length > 3 ? handleSearch() : null}}
                             onFocus={() => setfocus(true)}
                             onBlur={() => setfocus(false)}
                             placeholder='Buscar'
@@ -69,7 +70,7 @@ export default function SearchScreen({ navigation, route }) {
                                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item?.name?.slice(0, 24)}</Title>
                                                 <Label style={{ fontSize: 12, lineHeight: 14, color: color.secundary + 99, }}>{item?.infomacoes.length > 72 ? item?.infomacoes.slice(0, 72) + '...' : item?.infomacoes}</Label>
                                             </Column>
-                                            <MotiImage source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                            <Image source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                         </Row>
                                     </Button>
                                 )}
@@ -88,7 +89,7 @@ export default function SearchScreen({ navigation, route }) {
                                 renderItem={({ item }) => (
                                     <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                                         <Column style={{ justifyContent: 'center', width: 124, }}>
-                                            <MotiImage source={{ uri: item.Avatar }} style={{ width: 124, height: 124, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                            <Image source={{ uri: item.Avatar }} style={{ width: 124, height: 124, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                             <Title style={{ marginTop: 6, fontSize: 12, lineHeight: 14, marginBottom: 4, width: 112, }}>{item.label.length > 42 ? item.label.slice(0, 42) + '...' : item?.label?.slice(0, 42)}</Title>
                                             <Row style={{}}>
                                                 <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.Pontos}</Title>
@@ -117,7 +118,7 @@ export default function SearchScreen({ navigation, route }) {
                                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item?.name?.slice(0, 24)}</Title>
                                                 <Label style={{ fontSize: 12, lineHeight: 14, color: color.secundary + 99, }}>{item?.infomacoes?.length > 72 ? item?.infomacoes?.slice(0, 72) + '...' : item?.infomacoes}</Label>
                                             </Column>
-                                            <MotiImage source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                                            <Image source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                                         </Row>
                                     </Button>
                                 )}

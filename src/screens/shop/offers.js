@@ -9,21 +9,25 @@ import { getOffers, } from '@request/shop/index';
 import { Skeleton } from 'moti/skeleton';
 
 export default function ShopOffersScreen({ navigation, route }) {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color, margin } = useContext(ThemeContext);
     const [offers, setoffers] = useState();
     const [loading, setloading] = useState(true);
-    const isFocused = useIsFocused();
+
     useEffect(() => {
-        const fecthData = () => {
+        const fecthData = async () => {
             setloading(true)
-            getOffers().then((res) => {
-                setoffers(res)
-            }).finally(() => {
+            try {
+                const offer = await getOffers();
+                setoffers(offer);
+            } catch (error) {
+                console.log(error)
+            } finally{
                 setloading(false)
-            });
+            }
         }
         fecthData()
-    }, [isFocused])
+    }, [])
+
     const [fixedMenu, setFixedMenu] = useState(false);
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -154,7 +158,6 @@ const Offers = ({ data, loading }) => {
         </>
     )
 }
-
 
 const SkeletonList = () => {
     return (

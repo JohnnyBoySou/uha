@@ -7,7 +7,6 @@ import { MotiImage, MotiView } from 'moti';
 import { getSingleCategory } from '@api/request/category';
 import { useNavigation } from '@react-navigation/native';
 
-import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, Ticket } from 'lucide-react-native';
 const { width } = Dimensions.get('window');
 
 export default function CategorySingleScreen({ navigation, route }) {

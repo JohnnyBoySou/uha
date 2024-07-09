@@ -8,7 +8,6 @@ import { Feather } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { Skeleton } from 'moti/skeleton';
 
-
 export default function ExtractSingleScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const id = route?.params?.id ? route?.params?.id : '19';
@@ -23,14 +22,17 @@ export default function ExtractSingleScreen({ navigation, route }) {
     useEffect(() => {
         const fetchData = async () => {
             setloading(true);
-            await getExtractSingle(type, id).then((res) => {
+            try {
+                const res = await getExtractSingle(type, id);   
                 setservice(res?.service);
                 setshop(res?.shop);
                 setong(res?.ong);
                 setitem(res);
-            }).finally(() => {
+            } catch (error) {
+                console.log(error);
+            } finally {
                 setloading(false);
-            });
+            }
         }
         fetchData()
     }, []);

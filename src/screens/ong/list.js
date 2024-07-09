@@ -9,7 +9,6 @@ import ongs from '@data/ongs'
 
 export default function ONGListScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
-     
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>

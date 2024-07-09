@@ -1,7 +1,8 @@
 import React, { useEffect, useContext, useState, useRef, } from 'react';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 
-import { TextInput, Dimensions, Vibration } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { TextInput, Dimensions,  } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonOut, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState } from 'moti';
@@ -36,6 +37,13 @@ export default function NotafiscalSendScreen({ navigation, route }) {
         }
     }, [isFocused]);
 
+
+    const handleSend = (data) => {
+        setvalue(data); 
+        Haptics.notificationAsync( Haptics.NotificationFeedbackType.Success)
+        navigation.navigate('NotafiscalONGS', { value: data }); 
+    }
+ 
     return (
         <Main style={{ backgroundColor: "#fff", }}>
             <StatusBar style="light" translucent />
@@ -44,7 +52,11 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                     barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
                     style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
                     facing="back"
-                    onBarcodeScanned={(data) => { setvalue(data.data); Vibration.vibrate(200); navigation.navigate('NotafiscalONGS', { value: value }) }}  >
+                    onBarcodeScanned={(data) => {
+                        if (data.data !== value) {
+                            handleSend(data.data);
+                        }
+                    }}>
                 </CameraView>
 
                 <Scroll >
@@ -116,7 +128,7 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                                 maxLength={44}
                             />
                         </Column>
-                        <ButtonOut onPress={() => { navigation.navigate('NotafiscalONGS', { value: value }) }} style={{ borderColor: color.secundary, marginVertical: 24, marginHorizontal: 32, }}>
+                        <ButtonOut onPress={handleSend} style={{ borderColor: color.secundary, marginVertical: 24, marginHorizontal: 32, }}>
                             <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Cadastrar nota</Label>
                         </ButtonOut>
                     </BottomSheetView>

@@ -39,17 +39,15 @@ export default function HomeScreen({ navigation, }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            setloading(true)
             try {
-                getOffers().then((res) => {
-                    setoffers(res)
-                })
-                getShops().then((res) => {
-                    setshops(res)
-                })
-                getServices().then((res) => {
-                    setservices(res)
-                })
+                setloading(true)
+                const offer = await getOffers();
+                const shop = await getShops();
+                const service = await getServices(); 
+                setoffers(offer);
+                setshops(shop);
+                setservices(service);
+
             } catch (error) {
                 console.log(error)
             } finally {
@@ -57,7 +55,7 @@ export default function HomeScreen({ navigation, }) {
             }
         }
         fetchData()
-    }, [isFocused])
+    }, [])
 
     return (
         <Main style={{ backgroundColor: "#fff" }}>
