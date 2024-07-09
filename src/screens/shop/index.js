@@ -77,7 +77,7 @@ export default function ShopScreen({ navigation, route }) {
 const Offers = ({ data, loading }) => {
     const { color, margin, font } = useContext(ThemeContext);
     const navigation = useNavigation();
-    if (loading) { return <><ActivityIndicator size="large" color={color.primary} /></> }
+    if (loading) { return <></> }
     return (
         <Column>
             <Row style={{ justifyContent: 'space-between', marginBottom: 16, marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
@@ -125,7 +125,7 @@ const Promos = ({ data, title, loading }) => {
         )
     }, []);
 
-    if (loading) { return <><ActivityIndicator size="large" color={color.primary} /></> }
+    if (loading) { return <Column style={{ marginTop: 50, }}><ActivityIndicator size="large" color={color.primary} /></Column> }
     else {
         return (
             <>
@@ -217,7 +217,7 @@ const Cards = () => {
 
 const Services = ({ data, title, loading }) => {
     const { color } = useContext(ThemeContext);
-    if (loading) { return <><ActivityIndicator size="large" color={color.primary} /></> }
+    if (loading) { return <></> }
     return (
         <Column>
             <Title style={{ marginHorizontal: 28, marginTop: 12, marginBottom: 12, fontSize: 22, lineHeight: 22, letterSpacing: -1 }}>{title}</Title>
