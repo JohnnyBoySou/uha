@@ -13,7 +13,7 @@ export default function AsyncStaticScreen({ navigation, }) {
             setTimeout(() => {
               navigation.replace('Tabs');
             }, 1200);
-          } else if(isTokenExpired(user.token)) {
+          } else if(user?.token && isTokenExpired(user?.token)) {
             navigation.replace('AuthLogin');
           }else{
             navigation.replace('Onboarding');

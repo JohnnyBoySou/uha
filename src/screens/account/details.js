@@ -18,7 +18,6 @@ export default function AccountDetailsScreen({ navigation, }) {
 
     const [error, setError] = useState();
     const [loading, setloading] = useState(true);
-
     const [email, setemail] = useState();
     const [whatsapp, setwhatsapp] = useState();
     const [cep, setcep] = useState();
@@ -26,7 +25,6 @@ export default function AccountDetailsScreen({ navigation, }) {
     const [cpf, setcpf] = useState();
     const [avatar, setavatar] = useState();
     const [old_avatar, setold_avatar] = useState();
-    const isFocused = useIsFocused();
     const [disabled, setdisabled] = useState(true);
 
     useEffect(() => {
@@ -43,10 +41,9 @@ export default function AccountDetailsScreen({ navigation, }) {
             }).catch(error => console.log(error)).finally(() => setloading(false));
         }
         fecthData();
-    }, [isFocused]);
+    }, []);
 
-
-    const [temporaryImg, settemporaryImg] = useState();
+    const [temporaryImg, settemporaryImg] = useState(false);
     const handleImage = async () => {
         const responsey = await ImagePicker.launchImageLibraryAsync({ base64: true, quality: 1, });
         if (!responsey.canceled) {
@@ -57,7 +54,6 @@ export default function AccountDetailsScreen({ navigation, }) {
             setavatar(old_avatar?.length > 0 ? old_avatar : null)
         }
     }
-
     const handleSave = async () => {
         setError('')
 
@@ -103,7 +99,6 @@ export default function AccountDetailsScreen({ navigation, }) {
             }
         })
     }
-    
     const profile = temporaryImg ? { uri: `file://${temporaryImg}` } : avatar ? { uri: avatar } : require('@imgs/user_placeholder.png')
 
     return (

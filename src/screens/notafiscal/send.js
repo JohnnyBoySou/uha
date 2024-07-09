@@ -154,9 +154,11 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                                     </MotiView>
                                 </Row>
                                
+                               
                             </Column>
                         </MotiView>}
                 </AnimatePresence>
+                
 
                 <BottomSheet ref={bottomEnviar} snapPoints={[0.1, 340]}>
                     <BottomSheetView style={{ marginHorizontal: margin.h, }}>
@@ -181,11 +183,12 @@ export default function NotafiscalSendScreen({ navigation, route }) {
 }
 /**
  *  <Row>
-                                    <Button onPress={() => { bottomEnviar.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
+
+                                <Button onPress={() => { bottomEnviar.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
                                         <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
                                     </Button>
                                     <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: '#0d8cd4', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
                                         <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, }}>Digitar o código</Label>
                                     </MotiView>
-                                </Row>
+                                </Row>                                 
  */

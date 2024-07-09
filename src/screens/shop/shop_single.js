@@ -1,64 +1,52 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-
-import { FlatList, Image, Text, Dimensions, Platform, Linking, ActivityIndicator } from 'react-native';
+import { FlatList, Image, Platform, Linking, } from 'react-native';
 import { Main, Column, Label, Scroll, Title, Row, SubLabel, Button } from '@theme/global';
 
 import { ThemeContext } from 'styled-components/native';
-
-import { AnimatePresence, MotiImage, MotiView, } from 'moti';
+import { AnimatePresence, MotiView, Skeleton } from 'moti';
 
 //icons
-import { ArrowLeft, ArrowRight, MapPin, Search } from 'lucide-react-native';
+import { ArrowLeft, MapPin,} from 'lucide-react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-//component 
-import BottomSheet from '@gorhom/bottom-sheet'
-
 //request
-import { getSingleShop, getSingleOffers, getSingleServices } from '@request/shop/index';
+import { getSingleShop } from '@request/shop/index';
 
 import { StatusBar } from 'expo-status-bar';
 import CardOffers from '@components/cardOffers';
-import { Skeleton } from 'moti/skeleton';
-import  CardServices from '@components/cardServices';
+import CardServices from '@components/cardServices';
 
-
-const { width } = Dimensions.get('window');
 
 export default function ShopSingleScreen({ navigation, route }) {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color, margin } = useContext(ThemeContext);
     const id = route.params?.id ? route.params?.id : 1;
+
     const [item, setitem] = useState();
     const [offers, setoffers] = useState();
     const [services, setservices] = useState();
+
     const map = useRef(null)
 
     const [loading, setloading] = useState(true);
     const [error, seterror] = useState();
 
     useEffect(() => {
-    const fecthData = () => {
-        setloading(true)
-        getSingleShop(id).then((res) => {
-            setitem(res)
-            getSingleOffers(id).then((res) => {
-                setoffers(res)
-            }).catch((err) => {
-                seterror(err)
-            })
-            getSingleServices(id).then((res) => {
-                setservices(res)
-            }).catch((err) => {
-                seterror(err)
-            })
-        }).catch((err) => {
-            seterror(err)
-        }).finally(() => {
-            setloading(false)
-        })
-    }
-    fecthData()
-    }, [])
+        const fetchData = async () => {
+            setloading(true);
+            try {
+                const shop = await getSingleShop(id);
+                setitem(shop);
+                console.log(shop.services)
+                setoffers(shop?.offers);
+                setservices(shop.services);
+            } catch (err) {
+                seterror(err);
+            } finally {
+                setloading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
     const [fixedMenu, setFixedMenu] = useState(false);
 
@@ -72,30 +60,28 @@ export default function ShopSingleScreen({ navigation, route }) {
             .catch(err => console.error('An error occurred', err));
     };
 
-    if (loading) { return (<Main style={{ backgroundColor: '#fff', }}><StatusBar style="dark" translucent /><SkeletonLoading /></Main>) }
+    if (loading) return <Main><SkeletonLoading /></Main>;
+
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style="light" translucent />
             <Column style={{ position: 'absolute', top: 20, zIndex: 99, }}>
                 <AnimatePresence >
                     {fixedMenu &&
-                        <MotiView from={{ opacity: 0, translateY: -120, }} animate={{ translateY: -20, opacity: 1, }} exit={{ translateY: -120, opacity: 0, }} transition={{ type: 'timing' }} style={{ flexDirection: 'row', paddingTop: 50, paddingBottom: 18, paddingHorizontal: margin.h, alignItems: 'center', backgroundColor: color.secundary, width: width, justifyContent: 'space-between', borderBottomLeftRadius: 16, borderBottomRightRadius: 16, }}>
-
+                        <MotiView from={{ opacity: 0, translateY: -120, }} animate={{ translateY: -20, opacity: 1, }} exit={{ translateY: -120, opacity: 0, }} transition={{ type: 'timing' }} style={{ flexDirection: 'row', paddingTop: 50, paddingBottom: 18, paddingHorizontal: margin.h, alignItems: 'center', backgroundColor: color.secundary, width: '100%', justifyContent: 'space-between', borderBottomLeftRadius: 16, borderBottomRightRadius: 16, }}>
                             <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                                 <Column style={{ padding: 2, borderRadius: 100, backgroundColor: '#fff', }}>
-                                    <MotiImage source={{ uri: item?.img }} style={{ borderRadius: 100, width: 56, height: 56, }} />
+                                    <Image source={{ uri: item?.img }} style={{ borderRadius: 100, width: 56, height: 56, }} />
                                 </Column>
                                 <Column style={{ width: 26, height: 26, borderRadius: 100, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', marginTop: 32, marginLeft: -20, }}>
                                     <MaterialIcons style={{}} name="verified" size={24} color={color.blue} />
                                 </Column>
-
-
-                                <MotiView style={{ marginLeft: 18, }} >
+                                <Column style={{ marginLeft: 18, }} >
                                     <Title style={{ fontSize: 18, color: "#fff" }}>{item?.name}</Title>
                                     <Label style={{ fontSize: 12, color: "#f7f7f7" }}>{item?.address?.length > 24 ? item?.address.slice(0, 24) + '...' : item?.address}</Label>
-                                </MotiView>
+                                </Column>
                             </Row>
-                            <Button onPress={() => { map.current?.expand() }} style={{ backgroundColor: color.primary, marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <Button onPress={openMapWithCep} style={{ backgroundColor: color.primary, marginRight: 6, width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                                 <MapPin color='#fff' />
                             </Button>
                         </MotiView>}
@@ -110,6 +96,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                         source={{ uri: item?.capa }}
                         style={{
                             height: 300,
+                            width: '100%',
                             borderBottomLeftRadius: 32,
                             borderBottomRightRadius: 32,
                             marginBottom: -72,
@@ -118,8 +105,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                         }}
                     />
                     <Column style={{ padding: 6, backgroundColor: '#fff', borderRadius: 100, alignSelf: 'center', zIndex: -2, }}>
-                        <MotiImage
-                            transition={{ type: 'timing' }}
+                        <Image
                             source={{ uri: item?.img }}
                             style={{ borderRadius: 100, zIndex: 99, width: 132, height: 132, }}
                         />
@@ -139,88 +125,29 @@ export default function ShopSingleScreen({ navigation, route }) {
                             </Row>
                         </Button>
                     </Column>
-
-
-                    {offers?.length > 0 && <>
-                        <Column style={{ marginHorizontal: margin.h, }}>
-                            <Title style={{ letterSpacing: -1, fontSize: 22, }}>Ofertas</Title>
-                        </Column>
-                        <FlatList
-                            horizontal
-                            data={offers}
-                            style={{ marginVertical: margin.v, marginBottom: 30, }}
-                            showsHorizontalScrollIndicator={false}
-                            ListHeaderComponent={<Column style={{ width: margin.h, }} />}
-                            ListFooterComponent={<Column style={{ width: margin.h }} />}
-                            keyExtractor={(item) => item?.id.toString()}
-                            renderItem={({ item }) => <CardOffers item={item} />}
-                        />
-                    </>}
-
-                    {item?.banners?.length > 0 && <Banners data={item?.banners} />}
-
-                    {services?.length > 0 && <>
-                        <Column style={{ marginHorizontal: margin.h, marginTop: 0, marginBottom: 10, }}>
-                            <Title style={{ letterSpacing: -1, fontSize: 22, }}>Serviços</Title>
-                        </Column>
-                        <FlatList
-                            data={services}
-                            horizontal
-                            ListHeaderComponent={<Column style={{ width: margin.h, }} />}
-                            ListFooterComponent={<Column style={{ width: margin.h }} />}
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(index) => index.toString()}
-                            renderItem={({ item }) => <CardServices item={item} />}
-                        />
-                    </>}
+                    <Offers data={offers} />
+                    <Banners data={item?.banners} />
+                    <Services data={services} />
                 </Column>
                 <Column style={{ height: 70, }} />
             </Scroll>
-
-            <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
-                <AnimatePresence>
-                    {fixedMenu &&
-                        <MotiView from={{ opacity: 0, scale: 0, }} animate={{ scale: 1, opacity: 1, }} exit={{ scale: 0, opacity: 0, }} transition={{ type: 'timing' }} >
-                            <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                                <Search size={24} color="#fff" />
-                            </Button>
-                        </MotiView>}
-                </AnimatePresence>
-            </Column>
-
-            <BottomSheet ref={map} snapPoints={[0.1, 180,]}>
-                <Column style={{ padding: 0, justifyContent: 'center', alignItems: 'center', }}>
-                    <Title style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, }}>Horario de funcionamento</Title>
-                    <Label>Segunda à Sexta</Label>
-                    <SubLabel>{item?.open} - {item?.close}</SubLabel>
-                    <Button onPress={openMapWithCep} style={{ backgroundColor: color.primary, marginTop: 20, paddingVertical: 12, paddingHorizontal: 20, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                        <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                            <Title style={{ fontSize: 18, color: '#fff', marginRight: 8, }}>Abrir no mapa</Title>
-                            <MapPin size={18} color="#fff" />
-                        </Row>
-                    </Button>
-                </Column>
-            </BottomSheet>
-        </Main>
-    )
+    </Main>)
 }
 
 const Banners = ({ data }) => {
-    const render = ({ item }) => {
-        return (
-            <Button onPress={() => { }}  >
-                <MotiImage source={{ uri: item }} style={{ width: 240, height: 300, borderRadius: 24, marginRight: 18, objectFit: 'cover', }} />
-            </Button>
-        )
-    }
-
+    if (data?.length == 0) return
+    const { margin, color } = useContext(ThemeContext);
     return (
+        <Column>
+            <Column style={{ marginHorizontal: margin.h, marginTop: 0, marginBottom: 10, }}>
+                <Title style={{ letterSpacing: -1, fontSize: 22, }}>Promocionais</Title>
+            </Column>
         <FlatList
             decelerationRate={'fast'}
             scrollEventThrottle={16}
             data={data}
-            renderItem={render}
-            keyExtractor={(index) => index.toString()}
+            renderItem={({ item }) => <Image source={{ uri: item }} style={{ width: 240, height: 300, borderRadius: 24, marginRight: 18, objectFit: 'cover', }} />}
+            keyExtractor={(item) => item}
             horizontal
             showsHorizontalScrollIndicator={false}
             ListFooterComponent={<Column style={{ width: 34 }} />}
@@ -228,9 +155,52 @@ const Banners = ({ data }) => {
             snapToAlignment='center'
             snapToOffsets={[0, 300, 600]}
         />
+        </Column>
     )
 }
 
+const Services = ({ data }) => {
+    if (data?.length == 0) return
+    const { margin, color } = useContext(ThemeContext);
+    return (
+        <Column>
+            <Column style={{ marginHorizontal: margin.h, marginTop: 0, marginBottom: 10, }}>
+                <Title style={{ letterSpacing: -1, fontSize: 22, }}>Serviços</Title>
+            </Column>
+            <FlatList
+                data={data}
+                horizontal
+                ListHeaderComponent={<Column style={{ width: margin.h, }} />}
+                ListFooterComponent={<Column style={{ width: margin.h }} />}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(index) => index.toString()}
+                renderItem={({ item }) => <CardServices item={item} />}
+            />
+        </Column>
+    )
+}
+
+const Offers = ({ data }) => {
+    if (data?.length == 0) return
+    const { margin, color } = useContext(ThemeContext);
+    return (
+        <Column>
+            <Column style={{ marginHorizontal: margin.h, }}>
+                <Title style={{ letterSpacing: -1, fontSize: 22, }}>Ofertas do momento</Title>
+            </Column>
+            <FlatList
+                horizontal
+                data={data}
+                style={{ marginVertical: margin.v, marginBottom: 30, }}
+                showsHorizontalScrollIndicator={false}
+                ListHeaderComponent={<Column style={{ width: margin.h, }} />}
+                ListFooterComponent={<Column style={{ width: margin.h }} />}
+                keyExtractor={(item) => item?.id.toString()}
+                renderItem={({ item }) => <CardOffers item={item} />}
+            />
+        </Column>
+    )
+}
 
 const SkeletonLoading = () => {
     return (
