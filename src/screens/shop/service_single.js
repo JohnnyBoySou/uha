@@ -12,52 +12,48 @@ import Feather from '@expo/vector-icons/Feather';
 
 import HeartAnim from '@anim/heart';
 
-import { getSingleService, getSingleShop } from '@request/shop/index';
+import { getSingleService, } from '@request/shop/index';
 import { sendCodeService } from '@api/request/shop/qrcode';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
 import { Skeleton } from 'moti/skeleton';
+import { X } from 'lucide-react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width,  } = Dimensions.get('window');
 
 
 export default function ShopServiceSingleScreen({ navigation, route }) {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color, margin } = useContext(ThemeContext);
     const [item, setitem] = useState();
     const [shop, setshop] = useState();
-    const [others, setothers] = useState();
     const id = route.params?.id
+    const [loading, setloading] = useState();
+    const [error, seterror] = useState()
 
     useEffect(() => {
         const fetchData = async () => {
-            getSingleService(id).then((res) => {
-                setitem(res)
-                getSingleShop(res.shop.id).then((res) => {
-                    setshop(res)
-                })
-                setothers(res?.others)
-            }).catch((err) => {
-                console.log(err)
-            })
-            veriFav(item?.id).then((res) => {
-                setlike(res)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-        fetchData()
-    }, [])
+            setloading(true);
+            try {
+                const service = await getSingleService(id);
+                const fav = await veriFav(item?.id)
+                setlike(fav)
+                setitem(service);
+                setshop(service.shop);
+            } catch (err) {
+                seterror(err);
+            } finally {
+                setloading(false);
+            }
+        };
+        fetchData();
+    }, [id]);
 
-    const scrollX = React.useRef(new Animated.Value(0)).current;
-
-    const digit = useAnimationState({
-        from: { opacity: 0, width: 0, },
-        to: { opacity: 1, width: 220, },
-    })
     const nowdate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     const itm = {
         date: nowdate,
         shop: {
             name: shop?.name,
+            id: shop?.id,
+            img: shop?.img,
         },
         product: {
             name: item?.name,
@@ -77,9 +73,6 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         }
 
     }
-    const [loading, setloading] = useState();
-    const [error, seterror] = useState()
-
     const handleBuyService = async () => {
         setloading(true)
         sendCodeService(item?.id).then(res => {
@@ -98,6 +91,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     id: item?.id,
                 },
             }
+            setloading(false)
             navigation.navigate('ShopQRCode', { item: itm })
         }).catch((err) => {
             seterror(err.message)
@@ -107,40 +101,13 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         setloading(false)
     }
 
+    if (loading) return <Main style={{ backgroundColor: '#fff', }}><Scroll><SkeletonList /></Scroll></Main>
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll scrollEventThrottle={16} onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 120) { digit.transitionTo('to') } else { digit.transitionTo('from') } }}  >
+            <Scroll scrollEventThrottle={16}  >
                 <Header title="Detalhes" rose />
-                <FlatList
-                    horizontal
-                    data={item?.imgs}
-                    style={{ marginVertical: margin.v, marginBottom: 20, }}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    snapToAlignment='center'
-                    decelerationRate={'fast'}
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
-                    pagingEnabled
-                    ListEmptyComponent={<Row style={{ marginHorizontal: margin.h, }}><Skeleton colorMode='light' width={width * 0.85} height={284} radius={24} /></Row>}
-                    renderItem={({ item, index }) => <CardImage item={item} index={index} />}
-                />
-                {item?.imgs?.length > 1 &&
-                    <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: -14, marginBottom: 10, }}>
-                        <ExpandingDot
-                            data={item?.imgs}
-                            expandingDotWidth={20}
-                            scrollX={scrollX}
-                            containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
-                            dotStyle={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: 5,
-                                marginHorizontal: 2,
-                            }}
-                            activeDotColor={color.secundary}
-                            inActiveDotColor={color.secundary + 50}
-                        />
-                    </Column>}
+
+                <Carrousel data={item?.imgs} />
 
                 <Column style={{ marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
@@ -171,11 +138,11 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         />
 
                         <Button onPress={toggleLike} style={{ alignSelf: 'center', width: 42, height: 42, marginRight: 12, borderRadius: 12, backgroundColor: color.primary + 20, justifyContent: 'center', alignItems: 'center', }}>
-                                <AnimatePresence>
-                                    {like ? <HeartAnim w={52} h={52} play={like} />
-                                        :
-                                        <AntDesign name="hearto" size={24} color={color.primary} />}
-                                </AnimatePresence>
+                            <AnimatePresence>
+                                {like ? <HeartAnim w={52} h={52} play={like} />
+                                    :
+                                    <AntDesign name="hearto" size={24} color={color.primary} />}
+                            </AnimatePresence>
                         </Button>
                     </Row>
                 </Column>
@@ -199,39 +166,20 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         </Row>
                     </Column>
 
-                    {others?.length > 0 && <>
-                        <Title style={{ fontSize: 20, marginTop: -8, }}>Aproveite também</Title>
-                        <FlatList
-                            data={others}
-                            style={{ marginTop: 6, marginBottom: 30, marginHorizontal: -8, }}
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item) => item.id}
-                            columnWrapperStyle={{}}
-                            numColumns={2}
-                            renderItem={({ item }) => (
-                                <Button onPress={() => navigation.navigate('Home')} style={{ borderRadius: 8, padding: 4, backgroundColor: '#f5f5f5', marginVertical: 6, flexGrow: 1, margin: 8, }}>
-                                    <Row style={{ alignItems: 'center', }}>
-                                        <MotiImage source={{ uri: item.img }} style={{ width: 54, height: 54, borderRadius: 6, }} />
-                                        <Column style={{ marginLeft: 8, justifyContent: 'center', marginRight: 12, }}>
-                                            <SubLabel style={{ fontFamily: 'Font_Medium', fontSize: 14, }}>{item?.name.slice(0, 14)}</SubLabel>
-                                            <SubLabel style={{ color: color.primary, fontSize: 12, lineHeight: 16, }}>{item?.value} pontos</SubLabel>
-                                        </Column>
-                                    </Row>
-                                </Button>
-                            )}
-                        />
-                    </>}
                 </Column>
+
                 <Column style={{ height: 100, }} />
             </Scroll>
 
-            <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', bottom: 0, left: 20, zIndex: 99, }}>
+            <MotiView style={{ position: 'absolute', bottom: 0, alignSelf: 'center', zIndex: 99, }}>
                 <Row style={{ marginVertical: 20, }}>
                     <Button onPress={handleBuyService} disabled={loading || error?.length > 0} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
-                        <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />
+                        <Row>
+                            {error ? <X size={32} color="#fff" /> : <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />}
+                        </Row>
                     </Button>
-                    <MotiView transition={{ type: 'timing' }} state={digit} style={{ backgroundColor: error?.length > 0 ? "#850505" : '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
-                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, textAlign: 'right', }}>{error ? error.slice(5) : 'Gerar QRCODE'}    </Label>
+                    <MotiView style={{ backgroundColor: error?.length > 0 ? "#850505" : '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
+                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, textAlign: 'right', marginLeft: 18, }}>{error ? error.slice(5) : 'Gerar QRCODE'}    </Label>
                     </MotiView>
                 </Row>
             </MotiView>
@@ -239,6 +187,44 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     )
 }
 
+const Carrousel = ({ data }) => {
+    const { margin, color, } = useContext(ThemeContext);
+    const scrollX = React.useRef(new Animated.Value(0)).current;
+
+    return (
+        <>
+            <FlatList
+                horizontal
+                data={data}
+                style={{ marginVertical: margin.v, marginBottom: 20, }}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item, index) => index.toString()}
+                snapToAlignment='center'
+                decelerationRate={'fast'}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
+                pagingEnabled
+                renderItem={({ item, index }) => <CardImage item={item} index={index} />}
+            />
+            {data?.length > 1 &&
+                <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: -14, marginBottom: 10, }}>
+                    <ExpandingDot
+                        data={data}
+                        expandingDotWidth={20}
+                        scrollX={scrollX}
+                        containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                        dotStyle={{
+                            width: 10,
+                            height: 10,
+                            borderRadius: 5,
+                            marginHorizontal: 2,
+                        }}
+                        activeDotColor={color.secundary}
+                        inActiveDotColor={color.secundary + 50}
+                    />
+                </Column>}
+        </>
+    )
+}
 
 const CardImage = ({ item }) => {
     const [open, setopen] = useState(false);
@@ -267,7 +253,42 @@ const CardImage = ({ item }) => {
 
     return (
         <Pressable onLongPress={handleImg} style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
-            <MotiImage state={scaleIn} source={{ uri: item }} style={{ borderRadius: 24,}} />
+            <MotiImage state={scaleIn} source={{ uri: item }} style={{ borderRadius: 24, }} />
         </Pressable>
+    )
+}
+
+const SkeletonList = () => {
+    return (
+        <Column style={{ marginHorizontal: 28, }}>
+            <Column style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
+                <Skeleton height={300} width={width * 0.86} radius={24} colorMode='light' />
+            </Column>
+            <Column style={{ height: 12, }} />
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Column>
+                    <Skeleton height={40} width={width * 0.56} radius={6} colorMode='light' />
+                    <Column style={{ height: 6, }} />
+                    <Skeleton height={24} width={width * 0.4} radius={6} colorMode='light' />
+                </Column>
+                <Skeleton height={72} width={72} radius={12} colorMode='light' />
+            </Row>
+
+            <Row style={{ marginTop: 12, }}>
+                <Skeleton height={42} width={120} radius={100} colorMode='light' />
+                <Column style={{ width: 12, }} />
+                <Skeleton height={42} width={80} radius={100} colorMode='light' />
+                <Column style={{ width: 12, }} />
+                <Skeleton height={42} width={100} radius={100} colorMode='light' />
+            </Row>
+            <Column style={{ height: 26, }} />
+            <Skeleton height={34} width={width * 0.46} radius={8} colorMode='light' />
+            <Column style={{ height: 12, }} />
+            <Skeleton height={74} width={width * 0.86} radius={12} colorMode='light' />
+            <Column style={{ height: 32, }} />
+            <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                <Skeleton height={74} width={width * 0.6} radius={100} colorMode='light' />
+            </Column>
+        </Column>
     )
 }

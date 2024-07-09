@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { FlatList, Image, Platform, Linking, } from 'react-native';
+import { FlatList, Image, Platform, Linking, Dimensions} from 'react-native';
 import { Main, Column, Label, Scroll, Title, Row, SubLabel, Button } from '@theme/global';
 
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiView, Skeleton } from 'moti';
-
+import { AnimatePresence, MotiView,  } from 'moti';
+import { Skeleton } from 'moti/skeleton';
 //icons
 import { ArrowLeft, MapPin,} from 'lucide-react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -16,6 +16,7 @@ import { StatusBar } from 'expo-status-bar';
 import CardOffers from '@components/cardOffers';
 import CardServices from '@components/cardServices';
 
+const { width } = Dimensions.get('window');
 
 export default function ShopSingleScreen({ navigation, route }) {
     const { color, margin } = useContext(ThemeContext);
@@ -24,8 +25,6 @@ export default function ShopSingleScreen({ navigation, route }) {
     const [item, setitem] = useState();
     const [offers, setoffers] = useState();
     const [services, setservices] = useState();
-
-    const map = useRef(null)
 
     const [loading, setloading] = useState(true);
     const [error, seterror] = useState();
@@ -36,17 +35,17 @@ export default function ShopSingleScreen({ navigation, route }) {
             try {
                 const shop = await getSingleShop(id);
                 setitem(shop);
-                console.log(shop.services)
                 setoffers(shop?.offers);
                 setservices(shop.services);
             } catch (err) {
+                console.log(err)
                 seterror(err);
             } finally {
                 setloading(false);
             }
         };
         fetchData();
-    }, []);
+    }, [id]);
 
     const [fixedMenu, setFixedMenu] = useState(false);
 
@@ -60,7 +59,7 @@ export default function ShopSingleScreen({ navigation, route }) {
             .catch(err => console.error('An error occurred', err));
     };
 
-    if (loading) return <Main><SkeletonLoading /></Main>;
+    if (loading) return <Main style={{ backgroundColor: '#fff', }}><SkeletonLoading /></Main>;
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -118,7 +117,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                             <MaterialIcons style={{ marginLeft: 5, }} name="verified" size={24} color={color.blue} />
                         </Row>
                         <Label style={{ textAlign: 'center', marginVertical: 5, fontSize: 14, color: color.secundary + 99, lineHeight: 16, }}>{item?.desc}</Label>
-                        <Button style={{ borderRadius: 100, }} onPress={() => { map.current?.expand() }} >
+                        <Button style={{ borderRadius: 100, }} onPress={openMapWithCep}>
                             <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFE0F6', borderRadius: 100, paddingHorizontal: 12, marginVertical: 6, }}>
                                 <MapPin color={color?.primary} size={16} />
                                 <SubLabel style={{ textAlign: 'center', fontSize: 14, marginVertical: 5, marginHorizontal: 6, fontFamily: 'Font_Medium', color: color.primary, }}>{item?.address}</SubLabel>

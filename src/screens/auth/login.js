@@ -65,18 +65,18 @@ const Registrar = ({ type, settype }) => {
     const { color, font, margin, } = useContext(ThemeContext);
     const [focusEmail, setfocusEmail] = useState(false);
     const [focusPass, setfocusPass] = useState(false);
-    const [focusName, setfocusName] = useState();
     const [focusCPF, setfocusCPF] = useState();
-    const [focusCEP, setfocusCEP] = useState();
     const [focusCode, setfocusCode] = useState();
+    const [focusCEP, setfocusCEP] = useState();
+    const [focusName, setfocusName] = useState();
     const [focusWhatsapp, setfocusWhatsapp] = useState();
 
     const [loading, setloading] = useState(false);
 
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
-    const [whatsapp, setwhatsapp] = useState('');
     const [cpf, setcpf] = useState('');
+    const [whatsapp, setwhatsapp] = useState('');
     const [cep, setcep] = useState('');
     const [name, setname] = useState('');
     const [code, setcode] = useState('');
