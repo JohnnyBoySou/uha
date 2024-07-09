@@ -24,18 +24,16 @@ export default function ShopScreen({ navigation, route }) {
 
     const isFocused = useIsFocused();
     useEffect(() => {
-        const fecthData = async = () => {
+        const fecthData = async = async () => {
             setloading(true);
             try {
-                getShops().then((res) => {
-                    setdata(res)
-                })
-                getOffers().then((res) => {
-                    setoffers(res)
-                })
-                getServices().then((res) => {
-                    setservices(res)
-                })
+                const shops = await getShops();
+                setdata(shops);
+                const offer = await getOffers();
+                setoffers(offer)
+                const service = await getServices();
+                setservices(service)
+                
             } catch (err) {
                 console.log(err)
             } finally {
