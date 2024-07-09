@@ -54,7 +54,7 @@ export default function SearchScreen({ navigation, route }) {
 
                     <Row style={{ alignItems: 'center', marginTop: -15, marginBottom: 20, }}>
                         <CircleHelp color={color.label} size={24} />
-                        <Label style={{ fontSize: 14, marginLeft: 8, lineHeight: 16, }}>Busque por <U>estabelecimentos</U>, <U>serviços</U> ou <U>ONGs</U>.</Label>
+                        <Label style={{ fontSize: 14, marginLeft: 8, lineHeight: 16, }}>Busque por <U>ofertas</U>, <U>serviços</U> ou <U>ONGs</U>.</Label>
                     </Row>
 
                     {loading ? <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 24, }} /> : <>

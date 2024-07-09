@@ -38,10 +38,10 @@ export default function NotafiscalSendScreen({ navigation, route }) {
     }, [isFocused]);
 
 
-    const handleSend = (data) => {
-        setvalue(data); 
+    const handleSend = () => {
         Haptics.notificationAsync( Haptics.NotificationFeedbackType.Success)
-        navigation.navigate('NotafiscalONGS', { value: data }); 
+        navigation.navigate('NotafiscalONGS', { value: value }); 
+        console.log(value)
     }
  
     return (
@@ -53,8 +53,9 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                     style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
                     facing="back"
                     onBarcodeScanned={(data) => {
+                        setvalue(data.data);
                         if (data.data !== value) {
-                            handleSend(data.data);
+                            handleSend();
                         }
                     }}>
                 </CameraView>

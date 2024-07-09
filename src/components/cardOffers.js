@@ -14,9 +14,9 @@ const CardOffers = ({item}) => {
         {item?.sell_porcentage && <Row style={{ backgroundColor: '#d7d7d7', }}>
             <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
         </Row>}
-        <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item?.name.slice(0, 42)}</Title>
+        <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item?.name?.slice(0, 42)}</Title>
         <Row style={{}}>
-            <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value.slice(0, -3)}</Title>
+            <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value?.slice(0, -3)}</Title>
             <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
         </Row>
         <Row>

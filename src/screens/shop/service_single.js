@@ -46,7 +46,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         };
         setTimeout(() => {
             fetchData();
-        }, 200);
+        }, 300);
     }, []);
 
     const nowdate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });

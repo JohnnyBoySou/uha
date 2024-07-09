@@ -46,7 +46,7 @@ export default function ShopSingleScreen({ navigation, route }) {
         };
         setTimeout(() => {
             fetchData();
-        }, 200);
+        }, 300);
     }, []);
 
     const [fixedMenu, setFixedMenu] = useState(false);

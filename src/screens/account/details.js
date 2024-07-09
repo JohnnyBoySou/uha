@@ -48,9 +48,7 @@ export default function AccountDetailsScreen() {
                 setloading(false);
             }
         }
-        setTimeout(() => {
-            fecthData();
-        }, 200);
+        fecthData();
     }, []);
 
     const [temporaryImg, settemporaryImg] = useState(false);

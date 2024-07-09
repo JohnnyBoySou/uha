@@ -14,7 +14,7 @@ export default function ShopOffersScreen({ navigation, route }) {
     const [loading, setloading] = useState(true);
 
     useEffect(() => {
-        const fecthData = async () => {
+        const fetchData = async () => {
             setloading(true)
             try {
                 const offer = await getOffers();
@@ -25,7 +25,9 @@ export default function ShopOffersScreen({ navigation, route }) {
                 setloading(false)
             }
         }
-        fecthData()
+        setTimeout(() => {
+            fetchData();
+        }, 300);
     }, [])
 
     const [fixedMenu, setFixedMenu] = useState(false);

@@ -82,8 +82,8 @@ export default function Router() {
   return (
     <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
-            <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
-            <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  ,  backBehavior: 'none',}}/>
+            <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.SlideFromRightIOS  ,  backBehavior: 'none',}}/>
+            <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.SlideFromRightIOS  ,  backBehavior: 'none',}}/>
             <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Redeem" component={RedeemScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
@@ -93,12 +93,12 @@ export default function Router() {
             <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="CategorySingle" component={CategorySingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
-            <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS  , }}/>
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
+            <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
 
             <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
             <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS   , }}/>
+            <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ShopQRCode" component={ShopQRCodeScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ShopOffers" component={ShopOffersScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 

@@ -9,7 +9,7 @@ import { StatusBar } from 'expo-status-bar'
 import Header from '@components/header';
 
 import { ExpandingDot } from "react-native-animated-pagination-dots";
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 import { ScrollView } from 'react-native-gesture-handler';
 import CardOffers from '@components/cardOffers';

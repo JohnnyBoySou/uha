@@ -1,14 +1,18 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { FlatList,  Dimensions, Pressable, Animated } from 'react-native';
+import { FlatList,  Dimensions, Pressable, Animated, Image } from 'react-native';
 import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
-import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, Ticket } from 'lucide-react-native';
+import { AnimatePresence, MotiView, useAnimationState, } from 'moti';
+import { Bike, Bone, Brush, Car, Hospital, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, } from 'lucide-react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
+
+import CardOffers from '@components/cardOffers';
+import CardServices from '@components/cardServices';
+import CardShops from '@components/cardShops'
 
 import { getOffers, getShops, getServices, } from '@request/shop/index';
 import { getListCategory } from '@api/request/category';
@@ -35,7 +39,6 @@ export default function HomeScreen({ navigation, }) {
     const [shops, setshops] = useState();
     const [services, setservices] = useState();
     const [loading, setloading] = useState(true);
-    const isFocused = useIsFocused();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,7 +50,6 @@ export default function HomeScreen({ navigation, }) {
                 setoffers(offer);
                 setshops(shop);
                 setservices(service);
-
             } catch (error) {
                 console.log(error)
             } finally {
@@ -62,7 +64,7 @@ export default function HomeScreen({ navigation, }) {
             <StatusBar style="dark" backgroundColor="#fff" animated={true} />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
-                    <MotiImage source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
+                    <Image source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <Notify />
                         <Column style={{ width: 16, }} />
@@ -84,28 +86,24 @@ export default function HomeScreen({ navigation, }) {
 
                 <MotiView state={menu} style={{ overflow: 'hidden' }} transition={{type: 'timing'}}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
-
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={() => { navigation.navigate('Notafiscal') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                 <MaterialCommunityIcons name="clipboard-edit-outline" size={34} color={color.primary} />
                             </Button>
                             <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
                         </Column>
-
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={() => { navigation.navigate('Donate') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
-                                <MotiImage source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
+                                <Image source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                             </Button>
                             <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Doação</Label>
                         </Column>
-
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={() => { navigation.navigate('Shop') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                 <ShoppingBag color={color.primary} size={32} strokeWidth={2} />
                             </Button>
                             <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Shop</Label>
                         </Column>
-
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={toggleMenu} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                 <Row>
@@ -120,29 +118,24 @@ export default function HomeScreen({ navigation, }) {
                         {showMenu &&
                             <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} exit={{ opacity: 0, translateY: 20, }} transition={{ type: 'timing', duration: 300, }}>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
-
-
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Raspadinhas') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                             <FontAwesome5 name="hand-sparkles" size={30} color={color.primary} />
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Raspadinhas</Label>
                                     </Column>
-
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Ranking') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                             <AntDesign name="staro" size={32} color={color.primary} />
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Ranking</Label>
                                     </Column>
-
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Favorites') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, backgroundColor: color.primary + 20, }}>
                                             <AntDesign name="hearto" size={32} color={color.primary} />
                                         </Button>
                                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Favoritos</Label>
                                     </Column>
-
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Rifas') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, backgroundColor: color.primary + 20, }}>
                                             <Ionicons name="ticket-outline" size={28} color={color.primary} />
@@ -182,7 +175,6 @@ export default function HomeScreen({ navigation, }) {
         </Main>
     )
 }
-
 
 const Categorias = () => {
     const iconComponents = {
@@ -258,7 +250,7 @@ export const Carrousel = () => {
         return (
             <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
                 <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, }}>
-                    <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
+                    <Image source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
                 </Button>
             </Column>
         );
@@ -307,6 +299,29 @@ export const Carrousel = () => {
 const OffersCards = ({ data, loading }) => {
     const { color, margin, font } = useContext(ThemeContext);
     const navigation = useNavigation();
+    if(loading)return(<Row style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 40, borderTopLeftRadius: 32, }}>
+        <Column style={{ marginRight: 12, }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={18} width={80} />
+        </Column>
+        <Column style={{ marginRight: 12, }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={18} width={80} />
+        </Column>
+        <Column style={{ marginRight: 12, }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={18} width={80} />
+        </Column>
+    </Row>)
     return (
         <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, }}>
             <Row style={{ paddingHorizontal: margin.h, paddingVertical: 16, justifyContent: 'space-between', alignItems: 'center', }}>
@@ -315,32 +330,6 @@ const OffersCards = ({ data, loading }) => {
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14, }}>Ver mais</Label>
                 </Button>
             </Row>
-
-            {loading ?
-                <Row style={{ marginHorizontal: margin.h, }}>
-                    <Column style={{ marginRight: 12, }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
-                    </Column>
-                    <Column style={{ marginRight: 12, }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
-                    </Column>
-                    <Column style={{ marginRight: 12, }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
-                    </Column>
-                </Row>
-                :
                 <FlatList
                     data={data}
                     ListFooterComponent={
@@ -354,27 +343,9 @@ const OffersCards = ({ data, loading }) => {
                     showsHorizontalScrollIndicator={false}
                     horizontal
                     style={{ backgroundColor: color.background, }}
-                    renderItem={({ item }) => (
-                        <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                            <Column style={{ justifyContent: 'center', width: 124, }}>
-                                <MotiImage source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 20, borderTopRightRadius: 20, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                <Row style={{ backgroundColor: '#d7d7d7', }}>
-                                    <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
-                                </Row>
-                                <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 4, width: 112, }}>{item.name.length > 32 ? item?.name.slice(0, 42) + '...' : item?.name}</Title>
-                                <Row style={{}}>
-                                    <Title style={{ color: color.primary, fontSize: 16, marginRight: 4, lineHeight: 20, }}>{item?.value.slice(0, -3)}</Title>
-                                    <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
-                                </Row>
-                                <Row>
-                                    <Title style={{ color: "#000", fontSize: 12, marginTop: -6, marginRight: 4, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value?.slice(0, -3)}</Title>
-                                    <Title style={{ color: "#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>pontos</Title>
-                                </Row>
-                            </Column>
-                        </Button>
-                    )}
+                    renderItem={({ item }) => <CardOffers item={item} />}
                     keyExtractor={item => item.id}
-                />}
+                />
         </Column>
     )
 }
@@ -382,6 +353,18 @@ const OffersCards = ({ data, loading }) => {
 const Queridinhos = ({ data, loading }) => {
     const navigation = useNavigation()
     const { color, margin, font } = useContext(ThemeContext);
+    if(loading)return(<Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingTop: 40,}}>
+        <Column style={{ marginRight: 12, justifyContent: 'center', alignItems: 'center', }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={240} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+        </Column>
+        <Column style={{ marginRight: 12, justifyContent: 'center', alignItems: 'center', }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={240} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+        </Column>
+    </Row>)
     return (
         <Column style={{ backgroundColor: color.background, }}>
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background, }}>
@@ -392,37 +375,15 @@ const Queridinhos = ({ data, loading }) => {
                     </Button>
                 </Row>
             </Column>
-
-            {loading ?
-                <Row style={{ marginHorizontal: margin.h, }}>
-                    <Column style={{ marginRight: 12, justifyContent: 'center', alignItems: 'center', }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={240} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                    </Column>
-                    <Column style={{ marginRight: 12, justifyContent: 'center', alignItems: 'center', }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={240} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                    </Column>
-                </Row> :
                 <FlatList style={{ backgroundColor: color.background, }}
                     data={data}
                     ListFooterComponent={<Column style={{ width: 24 }} />}
                     ListHeaderComponent={<Column style={{ width: 24 }} />}
                     showsHorizontalScrollIndicator={false}
                     horizontal
-                    renderItem={({ item }) => (
-                        <Button style={{ marginRight: 12, borderRadius: 8, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }} >
-                            <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                <MotiImage source={{ uri: item.img }} style={{ width: 200, height: 100, objectFit: 'cover', borderRadius: 8, }} />
-                                <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 18, }}>{item?.name}</Title>
-                                <Label style={{ textAlign: 'center', color: color.secundary + 99, fontFamily: font.medium, fontSize: 14, lineHeight: 15, width: 180, marginTop: 0, }}>{item?.descri?.length > 42 ? item?.descri.slice(0, 42) + '...' : item?.descri}</Label>
-                            </Column>
-                        </Button>
-                    )}
+                    renderItem={({ item }) => <CardShops item={item} />}
                     keyExtractor={item => item.id}
-                />}
+                />
         </Column>
     )
 }
@@ -430,6 +391,29 @@ const Queridinhos = ({ data, loading }) => {
 const Servicos = ({ data, loading }) => {
     const navigation = useNavigation()
     const { color, margin, font } = useContext(ThemeContext);
+    if(loading)return(<Row style={{ paddingHorizontal: margin.h,  backgroundColor: color.background, paddingTop: 30, marginTop: -1,}}>
+        <Column style={{ marginRight: 12, }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={18} width={80} />
+        </Column>
+        <Column style={{ marginRight: 12, }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={18} width={80} />
+        </Column>
+        <Column style={{ marginRight: 12, }}>
+            <Skeleton colorMode="light" radius={12} height={120} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={24} width={120} />
+            <Column style={{ height: 6, }} />
+            <Skeleton colorMode="light" radius={6} height={18} width={80} />
+        </Column>
+    </Row>)
     return (
         <Column style={{ backgroundColor: color.background, paddingTop: 10, }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
@@ -438,48 +422,15 @@ const Servicos = ({ data, loading }) => {
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 16, }}>Ver mais</Label>
                 </Pressable>
             </Row>
-            {loading ?
-                <Row style={{ marginHorizontal: margin.h, }}>
-                    <Column style={{ marginRight: 12, }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
-                    </Column>
-                    <Column style={{ marginRight: 12, }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
-                    </Column>
-                    <Column style={{ marginRight: 12, }}>
-                        <Skeleton colorMode="light" radius={12} height={120} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={24} width={120} />
-                        <Column style={{ height: 6, }} />
-                        <Skeleton colorMode="light" radius={6} height={18} width={80} />
-                    </Column>
-                </Row>
-                :
                 <FlatList
                     data={data}
                     ListFooterComponent={<Column style={{ width: 24 }} />}
                     ListHeaderComponent={<Column style={{ width: 24 }} />}
                     showsHorizontalScrollIndicator={false}
                     horizontal
-                    renderItem={({ item }) => (
-                        <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                            <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                <MotiImage source={{ uri: item.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
-                                <Title style={{ textAlign: 'center', marginTop: 6, fontSize: 16, lineHeight: 18, }}>{item.title?.length > 10 ? item?.title?.slice(0, 11) + '...' : item?.title}</Title>
-                                <Label style={{ textAlign: 'center', width: 84, fontSize: 14, lineHeight: 15, marginTop: 3, color: color.secundary + 99, fontFamily: font.medium, marginBottom: 12, }}>{item.label}</Label>
-                            </Column>
-                        </Button>
-                    )}
+                    renderItem={({ item }) => <CardServices item={item} />}
                     keyExtractor={item => item.id}
-                />}
+                />
         </Column>
     )
 }
@@ -487,24 +438,8 @@ const Servicos = ({ data, loading }) => {
 const Donate = () => {
     const { color } = useContext(ThemeContext);
     const navigation = useNavigation();
-    const [activeIndex, setActiveIndex] = useState(0);
     const flatListRef = useRef(null);
-    const windowWidth = 300;
     const scrollX = useRef(new Animated.Value(0)).current;
-
-    const activyColor = '#5C0D45';
-    const inactivyColor = '#5C0D4570';
-
-    useEffect(() => {
-        const listener = scrollX.addListener(({ value }) => {
-            const index = Math.round(value / windowWidth);
-            setActiveIndex(index);
-        });
-
-        return () => {
-            scrollX.removeListener(listener);
-        };
-    }, [scrollX, windowWidth]);
 
     const handleScroll = Animated.event(
         [{ nativeEvent: { contentOffset: { x: scrollX } } }],
@@ -515,16 +450,16 @@ const Donate = () => {
         const link = item.img;
         return (
             <Column style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
-                <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24, marginRight: 12 }}>
-                    <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, }} />
+                <Button onPress={() => { navigation.navigate('DonateHide') }} style={{ borderRadius: 24, marginRight: 12 }}>
+                    <Image source={link} style={{ width: 320, height: 170, borderRadius: 24, }} />
                 </Button>
             </Column>
         );
     };
 
     const home = [
-        { id: '1', title: '1', img: require('@imgs/doe1.png'), route: 'DonateHide' },
-        { id: '2', title: '2', img: require('@imgs/doe2.png'), route: 'DonateHide' },
+        { id: '1', title: '1', img: require('@imgs/doe1.png'), },
+        { id: '2', title: '2', img: require('@imgs/doe2.png'), },
     ];
 
     return (
