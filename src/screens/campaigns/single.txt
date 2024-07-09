@@ -5,7 +5,6 @@ import { ArrowLeft, Info , Infinity } from 'lucide-react-native';
 import { MotiImage } from 'moti';
 import { FlatList } from 'react-native';
 import Header from '@components/header';
-import { getCampaignSingle } from '@request/campaigns';
 import { StatusBar } from 'expo-status-bar';
 
 export default function CampaignsSingleScreen({ navigation, route }) {

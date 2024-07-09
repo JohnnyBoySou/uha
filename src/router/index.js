@@ -51,13 +51,6 @@ import AccountAccessInfoScreen from '@screens/account/access';
 import AccountFAQScreen from '@screens/account/faq';
 import AccountTermsScreen from '@screens/account/terms';
 
-import CampaignsRifasScreen from '@screens/campaigns/rifa';
-import CampaignsScreen from '@screens/campaigns';
-import CampaignsGiftCardScreen from '@screens/campaigns/gift_card';
-import CampaignsProgressScreen from '@screens/campaigns/progress';
-import CampaignsSingleScreen from '@screens/campaigns/single';
-import CampaignsSingleFinishScreen from '@screens/campaigns/finish';
-
 import ONGSingleScreen from '@screens/ong/single';
 import ONGListScreen from '@screens/ong/list';
 import ONGSScreen from '@screens/ong';
@@ -67,7 +60,6 @@ import ShopScreen from '@screens/shop';
 import ShopSingleScreen from '@screens/shop/shop_single';
 import ShopServiceSingleScreen from '@screens/shop/service_single';
 import ShopQRCodeScreen from '@screens/shop/qrcode';
-import ShopSingleSearchScreen from '@screens/shop/search_shop_single';
 import ShopOffersScreen from '@screens/shop/offers';
 
 import QuestionsScreen from '@screens/questions';
@@ -76,15 +68,6 @@ import QuestionsChatScreen from '@screens/questions/chat';
 import QuestionsChatStatusScreen from '@screens/questions/chat_status';
 
 import RankingScreen from '@screens/ranking';
-
-import RifasScreen from '@screens/rifas';
-import RifasSingleScreen from '@screens/rifas/single';
-import RifasBuyScreen from '@screens/rifas/buy';
-
-import RaspadinhasScreen from '@screens/raspadinhas';
-import RaspadinhasSingleScreen from '@screens/raspadinhas/single';
-import RaspadinhasShopScreen from '@screens/raspadinhas/shop';
-
 import CategorySingleScreen from '@screens/search/category';
 
 const Stack = createStackNavigator();
@@ -94,7 +77,6 @@ const Tab = createBottomTabNavigator();
 import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
 
 export default function Router() {
   return (
@@ -118,7 +100,6 @@ export default function Router() {
             <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.ModalSlideFromBottomIOS   , }}/>
             <Stack.Screen name="ShopQRCode" component={ShopQRCodeScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ShopSingleSearch" component={ShopSingleSearchScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ShopOffers" component={ShopOffersScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -160,24 +141,10 @@ export default function Router() {
             <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="AccountTerms" component={AccountTermsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
-            <Stack.Screen name="CampaignsRifas" component={CampaignsRifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Campaigns" component={CampaignsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="CampaignsGiftCard" component={CampaignsGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="CampaignsProgress" component={CampaignsProgressScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="CampaignsSingle" component={CampaignsSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="CampaignsSingleFinish" component={CampaignsSingleFinishScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGS" component={ONGSScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
-            <Stack.Screen name="Rifas" component={RifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RifasSingle" component={RifasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RifasBuy" component={RifasBuyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
-            <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RaspadinhasShop" component={RaspadinhasShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

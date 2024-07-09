@@ -4,18 +4,17 @@ import { Main, Scroll, Row, Column, Title, Label, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView, useAnimationState, } from 'moti';
 import { Bike, Bone, Brush, Car, Hospital, Indent, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, Ticket } from 'lucide-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Internet from '@components/internet';
 
-
 import { getOffers, getShops, getServices, } from '@request/shop/index';
 import { getListCategory } from '@api/request/category';
 
-import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign} from '@expo/vector-icons'
+import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign } from '@expo/vector-icons'
 import { Skeleton } from 'moti/skeleton';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
@@ -38,29 +37,32 @@ export default function HomeScreen({ navigation, }) {
     const [shops, setshops] = useState();
     const [services, setservices] = useState();
     const [loading, setloading] = useState(true);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         const fetchData = async () => {
             setloading(true)
-            getOffers().then((res) => {
-                setoffers(res)
-            })
-            getShops().then((res) => {
-                setshops(res)
-            })
-            getServices().then((res) => {
-                setservices(res)
-            })
-            setTimeout(() => {
+            try {
+                getOffers().then((res) => {
+                    setoffers(res)
+                })
+                getShops().then((res) => {
+                    setshops(res)
+                })
+                getServices().then((res) => {
+                    setservices(res)
+                })
+            } catch (error) {
+                console.log(error)
+            } finally {
                 setloading(false)
-            }, 500);
+            }
         }
         fetchData()
-    }, [])
+    }, [isFocused])
 
     return (
         <Main style={{ backgroundColor: "#fff" }}>
-            <Internet />
             <StatusBar style="dark" backgroundColor="#fff" animated={true} />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
@@ -72,20 +74,19 @@ export default function HomeScreen({ navigation, }) {
                     </Row>
                 </Row>
 
-                    <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
-                        <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
-                            <Column from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
-                                <Search strokeWidth={2} color="#fff" size={24} />
-                            </Column>
-                            <Column style={{ justifyContent: 'center', marginLeft: 16, }}>
-                                <Title style={{ fontSize: 18, fontFamily: font.medium, marginTop: 4, marginBottom: -2, lineHeight: 18, color: color.secundary, }}>Pesquisar</Title>
-                                <Label style={{ fontSize: 12, color: color.secundary + 99, }}>Serviços - Estabelecimentos - ONGs</Label>
-                            </Column>
-                        </Row>
-                    </Button>
+                <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
+                    <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
+                        <Column from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
+                            <Search strokeWidth={2} color="#fff" size={24} />
+                        </Column>
+                        <Column style={{ justifyContent: 'center', marginLeft: 16, }}>
+                            <Title style={{ fontSize: 18, fontFamily: font.medium, marginTop: 4, marginBottom: -2, lineHeight: 18, color: color.secundary, }}>Pesquisar</Title>
+                            <Label style={{ fontSize: 12, color: color.secundary + 99, }}>Serviços - Estabelecimentos - ONGs</Label>
+                        </Column>
+                    </Row>
+                </Button>
 
                 <MotiView state={menu} style={{ overflow: 'hidden' }}>
-
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
 
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
@@ -159,11 +160,11 @@ export default function HomeScreen({ navigation, }) {
 
                 </MotiView>
 
-                    <Carrousel color={color} type="home" />
+                <Carrousel color={color} type="home" />
 
-                    <OffersCards data={offers} loading={loading} />
+                <OffersCards data={offers} loading={loading} />
 
-                    <Queridinhos data={shops} loading={loading} />
+                <Queridinhos data={shops} loading={loading} />
 
                 <Donate />
 
@@ -196,31 +197,31 @@ const Categorias = () => {
         "<Shirt size={28} color=\"#FFF2E3\" />": <Shirt size={28} color="#FFF2E3" />,
         "<Bike size={28} color=\"#FFF2E3\" />": <Bike size={28} color="#FFF2E3" />,
         "<Hospital size={28} color=\"#FFF2E3\" \/>": <Hospital size={28} color="#FFF2E3" />
-      };
-    
-      const transformIcon = (iconString) => {
+    };
+
+    const transformIcon = (iconString) => {
         return iconComponents[iconString] || null;
-      };
-    
-      const [categories, setCategories] = useState([]);
-      const navigation = useNavigation();
-      const { color, margin, font } = useContext(ThemeContext);
-    
-      useEffect(() => {
+    };
+
+    const [categories, setCategories] = useState([]);
+    const navigation = useNavigation();
+    const { color, margin, font } = useContext(ThemeContext);
+    const isFocused = useIsFocused();
+    useEffect(() => {
         const fetchData = async () => {
-          try {
-            const res = await getListCategory();
-            const transformedData = res.map(item => ({
-              ...item,
-              icon: transformIcon(item.icon)
-            }));
-            setCategories(transformedData);
-          } catch (error) {
-            console.error(error);
-          }
+            try {
+                const res = await getListCategory();
+                const transformedData = res.map(item => ({
+                    ...item,
+                    icon: transformIcon(item.icon)
+                }));
+                setCategories(transformedData);
+            } catch (error) {
+                console.error(error);
+            }
         };
         fetchData();
-      }, []);
+    }, [isFocused]);
 
     return (
         <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 20, }}>
@@ -232,7 +233,7 @@ const Categorias = () => {
                 keyExtractor={item => item.id}
                 style={{ marginVertical: margin.v, marginTop: 0, }}
                 renderItem={({ item }) => (
-                    <Button  style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('CategorySingle', { item: item, id: item.id, icon: item.icon,}) }}>
+                    <Button style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 6, }} onPress={() => { navigation.navigate('CategorySingle', { item: item, id: item.id, icon: item.icon, }) }}>
                         <Row style={{ alignItems: 'center', }}>
                             <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
                                 {item?.icon}

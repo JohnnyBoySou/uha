@@ -7,6 +7,7 @@ import Header from '@components/header';
 
 export default function ShareScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
+    const user = {code: '125323'}
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>

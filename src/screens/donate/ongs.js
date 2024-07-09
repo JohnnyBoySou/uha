@@ -5,25 +5,26 @@ import { ThemeContext } from 'styled-components/native';
 import { MotiImage } from 'moti';
 import { ArrowUpRight } from 'lucide-react-native';
 import CheckBox from '@components/checkbox';
-import { getONGs } from '@api/request/ongs';
-import ongs from '@data/ongs'
-import { useNavigation } from '@react-navigation/native';
+import { getONGs } from '@api/request/ongs/ongs';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 export default function DonateONGS ({ item, handleOng }){
     const navigation = useNavigation()
     const { color,  margin } = useContext(ThemeContext);
     const [loading, setloading] = useState();
     const [selectOng, setselectOng] = useState();
-    //const [ongs, setongs] = useState([]);
-
+    const [ongs, setongs] = useState([]);
+    const isFocused = useIsFocused();
     useEffect(() => {
         const fetchData = async () => {
+            setloading(true);
            getONGs().then((res) => {
-            //    setongs(res);
-              });
+                setongs(res);
+                setloading(false)  
+            });
         }
         fetchData();
-    }, []);
+    }, [isFocused]);
 
     return (
         <Main style={{ paddingTop: 10, backgroundColor: "#f7f7f7", paddingBottom: 30,}} >

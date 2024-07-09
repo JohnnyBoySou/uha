@@ -24,8 +24,3 @@
         "status": "Campanha expirada"
     }
 ]
-
-//url: base_url + "api/extract/rifas?page=1",
-//token no body
-//method: "GET",
-//headers: { "Content-Type": "application/json }
