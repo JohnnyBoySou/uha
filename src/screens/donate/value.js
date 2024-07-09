@@ -72,8 +72,8 @@ export default function DonateValueScreen({ navigation, route }) {
                                     <MotiImage style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: '#FFE0F6' }} source={{ uri: ong?.img }} />
                                 </Button>
                                 <Column style={{ marginLeft: 14, }}>
-                                    <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', }}>{ong?.name.length >= 20 ? ong?.name.slice(0, 15) + '...' : ong?.name}</Title>
-                                    <Label style={{ fontSize: 12, marginTop: -2, }}>{ong?.desc.length >= 26 ? ong?.desc.slice(0, 20) + '...' : ong?.desc}</Label>
+                                    <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', }}>{ong?.name?.length >= 20 ? ong?.name.slice(0, 15) + '...' : ong?.name}</Title>
+                                    <Label style={{ fontSize: 12, marginTop: -2, }}>{ong?.desc?.length >= 26 ? ong?.desc.slice(0, 20) + '...' : ong?.desc}</Label>
                                 </Column>
                             </Row>
                             <CheckBox status={true} />

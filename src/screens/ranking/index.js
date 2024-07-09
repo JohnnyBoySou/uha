@@ -32,8 +32,8 @@ export default function RankingScreen({ navigation, }) {
                 }
             </AnimatePresence>
 
-            <Scroll style={{  }} onScroll={(event) => {  const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 5) { setactionButton(true); } else {  setactionButton(false); } }}>
-                <Column style={{ paddingBottom: 30, backgroundColor: color.primary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, }}>
+            <Scroll style={{ marginTop: -20,  }} onScroll={(event) => {  const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 5) { setactionButton(true); } else {  setactionButton(false); } }}>
+                <Column style={{ paddingBottom: 30,  backgroundColor: color.primary, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: margin.h, marginVertical: 16, }}>
                         <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                             <ArrowLeft color={color.secundary} />

@@ -1,12 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { FlatList, ScrollView } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button,  } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import Check from '@components/check';
-
-import { MotiView, AnimatePresence } from 'moti';
-import { ActivityIndicator } from 'react-native-paper';
 
 export default function AccountNotifyScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -89,6 +85,8 @@ export default function AccountNotifyScreen({ navigation, }) {
                         As alterações podem levar alguns minutos para serem processadas.
                         </Label>
                     </Column>
+
+                    <Column style={{height: 100, }} />
                 </Scroll>
 
         </Main>

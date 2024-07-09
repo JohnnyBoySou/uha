@@ -14,13 +14,20 @@ import { AntDesign } from '@expo/vector-icons';
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [user, setuser] = useState();
-    const isFocused = useIsFocused();
-
+    const [loading, setloading] = useState();
     useEffect(() => {
         const fecthData = async () => {
-            listUser().then((res) => {
-                setuser(res);
-            });
+            setloading(true)
+            try {
+                const user = await listUser();
+                setuser(user);
+            } catch (error) {
+                console.log(error)
+            } finally{
+                setloading(false)
+            }
+
+            
         }
         fecthData();
     }, []);

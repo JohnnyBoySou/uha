@@ -14,17 +14,20 @@ export default function DonateONGS ({ item, handleOng }){
     const [loading, setloading] = useState();
     const [selectOng, setselectOng] = useState();
     const [ongs, setongs] = useState([]);
-    const isFocused = useIsFocused();
     useEffect(() => {
         const fetchData = async () => {
-            setloading(true);
-           getONGs().then((res) => {
-                setongs(res);
-                setloading(false)  
-            });
+            try {
+                setloading(true);
+                const list = await getONGs()
+                setongs(list);
+            } catch (error) {
+                console.log(error)
+            } finally{
+                setloading(false)
+            }
         }
         fetchData();
-    }, [isFocused]);
+    }, []);
 
     return (
         <Main style={{ paddingTop: 10, backgroundColor: "#f7f7f7", paddingBottom: 30,}} >
@@ -42,7 +45,7 @@ export default function DonateONGS ({ item, handleOng }){
                     keyExtractor={item => item?.id}
                     showsVerticalScrollIndicator={true}
                     renderItem={({ item }) => (
-                        <Row  key={item?.id} style={{  marginVertical: 3, paddingHorizontal: 12, borderRadius:12, paddingVertical:12, alignItems: 'center', justifyContent: 'space-between', backgroundColor: item?.id === selectOng?.id ? color.blue+30 : 'transparent',}}>
+                        <Row key={item?.id} style={{  marginVertical: 3, paddingHorizontal: 12, borderRadius:12, paddingVertical:12, alignItems: 'center', justifyContent: 'space-between', backgroundColor: item?.id === selectOng?.id ? color.blue+30 : 'transparent',}}>
                                <Row style={{  alignItems: 'center',  }}>
                                 <Button onPress={() => { navigation.navigate('ONGSingle', { item: item, }) }} >
                                     <Column>
@@ -52,7 +55,7 @@ export default function DonateONGS ({ item, handleOng }){
                                 </Button>
                                 <Column style={{ marginLeft: 20, }}>
                                     <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', }}>{item?.name.length >= 20 ? item?.name.slice(0, 18) + '...' : item?.name}</Title>
-                                    <Label style={{ fontSize: 12, marginTop: -2, }}>{item?.desc.length >= 26 ? item?.desc.slice(0, 26) + '...' : item?.desc}</Label>
+                                    <Label style={{ fontSize: 12, marginTop: -2, }}>{item?.desc?.length >= 26 ? item?.desc?.slice(0, 26) + '...' : item?.desc}</Label>
                                 </Column>
                                </Row>
                                <Button onPress={() => {setselectOng(item)}} style={{ marginRight: 6, borderRadius: 5, }} >

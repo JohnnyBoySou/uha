@@ -5,12 +5,11 @@ import Header from '@components/header';
 import { MotiImage, MotiView } from 'moti';
 import { FlatList } from 'react-native';
 
-import ongs from '@data/ongs'
-import { ArrowUpRight } from 'lucide-react-native';
+import ongs from '@data/ongs' 
 
 export default function ONGListScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
-    const item = route?.params?.item
+     
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
