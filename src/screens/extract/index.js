@@ -75,38 +75,6 @@ export default function ExtractScreen({ navigation, route }) {
         fetchData()
     }, [isFocused]);
 
-
-    const fetchData = async (type) => {
-        if (type === 'Doações') {
-            if (doacoes?.length > 0) return
-            setloading(true)
-            getExtractDonate().then(res => {
-                setdoacoes(res)
-                setloading(false)
-            })
-        } else if (type === 'Rifas') {
-            if (rifas?.length > 0) return
-            setloading(true)
-                setrifas([])
-                setloading(false)
-        } else if (type === 'Notas fiscais') {
-            if (notas?.length > 0) return
-            setloading(true)
-            getExtractNotas().then((res) => {
-                setnotas(res)
-                setloading(false)
-            });
-        } else if (type === 'Transações') {
-            if (transacao?.length > 0) return
-            setloading(true)
-            getExtractTransacao().then((res) => {
-                settransacao(res)
-                console.log(res)
-                setloading(false)
-            });
-        }
-    };
-
     const [actionButton, setactionButton] = useState(false);
     const scrollMain = useRef()
     return (
@@ -228,9 +196,7 @@ export default function ExtractScreen({ navigation, route }) {
                     </MotiView>
                 }
             </AnimatePresence>
-
-            <NavBar bts={bts} page={page} setpage={setpage} fetchData={fetchData} scrollTags={scrollTags} margin={margin} color={color} font={font} />
-
+            <NavBar bts={bts} page={page} setpage={setpage} scrollTags={scrollTags} margin={margin} color={color} font={font} />
             {loading ? <SkeletonList /> :
                 <FlatList
                     ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
@@ -256,13 +222,13 @@ export default function ExtractScreen({ navigation, route }) {
     )
 }
 
-const NavBar = ({ bts, page, setpage, fetchData, scrollTags, margin, color, font }) => {
+const NavBar = ({ bts, page, setpage,  scrollTags, margin, color, font }) => {
     return (
         <Column>
             <Column style={{ height: 150, }} />
             <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12, }} showsHorizontalScrollIndicator={false}>
                 {bts.map((bt, index) => (
-                    <Button key={index} onPress={() => { setpage(bt); fetchData(bt) }}
+                    <Button key={index} onPress={() => { setpage(bt)}}
                         style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0, }}>
                         <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
                     </Button>

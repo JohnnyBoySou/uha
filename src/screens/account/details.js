@@ -110,7 +110,9 @@ export default function AccountDetailsScreen({ navigation, }) {
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll >
-                <Header title='Dados cadastrais' rose />
+                <Row>
+                    <Title>Dados Cadastrais</Title>
+                </Row>
                 <Column style={{ paddingHorizontal: margin.h, marginTop: 20, }}>
                     <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
                         <MotiImage style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={profile} />

@@ -33,7 +33,6 @@ export default function SearchScreen({ navigation, route }) {
         <Main style={{ backgroundColor: "#fff", }}>
             <Scroll>
                 <Header title="Pesquisar" rose />
-                {loading && <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 24, }} />}
 
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 20, flex: 1, }}>
                     <Row style={{ marginBottom: 24, justifyContent: 'center', alignItems: 'center', }}>
@@ -57,8 +56,7 @@ export default function SearchScreen({ navigation, route }) {
                         <Label style={{ fontSize: 14, marginLeft: 8, lineHeight: 16, }}>Busque por <U>estabelecimentos</U>, <U>serviços</U> ou <U>ONGs</U>.</Label>
                     </Row>
 
-
-                    {!loading && <>
+                    {loading ? <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 24, }} /> : <>
                         {shops?.length > 0 && <>
                             <Title style={{ fontSize: 22, lineHeight: 24, marginBottom: 12, }}>Estabelecimentos</Title>
                             <FlatList
@@ -127,6 +125,7 @@ export default function SearchScreen({ navigation, route }) {
                             />
                         </>}
                     </>}
+                    
                     <Column style={{ height: 70, }}></Column>
                 </Column>
             </Scroll>

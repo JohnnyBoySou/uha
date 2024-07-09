@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState, } from 'react';
-import { FlatList, Pressable } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, ButtonSE, LabelSE, SubLabel, Button, LineL } from '@theme/global';
+import { FlatList, Pressable, Image } from 'react-native';
+import { Main, Scroll, Column, Label, Title, Row, ButtonSE, LabelSE, SubLabel, Button, LineL, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Check from '@components/check';
 import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, HeartHandshake } from 'lucide-react-native';
-import { MotiImage, MotiView } from 'moti';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
@@ -28,14 +27,12 @@ export default function AccountScreen({ navigation, }) {
 
     const [dark, setdark] = useState(false);
 
-
-
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style="dark" backgroundColor="#fff" animated />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
-                    <Title>Olá, {user?.name.length > 12 ? user?.name.slice(0,12) + '...' : user?.name }</Title>
+                    <Title>Minha conta</Title>
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <Notify />
                         <Column style={{ width: 16, }} />
@@ -43,7 +40,7 @@ export default function AccountScreen({ navigation, }) {
                     </Row>
                 </Row>
 
-                <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} delay={200} style={{ backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
+                <Column from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} delay={200} style={{ backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: "#fff", }}>Pontos em conta</Label>
                     <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{user?.PontosAtuais}</Title>
                     <LineL />
@@ -52,9 +49,9 @@ export default function AccountScreen({ navigation, }) {
                     <ButtonSE onPress={() => { navigation.navigate('Shop') }} style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 32, }}  >
                         <LabelSE style={{ color: color.background, }}>Utilizar pontos</LabelSE>
                     </ButtonSE>
-                </MotiView>
+                </Column>
 
-                <MotiView from={{ opacity: 0, translateY: 20 }} animate={{ opacity: 1, translateY: 0, }} delay={600}>
+                <Column from={{ opacity: 0, translateY: 20 }} animate={{ opacity: 1, translateY: 0, }} delay={600}>
 
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
                         <Button onPress={() => { navigation.navigate('ONGList') }} style={{ flexGrow: 1, }}>
@@ -68,7 +65,7 @@ export default function AccountScreen({ navigation, }) {
                         <Button onPress={() => { navigation.navigate('Extract', { type: 'Doações' }) }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20, }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                    <MotiImage source={require('@icons/pontos.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
+                                    <Image source={require('@icons/pontos.png')} style={{ width: 42, objectFit: 'contain', height: 40, }} />
                                 </Column>
                                 <SubLabel>Doações</SubLabel>
                             </Column>
@@ -82,12 +79,12 @@ export default function AccountScreen({ navigation, }) {
                             </Column>
                         </Button>
                     </Row>
-                </MotiView>
+                </Column>
 
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 24, }}>
-                    <MotiView from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={1000}>
+                    <Column from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={1000}>
                         <Title style={{ fontSize: 18, }}>Configurações</Title>
-                    </MotiView>
+                    </Column>
                     <FlatList
                         style={{ marginTop: 12, }}
                         data={Configs}
@@ -135,11 +132,11 @@ const Card = ({ item, index }) => {
     const { color, font, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
     return (
-        <MotiView from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={(index + 3) * 300}>
+        <Column from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={(index + 3) * 300}>
             <Button onPress={() => { navigation.navigate(item.screen) }} >
                 <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: "#00000012", alignItems: 'center', paddingBottom: 12, }}>
                     <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6", }}>
-                        <MotiImage source={item.img} style={{ width: 28, height: 28, objectFit: 'contain' }} />
+                        <Image source={item.img} style={{ width: 28, height: 28, objectFit: 'contain' }} />
                     </Column>
                     <Column style={{ marginHorizontal: 20, }}>
                         <Row style={{ alignItems: 'center', }}>
@@ -151,7 +148,7 @@ const Card = ({ item, index }) => {
                     </Column>
                 </Row>
             </Button>
-        </MotiView>
+        </Column>
     )
 }
 

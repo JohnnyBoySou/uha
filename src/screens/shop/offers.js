@@ -5,16 +5,15 @@ import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage } from 'moti';
 import { ArrowLeft, Cpu, Search } from 'lucide-react-native';
 import { MotiView } from 'moti';
-import { useNavigation, } from '@react-navigation/native';
+import { useIsFocused, useNavigation, } from '@react-navigation/native';
 import { getOffers, getServices } from '@request/shop/index';
 import { Skeleton } from 'moti/skeleton';
 
 export default function ShopOffersScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [offers, setoffers] = useState();
-    const [services, setservices] = useState();
     const [loading, setloading] = useState(true);
-
+    const isFocused = useIsFocused();
     useEffect(() => {
         const fecthData = () => {
             setloading(true)
@@ -25,7 +24,7 @@ export default function ShopOffersScreen({ navigation, route }) {
             });
         }
         fecthData()
-    }, [])
+    }, [isFocused])
     const [fixedMenu, setFixedMenu] = useState(false);
     return (
         <Main style={{ backgroundColor: '#fff', }}>
@@ -54,12 +53,7 @@ export default function ShopOffersScreen({ navigation, route }) {
 
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
                 <AnimatePresence>
-                    {fixedMenu &&
-                        <MotiView from={{ opacity: 0, scale: 0, }} animate={{ scale: 1, opacity: 1, }} exit={{ scale: 0, opacity: 0, }} transition={{ type: 'timing' }} >
-                            <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                                <Search size={24} color="#fff" />
-                            </Button>
-                        </MotiView>}
+                    {fixedMenu && <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}><Search size={24} color="#fff" /></Button>}
                 </AnimatePresence>
             </Column>
         </Main>
