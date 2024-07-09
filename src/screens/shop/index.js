@@ -1,13 +1,10 @@
 import React, { useContext, useState, useEffect, useRef, useMemo } from 'react';
-import { FlatList, Dimensions, Animated } from 'react-native';
+import { FlatList, Dimensions, Animated, Image, ActivityIndicator } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiImage } from 'moti';
-import { Search, X } from 'lucide-react-native';
-import { MotiView } from 'moti';
+import { Search, } from 'lucide-react-native';
 import { useIsFocused, useNavigation, } from '@react-navigation/native';
 import { getShops, getOffers, getServices } from '@request/shop/index';
-import { getCategory } from '@request/category';
 import { StatusBar } from 'expo-status-bar'
 import Header from '@components/header';
 
@@ -19,13 +16,12 @@ import CardOffers from '@components/cardOffers';
 import CardServices from '@components/cardServices';
 
 export default function ShopScreen({ navigation, route }) {
-    const { color, font, margin } = useContext(ThemeContext);
-    const [type, settype] = useState(route.params?.type);
+    const { color, margin } = useContext(ThemeContext);
     const [data, setdata] = useState();
     const [offers, setoffers] = useState();
     const [loading, setloading] = useState(true);
     const [services, setservices] = useState();
-    
+
     const isFocused = useIsFocused();
     useEffect(() => {
         const fecthData = async = () => {
@@ -56,38 +52,34 @@ export default function ShopScreen({ navigation, route }) {
             <StatusBar style='dark' backgroundColor="#fff" />
             <Scroll onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 80) { setFixedMenu(true); } else { setFixedMenu(false); } }} scrollEventThrottle={16}>
                 <Header rose />
-                {type == null &&
-                    <>
-                        <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
-                            <Title style={{ fontSize: 28, lineHeight: 28, letterSpacing: -1,}}>Estabelecimentos parceiros </Title>
-                            <Label style={{ marginVertical: 6, fontSize: 16,  }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
-                        </Column>
-                        <Cards />
-                    </>}
+                <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
+                    <Title style={{ fontSize: 28, lineHeight: 28, letterSpacing: -1, }}>Estabelecimentos parceiros </Title>
+                    <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre seus serviços favoritos e troque-os por pontos! </Label>
+                </Column>
+                <Cards />
                 <Column>
                     <Promos data={data} loading={loading} title="Promos incríveis" />
-                    <Offers data={offers} loading={loading}/>
-                    <Services data={services} title="Veja mais serviços" loading={loading}/>
+                    <Offers data={offers} loading={loading} />
+                    <Services data={services} title="Veja mais serviços" loading={loading} />
                 </Column>
                 <Column style={{ height: 100, }} />
             </Scroll>
             <Column style={{ position: 'absolute', bottom: 30, right: 30, zIndex: 99, }}>
-                <AnimatePresence>
-                    {fixedMenu &&
-                        <MotiView from={{ opacity: 0, scale: 0, }} animate={{ scale: 1, opacity: 1, }} exit={{ scale: 0, opacity: 0, }} transition={{ type: 'timing' }} >
-                            <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' },) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                                <Search size={24} color="#fff" />
-                            </Button>
-                        </MotiView>}
-                </AnimatePresence>
+                {fixedMenu &&
+                    <Column>
+                        <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' },) }} style={{ backgroundColor: color.primary, width: 52, height: 52, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <Search size={24} color="#fff" />
+                        </Button>
+                    </Column>}
             </Column>
         </Main>
     )
 }
 
-const Offers = ({ data }) => {
+const Offers = ({ data, loading }) => {
     const { color, margin, font } = useContext(ThemeContext);
     const navigation = useNavigation();
+    if (loading) { return <><ActivityIndicator size="large" color={color.primary} /></> }
     return (
         <Column>
             <Row style={{ justifyContent: 'space-between', marginBottom: 16, marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
@@ -109,7 +101,7 @@ const Offers = ({ data }) => {
     )
 }
 
-const Promos = ({ data, title }) => {
+const Promos = ({ data, title, loading }) => {
     const { color, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
 
@@ -128,62 +120,65 @@ const Promos = ({ data, title }) => {
                                 ))}
                             </Row>
                         </Column>
-                        <MotiImage source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                        <Image source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                     </Row>
                 </Button>
             </Column>
         )
     }, []);
 
-    return (
-        <>
-            <Row style={{ justifyContent: 'space-between', marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
-                <Title style={{ fontSize: 22, letterSpacing: -1 }}>{title}</Title>
-                <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, }}>
-                    <ExpandingDot
-                        data={[1, 2, 3]}
-                        expandingDotWidth={20}
-                        scrollX={scrollX}
-                        containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
-                        dotStyle={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: 5,
-                            marginHorizontal: 2,
-                        }}
-                        activeDotColor={color.secundary}
-                        inActiveDotColor={color.secundary + 50}
-                    />
-                </Column>
-            </Row>
+    if (loading) { return <><ActivityIndicator size="large" color={color.primary} /></> }
+    else {
+        return (
+            <>
+                <Row style={{ justifyContent: 'space-between', marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
+                    <Title style={{ fontSize: 22, letterSpacing: -1 }}>{title}</Title>
+                    <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, }}>
+                        <ExpandingDot
+                            data={[1, 2, 3]}
+                            expandingDotWidth={20}
+                            scrollX={scrollX}
+                            containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                            dotStyle={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                marginHorizontal: 2,
+                            }}
+                            activeDotColor={color.secundary}
+                            inActiveDotColor={color.secundary + 50}
+                        />
+                    </Column>
+                </Row>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled style={{ marginTop: 16, }} snapToAlignment='center'
-                decelerationRate={'fast'}
-                onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
-            >
-                <FlatList
-                    data={data?.slice(0, 3)}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => <CardList item={item} />}
-                    keyExtractor={item => item?.id}
-                />
-                <FlatList
-                    data={data?.slice(3, 6)}
-                    pagingEnabled
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => <CardList item={item} />}
-                    keyExtractor={item => item?.id}
-                />
-                <FlatList
-                    data={data?.slice(6, 9)}
-                    pagingEnabled
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => <CardList item={item} />}
-                    keyExtractor={item => item?.id}
-                />
-            </ScrollView>
-        </>
-    )
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled style={{ marginTop: 16, }} snapToAlignment='center'
+                    decelerationRate={'fast'}
+                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
+                >
+                    <FlatList
+                        data={data?.slice(0, 3)}
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({ item }) => <CardList item={item} />}
+                        keyExtractor={item => item?.id}
+                    />
+                    <FlatList
+                        data={data?.slice(3, 6)}
+                        pagingEnabled
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({ item }) => <CardList item={item} />}
+                        keyExtractor={item => item?.id}
+                    />
+                    <FlatList
+                        data={data?.slice(6, 9)}
+                        pagingEnabled
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({ item }) => <CardList item={item} />}
+                        keyExtractor={item => item?.id}
+                    />
+                </ScrollView>
+            </>
+        )
+    }
 }
 
 const Cards = () => {
@@ -199,8 +194,8 @@ const Cards = () => {
                         <Label style={{ color: "#FFF2E3", marginTop: 30, fontFamily: 'Font_Medium', alignSelf: 'flex-start', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Cadastre suas</Label>
                         <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, alignSelf: 'flex-start', marginBottom: 20, }}>Notas fiscais</Title>
                     </Column>
-                    <MotiImage  source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', objectFit: 'cover', }} />
-                    <MotiImage  source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
+                    <Image source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', objectFit: 'cover', }} />
+                    <Image source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
                 </Column>
             </Button>
 
@@ -213,8 +208,8 @@ const Cards = () => {
                             <Label style={{ color: "#FFF2E3", marginTop: 40, fontFamily: 'Font_Medium', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Atualizado {'\n'}a cada <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, zIndex: 99, }}> 6 horas </Title></Label>
                         </Row>
                     </Column>
-                    <MotiImage  source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', objectFit: 'contain', marginRight: -20, }} />
-                    <MotiImage  source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
+                    <Image source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', objectFit: 'contain', marginRight: -20, }} />
+                    <Image source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
                 </Column>
             </Button>
 
@@ -222,10 +217,9 @@ const Cards = () => {
     )
 }
 
-
-const Services = ({ data, title }) => {
+const Services = ({ data, title, loading }) => {
     const { color } = useContext(ThemeContext);
-    const navigation = useNavigation();
+    if (loading) { return <><ActivityIndicator size="large" color={color.primary} /></> }
     return (
         <Column>
             <Title style={{ marginHorizontal: 28, marginTop: 12, marginBottom: 12, fontSize: 22, lineHeight: 22, letterSpacing: -1 }}>{title}</Title>

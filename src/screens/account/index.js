@@ -62,7 +62,7 @@ export default function AccountScreen({ navigation, }) {
                                 <SubLabel>ONGs</SubLabel>
                             </Column>
                         </Button>
-                        <Button onPress={() => { navigation.navigate('Extract', { type: 'Doações' }) }} style={{ flexGrow: 1, }}>
+                        <Button onPress={() => { navigation.navigate('Shop') }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20, }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
                                 <ShoppingBag color={color.primary} size={32} strokeWidth={2} />
