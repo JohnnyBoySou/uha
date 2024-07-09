@@ -261,7 +261,7 @@ const CardImage = ({ item }) => {
 
 const SkeletonList = () => {
     return (
-        <Column style={{ marginHorizontal: 28, }}>
+        <Column style={{ marginHorizontal: 28, marginTop: 50,}}>
             <Column style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
                 <Skeleton height={300} width={width * 0.86} radius={24} colorMode='light' />
             </Column>

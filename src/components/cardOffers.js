@@ -8,7 +8,7 @@ const CardOffers = ({item}) => {
     const navigation = useNavigation()
     const { color,  } = useContext(ThemeContext);
     return(
-    <Button style={{ marginRight: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
+    <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
     <Column style={{ justifyContent: 'center', width: 124, }}>
         <Image source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 12, borderTopRightRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
         {item?.sell_porcentage && <Row style={{ backgroundColor: '#d7d7d7', }}>

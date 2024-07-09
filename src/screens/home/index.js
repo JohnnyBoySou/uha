@@ -90,19 +90,19 @@ export default function HomeScreen({ navigation, }) {
                             <Button onPress={() => { navigation.navigate('Notafiscal') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                 <MaterialCommunityIcons name="clipboard-edit-outline" size={34} color={color.primary} />
                             </Button>
-                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Nota fiscal</Label>
+                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.secundary, textAlign: 'center' }}>Nota fiscal</Label>
                         </Column>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={() => { navigation.navigate('Donate') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                 <Image source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34, }} />
                             </Button>
-                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Doação</Label>
+                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.secundary, textAlign: 'center' }}>Doação</Label>
                         </Column>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={() => { navigation.navigate('Shop') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                 <ShoppingBag color={color.primary} size={32} strokeWidth={2} />
                             </Button>
-                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>Shop</Label>
+                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.secundary, textAlign: 'center' }}>Shop</Label>
                         </Column>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                             <Button onPress={toggleMenu} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
@@ -110,7 +110,7 @@ export default function HomeScreen({ navigation, }) {
                                     {showMenu ? <Minus size={32} color={color.primary} /> : <Plus size={32} color={color.primary} />}
                                 </Row>
                             </Button>
-                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.title, textAlign: 'center' }}>{showMenu ? 'Menos' : 'Mais'}</Label>
+                            <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.secundary, textAlign: 'center' }}>{showMenu ? 'Menos' : 'Mais'}</Label>
                         </Column>
                     </Row>
 
@@ -122,25 +122,25 @@ export default function HomeScreen({ navigation, }) {
                                         <Button onPress={() => { navigation.navigate('Raspadinhas') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                             <FontAwesome5 name="hand-sparkles" size={30} color={color.primary} />
                                         </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Raspadinhas</Label>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.secundary, textAlign: 'center' }}>Raspadinhas</Label>
                                     </Column>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Ranking') }} rippleColor={color.secundary} style={{ backgroundColor: color.primary + 20, padding: 18, borderRadius: 12, }}>
                                             <AntDesign name="staro" size={32} color={color.primary} />
                                         </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Ranking</Label>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.secundary, textAlign: 'center' }}>Ranking</Label>
                                     </Column>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Favorites') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, backgroundColor: color.primary + 20, }}>
                                             <AntDesign name="hearto" size={32} color={color.primary} />
                                         </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Favoritos</Label>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.secundary, textAlign: 'center' }}>Favoritos</Label>
                                     </Column>
                                     <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Button onPress={() => { navigation.navigate('Rifas') }} rippleColor={color.secundary} style={{ padding: 18, borderRadius: 12, backgroundColor: color.primary + 20, }}>
                                             <Ionicons name="ticket-outline" size={28} color={color.primary} />
                                         </Button>
-                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.title, textAlign: 'center' }}>Rifas</Label>
+                                        <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 12, color: color.secundary, textAlign: 'center' }}>Rifas</Label>
                                     </Column>
                                 </Row>
                             </MotiView>
@@ -228,7 +228,7 @@ const Categorias = () => {
                             </Column>
                             <Column style={{ justifyContent: 'center', }}>
                                 <Title style={{ fontSize: 18, lineHeight: 20, }}>{item.name}</Title>
-                                <Label style={{ marginTop: 2, color: color.title, fontFamily: font.medium, fontSize: 14, }}>{item.estabelecimentos} estabelecimentos parceiros</Label>
+                                <Label style={{ marginTop: 2, color: color.secundary+99, fontFamily: font.medium, fontSize: 14, }}>{item.estabelecimentos} estabelecimentos parceiros</Label>
                             </Column>
                         </Row>
                     </Button>
@@ -323,7 +323,7 @@ const OffersCards = ({ data, loading }) => {
         </Column>
     </Row>)
     return (
-        <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, }}>
+        <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32,  paddingBottom: 2, marginBottom: -2,}}>
             <Row style={{ paddingHorizontal: margin.h, paddingVertical: 16, justifyContent: 'space-between', alignItems: 'center', }}>
                 <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
                 <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16, }}>
@@ -463,7 +463,7 @@ const Donate = () => {
     ];
 
     return (
-        <Column style={{ backgroundColor: color.background, paddingTop: 30, }}>
+        <Column style={{ backgroundColor: color.background, paddingTop: 30, paddingBottom: 2, marginBottom: -2, }}>
             <Title style={{ marginLeft: 28, marginBottom: 14, fontSize: 22, }}>Doe anonimamente</Title>
             <FlatList
                 ref={flatListRef}
@@ -479,7 +479,7 @@ const Donate = () => {
                 onScroll={handleScroll}
             />
 
-            <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: 10, }}>
+            <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3,  alignSelf: 'center', marginTop: 10, }}>
                 <ExpandingDot
                     data={[1, 2]}
                     expandingDotWidth={20}

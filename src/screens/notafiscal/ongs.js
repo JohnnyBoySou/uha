@@ -36,12 +36,15 @@ const NotafiscalONGS = ({ navigation, route, }) => {
 
 
     useEffect(() => {
-        const fecthData = () => {
-            setloading(true);
-            getONGs().then(res => {
-                setongs(res);
+        const fecthData = async () => {
+            try {
+                const ong = await getONGs();
+                setongs(ong)
+            } catch (error) {
+                console.log(error)   
+            } finally{
                 setloading(false);
-            })
+            }
         }
         fecthData();
     }, []);

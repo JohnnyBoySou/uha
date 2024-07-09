@@ -220,7 +220,7 @@ const NavBar = ({ bts, page, setpage,  scrollTags, margin, color, font }) => {
 const Empty = ({ type }) => {
     const { color, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
-    const msg = type === 'Doações' ? 'Começe a dor agora mesmo!' : type === 'Transações' ? 'Começe a utilizar seus \npontos agora mesmo!' : type === 'Rifas' ? 'Participe de nossas rifas \ne ganhe prêmios!' : type === 'Moedas' ? 'Começe a utilizar suas \nmoedas agora mesmo!' : 'Nada por aqui, cadastre \numa nota fiscal!'
+    const msg = type === 'Doações' ? 'Começe a doar \nagora mesmo!' : type === 'Transações' ? 'Começe a utilizar seus \npontos agora mesmo!' : type === 'Rifas' ? 'Participe de nossas \nrifas e ganhe prêmios!' : type === 'Moedas' ? 'Começe a utilizar suas \nmoedas agora mesmo!' : 'Nada por aqui, cadastre \numa nota fiscal!'
     const screen = type === 'Doações' ? 'Donate' : type === 'Transações' ? 'Shop' : type === 'Rifas' ? 'Rifas' : type === 'Moedas' ? 'Shop' : 'NotafiscalSend'
     const btmessage = type === 'Doações' ? 'Fazer doação' : type === 'Transações' ? 'Ver ofertas' : type === 'Rifas' ? 'Participar' : type === 'Moedas' ? 'Comprar' : 'Cadastrar'
     return (
@@ -235,7 +235,7 @@ const Empty = ({ type }) => {
             </Row>
             <Title style={{ fontSize: 20, textAlign: 'center', marginTop: 8, }}>{msg}</Title>
 
-            <ButtonPR style={{ marginHorizontal: 24, marginVertical: 12, }} onPress={() => { navigation.navigate(screen) }} >
+            <ButtonPR style={{ marginHorizontal: 24, marginVertical: 12, alignSelf: 'center', paddingHorizontal: 32, }} onPress={() => { navigation.navigate(screen) }} >
                 <LabelLI style={{ color: '#fff', }}>{btmessage}</LabelLI>
             </ButtonPR>
 
