@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row ,  Button,} from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MessagesSquare, Info, ScrollText } from 'lucide-react-native';
-import Header from './../../components/header';
+import Header from '@components/header';
 import { MotiImage } from 'moti';
 import { useNavigation } from '@react-navigation/native';
 

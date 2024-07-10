@@ -3,29 +3,19 @@ import { createStackNavigator, TransitionPresets, } from '@react-navigation/stac
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute } from '@react-navigation/native';
 
-import HomeScreen from '@screens/home';
-import OnboardingScreen from '@screens/onboarding/index';
-
+import OnboardingScreen from '@screens/auth/onboarding';
 import AuthLoginScreen from '@screens/auth/login';
+import AsyncStaticScreen from '@screens/auth/async';
 
-import NotifyScreen from '@screens/notify';
-import RedeemScreen from '@screens/redeem';
-import ShareScreen from '@screens/share';
-import AsyncStaticScreen from '@screens/async';
-import ReciboScreen from '@screens/recibo';
-import SearchScreen from '@screens/search';
+import HomeScreen from '@screens/tabs/home';
 
-import BuyServiceScreen from '@screens/buyservice';
-import BuyServiceSuccessScreen from '@screens/buyservice/success';
-import BuyServiceGiftSuccessScreen from '@screens/buyservice/success_gift';
-import BuyServiceErrorScreen from '@screens/buyservice/error';
-import BuyServiceGiftErrorScreen from '@screens/buyservice/error_gift';
-import BuyServiceSuccessHideScreen from '@screens/buyservice/success_hide';
-import BuyServiceRifaSuccessScreen from '@screens/buyservice/success_rifa';
+import NotifyScreen from '@screens/geral/notify';
+import ShareScreen from '@screens/geral/share';
+import FavoritesScreen from '@screens/geral/favorites';
+import ReciboScreen from '@screens/geral/recibo';
 
-import BuyServiceGiftCardScreen from '@screens/buyservice/gift_card';
-import BuyServiceRifaScreen from '@screens/buyservice/rifa';
-import BuyServiceReceiveGiftScreen from '@screens/buyservice/receive_gift';
+import CategorySingleScreen from '@screens/tabs/search/category';
+import SearchScreen from '@screens/tabs/search';
 
 import DonateScreen from '@screens/donate';
 import DonateValueScreen from '@screens/donate/value';
@@ -33,28 +23,27 @@ import DonateHideScreen from '@screens/donate/hide';
 import DonateValueHideScreen from '@screens/donate/value_hide';
 import DonateSuccessHideScreen from '@screens/donate/success_hide';
 import DonateCertificadoScreen from '@screens/donate/certificado';
-
 import PayBoletoScreen from '@screens/donate/pay_boleto';
-import NotafiscalScreen from '@screens/notafiscal';
-import NotafiscalSendScreen from '@screens/notafiscal/send';
-import NotafiscalSuccessScreen from '@screens/notafiscal/success';
-import NotafiscalErrorScreen from '@screens/notafiscal/error';
-import NotafiscalONGS from '@screens/notafiscal/ongs';
 
-import ExtractScreen from '@screens/extract';
-import ExtractSingleScreen from '@screens/extract/single';
+import NotafiscalScreen from '@screens/tabs/notafiscal';
+import NotafiscalSendScreen from '@screens/tabs/notafiscal/send';
+import NotafiscalSuccessScreen from '@screens/tabs/notafiscal/success';
+import NotafiscalErrorScreen from '@screens/tabs/notafiscal/error';
+import NotafiscalONGS from '@screens/tabs/notafiscal/ongs';
 
-import AccountScreen from '@screens/account';
-import AccountNotifyScreen from '@screens/account/notify';
-import AccountDetailsScreen from '@screens/account/details';
-import AccountAccessInfoScreen from '@screens/account/access';
-import AccountFAQScreen from '@screens/account/faq';
-import AccountTermsScreen from '@screens/account/terms';
+import ExtractScreen from '@screens/tabs/extract';
+import ExtractSingleScreen from '@screens/tabs/extract/single';
+
+import AccountScreen from '@screens/tabs/account';
+import AccountNotifyScreen from '@screens/tabs/account/notify';
+import AccountDetailsScreen from '@screens/tabs/account/details';
+import AccountAccessInfoScreen from '@screens/tabs/account/access';
+import AccountFAQScreen from '@screens/tabs/account/faq';
+import AccountTermsScreen from '@screens/tabs/account/terms';
 
 import ONGSingleScreen from '@screens/ong/single';
 import ONGListScreen from '@screens/ong/list';
 import ONGSScreen from '@screens/ong';
-import FavoritesScreen from '@screens/favorites';
 
 import ShopScreen from '@screens/shop';
 import ShopSingleScreen from '@screens/shop/shop_single';
@@ -68,7 +57,6 @@ import QuestionsChatScreen from '@screens/questions/chat';
 import QuestionsChatStatusScreen from '@screens/questions/chat_status';
 
 import RankingScreen from '@screens/ranking';
-import CategorySingleScreen from '@screens/search/category';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -82,19 +70,19 @@ export default function Router() {
   return (
     <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
-            <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.SlideFromRightIOS  ,  backBehavior: 'none',}}/>
-            <Stack.Screen name="Home" component={HomeScreen} options={{...TransitionPresets.SlideFromRightIOS  ,  backBehavior: 'none',}}/>
-            <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Redeem" component={RedeemScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
+          
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
-            <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="SearchModal" component={SearchScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="CategorySingle" component={CategorySingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
             <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
+
+            <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.SlideFromRightIOS  ,  backBehavior: 'none',}}/>
+
+            <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
+            <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            
+            <Stack.Screen name="CategorySingle" component={CategorySingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
             <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -103,18 +91,6 @@ export default function Router() {
             <Stack.Screen name="ShopOffers" component={ShopOffersScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
-            <Stack.Screen name="BuyServiceSuccess" component={BuyServiceSuccessScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceGiftSuccess" component={BuyServiceGiftSuccessScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceError" component={BuyServiceErrorScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceGiftError" component={BuyServiceGiftErrorScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceRifaSuccess" component={BuyServiceRifaSuccessScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
-            <Stack.Screen name="BuyService" component={BuyServiceScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceGiftCard" component={BuyServiceGiftCardScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceRifa" component={BuyServiceRifaScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceSuccessHide" component={BuyServiceSuccessHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="BuyServiceReceiveGift" component={BuyServiceReceiveGiftScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

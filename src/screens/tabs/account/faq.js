@@ -2,7 +2,7 @@ import React, { useContext, } from 'react';
 import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, ButtonOut, LabelLI } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import Header from '../../components/header';
+import Header from '@components/header';
 
 export default function AccountFAQScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);

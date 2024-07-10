@@ -345,10 +345,12 @@ const Entrar = ({ type, settype, }) => {
     const [focusEmail, setfocusEmail] = useState(false);
     const [focusPass, setfocusPass] = useState(false);
 
+    const passref = useRef(null);
+
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
-    const [pass, setpass] = useState();
-    const [remember, setremember] = useState();
+    const [pass, setpass] = useState(true);
+    const [remember, setremember] = useState(true);
     const [loading, setloading] = useState();
     const [error, seterror] = useState();
     const handleLogin = async () => {
@@ -410,6 +412,7 @@ const Entrar = ({ type, settype, }) => {
                         onFocus={() => setfocusEmail(true)}
                         onBlur={() => setfocusEmail(false)}
                         onChangeText={(e) => setemail(e)}
+                        onSubmitEditing={() => {passref?.current.focus()}}
                         value={email}
                         keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', color: color.secundary, }} placeholder='E-mail' placeholderTextColor="#11111190" />
                 </Row>
@@ -418,9 +421,11 @@ const Entrar = ({ type, settype, }) => {
                         <Lock color={focusPass ? color.primary : color.secundary} size={22} />
                     </Column>
                     <TextInput
+                        ref={passref}
                         onFocus={() => setfocusPass(true)}
                         onBlur={() => setfocusPass(false)}
                         onChangeText={(e) => setpassword(e)}
+                        onSubmitEditing={() => { handleLogin() }}
                         value={password}
                         keyboardType='password' style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='Senha' secureTextEntry={pass} placeholderTextColor="11111140" />
 
@@ -495,7 +500,6 @@ const Entrar = ({ type, settype, }) => {
 
 const ForgetPassword = ({ handleExit }) => {
     const { color, font, margin, } = useContext(ThemeContext);
-    const navigation = useNavigation()
     const [type, settype] = useState('Redefinir');
     const [focusEmail, setfocusEmail] = useState();
     const [email, setemail] = useState('');

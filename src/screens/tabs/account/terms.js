@@ -1,10 +1,7 @@
 import React, { useContext, } from 'react';
-import { FlatList } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, ButtonOut, LabelLI, SubLabel } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MessagesSquare, Info, ScrollText } from 'lucide-react-native';
-import Header from '../../components/header';
-import { MotiImage } from 'moti';
+import Header from '@components/header';
 
 export default function AccountTermsScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -32,41 +29,3 @@ export default function AccountTermsScreen({ navigation, }) {
     )
 }
 
-const Card = ({ item }) => {
-    const { color, font, margin } = useContext(ThemeContext);
-
-    return(
-        <Column style={{ borderBottomWidth: 1, borderBottomColor: color.off, marginBottom: 12,   paddingBottom: 12, }}>
-            <Title style={{ fontSize: 18, marginRight: 6, }}>{item?.q}</Title>
-            <Label style={{ fontSize: 14, }}>{item?.r}</Label>
-        </Column>
-)}
-
-
-const Configs = [
-    {
-        q: 'Pergunta frequente...',
-        r: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-    },
-    {
-        q: 'Pergunta frequente...',
-        r: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-    },
-    {
-        q: 'Pergunta frequente...',
-        r: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-    },
-    {
-        q: 'Pergunta frequente...',
-        r: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-    },
-    {
-        q: 'Pergunta frequente...',
-        r: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-    },
-    {
-        q: 'Pergunta frequente...',
-        r: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-    },
-    
-]
