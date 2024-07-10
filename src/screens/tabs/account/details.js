@@ -120,7 +120,7 @@ export default function AccountDetailsScreen() {
                 <Header title='Dados cadastrais' rose />
                     <Column style={{ paddingHorizontal: margin.h, marginTop: 20, }}>
                         <Column style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
-                            <Image style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', objectFit: 'cover' }} source={profile} />
+                            <Image style={{ width: 144, height: 144, borderRadius: 100, alignSelf: 'center', }} contentFit="cover" transition={1000} cachePolicy="disk"  source={profile} />
                             <Pressable onPress={handleImage}>
                                 <SubLabel style={{ color: color.primary, marginTop: 12, }}>Escolher foto de perfil</SubLabel>
                             </Pressable>

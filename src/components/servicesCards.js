@@ -63,7 +63,8 @@ const CardServices = React.memo(({ item }) => {
                     transition={1000}
                     source={{ uri: img }}
                     cachePolicy="disk"
-                    style={{ width: 124, height: 124, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff" }}
+                    contentFit="cover"
+                    style={{ width: 124, height: 124, borderRadius: 12, backgroundColor: "#fff" }}
                 />
                 <Title style={{ marginTop: 12, fontSize: 14, lineHeight: 14, marginBottom: 4, width: 112, textAlign: 'center', fontFamily: 'Font_Medium', color: color.secundary + 99 }}>{label}</Title>
             </Column>

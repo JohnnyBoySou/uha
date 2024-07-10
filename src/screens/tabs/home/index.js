@@ -65,7 +65,7 @@ export default function HomeScreen({ navigation, }) {
             <StatusBar style="dark" backgroundColor="#fff" animated={true} />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
-                    <Image source={require('@imgs/logo_black_nobg.png')} style={{ width: 100, height: 40, objectFit: 'contain', }} />
+                    <Image source={require('@imgs/logo_black_nobg.png')} transition={1000} contentFit="contain" style={{ width: 100, height: 40,   }} />
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <Notify />
                         <Column style={{ width: 16, }} />

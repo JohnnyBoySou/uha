@@ -46,7 +46,7 @@ export default function App() {
   }
 
   return (
-    <View onLayout={onLayoutRootView}>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <ThemeProvider theme={light}>
         <SafeAreaProvider>
           <Router />
