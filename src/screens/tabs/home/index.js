@@ -72,7 +72,6 @@ export default function HomeScreen({ navigation, }) {
                         <Avatar />
                     </Row>
                 </Row>
-
                 <Button onPress={() => { navigation.navigate('Tabs', { screen: 'Search' }) }} style={{ borderRadius: 100, marginVertical: 24, backgroundColor: color.primary + 20, paddingVertical: 12, paddingHorizontal: 8, marginHorizontal: margin.h, }}>
                     <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
                         <Column from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 48, height: 48, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
@@ -84,10 +83,8 @@ export default function HomeScreen({ navigation, }) {
                         </Column>
                     </Row>
                 </Button>
-
                 <MenuHandle />
-
-                <Carrousel color={color} type="home" />
+                <Carrousel />
                 <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
                     <OffersCards data={offers} loading={loading} />
                     <ShopsCards data={shops} loading={loading} />
@@ -244,8 +241,8 @@ const Donate = () => {
         const link = item.img;
         return (
             <Column style={{ width: width, justifyContent: 'center', alignItems: 'center' }}>
-                <Button onPress={() => { navigation.navigate('DonateHide') }} style={{ borderRadius: 24, marginRight: 12 }}>
-                    <Image source={link} style={{ width: 320, height: 170, borderRadius: 24 }} />
+                <Button onPress={() => { navigation.navigate('DonateHide') }} style={{ borderRadius: 24, }}>
+                    <Image source={link} style={{ width: width * 0.86, height: 170,   borderRadius: 24 }} />
                 </Button>
             </Column>
         );

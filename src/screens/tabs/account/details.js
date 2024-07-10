@@ -48,7 +48,9 @@ export default function AccountDetailsScreen() {
                 setloading(false);
             }
         }
-        fecthData();
+        setTimeout(() => {
+            fecthData();
+        }, 500);
     }, []);
 
     const [temporaryImg, settemporaryImg] = useState(false);
@@ -84,7 +86,6 @@ export default function AccountDetailsScreen() {
         setloading(true);
         const params = {
             "name": name,
-            "email": email,
             "whatsapp": whatsapp,
             "cep": cep
         };

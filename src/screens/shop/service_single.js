@@ -1,113 +1,127 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { Vibration, FlatList, Animated, Dimensions, Pressable } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, ButtonOut, LabelLI, U } from '@theme/global';
+import { Vibration, FlatList, Dimensions, ActivityIndicator, Animated as RAnimated } from 'react-native';
+import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiImage, MotiView, useAnimationState } from 'moti';
+import { AnimatePresence, MotiView, } from 'moti';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Header from '@components/header';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
+import { Image } from 'expo-image'
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Feather from '@expo/vector-icons/Feather';
-
 import HeartAnim from '@anim/heart';
 
 import { getSingleService, } from '@request/shop/index';
 import { sendCodeService } from '@api/request/shop/qrcode';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
 import { Skeleton } from 'moti/skeleton';
-import { X } from 'lucide-react-native';
+import { Check, X } from 'lucide-react-native';
 
-const { width,  } = Dimensions.get('window');
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withSequence, withSpring, withTiming } from 'react-native-reanimated';
+const { width, height } = Dimensions.get('window');
 
 
 export default function ShopServiceSingleScreen({ navigation, route }) {
     const { color, margin } = useContext(ThemeContext);
-    const [item, setitem] = useState();
-    const [shop, setshop] = useState();
-    const id = route.params?.id
-    const [loading, setloading] = useState(true);
-    const [error, seterror] = useState(null)
+    const { id } = route.params;
+    const [item, setItem] = useState(null);
+    const [shop, setShop] = useState(null);
+    const [like, setLike] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [loadingBuy, setLoadingBuy] = useState(false);
+    const [success, setsuccess] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const service = await getSingleService(id);
-                const fav = await veriFav(service?.id)
-                setlike(fav)
-                setitem(service);
-                setshop(service.shop);
+                const fav = await veriFav(service?.id);
+                setLike(fav);
+                setItem(service);
+                setShop(service.shop);
             } catch (err) {
-                console.log(err)
-                seterror(err);
+                setError(err);
             } finally {
-                setloading(false);
+                setLoading(false);
             }
         };
-        setTimeout(() => {
-            fetchData();
-        }, 300);
-    }, []);
+        fetchData();
+    }, [id]);
 
-    const nowdate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    const itm = {
-        date: nowdate,
-        shop: {
-            name: shop?.name,
-            id: shop?.id,
-            img: shop?.img,
-        },
-        product: {
+    const handleToggleLike = async () => {
+        const product = {
             name: item?.name,
             value: item?.value,
             img: item?.imgs[0],
             id: item?.id,
-        },
-    }
-    const [like, setlike] = useState();
-    const toggleLike = async () => {
-        if (like) {
-            setlike(false)
-            await delFav(item.id).then((res) => { }).catch((err) => { console.log(err) })
-        } else {
-            setlike(true)
-            await addFav(itm?.product).then((res) => { }).catch((err) => { console.log(err) })
         }
+        try {
+            if (like) {
+                setLike(false);
+                await delFav(item.id);
+            } else {
+                setLike(true);
+                await addFav(product);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    }
     const handleBuyService = async () => {
-        setloading(true)
-        sendCodeService(item?.id).then(res => {
+        try {
+            setLoadingBuy(true);
+            const res = await sendCodeService(item.id);
             const itm = {
                 date: res.create,
-                code: res?.token,
-                gerador: res?.gerador,
+                code: res.token,
+                gerador: res.gerador,
                 shop: {
-                    name: shop?.name,
-                    id: shop?.id,
+                    name: shop.name,
+                    id: shop.id,
                 },
                 product: {
-                    name: item?.name,
-                    value: item?.value,
-                    img: item?.imgs[0],
-                    id: item?.id,
+                    name: item.name,
+                    value: item.value,
+                    img: item.imgs[0],
+                    id: item.id,
                 },
-            }
-            setloading(false)
-            navigation.navigate('ShopQRCode', { item: itm })
-        }).catch((err) => {
-            seterror(err.message)
+            };
+
+            setLoadingBuy(false);
+            setsuccess(true);
+            setError()
+            setTimeout(() => {
+                navigation.navigate('ShopQRCode', { item: itm, })
+            }, 800);
+        } catch (err) {
+            setLoadingBuy(false);
+            setsuccess(false);
+            setError(err?.message);
             Vibration.vibrate(300);
-            setloading(false)
-        })
-        setloading(false)
+        } finally {
+            setTimeout(() => {
+                setLoadingBuy(false);
+            }, 1000);
+        }
+    };
+
+    if (loading) {
+        return (
+            <Main style={{ backgroundColor: '#fff' }}>
+                <Scroll>
+                    <SkeletonList />
+                </Scroll>
+            </Main>
+        );
     }
-    if (loading) return <Main style={{ backgroundColor: '#fff', }}><Scroll><SkeletonList /></Scroll></Main>
+
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll scrollEventThrottle={16}  >
+            <Scroll>
                 <Header title="Detalhes" rose />
-
                 <Carrousel data={item?.imgs} />
 
                 <Column style={{ marginHorizontal: margin.h, }}>
@@ -131,14 +145,13 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                             keyExtractor={(item) => item.id}
                             horizontal
                             renderItem={({ item }) => (
-                                <Button key={item.id} onPress={() => { navigation.navigate('Shop', { type: item }) }} style={{ marginRight: 6, }}>
+                                <Button key={item.id} onPress={() => { navigation.navigate('CategorySingle', { item: item, id: item?.id }) }} style={{ marginRight: 6, }}>
                                     <Label key={item.name} style={{ fontSize: 14, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 6, paddingHorizontal: 14, backgroundColor: color.primary + 20, borderRadius: 8, alignSelf: 'flex-start', }}>{item?.name}</Label>
                                 </Button>
                             )}
-
                         />
 
-                        <Button onPress={toggleLike} style={{ alignSelf: 'center', width: 42, height: 42, marginRight: 12, borderRadius: 12, backgroundColor: color.primary + 20, justifyContent: 'center', alignItems: 'center', }}>
+                        <Button onPress={handleToggleLike} style={{ alignSelf: 'center', width: 42, height: 42, marginRight: 12, borderRadius: 12, backgroundColor: color.primary + 20, justifyContent: 'center', alignItems: 'center', }}>
                             <AnimatePresence>
                                 {like ? <HeartAnim w={52} h={52} play={like} />
                                     :
@@ -154,7 +167,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Row>
                                 <Button onPress={() => { navigation.navigate('ShopSingle', { id: shop?.id }) }} >
-                                    <MotiImage source={{ uri: shop?.img }} style={{ width: 54, height: 54, borderRadius: 12, }} />
+                                    <Image contentFit='cover' transition={500} cachePolicy="disk" source={{ uri: shop?.img }} style={{ width: 54, height: 54, borderRadius: 12, }} />
                                 </Button>
                                 <Column style={{ justifyContent: 'center', marginLeft: 20, }}>
                                     <SubLabel style={{ color: color.secundary, fontSize: 16, }}>{shop?.name}</SubLabel>
@@ -166,53 +179,136 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                             </Button>
                         </Row>
                     </Column>
-
                 </Column>
-
-                <Column style={{ height: 100, }} />
             </Scroll>
 
-            <MotiView style={{ position: 'absolute', bottom: 0, alignSelf: 'center', zIndex: 99, }}>
-                <Row style={{ marginVertical: 20, }}>
-                    <Button onPress={handleBuyService} disabled={loading || error?.length > 0} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
-                        <Row>
-                            {error ? <X size={32} color="#fff" /> : <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />}
-                        </Row>
-                    </Button>
-                    <MotiView style={{ backgroundColor: error?.length > 0 ? "#850505" : '#bf0d8a', paddingLeft: 24, marginLeft: -36, height: 62, zIndex: -1, justifyContent: 'center', alignItems: 'center', borderRadius: 10, }}>
-                        <Label style={{ color: '#fff', fontFamily: 'Font_Medium', fontSize: 16, textAlign: 'right', marginLeft: 18, }}>{error ? error.slice(5) : 'Gerar QRCODE'}    </Label>
-                    </MotiView>
-                </Row>
-            </MotiView>
+            <BuyService item={item} handleBuyService={handleBuyService} loading={loadingBuy} error={error} success={success} />
         </Main>
     )
 }
 
-const Carrousel = ({ data }) => {
-    const { margin, color, } = useContext(ThemeContext);
-    const scrollX = React.useRef(new Animated.Value(0)).current;
+const BuyService = ({ handleBuyService, loading, error, success, item }) => {
+    const { color } = useContext(ThemeContext);
+    const widthValue = useSharedValue(162);
+    const heightValue = useSharedValue(62);
+    const radiusValue = useSharedValue(100);
+    const bottomValue = useSharedValue(20);
+    const backgroundValue = useSharedValue(error ? '#850505' : '#bf0d8a');
 
+
+    useEffect(() => {
+        if (success && !loading) {
+            // Sucesso
+            widthValue.value = withTiming(width, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
+            heightValue.value = withTiming(height, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
+            bottomValue.value = withSpring(0);
+            radiusValue.value = withTiming(0, { duration: 300, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
+            backgroundValue.value = withSpring(color.green);
+
+        } else if (error && !loading) {
+            // Erro
+            bottomValue.value = withTiming(20, { duration: 300 });
+            widthValue.value = withTiming(264, { duration: 300 });
+            heightValue.value = withTiming(62, { duration: 300 });
+            radiusValue.value = withTiming(100, { duration: 300 });
+            backgroundValue.value = withTiming('#f55353');
+        }
+        else if (loading && !error && !success) {
+            // loading
+            radiusValue.value = withTiming(100, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
+            widthValue.value = withTiming(62, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
+            heightValue.value = withTiming(62, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
+            bottomValue.value = withSpring(20);
+        } else if (!loading && !error && !success) {
+            // Normal
+            bottomValue.value = withTiming(20, { duration: 300 });
+            widthValue.value = withTiming(214, { duration: 300 });
+            heightValue.value = withTiming(62, { duration: 300 });
+            radiusValue.value = withTiming(100, { duration: 300 });
+            backgroundValue.value = withTiming('#bf0d8a', { duration: 300 });
+        }
+    }, [success, error, loading]);
+
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            width: widthValue.value,
+            height: heightValue.value,
+            backgroundColor: backgroundValue.value,
+            bottom: bottomValue.value,
+            borderRadius: radiusValue.value,
+        };
+    });
+
+    return (
+        <Animated.View style={[{ position: 'absolute', bottom: 20, borderRadius: 100, alignSelf: 'center', zIndex: 99, backgroundColor: 'red', }, animatedStyle]}>
+            {!success && <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Button onPress={() => handleBuyService()} disabled={loading || error?.length > 0} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                    <Row>
+                        {loading && <ActivityIndicator size="large" color="#fff" />}
+                        {!loading && <>
+                            {!error && <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />}
+                            {error && <Feather name="x" size={24} color="#fff" />}
+                        </>}
+                    </Row>
+                </Button>
+                {!loading && <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} transition={{ type: 'timing', delay: 200, }}><Label style={{ color: '#fff', fontFamily: 'Font_Medium', lineHeight: 16, marginRight: 20, fontSize: 16, }}>{error?.length > 0 ? error : 'Gerar QRCODE '}</Label></MotiView>}
+            </Row>}
+
+            {success &&
+                <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} transition={{ type: 'timing', duration: 500, }} delay={500} style={{ justifyContent: 'center', alignItems: 'center', flex: 1, }}>
+                    <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 100, height: 100, borderRadius: 100, backgroundColor: "#ffffff50", justifyContent: 'center', alignItems: 'center', }}>
+                        <Check size={60} color="#fff" />
+                    </MotiView>
+                    <Title style={{ color: '#fff', textAlign: 'center', fontSize: 28, lineHeight: 28, marginTop: 20, }}>Troca realizada com sucesso!</Title>
+                    <Title style={{ color: '#fff', textAlign: 'center', fontFamily: 'Font_Medium', fontSize: 22, lineHeight: 22, marginTop: 12, }}>Redirecionando {'\n'}ao resgatar...</Title>
+                </MotiView>}
+        </Animated.View>
+    );
+};
+
+const Carrousel = ({ data }) => {
+    const { margin, color } = useContext(ThemeContext);
+    const scrollX = useRef(new RAnimated.Value(0)).current;
     return (
         <>
             <FlatList
                 horizontal
                 data={data}
-                style={{ marginVertical: margin.v, marginBottom: 20, }}
+                style={{ marginVertical: margin.v, marginBottom: 20 }}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item, index) => index.toString()}
                 snapToAlignment='center'
-                decelerationRate={'fast'}
-                onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
+                decelerationRate='fast'
+                onScroll={RAnimated.event(
+                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                    { useNativeDriver: false }
+                )}
                 pagingEnabled
-                renderItem={({ item, index }) => <CardImage item={item} index={index} />}
+                renderItem={({ item }) => (
+                    <Column style={{ width }}>
+                        <Image
+                            source={{ uri: item }}
+                            transition={500}
+                            cachePolicy='disk'
+                            contentFit='cover'
+                            style={{
+                                borderRadius: 24,
+                                width: 0.86 * width,
+                                alignSelf: 'center',
+                                height: 320,
+                            }}
+                        />
+                    </Column>
+                )}
             />
-            {data?.length > 1 &&
-                <Column style={{ backgroundColor: color.secundary + 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: -14, marginBottom: 10, }}>
+            {data?.length > 1 && (
+                <Column style={{ backgroundColor: `${color.secundary + 20}`, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 3, alignSelf: 'center', marginTop: -14, marginBottom: 10 }}>
                     <ExpandingDot
                         data={data}
                         expandingDotWidth={20}
                         scrollX={scrollX}
-                        containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                        containerStyle={{ position: 'relative', marginTop: 0, top: 0 }}
                         dotStyle={{
                             width: 10,
                             height: 10,
@@ -222,46 +318,15 @@ const Carrousel = ({ data }) => {
                         activeDotColor={color.secundary}
                         inActiveDotColor={color.secundary + 50}
                     />
-                </Column>}
+                </Column>
+            )}
         </>
-    )
-}
-
-const CardImage = ({ item }) => {
-    const [open, setopen] = useState(false);
-    const scaleIn = useAnimationState({
-        from: {
-            width: width * 0.8, height: 284,
-        },
-        to: {
-            width: width, height: 484,
-        },
-    });
-
-    const handleImg = () => {
-        if (open) {
-            scaleIn.transitionTo('to');
-            setopen(false);
-        } else {
-            scaleIn.transitionTo('from');
-            setopen(true);
-        }
-    }
-
-    useEffect(() => {
-        handleImg();
-    }, [])
-
-    return (
-        <Pressable onLongPress={handleImg} style={{ width: width, justifyContent: 'center', alignItems: 'center', }}>
-            <MotiImage state={scaleIn} source={{ uri: item }} style={{ borderRadius: 24, }} />
-        </Pressable>
-    )
-}
+    );
+};
 
 const SkeletonList = () => {
     return (
-        <Column style={{ marginHorizontal: 28, marginTop: 50,}}>
+        <Column style={{ marginHorizontal: 28, marginTop: 50, }}>
             <Column style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
                 <Skeleton height={300} width={width * 0.86} radius={24} colorMode='light' />
             </Column>

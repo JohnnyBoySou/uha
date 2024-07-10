@@ -6,15 +6,18 @@ import { FlatList, Dimensions } from 'react-native';
 import { MotiImage, MotiView } from 'moti';
 import { getSingleCategory } from '@api/request/category';
 import { useNavigation } from '@react-navigation/native';
+import { Bike, Bone, Brush, Car, Hospital, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, } from 'lucide-react-native';
 
 const { width } = Dimensions.get('window');
 
 export default function CategorySingleScreen({ navigation, route }) {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color } = useContext(ThemeContext);
     const { item, id } = route.params
+
+    const icon = item.icon ? item.icon : cats.find(cat => cat.name === item.name).icon;
+
     const [shops, setshops] = useState();
     const [loading, setloading] = useState(false);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,12 +41,16 @@ export default function CategorySingleScreen({ navigation, route }) {
                 <Column style={{  marginVertical: 20, flex: 1, }}>
 
                 <MotiView from={{scale: 0, opacity: 0,}} animate={{scale: 1, opacity: 1,}} style={{ width: 64, marginBottom: 30, height: 64, borderRadius: 100, backgroundColor: color.primary, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', }}>
-                    {item?.icon}
+                    {icon}
                 </MotiView>
 
                   {!loading && <>
                         <FlatList
-                            data={shops}
+                            data={shops} 
+                            initialNumToRender={3}
+                            maxToRenderPerBatch={3}
+                            windowSize={3}
+                            removeClippedSubviews={true}
                             showsHorizontalScrollIndicator={false}
                             renderItem={({ item }) => <CardList item={item}/>}
                             keyExtractor={item => item.id}
@@ -54,7 +61,6 @@ export default function CategorySingleScreen({ navigation, route }) {
         </Main>
     )
 }
-
 
 const CardList = ({item}) => {
     const navigation = useNavigation();
@@ -78,3 +84,6 @@ const CardList = ({item}) => {
         </Column>
     )
 }
+
+
+const cats = [{"created_at": "2024-07-04 12:58:05", "estabelecimentos": 0, "icon": <Shirt color="#FFF2E3" size={28} />, "id": 11, "name": "Vestuário", "updated_at": "2024-07-04 12:58:05"}, {"created_at": "2024-07-04 12:58:05", "estabelecimentos": 1, "icon": <Bike color="#FFF2E3" size={28} />, "id": 12, "name": "Esportivo", "updated_at": "2024-07-04 12:58:05"}, {"created_at": "2024-07-04 12:58:05", "estabelecimentos": 0, "icon": <Hospital color="#FFF2E3" size={28} />, "id": 13, "name": "Farmácia", "updated_at": "2024-07-04 12:58:05"}, {"created_at": "2024-07-04 12:58:05", "estabelecimentos": 2, "icon": <Bone color="#FFF2E3" size={28} />, "id": 14, "name": "Serviços Pet", "updated_at": "2024-07-04 12:58:05"}, {"created_at": "2024-07-04 12:58:05", "estabelecimentos": 1, "icon": <Brush color="#FFF2E3" size={28} />, "id": 15, "name": "Cuidados estéticos", "updated_at": "2024-07-04 12:58:05"}, {"created_at": "2024-07-04 12:58:05", "estabelecimentos": 1, "icon": <Pizza color="#FFF2E3" size={28} />, "id": 16, "name": "Comida", "updated_at": "2024-07-04 12:58:05"}, {"created_at": "2024-07-04 12:58:05", "estabelecimentos": 1, "icon": <Car color="#FFF2E3" size={28} />, "id": 17, "name": "Veículos", "updated_at": "2024-07-04 12:58:05"}]

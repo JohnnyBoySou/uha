@@ -2,9 +2,8 @@ import React, { useContext, useMemo, useCallback } from "react";
 import { Button, Column, Title, Row, Label } from "@theme/global";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "styled-components/native";
-import { FlatList, } from "react-native";
 import { Skeleton } from "moti/skeleton";
-
+import { FlatList } from 'react-native-gesture-handler'
 import { Image } from 'expo-image'
 
 export const OffersCards = ({ data, loading }) => {
@@ -16,19 +15,19 @@ export const OffersCards = ({ data, loading }) => {
 
     if (loading) return (<LoadOffers />)
     return (
-        <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, paddingBottom: 2, marginBottom: -2, }}>
+        <Column style={{ backgroundColor: 'transparent', paddingBottom: 2, marginBottom: 12, }}>
             <Row style={{ paddingHorizontal: margin.h, paddingVertical: 16, justifyContent: 'space-between', alignItems: 'center', }}>
                 <Title style={{ fontSize: 22, }}>Ofertas relâmpago</Title>
-                <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16, }}>
+                <Button onPress={() => { navigation.navigate('ShopOffers') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 6, paddingHorizontal: 12, }}>
                     <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14, }}>Ver mais</Label>
                 </Button>
             </Row>
             <FlatList
                 data={data}
-                ListHeaderComponent={<Column style={{ width: 24 }} />}
+                ListHeaderComponent={<Column style={{ width: 28 }} />}
                 showsHorizontalScrollIndicator={false}
                 horizontal
-                style={{ backgroundColor: color.background }}
+                style={{ backgroundColor: 'transparent' }}
                 renderItem={renderItem}
                 keyExtractor={keyExtractor}
                 initialNumToRender={3}

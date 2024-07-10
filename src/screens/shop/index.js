@@ -1,47 +1,56 @@
-import React, { useContext, useState, useEffect, useRef, useMemo } from 'react';
-import { FlatList, Dimensions, Animated, Image, ActivityIndicator } from 'react-native';
+import React, { useContext, useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { FlatList, Dimensions, Animated, Image, } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Search, } from 'lucide-react-native';
 import { useIsFocused, useNavigation, } from '@react-navigation/native';
-import { getShops, getOffers, getServices } from '@request/shop/index';
 import { StatusBar } from 'expo-status-bar'
+
 import Header from '@components/header';
 
 import { ExpandingDot } from "react-native-animated-pagination-dots";
-const { width } = Dimensions.get('window');
-
 import { ScrollView } from 'react-native-gesture-handler';
+
+import { getShops, getOffers, getServices } from '@request/shop/index';
+import { Skeleton } from 'moti/skeleton';
+
 import CardOffers from '@components/cardOffers';
 import CardServices from '@components/cardServices';
+import LoadOffers from '@components/loadOffers';
+import LoadServices from '@components/loadServices';
 
-export default function ShopScreen({ navigation, route }) {
+const { width } = Dimensions.get('window');
+
+export default function ShopScreen({ navigation}) {
     const { color, margin } = useContext(ThemeContext);
-    const [data, setdata] = useState();
-    const [offers, setoffers] = useState();
-    const [loading, setloading] = useState(true);
-    const [services, setservices] = useState();
 
+    const [data, setData] = useState(null);
+    const [offers, setOffers] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [services, setServices] = useState(null);
     const isFocused = useIsFocused();
-    useEffect(() => {
-        const fecthData = async = async () => {
-            setloading(true);
-            try {
-                const shops = await getShops();
-                setdata(shops);
-                const offer = await getOffers();
-                setoffers(offer)
-                const service = await getServices();
-                setservices(service)
-                
-            } catch (err) {
-                console.log(err)
-            } finally {
-                setloading(false)
-            }
+
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        try {
+            const [shops, offer, service] = await Promise.all([getShops(), getOffers(), getServices()]);
+            setData(shops);
+            setOffers(offer);
+            setServices(service);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
         }
-        fecthData()
-    }, [isFocused])
+    }, []);
+
+    useEffect(() => {
+        if (isFocused) {
+            setTimeout(() => {
+                fetchData();
+            }, 500);
+        }
+    }, [isFocused, fetchData]);
 
     const [fixedMenu, setFixedMenu] = useState(false);
 
@@ -77,7 +86,7 @@ export default function ShopScreen({ navigation, route }) {
 const Offers = ({ data, loading }) => {
     const { color, margin, font } = useContext(ThemeContext);
     const navigation = useNavigation();
-    if (loading) { return <></> }
+    if (loading) { return <Column style={{ marginTop: 40, marginHorizontal: 28, }}><LoadOffers /></Column> }
     return (
         <Column>
             <Row style={{ justifyContent: 'space-between', marginBottom: 16, marginTop: 20, alignItems: 'center', marginHorizontal: margin.h, }}>
@@ -125,7 +134,20 @@ const Promos = ({ data, title, loading }) => {
         )
     }, []);
 
-    if (loading) { return <Column style={{ marginTop: 50, }}><ActivityIndicator size="large" color={color.primary} /></Column> }
+    if (loading) { return <Column style={{ marginTop: 10, marginHorizontal: 28,  }}>
+        <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 12,  }}>
+            <Skeleton colorMode='light' width={140} height={40} radius={8} />
+            <Skeleton colorMode='light' width={50} height={30} radius={120} />
+        </Row>
+        <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+        <Skeleton colorMode='light' width={width - 58} height={140} radius={12} />
+        <Column style={{ height: 12, }} />
+        <Skeleton colorMode='light' width={width - 58} height={140} radius={12} />
+        <Column style={{ height: 12, }} />
+        <Skeleton colorMode='light' width={width - 58} height={140} radius={12} />
+        </Column>
+
+    </Column> }
     else {
         return (
             <>
@@ -216,15 +238,14 @@ const Cards = () => {
 }
 
 const Services = ({ data, title, loading }) => {
-    const { color } = useContext(ThemeContext);
-    if (loading) { return <></> }
+    if (loading) { return <Column style={{ marginTop: 20, }}><LoadServices /></Column> }
     return (
         <Column>
             <Title style={{ marginHorizontal: 28, marginTop: 12, marginBottom: 12, fontSize: 22, lineHeight: 22, letterSpacing: -1 }}>{title}</Title>
             <FlatList
                 data={data}
-                ListFooterComponent={<Column style={{ width: 24 }} />}
-                ListHeaderComponent={<Column style={{ width: 24 }} />}
+                ListFooterComponent={<Column style={{ width: 28 }} />}
+                ListHeaderComponent={<Column style={{ width: 28 }} />}
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 renderItem={({ item }) => <CardServices item={item} />}

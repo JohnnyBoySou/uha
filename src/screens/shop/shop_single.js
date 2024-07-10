@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, } from 'react';
-import { FlatList, Image, Platform, Linking, Dimensions} from 'react-native';
+import { FlatList,  Platform, Linking, Dimensions} from 'react-native';
 import { Main, Column, Label, Scroll, Title, Row, SubLabel, Button } from '@theme/global';
 
 import { ThemeContext } from 'styled-components/native';
@@ -11,10 +11,11 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 //request
 import { getSingleShop } from '@request/shop/index';
-
+import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
-import CardOffers from '@components/cardOffers';
-import CardServices from '@components/cardServices';
+
+import { OffersCards } from '@components/offersCards';
+import { ServicesCards } from '@components/servicesCards';
 
 const { width } = Dimensions.get('window');
 
@@ -25,6 +26,7 @@ export default function ShopSingleScreen({ navigation, route }) {
     const [item, setitem] = useState();
     const [offers, setoffers] = useState();
     const [services, setservices] = useState();
+    const [banners, setbanners] = useState();
 
     const [loading, setloading] = useState(true);
     const [error, seterror] = useState();
@@ -35,8 +37,9 @@ export default function ShopSingleScreen({ navigation, route }) {
             try {
                 const shop = await getSingleShop(id);
                 setitem(shop);
+                setbanners(shop?.banners);
                 setoffers(shop?.offers);
-                setservices(shop.services);
+                setservices(shop?.services);
             } catch (err) {
                 console.log(err)
                 seterror(err);
@@ -71,7 +74,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                         <MotiView from={{ opacity: 0, translateY: -120, }} animate={{ translateY: -20, opacity: 1, }} exit={{ translateY: -120, opacity: 0, }} transition={{ type: 'timing' }} style={{ flexDirection: 'row', paddingTop: 50, paddingBottom: 18, paddingHorizontal: margin.h, alignItems: 'center', backgroundColor: color.secundary, width: '100%', justifyContent: 'space-between', borderBottomLeftRadius: 16, borderBottomRightRadius: 16, }}>
                             <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                                 <Column style={{ padding: 2, borderRadius: 100, backgroundColor: '#fff', }}>
-                                    <Image source={{ uri: item?.img }} style={{ borderRadius: 100, width: 56, height: 56, }} />
+                                    <Image transition={1000} source={{ uri: item?.img }} style={{ borderRadius: 100, width: 56, height: 56, }} />
                                 </Column>
                                 <Column style={{ width: 26, height: 26, borderRadius: 100, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', marginTop: 32, marginLeft: -20, }}>
                                     <MaterialIcons style={{}} name="verified" size={24} color={color.blue} />
@@ -87,6 +90,7 @@ export default function ShopSingleScreen({ navigation, route }) {
                         </MotiView>}
                 </AnimatePresence>
             </Column>
+            
             <Scroll onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 160) { setFixedMenu(true); } else { setFixedMenu(false); } }} scrollEventThrottle={16} style={{ paddingTop: 0, }}>
                 <Column>
                     <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 28, position: 'absolute', top: 40, borderRadius: 100, left: 28, justifyContent: 'center', alignItems: 'center', zIndex: 99, }}>
@@ -94,6 +98,9 @@ export default function ShopSingleScreen({ navigation, route }) {
                     </Button>
                     <Image
                         source={{ uri: item?.capa }}
+                        transition={500}
+                        cachePolicy="disk"
+                        contentFit="cover"
                         style={{
                             height: 300,
                             width: '100%',
@@ -106,15 +113,19 @@ export default function ShopSingleScreen({ navigation, route }) {
                     />
                     <Column style={{ padding: 6, backgroundColor: '#fff', borderRadius: 100, alignSelf: 'center', zIndex: -2, }}>
                         <Image
+                            transition={500}
+                            cachePolicy="disk"
+                            contentFit="cover"
                             source={{ uri: item?.img }}
                             style={{ borderRadius: 100, zIndex: 99, width: 132, height: 132, }}
                         />
                     </Column>
                 </Column>
-                <Column style={{ flex: 1, marginTop: 12, }} >
-                    <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24, }}>
+
+                <Column style={{ marginTop: 8, }} >
+                    <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, }}>
                         <Row>
-                            <Title>{item?.name} </Title>
+                            <Title>{item?.name}</Title>
                             <MaterialIcons style={{ marginLeft: 5, }} name="verified" size={24} color={color.blue} />
                         </Row>
                         <Label style={{ textAlign: 'center', marginVertical: 5, fontSize: 14, color: color.secundary + 99, lineHeight: 16, }}>{item?.desc}</Label>
@@ -125,79 +136,42 @@ export default function ShopSingleScreen({ navigation, route }) {
                             </Row>
                         </Button>
                     </Column>
-                    <Offers data={offers} />
-                    <Banners data={item?.banners} />
-                    <Services data={services} />
+                    {offers?.length > 0 && <OffersCards data={offers} />}
+                    {banners?.length > 0 && <Banners data={banners} />}
+                    {services?.length > 0 && <ServicesCards data={services} />}
                 </Column>
-                <Column style={{ height: 70, }} />
+
+                <Column style={{ height: 50, }} />
             </Scroll>
     </Main>)
 }
 
 const Banners = ({ data }) => {
     if (data?.length == 0) return
-    const { margin, color } = useContext(ThemeContext);
     return (
         <Column>
-            <Column style={{ marginHorizontal: margin.h, marginTop: 0, marginBottom: 10, }}>
+            <Column style={{ marginHorizontal: 28, marginTop: 10, marginBottom: 10, }}>
                 <Title style={{ letterSpacing: -1, fontSize: 22, }}>Promocionais</Title>
             </Column>
         <FlatList
-            decelerationRate={'fast'}
-            scrollEventThrottle={16}
             data={data}
-            renderItem={({ item }) => <Image source={{ uri: item }} style={{ width: 240, height: 300, borderRadius: 24, marginRight: 18, objectFit: 'cover', }} />}
+            renderItem={({ item }) => <Image 
+            transition={1000}
+            contentFit='cover'
+            source={{ uri: item }} 
+            style={{ width: 240, height: 300, borderRadius: 12, marginRight: 18,  }} />}
             keyExtractor={(item) => item}
             horizontal
             showsHorizontalScrollIndicator={false}
-            ListFooterComponent={<Column style={{ width: 34 }} />}
-            style={{ paddingHorizontal: 24, marginBottom: 32, }}
+            ListHeaderComponent={<Column style={{ width: 28 }} />}
+            ListFooterComponent={<Column style={{ width: 28 }} />}
+            style={{ marginVertical: 6, }}
+            initialNumToRender={2}
+            maxToRenderPerBatch={2}
+            windowSize={2}
             snapToAlignment='center'
             snapToOffsets={[0, 300, 600]}
         />
-        </Column>
-    )
-}
-
-const Services = ({ data }) => {
-    if (data?.length == 0) return
-    const { margin, color } = useContext(ThemeContext);
-    return (
-        <Column>
-            <Column style={{ marginHorizontal: margin.h, marginTop: 0, marginBottom: 10, }}>
-                <Title style={{ letterSpacing: -1, fontSize: 22, }}>Serviços</Title>
-            </Column>
-            <FlatList
-                data={data}
-                horizontal
-                ListHeaderComponent={<Column style={{ width: margin.h, }} />}
-                ListFooterComponent={<Column style={{ width: margin.h }} />}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(index) => index.toString()}
-                renderItem={({ item }) => <CardServices item={item} />}
-            />
-        </Column>
-    )
-}
-
-const Offers = ({ data }) => {
-    if (data?.length == 0) return
-    const { margin, color } = useContext(ThemeContext);
-    return (
-        <Column>
-            <Column style={{ marginHorizontal: margin.h, }}>
-                <Title style={{ letterSpacing: -1, fontSize: 22, }}>Ofertas do momento</Title>
-            </Column>
-            <FlatList
-                horizontal
-                data={data}
-                style={{ marginVertical: margin.v, marginBottom: 30, }}
-                showsHorizontalScrollIndicator={false}
-                ListHeaderComponent={<Column style={{ width: margin.h, }} />}
-                ListFooterComponent={<Column style={{ width: margin.h }} />}
-                keyExtractor={(item) => item?.id.toString()}
-                renderItem={({ item }) => <CardOffers item={item} />}
-            />
         </Column>
     )
 }

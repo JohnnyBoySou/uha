@@ -1,9 +1,11 @@
 import React, { useContext, useMemo, useCallback } from "react";
 import { Button, Column, Title, Row, Label } from "@theme/global";
 import { useNavigation } from "@react-navigation/native";
-import { ThemeContext } from "styled-components/native";
-import { Image, FlatList,  } from "react-native";
+import { ThemeContext } from "styled-components/native"; 
 import { Skeleton } from "moti/skeleton";
+
+import { Image } from 'expo-image'
+import { FlatList } from 'react-native-gesture-handler'
 
 export const ShopsCards = ({ data, loading }) => {
     const navigation = useNavigation()
@@ -19,7 +21,7 @@ export const ShopsCards = ({ data, loading }) => {
             <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                     <Title style={{ fontSize: 22 }}>Estabelecimentos</Title>
-                    <Button onPress={() => { navigation.navigate('Shop') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 8, paddingHorizontal: 16 }}>
+                    <Button onPress={() => { navigation.navigate('Shop') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 6, paddingHorizontal: 12 }}>
                         <Label style={{ color: color.primary, fontFamily: font.bold, fontSize: 14 }}>Ver mais</Label>
                     </Button>
                 </Row>
@@ -50,7 +52,7 @@ const CardShops = React.memo(({ item }) => {
     const { id, img, name, descri } = item;
 
     const navigateToShopDetails = useCallback(() => {
-        navigation.navigate('ShopServiceSingle', { id });
+        navigation.navigate('ShopSingle', { id });
     }, [navigation, id]);
 
     return (
@@ -60,7 +62,7 @@ const CardShops = React.memo(({ item }) => {
                     transition={1000}
                     source={{ uri: img }}
                     cachePolicy="disk"
-                    style={{ width: 224, height: 124, borderRadius: 18, objectFit: 'cover', backgroundColor: "#fff" }}
+                    style={{ width: 224, height: 124, borderRadius: 18, backgroundColor: "#fff" }}
                 />
                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 20, marginBottom: 4, width: 224, textAlign: 'center' }}>{name?.slice(0, 42)}</Title>
                 <Label style={{ fontSize: 12, lineHeight: 13, textAlign: 'center', color: '#5C0D4599' }}>{descri?.length > 52 ? descri?.slice(0, 52) + '...' : descri}</Label>

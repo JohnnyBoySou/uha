@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
@@ -27,7 +27,7 @@ export default function ShopOffersScreen({ navigation, route }) {
         }
         setTimeout(() => {
             fetchData();
-        }, 300);
+        }, 500);
     }, [])
 
     const [fixedMenu, setFixedMenu] = useState(false);
@@ -48,7 +48,7 @@ export default function ShopOffersScreen({ navigation, route }) {
                 </Row>
                 <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
                     <Title style={{ fontSize: 28, lineHeight: 28, }}>Ofertas fresquinhas</Title>
-                    <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre as melhores ofertas dos seus serviços favoritos</Label>
+                    <Label style={{ marginVertical: 6, fontSize: 16, lineHeight: 16, color: color.secundary+99, }}>Encontre as melhores ofertas dos seus serviços favoritos</Label>
                 </Column>
 
                 <Title style={{ marginHorizontal: margin.h, marginBottom: 5, marginTop: 0, }}>⚡ Relâmpago</Title>
@@ -66,100 +66,73 @@ export default function ShopOffersScreen({ navigation, route }) {
 }
 
 const Rain = ({ data, loading }) => {
-    const { color } = useContext(ThemeContext);
     const navigation = useNavigation();
+    const handlePress = useCallback((id) => {
+        navigation.navigate('ShopServiceSingle', { id });
+    }, [navigation]);
 
-    const CardOffer = ({ item }) => {
-        return (
-            <Button style={{ borderRadius: 6, backgroundColor: "#f7f7f7", marginBottom: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                <Column style={{ justifyContent: 'center', width: 164, }}>
-                    <MotiImage source={{ uri: item.img }} style={{ width: 164, height: 154, marginBottom: 8, borderTopLeftRadius: 8, borderTopRightRadius: 8, objectFit: 'cover', }} />
-                    <Column style={{ paddingHorizontal: 12, paddingBottom: 14, }}>
-                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-
-                            <Row>
-                                <Title style={{ color: color.primary, fontSize: 22, marginRight: 3, lineHeight: 24, marginLeft: 0, }}>{item?.value.slice(0, -3)}</Title>
-                                <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
-                            </Row>
-                            <Row>
-                                <Title style={{ color: "#000", fontSize: 10, marginTop: -6, marginRight: 2, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value?.slice(0, -3)}</Title>
-                                <Title style={{ color: "#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>pontos</Title>
-                            </Row>
-                        </Row>
-
-                        <Column style={{ width: '100%', marginTop: 6, }} >
-                            <Row style={{ backgroundColor: '#d7d7d7', borderRadius: 100, }}>
-                                <Column style={{ backgroundColor: color.primary, height: 6, width: item?.sell_porcentage + '%', borderRadius: 100, }} />
-                            </Row>
-                            <Title style={{ fontSize: 10, marginTop: -3, fontFamily: 'Font_Medium' }}>{item?.sell_porcentage}% vendido</Title>
-                        </Column>
-                    </Column>
-                    <Title style={{ fontSize: 14, lineHeight: 16, width: 154, marginHorizontal: 12, marginTop: -12, marginBottom: 12, }}>{item.name.slice(0, 42)}</Title>
-
-                </Column>
-            </Button>
-        )
-    }
     return (
         <>
-            {loading ? <SkeletonList /> :
+            {loading ? (
+                <SkeletonList />
+            ) : (
                 <FlatList
                     data={data}
                     showsHorizontalScrollIndicator={false}
                     numColumns={2}
-                    columnWrapperStyle={{ justifyContent: 'space-evenly', marginHorizontal: 12, }}
-                    style={{ marginVertical: 12, }}
-                    renderItem={({ item }) => <CardOffer item={item} />}
+                    style={{ marginTop: 16, }}
+                    columnWrapperStyle={{ justifyContent: 'space-between', marginHorizontal: 28, }}
+                    renderItem={({ item }) => <CardOffer item={item} onPress={() => handlePress(item.id)} />}
                     keyExtractor={item => item.id}
-                />}
+                />
+            )}
         </>
-    )
-}
+    );
+};
 
-const Offers = ({ data, loading }) => {
+const CardOffer = React.memo(({ item, onPress }) => {
     const { color } = useContext(ThemeContext);
-    const navigation = useNavigation();
-    const CardHide = ({ item }) => {
-        return (
-            <Button style={{ borderRadius: 6, backgroundColor: "#f7f7f7", marginBottom: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
-                <Column style={{ justifyContent: 'center', width: 164, }}>
-                    <MotiImage source={{ uri: item.img }} style={{ width: 164, height: 154, marginBottom: 8, borderTopLeftRadius: 8, borderTopRightRadius: 8, objectFit: 'cover', }} />
-                    <Column style={{ paddingHorizontal: 12, paddingBottom: 14, }}>
-                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-
-                            <Row>
-                                <Title style={{ color: color.primary, fontSize: 22, marginRight: 3, lineHeight: 24, marginLeft: 0, }}>{item?.value.slice(0, -3)}</Title>
-                                <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12, }}>pontos</Title>
-                            </Row>
-                            <Row>
-                                <Title style={{ color: "#000", fontSize: 10, marginTop: -6, marginRight: 2, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>{item?.old_value?.slice(0, -3)}</Title>
-                                <Title style={{ color: "#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>pontos</Title>
-                            </Row>
-                        </Row>
-                    </Column>
-                    <Title style={{ fontSize: 14, lineHeight: 16, width: 154, marginHorizontal: 12, marginTop: -8, marginBottom: 12, }}>{item.name.slice(0, 42)}</Title>
-
-                </Column>
-            </Button>
-        )
-    }
     return (
-        <>
-            {loading ? <SkeletonList /> :
-                <FlatList
-                    data={data}
-                    ListFooterComponent={<Column style={{ width: 24 }} />}
-                    ListHeaderComponent={<Column style={{ width: 24 }} />}
-                    showsHorizontalScrollIndicator={false}
-                    numColumns={2}
-                    columnWrapperStyle={{ justifyContent: 'space-evenly', marginHorizontal: 12, }}
-                    style={{ marginVertical: 12, }}
-                    renderItem={({ item }) => <CardHide item={item} />}
-                    keyExtractor={item => item.id}
-                />}
-        </>
-    )
-}
+        <Button 
+            style={{ borderRadius: 6, backgroundColor: "#f7f7f7", marginBottom: 12 }} 
+            onPress={onPress}
+        >
+            <Column style={{ justifyContent: 'center', width: 148 }}>
+                <MotiImage 
+                    source={{ uri: item.img }} 
+                    style={{ width: 148, height: 154, marginBottom: 8, borderTopLeftRadius: 8, borderTopRightRadius: 8, objectFit: 'cover' }} 
+                />
+                <Column style={{ paddingHorizontal: 12, paddingBottom: 14 }}>
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Row>
+                            <Title style={{ color: color.primary, fontSize: 22, marginRight: 3, lineHeight: 24, marginLeft: 0 }}>
+                                {item?.value.slice(0, -3)}
+                            </Title>
+                            <Title style={{ color: color.primary, fontSize: 10, lineHeight: 12 }}>pontos</Title>
+                        </Row>
+                        <Row>
+                            <Title style={{ color: "#000", fontSize: 10, marginTop: -6, marginRight: 2, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>
+                                {item?.old_value?.slice(0, -3)}
+                            </Title>
+                            <Title style={{ color: "#000", fontSize: 8, lineHeight: 12, textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: '#000' }}>
+                                pontos
+                            </Title>
+                        </Row>
+                    </Row>
+                    <Column style={{ width: '100%', marginTop: 6 }}>
+                        <Row style={{ backgroundColor: '#d7d7d7', borderRadius: 100 }}>
+                            <Column style={{ backgroundColor: color.primary, height: 6, width: `${item?.sell_porcentage}%`, borderRadius: 100 }} />
+                        </Row>
+                        <Title style={{ fontSize: 10, marginTop: -3, fontFamily: 'Font_Medium' }}>{item?.sell_porcentage}% vendido</Title>
+                    </Column>
+                </Column>
+                <Title style={{ fontSize: 13, lineHeight: 14, width: 144, marginHorizontal: 12, marginTop: -12, marginBottom: 12 }}>
+                    {item?.name?.slice(0, 42)}
+                </Title>
+            </Column>
+        </Button>
+    );
+});
 
 const SkeletonList = () => {
     return (
