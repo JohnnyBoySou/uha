@@ -5,7 +5,6 @@ import getBaseURL from '@hooks/getBaseUrl';
 
 export const getUser = async (email, password) => {
   const BASE_URL = await getBaseURL();
-  const token = await getToken();
   const sanitizedEmail = validator.normalizeEmail(email);
   const sanitizedPassword = validator.escape(password);
   try {
@@ -118,3 +117,5 @@ export const listUser = async () => {
     return false;
   }
 }
+
+

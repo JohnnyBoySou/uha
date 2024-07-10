@@ -13,16 +13,15 @@ import { updatePreferences } from '@api/user/preferences';
 import { TextInputMask } from 'react-native-masked-text';
 import { Skeleton } from 'moti/skeleton';
 
-
 export default function AccountDetailsScreen() {
     const { color, font, margin } = useContext(ThemeContext);
     const [error, setError] = useState();
+
+    const [date, setdate] = useState();
     const [loading, setloading] = useState(true);
-    const [email, setemail] = useState();
     const [whatsapp, setwhatsapp] = useState();
     const [cep, setcep] = useState();
     const [name, setname] = useState();
-    const [cpf, setcpf] = useState();
     const [avatar, setavatar] = useState();
     const [old_avatar, setold_avatar] = useState();
     const [disabled, setdisabled] = useState(true);
@@ -36,10 +35,9 @@ export default function AccountDetailsScreen() {
             try {
                 const res = await listUser();
                 setavatar(res.avatar);
+                setdate(res);
                 setold_avatar(res.avatar);
-                setemail(res.email);
                 setname(res.name);
-                setcpf(res.cpf);
                 setcep(res.cep);
                 setwhatsapp(res.whatsapp);
             } catch (error) {
@@ -64,6 +62,7 @@ export default function AccountDetailsScreen() {
             setavatar(old_avatar?.length > 0 ? old_avatar : null)
         }
     }
+
     const handleSave = async () => {
         setError('')
         setfocusCEP(false);
@@ -79,42 +78,45 @@ export default function AccountDetailsScreen() {
         if (!validateCEP(cep)) {
             return setError('CEP inválido');
         }
-        if (!validateEmail(email)) {
-            return setError('E-mail inválido');
-        }
 
         setloading(true);
-        const params = {
-            "name": name,
-            "whatsapp": whatsapp,
-            "cep": cep
-        };
-        if (avatar !== old_avatar) {
-            params.avatar = avatar
-        }
 
-        await updateUser(params).then(async res => {
-            if (res) {
-                const pr = {
-                    "avatar": res.avatar,
-                    "name": res.name,
-                    "whatsapp": res.whatsapp,
-                    "cep": res.cep
-                };
-                await updatePreferences(pr).then(res => {
-                    if (res) {
-                        setloading(false);
-                    }
-                })
-                setdisabled(true);
-                setloading(false);
+        try {
+            const params = {
+                "name": name,
+                "whatsapp": whatsapp,
+                "cep": cep,
+                "email": date?.email,
+            };
+            if (avatar !== old_avatar) {
+                params.avatar = avatar
             }
-        })
+    
+            const update = await updateUser(params);
+            const pr = {
+                "avatar": update.avatar,
+                "name": update.name,
+                "whatsapp": update.whatsapp,
+                "cep": update.cep
+            };
+    
+            const preferences = await updatePreferences(pr);
+            if (preferences) {
+                setloading(false);
+                setdisabled(true);
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setloading(false);
+            setdisabled(true);
+        }
+       
+        
     }
     const profile = temporaryImg ? { uri: `file://${temporaryImg}` } : avatar ? { uri: avatar } : require('@imgs/user_placeholder.png')
 
     if(loading) return(<Main style={{ backgroundColor: '#fff', flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 120, }}><SkeletonLoading/></Main>)
-    
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
@@ -131,19 +133,17 @@ export default function AccountDetailsScreen() {
                                 <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                                     <Mail color={color.secundary} size={22} />
                                 </Column>
-                                <TextInput
-                                    value={email}
-                                    disabled={true}
-                                    keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='E-mail *' placeholderTextColor="#11111190" />
+                                <Column style={{  paddingVertical: 12, width: '78%', }} >
+                                    <Title style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, }}>{date?.email}</Title>
+                                </Column>
                             </Row>
                             <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: color.off, }}>
                                 <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                                     <BookUser color={color.secundary} size={22} />
                                 </Column>
-                                <TextInput
-                                    disabled={true}
-                                    value={cpf}
-                                    style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} placeholder='CPF *' placeholderTextColor="#11111190" />
+                                <Column style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, paddingVertical: 12, width: '78%', }} >
+                                    <Title style={{ fontFamily: font.medium, fontSize: 18, color: color.secundary, }}>{date?.cpf}</Title>
+                                </Column>
                             </Row>
 
                             <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusName ? color.primary : color.off, }}>
@@ -238,7 +238,6 @@ export default function AccountDetailsScreen() {
     )
 }
 
-const validateEmail = (email) => validator.isEmail(email);
 const validateCEP = (cep) => validator.isPostalCode(cep, 'BR');
 
 const SkeletonLoading = () => {

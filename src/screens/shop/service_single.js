@@ -180,6 +180,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         </Row>
                     </Column>
                 </Column>
+                <Column style={{height: 170, }} />
             </Scroll>
 
             <BuyService item={item} handleBuyService={handleBuyService} loading={loadingBuy} error={error} success={success} />
