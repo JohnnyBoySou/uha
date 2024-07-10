@@ -11,7 +11,7 @@ import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import { StatusBar } from 'expo-status-bar'
 import QRCode from 'react-native-qrcode-svg';
-import DonateONGS from './ongs';
+import DonateONGS from '../ongs';
 
 
 export default function DonateValueHideScreen({ navigation, route }) {

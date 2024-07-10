@@ -19,9 +19,9 @@ import SearchScreen from '@screens/tabs/search';
 
 import DonateScreen from '@screens/donate';
 import DonateValueScreen from '@screens/donate/value';
-import DonateHideScreen from '@screens/donate/hide';
-import DonateValueHideScreen from '@screens/donate/value_hide';
-import DonateSuccessHideScreen from '@screens/donate/success_hide';
+import DonateHideScreen from '@screens/donate/hide/hide';
+import DonateValueHideScreen from '@screens/donate/hide/value_hide';
+import DonateSuccessHideScreen from '@screens/donate/hide/success_hide';
 import DonateCertificadoScreen from '@screens/donate/certificado';
 import PayBoletoScreen from '@screens/donate/pay_boleto';
 

@@ -1,37 +1,38 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ThemeProvider } from 'styled-components/native';
-import light from './src/theme/light';
-import { preventAutoHideAsync, hideAsync} from 'expo-splash-screen';
+import { preventAutoHideAsync, hideAsync } from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { View, useColorScheme, LogBox} from 'react-native';
-import Router from './src/router/index';
+import { View, LogBox } from 'react-native';
+import Router from './src/router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import light from './src/theme/light';
+
 preventAutoHideAsync();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
 
-  const theme = useColorScheme();
-
   useEffect(() => {
-    LogBox.ignoreAllLogs(true)
-    async function prepare() {
-      try{
+    LogBox.ignoreAllLogs(true);
+
+    async function loadResourcesAndDataAsync() {
+      try {
         await Font.loadAsync({
           Font_Book: require('./assets/fonts/Inter_Book.ttf'),
           Font_Medium: require('./assets/fonts/Inter_Medium.ttf'),
           Font_Bold: require('./assets/fonts/Inter_Bold.ttf'),
           Font_Black: require('./assets/fonts/Inter_Black.ttf'),
         });
-      }catch (e) {
-        console.warn(e);
-      }finally {
+        // Carregamento das fontes concluído
         setAppIsReady(true);
+      } catch (e) {
+        console.warn(e);
       }
     }
-    prepare();
+
+    loadResourcesAndDataAsync();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -41,15 +42,14 @@ export default function App() {
   }, [appIsReady]);
 
   if (!appIsReady) {
-    return null;
+    return null; 
   }
 
-  //theme === 'dark' ? dark : light // toggle theme
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <View onLayout={onLayoutRootView}>
       <ThemeProvider theme={light}>
         <SafeAreaProvider>
-        <Router />
+          <Router />
         </SafeAreaProvider>
       </ThemeProvider>
     </View>
