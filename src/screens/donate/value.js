@@ -1,10 +1,8 @@
 import React, { useContext, useState, useRef } from 'react';
-import { FlatList, Pressable, ScrollView, ActivityIndicator, TextInput, StyleSheet } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, LineD, ButtonSE, LabelSE, SubLabel, Button, ButtonLI, LabelLI, ButtonOut, U, ButtonPR } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button, LabelLI, ButtonOut, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ArrowLeft, CircleCheck, CheckCircle, Info, ScrollText, Moon, CircleX, LogOut, Delete, Clipboard as Clip, CircleDashed, Edit } from 'lucide-react-native';
+import { ArrowLeft, Clipboard as Clip, CircleDashed, Edit } from 'lucide-react-native';
 import CheckBox from '@components/checkbox';
-import Check from '@components/check';
 import Avatar from '@components/avatar';
 import { AnimatePresence, MotiImage, MotiView } from 'moti';
 import * as Clipboard from 'expo-clipboard';
@@ -13,13 +11,14 @@ import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import DonateONGS from './ongs';
 import QRCode from 'react-native-qrcode-svg';
 import { StatusBar } from 'expo-status-bar';
+import { MercadoPago } from '../../components/mercadoPago';
 
 export default function DonateValueScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [loading, setloading] = useState(false);
     const valor = route?.params?.valor ? route?.params?.valor : 30;
     const [value, setvalue] = useState(valor ? valor : 30);
-    const [type, settype] = useState(null);
+    const [type, settype] = useState('credito');
     const [visible, setVisible] = useState(false);
     const moedas = parseInt(value) * 15;
 
@@ -172,7 +171,7 @@ export default function DonateValueScreen({ navigation, route }) {
                                     </Column>
                                 </Row>
                             </Button>
-                            <ContextCredit item={item} navigation={navigation} />
+                            <MercadoPago value={value} ong={ong} />
                         </MotiView>}
 
                 </Column>
@@ -234,45 +233,6 @@ const ContextPix = ({ item, navigation }) => {
                     <LabelLI style={{ color: '#fff', }}>Transferir</LabelLI>
                 </ButtonPR>
             </Row>
-        </Column>
-    )
-}
-
-const ContextCredit = ({ item, navigation }) => {
-    const { color, font, margin } = useContext(ThemeContext);
-    const data = { codigo: '0987643212345678909876543212345678900987654321', value: item?.value, vencimento: '10/10/2024', email: 'user@mail.com', points: 120, }
-    const [remember, setremember] = useState(true);
-
-    const [number, setnumber] = useState();
-    const [cvv, setcvv] = useState();
-    const [val, setval] = useState();
-    return (
-        <Column style={{ justifyContent: 'center', }}>
-            <Column style={{ marginTop: 20, }}>
-                <SubLabel style={{ fontSize: 14, color: color.secundary, }}>NÚMERO DO CARTÃO</SubLabel>
-                <TextInput value={number} onChangeText={(e) => setnumber(e)} style={{ borderBottomWidth: 2, borderBottomColor: color.off, fontFamily: 'Font_Medium', marginTop: 10, fontSize: 20, flexGrow: 1, }} placeholder='0000 0000 0000 0000' />
-            </Column>
-            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 30, marginBottom: 12, }}>
-                <Column>
-                    <SubLabel style={{ fontSize: 14, color: color.secundary, }}>DATA DE EXPIRAÇÃO</SubLabel>
-                    <TextInput value={val} onChangeText={(e) => setval(e)} style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginTop: 10, fontFamily: 'Font_Medium', fontSize: 20, width: 150, }} placeholder='MM/AA' />
-                </Column>
-                <Column>
-                    <SubLabel style={{ fontSize: 14, color: color.secundary, }}>CVV</SubLabel>
-                    <TextInput value={cvv} onChangeText={(e) => setcvv(e)} style={{ borderBottomWidth: 2, borderBottomColor: color.off, marginTop: 10, fontFamily: 'Font_Medium', fontSize: 20, flexGrow: 1, width: 150, }} placeholder='000' />
-                </Column>
-            </Row>
-
-            <Row style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20, }}>
-                <Label style={{ fontSize: 14, fontFamily: 'Font_Bold', marginRight: 10, }}>Lembrar deste cartão para uso futuro</Label>
-                <Button onPress={() => { setremember(!remember) }} style={{ alignSelf: 'center', }} >
-                    <Check status={remember} />
-                </Button>
-            </Row>
-
-            <ButtonPR style={{ paddingHorizontal: 24, marginTop: 40, }} onPress={() => { navigation.navigate('BuyServiceSuccess') }} >
-                <LabelLI style={{ color: '#fff', }}>Continuar</LabelLI>
-            </ButtonPR>
         </Column>
     )
 }

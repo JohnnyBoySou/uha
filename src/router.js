@@ -69,7 +69,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='DonateValue'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
