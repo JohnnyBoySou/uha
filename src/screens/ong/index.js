@@ -5,25 +5,38 @@ import Header from '@components/header';
 import { MotiImage, MotiView } from 'moti';
 import { FlatList, ScrollView } from 'react-native';
 
-import ongs from '@data/ongs'
 import { useNavigation } from '@react-navigation/native';
+import { getONGs } from '@api/request/ongs/ongs';
 
 export default function ONGSScreen({ navigation, route }) {
-    const { color, font, margin, } = useContext(ThemeContext);
-    const item = route?.params?.item
-    const [fixedMenu, setFixedMenu] = useState(false);
+    const [ongs, setongs] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setloading(true);
+                const list = await getONGs()
+                setongs(list);
+            } catch (error) {
+                console.log(error)
+            } finally{
+                setloading(false)
+            }
+        }
+        fetchData();
+    }, []);
+
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll onScroll={(event) => {const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 80) {setFixedMenu(true);} else {setFixedMenu(false);} }} scrollEventThrottle={16}>
+            <Scroll >
                 <Header rose />
-                <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: margin.h, }}>
+                <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: 28, }}>
                         <Title style={{ fontSize: 28, lineHeight: 28, }}>ONGs parceiras </Title>
                         <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre a ONG que mais combina com você! </Label>
                     </Column>
                     <Cards />
 
-                    <Title style={{ marginHorizontal: margin.h, }}>Mais pertos de você</Title>
+                    <Title style={{ marginHorizontal: 28, }}>Mais pertos de você</Title>
                 <ONGSList data={ongs}/>
                 <Column style={{height: 80, }} />
             </Scroll>
@@ -47,7 +60,6 @@ const ONGSList = ({ data }) => {
                             <Column style={{ width: 220, justifyContent: 'center', }}>
                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
                                 <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc.length > 80 ? item?.desc.slice(0, 80) + '...' : item?.desc }</Label>
-
                             </Column>
                             <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                         </Row>
@@ -66,8 +78,6 @@ const ONGSList = ({ data }) => {
                             <Column style={{ width: 220, justifyContent: 'center', }}>
                                 <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
                                 <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
-                               
-
                             </Column>
                             <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                         </Row>
