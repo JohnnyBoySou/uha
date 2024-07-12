@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Text, Alert, ActivityIndicator, TextInput, Pressable } from 'react-native';
 //import { WebView } from 'react-native-webview';
 import { Button, Column, Title } from '@theme/global';
-import { loadMercadoPago } from "@mercadopago/sdk-js";
 
 
 export default function PaymentCredito({ product, user }) {

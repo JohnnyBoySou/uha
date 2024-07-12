@@ -11,16 +11,19 @@ import BottomSheet from '@gorhom/bottom-sheet'
 import { createPreferences } from '@api/user/preferences';
 import { StatusBar } from 'expo-status-bar';
 import { getUser, registerUser } from '@api/request/user/user';
+
 import Error from '@components/error';
+import Success from '@components/success';
+
 import validator from 'validator';
 import { TextInputMask } from 'react-native-masked-text'
-
+import { resetPassword, resetPasswordCode, resetPasswordNew } from '@api/request/user/user';
 
 export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState();
     const [type, settype] = useState('Entrar');
-    const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Graças a pessoas generosas como você, levamos conforto e segurança a quem mais precisa.' } : { title: 'Escolha uma nova senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
+    const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Graças a pessoas generosas como você, levamos conforto e segurança a quem mais precisa.' } : { title: 'Redefinir senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
     const handleExit = (value) => {
         settype(value)
     }
@@ -220,7 +223,7 @@ const Registrar = ({ type, settype }) => {
                             onBlur={() => setfocusWhatsapp(false)}
                             value={whatsapp}
                             onChangeText={(e) => setwhatsapp(e)}
-                            keyboardType='number-pad'  style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='WhatsApp *' placeholderTextColor="#11111190" />
+                            keyboardType='number-pad' style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='WhatsApp *' placeholderTextColor="#11111190" />
                     </Row>
                     <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusCEP ? color.primary : color.off, }}>
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -236,7 +239,7 @@ const Registrar = ({ type, settype }) => {
                             value={cep}
                             keyboardType='number-pad'
                             onChangeText={(e) => setcep(e)}
-                             style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='CEP (Código Postal) *' placeholderTextColor="#11111190" />
+                            style={{ fontFamily: font.medium, color: color.secundary, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='CEP (Código Postal) *' placeholderTextColor="#11111190" />
                     </Row>
                     <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -412,7 +415,7 @@ const Entrar = ({ type, settype, }) => {
                         onFocus={() => setfocusEmail(true)}
                         onBlur={() => setfocusEmail(false)}
                         onChangeText={(e) => setemail(e)}
-                        onSubmitEditing={() => {passref?.current.focus()}}
+                        onSubmitEditing={() => { passref?.current.focus() }}
                         value={email}
                         keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', color: color.secundary, }} placeholder='E-mail' placeholderTextColor="#11111190" />
                 </Row>
@@ -500,32 +503,75 @@ const Entrar = ({ type, settype, }) => {
 
 const ForgetPassword = ({ handleExit }) => {
     const { color, font, margin, } = useContext(ThemeContext);
+    const [loading, setloading] = useState(false);
+    const [error, seterror] = useState();
+    const [success, setsuccess] = useState();
+
     const [type, settype] = useState('Redefinir');
     const [focusEmail, setfocusEmail] = useState();
-    const [email, setemail] = useState('');
-    const [loading, setloading] = useState(false);
+    const [email, setemail] = useState('joaodesousa101@gmail.com');
+    const [codigo, setcode] = useState();
+
+    const [password, setpassword] = useState();
+    const [passwordRepeat, setpasswordRepeat] = useState();
+
     const [step, setstep] = useState(1);
-    const handleSend = () => {
-        if (email?.length < 5) return alert('Preencha o campo de e-mail')
+    const handleSend = async () => {
+        seterror()
+        setsuccess()
         setloading(true)
-        setTimeout(() => {
+        resetPassword(email).then(res => {
+            if (res.email) {
+                setstep(2)
+            } else {
+                seterror(res)
+            }
+        }).catch(err => {
+            seterror(err)
+        }).finally(() => {
             setloading(false)
-            //chamada api
-            setstep(2)
-        }, 2000);
+        })
     }
 
     const handleVerify = () => {
+        seterror()
+        setsuccess()
+        setloading(true)
         if (digit1?.length === 1 && digit2?.length === 1 && digit3?.length === 1 && digit4?.length === 1) {
-            setloading(true)
-            setTimeout(() => {
+            resetPasswordCode(email, digit1 + digit2 + digit3 + digit4).then(res => {
+                if (res.codigo) {
+                    setcode(res?.codigo)
+                    settype('Nova senha')
+                } else {
+                    seterror(res)
+                }
+            }).catch(err => {
+                console.log(err)
+            }).finally(() => {
                 setloading(false)
-                //chamada api
-
-                settype('Nova senha')
-            }, 2000);
+            })
         }
     }
+
+    const params = { password: password, password_confirmation: passwordRepeat, email: email, codigo: codigo }
+    const handleReset = async () => {
+        setloading(true)
+        seterror()
+        setsuccess()
+        try {
+            const res = await resetPasswordNew(params)
+            setsuccess(res?.message)
+            setTimeout(() => {
+                handleExit('Entrar')
+            }, 2000);
+
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setloading(false)
+        }
+    }
+
 
 
     const [digit1, setdigit1] = useState();
@@ -547,11 +593,12 @@ const ForgetPassword = ({ handleExit }) => {
     const [focusPass2, setfocusPass2] = useState();
 
     const [pass, setpass] = useState();
-    const [password, setpassword] = useState();
-    const [passwordRepeat, setpasswordRepeat] = useState();
+
+    const isPasswordStrong = () => {
+        return Object.values(passwordCriteria).every(criterion => criterion);
+    };
 
     const repeat = useRef()
-
 
     const checkPasswordStrength = (password) => {
         const criteria = {
@@ -563,20 +610,7 @@ const ForgetPassword = ({ handleExit }) => {
         };
         return criteria;
     };
-
     const passwordCriteria = checkPasswordStrength(password);
-
-    const handleNewPassword = () => {
-        if (passwordCriteria?.length && passwordCriteria?.upperCase && passwordCriteria?.lowerCase && passwordCriteria?.number && passwordCriteria?.repeat) {
-            setloading(true)
-            setTimeout(() => {
-                setloading(false)
-                //chamada api
-                handleExit('Entrar')
-                // navigation.navigate('Home')
-            }, 1500);
-        }
-    }
 
     return (
         <MotiView from={{ translateY: 20, opacity: 0 }} animate={{ translateY: 0, opacity: 1, }} transition={{ type: 'timing' }}>
@@ -590,6 +624,7 @@ const ForgetPassword = ({ handleExit }) => {
                 </Button>
             </Row>
 
+            {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 
             {type === 'Redefinir' && <Column>
 
@@ -729,13 +764,14 @@ const ForgetPassword = ({ handleExit }) => {
                     <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111', }}>Repita a senha.</Label>
                 </Row>
 
-                <ButtonPR disabled={loading} onPress={handleNewPassword} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
+                <ButtonPR disabled={loading || !isPasswordStrong()} onPress={handleReset} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
                     <Row>
                         {loading ? <ActivityIndicator animating={loading} color="#fff" size={27} /> : <LabelPR>Definir nova senha</LabelPR>}
                     </Row>
                 </ButtonPR>
             </Column>
             }
+            <Column style={{ height: 40, }} />
         </MotiView>
     )
 }

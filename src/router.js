@@ -40,6 +40,7 @@ import AccountDetailsScreen from '@screens/tabs/account/details';
 import AccountAccessInfoScreen from '@screens/tabs/account/access';
 import AccountFAQScreen from '@screens/tabs/account/faq';
 import AccountTermsScreen from '@screens/tabs/account/terms';
+import AccountResetScreen from '@screens/tabs/account/reset'
 
 import ONGSingleScreen from '@screens/ong/single';
 import ONGListScreen from '@screens/ong/list';
@@ -69,7 +70,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='DonateValue'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Ranking'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
@@ -116,6 +117,8 @@ export default function Router() {
             <Stack.Screen name="AccountAccess" component={AccountAccessInfoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="AccountTerms" component={AccountTermsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="AccountReset" component={AccountResetScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
 
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

@@ -13,7 +13,7 @@ import { updatePreferences } from '@api/user/preferences';
 import { TextInputMask } from 'react-native-masked-text';
 import { Skeleton } from 'moti/skeleton';
 
-export default function AccountDetailsScreen() {
+export default function AccountDetailsScreen({ navigation }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [error, setError] = useState();
 
@@ -200,7 +200,7 @@ export default function AccountDetailsScreen() {
                             <Row style={{ marginBottom: 8, justifyContent: 'space-between', alignItems: 'center', }}>
                                 <Title style={{ fontSize: 20, }}>Senha</Title>
                             </Row>
-                            <ButtonOut style={{ borderColor: color.primary, }}>
+                            <ButtonOut onPress={() => {navigation.navigate('AccountReset', )}}  style={{ borderColor: color.primary, }}>
                                 <Label style={{ color: color.primary, fontFamily: font.medium, }}>Redefinir senha</Label>
                             </ButtonOut>
                         </Column>

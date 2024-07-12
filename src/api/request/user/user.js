@@ -49,11 +49,10 @@ export const registerUser = async (params) => {
 
 export const resetPassword = async (email) => {
   const BASE_URL = await getBaseURL();
-  const token = await getToken();
   const sanitizedEmail = validator.normalizeEmail(email);
 
   try {
-    const response = await axios.post(`${BASE_URL}/reset-password`, {
+    const response = await axios.post(`${BASE_URL}/usuarios/esquecisenhaemail`, {
       email: sanitizedEmail
     });
     return response.data;
@@ -62,6 +61,43 @@ export const resetPassword = async (email) => {
     return err.message
   }
 };
+export const resetPasswordCode = async (email, code) => {
+  const BASE_URL = await getBaseURL();
+  const sanitizedEmail = validator.normalizeEmail(email);
+
+  try {
+    const response = await axios.post(`${BASE_URL}/usuarios/esquecisenhacodigo`, {
+      email: sanitizedEmail,
+      codigo: code,
+    });
+    return response.data;
+  } catch (error) {
+    const err = JSON.parse(error.request.response);
+    return err.message
+  }
+};
+
+export const resetPasswordNew = async (params) => {
+  const BASE_URL = await getBaseURL();
+  try {
+    const res = await axios.post(`${BASE_URL}/usuarios/esquecisenharedefinir`, {
+      email: params.email,
+      codigo: params.codigo,
+      password: params.password,
+      password_confirmation: params.password_confirmation,
+    },);
+    return res.data;
+  } catch (error) {
+    console.log('Error:', error.message);
+     if (error.request) {
+      console.log('Request data:', error.request);
+    } else {
+      console.log('Error message:', error.message);
+    }
+    throw new Error(error.message);
+  }
+};
+
 
 export const validateToken = async (token) => {
   const sanitizedToken = validator.escape(token);
@@ -71,8 +107,8 @@ export const validateToken = async (token) => {
     });
     return response.data;
   } catch (error) {
-    const err = JSON.parse(error.request.response);
-    return err.message
+    const err = error.request.response
+    return new Throw(err.message)
   }
 };
 
@@ -87,7 +123,7 @@ export const updateUser = async (params) => {
         name: params.name,
         whatsapp: params.whatsapp,
         cep: params.cep,
-        avatar: params.avatar, 
+        avatar: params.avatar,
       },
       {
         headers: {
