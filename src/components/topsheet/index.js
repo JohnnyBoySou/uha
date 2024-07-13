@@ -12,12 +12,12 @@ import { useState } from "react"
 import { Column, Title } from '@theme/global';
 
 
-export default function TopSheet({ children, min, max, normal,  }) {
-  const height = useSharedValue(150); // Altura inicial do componente
+export default function TopSheet({ children, min, max, normal, valueMin, valueNormal, valueMax, }) {
+  const height = useSharedValue(valueMin); // Altura inicial do componente
 
-  const MIN_HEIGHT = 150; // Altura mínima
-  const NORMAL_HEIGHT = 300; // Altura normal
-  const MAX_HEIGHT = 730; // Altura máxima
+  const MIN_HEIGHT = valueMin// Altura mínima
+  const NORMAL_HEIGHT = valueNormal // Altura normal
+  const MAX_HEIGHT =valueMax; // Altura máxima
 
   const [currentStatus, setCurrentStatus] = useState('min');
 

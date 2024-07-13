@@ -88,6 +88,9 @@ export default function ExtractScreen({ navigation, route }) {
         <Main style={{ backgroundColor: '#fff', }}>
             {isFocused && <StatusBar style="light" backgroundColor={color.primary} animated={true} duration={100} />}
             <TopSheet
+                valueMin={150}
+                valueNormal={300}
+                valueMax={730}
                 min={
                     <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
