@@ -9,6 +9,14 @@ import AsyncStaticScreen from '@screens/auth/async';
 
 import HomeScreen from '@screens/tabs/home';
 
+import RaspadinhasScreen from '@screens/raspadinhas';
+import RaspadinhasSingleScreen from '@screens/raspadinhas/single';
+import RaspadinhasShopScreen from '@screens/raspadinhas/shop';
+
+import RifasScreen from '@screens/rifas';
+import RifasSingleScreen from '@screens/rifas/single';
+import RifasBuyScreen from '@screens/rifas/buy';
+
 import NotifyScreen from '@screens/geral/notify';
 import ShareScreen from '@screens/geral/share';
 import FavoritesScreen from '@screens/geral/favorites';
@@ -70,7 +78,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Ranking'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
@@ -123,6 +131,14 @@ export default function Router() {
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGS" component={ONGSScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
+            <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="RaspadinhasShop" component={RaspadinhasShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
+            <Stack.Screen name="Rifas" component={RifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="RifasSingle" component={RifasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="RifasBuy" component={RifasBuyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
 
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

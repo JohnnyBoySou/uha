@@ -1,11 +1,10 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
-import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel, ButtonOut, ButtonLI, LabelLI, ButtonPR, LabelPR } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel, ButtonOut, LabelLI, ButtonPR, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ArrowLeft, Clock, Info, Phone, Plus, X } from 'lucide-react-native';
+import { Clock, Plus, X } from 'lucide-react-native';
 import { MotiImage } from 'moti';
 import { FlatList, Animated, ScrollView } from 'react-native';
 import Header from '@components/header';
-import { getRifaSingle } from '@api/request/rifa';
 
 
 export default function RifasSingleScreen({ navigation, route }) {
@@ -16,11 +15,6 @@ export default function RifasSingleScreen({ navigation, route }) {
 
     useEffect(() => {
         const fecthData = () => {
-            getRifaSingle(id).then((res) => {
-                setitem(res);
-                const winner = res?.sorteados?.includes(res.user.id) ? true : res.sorteados.length == 0 ? null : false;
-                setwinner(winner)
-            })
         }
         fecthData();
     }, [])

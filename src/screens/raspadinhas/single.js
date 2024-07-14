@@ -4,23 +4,17 @@ import { ThemeContext } from 'styled-components/native';
 import { CircleAlert, Clock, X } from 'lucide-react-native';
 import { MotiImage, MotiView } from 'moti';
 import Header from '@components/header';
-import raspadinha_single from '@data/raspadinhas/raspadinha_single';
-import { getRaspadinhaSingle } from '@api/request/raspadinha';
 
 
 export default function RaspadinhasSingleScreen({ navigation, route }) {
     const { color, font, margin, } = useContext(ThemeContext);
-
-    const [item, setitem] = useState(raspadinha_single[0]);
+    const [item, setitem] = useState();
     const id = route.params.id ? route.params.id : 'ras-1';
     const type = route.params?.type
     const value_raspadinha = type === 'Básica' ? 5 : type === 'Pro' ? 9 : type === 'Premium' ? 13 : type === 'Plus' ? 17 : 0
 
     useEffect(() => {
         const fetchData = () => {
-            getRaspadinhaSingle(id).then(res => {
-                setitem(res)
-            })
         }
         fetchData()
     }, [])
