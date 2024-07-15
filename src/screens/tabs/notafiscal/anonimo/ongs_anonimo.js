@@ -5,11 +5,11 @@ import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import { StatusBar } from 'expo-status-bar';
 import { getONGs } from '@api/request/ongs/ongs';
-import { sendNotafiscal } from '@api/request/notafiscal/nota';
+import { sendNotafiscalAnonima } from '@api/request/notafiscal/nota';
 import CardOngs from '@components/cardOngs';
 import { Skeleton } from 'moti/skeleton';
 
-const NotafiscalONGS = ({ navigation, route, }) => {
+export default function NotafiscalONGSAnonimoScreen({ navigation, route, }){
 
     const { color, margin } = useContext(ThemeContext);
     const [loading, setloading] = useState(true);
@@ -24,13 +24,13 @@ const NotafiscalONGS = ({ navigation, route, }) => {
             notas: notas,
             id: selectOng,
         }
-        sendNotafiscal(params).then((res) => {
+        sendNotafiscalAnonima(params).then((res) => {
             if (res) {
                 setloadingLoad(false)
-                navigation.navigate('NotafiscalSuccess', { status: res })
+                navigation.navigate('NotafiscalSuccessAnonimo', { status: res })
             }
         }).catch(err => {
-            navigation.navigate('NotafiscalError', { status: err.message })
+            navigation.navigate('NotafiscalErrorAnonimo', { status: err.message })
             setloadingLoad(false)
         })
     }
@@ -122,5 +122,4 @@ const NotafiscalONGS = ({ navigation, route, }) => {
         </Main>
     )
 }
-export default NotafiscalONGS;
 

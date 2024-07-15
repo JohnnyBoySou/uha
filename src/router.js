@@ -38,6 +38,12 @@ import NotafiscalSendScreen from '@screens/tabs/notafiscal/send';
 import NotafiscalSuccessScreen from '@screens/tabs/notafiscal/success';
 import NotafiscalErrorScreen from '@screens/tabs/notafiscal/error';
 import NotafiscalONGS from '@screens/tabs/notafiscal/ongs';
+import NotafiscalSelectScreen from '@screens/tabs/notafiscal/select';
+
+import NotafiscalErrorAnonimoScreen from '@screens/tabs/notafiscal/anonimo/error_anonimo';
+import NotafiscalSendAnonimoScreen from '@screens/tabs/notafiscal/anonimo/send_anonimo';
+import NotafiscalONGSAnonimoScreen from '@screens/tabs/notafiscal/anonimo/ongs_anonimo';
+import NotafiscalSuccessAnonimoScreen from '@screens/tabs/notafiscal/anonimo/success_anonimo';
 
 import ExtractScreen from '@screens/tabs/extract';
 import ExtractSingleScreen from '@screens/tabs/extract/single';
@@ -112,6 +118,15 @@ export default function Router() {
 
             <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
+            <Stack.Screen name="NotafiscalSendAnonimo" component={NotafiscalSendAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="NotafiscalONGSAnonimo" component={NotafiscalONGSAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
+            <Stack.Screen name="NotafiscalSuccessAnonimo" component={NotafiscalSuccessAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="NotafiscalErrorAnonimo" component={NotafiscalErrorAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+
+
+            <Stack.Screen name="NotafiscalSelect" component={NotafiscalSelectScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -127,7 +142,6 @@ export default function Router() {
             <Stack.Screen name="AccountTerms" component={AccountTermsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="AccountReset" component={AccountResetScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
-
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGS" component={ONGSScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
@@ -139,7 +153,6 @@ export default function Router() {
             <Stack.Screen name="Rifas" component={RifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="RifasSingle" component={RifasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="RifasBuy" component={RifasBuyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-
 
             <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
