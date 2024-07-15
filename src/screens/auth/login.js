@@ -509,7 +509,7 @@ const ForgetPassword = ({ handleExit }) => {
 
     const [type, settype] = useState('Redefinir');
     const [focusEmail, setfocusEmail] = useState();
-    const [email, setemail] = useState('joaodesousa101@gmail.com');
+    const [email, setemail] = useState('');
     const [codigo, setcode] = useState();
 
     const [password, setpassword] = useState();
