@@ -25,45 +25,27 @@ export default function ExtractScreen({ navigation, route }) {
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     const isFocused = useIsFocused();
-    const [data, setData] = useState({
-        transacao: [],
-        notas: [],
-        doacoes: [],
-        rifas: [],
-        user: null
-    });
+    
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(page);
+    const [transacao, settransacao] = useState([]);
+    const [notas, setnotas] = useState([]);
+    const [doacoes, setdoacoes] = useState([]);
+    const [rifas, setrifas] = useState([]);
+    const [user, setuser] = useState();
 
-    const selectData = useCallback(() => {
-        switch (currentPage) {
-            case 'Doações':
-                return data.doacoes;
-            case 'Transações':
-                return data.transacao;
-            case 'Notas fiscais':
-                return data.notas;
-            case 'Rifas':
-                return data.rifas;
-            default:
-                return [];
-        }
-    }, [currentPage, data]);
+    const selectData = page === 'Doações' ? doacoes : page === 'Transações' ? transacao : page === 'Notas fiscais' ? notas : page === 'Rifas' ? rifas : []
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [us, tr, nt] = await Promise.all([
-                    listUser(),
-                    getExtractTransacao(),
-                    getExtractNotas()
-                ]);
-                setData(prevData => ({
-                    ...prevData,
-                    user: us,
-                    transacao: tr,
-                    notas: nt
-                }));
+                
+                const us = await listUser();
+                const tr = await getExtractTransacao();
+                const nt = await getExtractNotas();
+                setuser(us)
+                setnotas(nt)
+                settransacao(tr)
             } catch (error) {
                 console.error(error);
             } finally {
@@ -96,11 +78,11 @@ export default function ExtractScreen({ navigation, route }) {
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Column>
                                 <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Notas fiscais</Title>
-                                <Title style={{ color: "#fff" }}>{data?.user?.NotasDoadas}</Title>
+                                <Title style={{ color: "#fff" }}>{user?.NotasDoadas}</Title>
                             </Column>
                             <Column>
                                 <Title style={{ color: "#fff", textAlign: 'right', fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                <Title style={{ color: "#fff", textAlign: 'right' }}>{data?.user?.PontosAtuais}</Title>
+                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user?.PontosAtuais}</Title>
                             </Column>
                         </Row>
                     </MotiView>
@@ -111,12 +93,12 @@ export default function ExtractScreen({ navigation, route }) {
                             <Row style={{ justifyContent: 'space-between', }}>
                                 <Column style={{ borderWidth: 1, borderColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
                                     <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Notas fiscais</Title>
-                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>{data?.user?.NotasDoadas}</Title>
+                                    <Title style={{ color: "#fff", fontSize: 28, lineHeight: 32, }}>{user?.NotasDoadas}</Title>
                                 </Column>
                                 <Column style={{ width: 16, }} />
                                 <Column style={{ backgroundColor: '#ffffff', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 12, flexGrow: 1, }}>
                                     <Title style={{ color: color.secundary, fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                    <Title style={{ color: color.secundary, }}>{data?.user?.PontosAtuais}</Title>
+                                    <Title style={{ color: color.secundary, }}>{user?.PontosAtuais}</Title>
                                 </Column>
                             </Row>
                             <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', }}>
@@ -158,11 +140,11 @@ export default function ExtractScreen({ navigation, route }) {
                             <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 40, }}>
                                 <Column style={{}}>
                                     <Label>Notas fiscais</Label>
-                                    <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, }}>{data?.user?.NotasDoadas}</Title>
+                                    <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, }}>{user?.NotasDoadas}</Title>
                                 </Column>
                                 <Column style={{}}>
                                     <Label style={{ textAlign: 'right' }}>Pontos</Label>
-                                    <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, textAlign: 'right' }}>{data?.user?.PontosAtuais}</Title>
+                                    <Title style={{ fontSize: 62, lineHeight: 68, fontFamily: font.book, textAlign: 'right' }}>{user?.PontosAtuais}</Title>
                                 </Column>
                             </Row>
 
@@ -205,7 +187,7 @@ export default function ExtractScreen({ navigation, route }) {
             {loading ? <SkeletonList /> :
                 <FlatList
                     ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
-                    data={selectData()}
+                    data={selectData}
                     keyExtractor={(item) => item.id}
                     ListEmptyComponent={<Empty type={page} />}
                     ref={scrollMain}
