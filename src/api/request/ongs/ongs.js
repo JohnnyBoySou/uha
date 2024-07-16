@@ -29,7 +29,7 @@ export async function getONGSingle(id){
                 Authorization: `Bearer ${token}`,
             },
         });
-        return res.data.data;
+        return res.data;
     } catch (error) {
         const err = JSON.parse(error.request.response);
         throw new Error(err.message)

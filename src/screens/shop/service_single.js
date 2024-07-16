@@ -3,11 +3,11 @@ import { Vibration, FlatList, Dimensions, ActivityIndicator, Animated as RAnimat
 import { Main, Scroll, Column, Label, Title, Row, SubLabel, Button, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiView, } from 'moti';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import Header from '@components/header';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { Image } from 'expo-image'
 
+import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Feather from '@expo/vector-icons/Feather';
 import HeartAnim from '@anim/heart';
@@ -56,6 +56,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
             value: item?.value,
             img: item?.imgs[0],
             id: item?.id,
+            type: 'product'
         }
         try {
             if (like) {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Main, Scroll, Column, Label, Title, Button, LabelLI, Row, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';

@@ -39,7 +39,7 @@ export default function ONGListScreen({ navigation, route }) {
                     data={ongs}
                     keyExtractor={item => item?.id}
                     renderItem={({ item }) => (
-                        <Button onPress={() => { navigation.navigate('ONGSingle', { item: item, }) }} >
+                        <Button onPress={() => { navigation.navigate('ONGSingle', { id: item.id, }) }} >
                             <Row key={item?.id} style={{ marginVertical: 3, paddingHorizontal: 12, borderRadius: 12, paddingVertical: 12, alignItems: 'center', justifyContent: 'space-between', }}>
                                 <Row style={{ alignItems: 'center', }}>
                                     <Column style={{ marginLeft: 20, flexGrow: 2, }}>

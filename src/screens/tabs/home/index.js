@@ -17,10 +17,12 @@ import Notify from '@components/notify';
 import { ServicesCards } from '@components/servicesCards';
 import { OffersCards } from '@components/offersCards';
 import { ShopsCards } from '@components/shopCards';
+import { ONGSCards } from '@components/ongsCards';
 
 //apis
 import { getOffers, getShops, getServices, } from '@request/shop/index';
 import { getListCategory } from '@api/request/category';
+import { getONGs } from '@api/request/ongs/ongs';
 
 //libs
 import { ExpandingDot } from "react-native-animated-pagination-dots";
@@ -35,16 +37,18 @@ export default function HomeScreen({ navigation, }) {
     const [offerS, setOffers] = useState([]);
     const [shopS, setShops] = useState([]);
     const [serviceS, setServices] = useState([]);
+    const [ongs, setongs] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const [offer, shop, service] = await Promise.all([getOffers(), getShops(), getServices()]);
+                const [offer, shop, service, ongs] = await Promise.all([getOffers(), getShops(), getServices(), getONGs()]);
                 setOffers(offer);
                 setShops(shop);
                 setServices(service);
+                setongs(ongs);
             } catch (error) {
                 console.log(error);
             } finally {
@@ -90,6 +94,7 @@ export default function HomeScreen({ navigation, }) {
                     <ShopsCards data={shops} loading={loading} />
                     <Donate />
                     <ServicesCards data={services} loading={loading} />
+                    <ONGSCards data={ongs} loading={loading} />
                     <Categorias />
                 </Column>
 
