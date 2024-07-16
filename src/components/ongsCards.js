@@ -49,22 +49,25 @@ export const ONGSCards = ({ data, loading }) => {
 const CardONGS = React.memo(({ item }) => {
     const navigation = useNavigation();
     const { color } = useContext(ThemeContext);
-    const { img, name, id } = item;
+    const { img, name, id, descri } = item;
 
     const navigateToServiceDetails = useCallback(() => {
         navigation.navigate('ONGSingle', { id: id });
     }, [navigation, id]);
 
     return (
-        <Button style={{ marginRight: 12 }} onPress={navigateToServiceDetails}>
-            <Row style={{ justifyContent: 'center', width: 204, alignItems: 'center' }}>
+        <Button style={{ marginRight: 12, borderRadius: 12, backgroundColor: '#fff', }} onPress={navigateToServiceDetails}>
+            <Row style={{ width: 244, alignItems: 'center' }}>
                 <Image
                     transition={500}
                     source={{ uri: img }}
                     contentFit="cover"
-                    style={{ width: 84, height: 84, borderRadius: 12, backgroundColor: "#fff" }}
+                    style={{ width: 84, height: 84, borderRadius: 12, backgroundColor: "#fff", margin: 6, }}
                 />
-                <Title style={{ marginTop: 12, fontSize: 14, lineHeight: 14, marginBottom: 4, width: 90, marginLeft: 10, color: color.secundary,}}>{name}</Title>
+                <Column style={{ width: 90, marginLeft: 10, }}>
+                    <Title style={{ fontSize: 14, lineHeight: 14, marginBottom: 4,  color: color.secundary,}}>{name}</Title>
+                    <Label style={{ color: color.secundary+99, fontSize: 12, lineHeight: 12, }}>{descri}</Label>
+                </Column>
             </Row>
         </Button>
     );

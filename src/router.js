@@ -59,6 +59,7 @@ import AccountResetScreen from '@screens/tabs/account/reset'
 import ONGSingleScreen from '@screens/ong/single';
 import ONGListScreen from '@screens/ong/list';
 import ONGSScreen from '@screens/ong';
+import ONGCategoryScreen from '@screens/ong/category';
 
 import ShopScreen from '@screens/shop';
 import ShopSingleScreen from '@screens/shop/shop_single';
@@ -145,6 +146,7 @@ export default function Router() {
             <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ONGS" component={ONGSScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="ONGCategory" component={ONGCategoryScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

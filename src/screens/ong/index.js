@@ -1,24 +1,35 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Main, Scroll, Column, Label, Title, Button, LabelLI, Row, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import { MotiImage, MotiView } from 'moti';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList, ScrollView, Dimensions, Animated } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { getONGs } from '@api/request/ongs/ongs';
+import { getONGs, getONGsCategories } from '@api/request/ongs/ongs';
+
+import { ExpandingDot } from "react-native-animated-pagination-dots";
+import { Dog, HeartPulse, Speech, Trees } from 'lucide-react-native'
+import { SkeletonList } from './category';
+
+const { width } = Dimensions.get('window')
 
 export default function ONGSScreen({ navigation, route }) {
+    const { color, font, margin } = useContext(ThemeContext);
+    const [loading, setloading] = useState(true);
     const [ongs, setongs] = useState([]);
+    const [categories, setcategories] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setloading(true);
                 const list = await getONGs()
+                const cats = await getONGsCategories()
                 setongs(list);
+                setcategories(cats);
             } catch (error) {
                 console.log(error)
-            } finally{
+            } finally {
                 setloading(false)
             }
         }
@@ -28,40 +39,43 @@ export default function ONGSScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
-            <Scroll >
+            <Scroll>
                 <Header rose />
                 <Column style={{ justifyContent: 'center', marginVertical: 24, marginHorizontal: 28, }}>
-                        <Title style={{ fontSize: 28, lineHeight: 28, }}>ONGs parceiras </Title>
-                        <Label style={{ marginVertical: 6, fontSize: 16, }}>Encontre a ONG que mais combina com você! </Label>
-                    </Column>
-                    <Cards />
-
-                    <Title style={{ marginHorizontal: 28, }}>Mais pertos de você</Title>
-                <ONGSList data={ongs}/>
-                <Column style={{height: 80, }} />
+                    <Title style={{ fontSize: 28, lineHeight: 28, }}>ONGs parceiras </Title>
+                    <Label style={{ marginVertical: 6, fontSize: 16, color: color.secundary + 99, lineHeight: 18, }}>Encontre a ONG que mais combina com você! </Label>
+                </Column>
+                <Cards />
+                <Title style={{ marginHorizontal: 28, fontSize: 22, lineHeight: 22, letterSpacing: -1, marginTop: 16, }}>Você pode gostar</Title>
+                {loading ? <SkeletonList /> : <ONGSList data={ongs} /> }
+                <Column style={{ height: 80, }} />
             </Scroll>
         </Main>
     )
 }
 
-
 const ONGSList = ({ data }) => {
     const { color } = useContext(ThemeContext);
     const navigation = useNavigation();
     return (
-        <Scroll horizontal showsHorizontalScrollIndicator={false} pagingEnabled >
+        <Scroll horizontal showsHorizontalScrollIndicator={false} pagingEnabled style={{ paddingTop: 15, }}>
             <FlatList
                 data={data?.slice(0, 3)}
                 showsHorizontalScrollIndicator={false}
-                style={{ marginLeft: 28, }}
+                style={{ width: width, paddingHorizontal: 28, marginTop: 0, }}
                 renderItem={({ item }) => (
-                    <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}>
-                        <Row style={{}}>
-                            <Column style={{ width: 220, justifyContent: 'center', }}>
-                                <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
-                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc.length > 80 ? item?.desc.slice(0, 80) + '...' : item?.desc }</Label>
+                    <Button style={{ marginBottom: 12, borderRadius: 12, backgroundColor: '#f7f7f7', padding: 16, }} onPress={() => { navigation.navigate('ONGSingle', { id: item.id }) }}>
+                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Column style={{ justifyContent: 'center', }}>
+                                <Title style={{ marginTop: 6, width: 180, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
+                                <Label style={{ fontSize: 14, lineHeight: 16, width: 180, }}>{item?.descri?.length > 80 ? item?.descri?.slice(0, 80) + '...' : item?.descri}</Label>
+                                <Row style={{ marginTop: 8, }}>
+                                    {item?.categories?.slice(0, 2).map((cat) => (
+                                        <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>
+                                    ))}
+                                </Row>
                             </Column>
-                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                         </Row>
                     </Button>
                 )}
@@ -69,17 +83,21 @@ const ONGSList = ({ data }) => {
             />
             <FlatList
                 data={data?.slice(3, 6)}
-                pagingEnabled
                 showsHorizontalScrollIndicator={false}
-                style={{ marginLeft: 28,  }}
+                style={{ width: width, paddingHorizontal: 28, marginTop: 0, }}
                 renderItem={({ item }) => (
-                    <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}  >
-                        <Row style={{}}>
-                            <Column style={{ width: 220, justifyContent: 'center', }}>
-                                <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
-                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
+                    <Button style={{ marginBottom: 12, borderRadius: 12, backgroundColor: '#f7f7f7', padding: 16, }} onPress={() => { navigation.navigate('ONGSingle', { id: item.id }) }}>
+                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Column style={{ justifyContent: 'center', }}>
+                                <Title style={{ marginTop: 6, width: 180, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
+                                <Label style={{ fontSize: 14, lineHeight: 16, width: 180, }}>{item?.descri?.length > 80 ? item?.descri?.slice(0, 80) + '...' : item?.descri}</Label>
+                                <Row style={{ marginTop: 8, }}>
+                                    {item?.categories?.slice(0, 2).map((cat) => (
+                                        <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>
+                                    ))}
+                                </Row>
                             </Column>
-                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                         </Row>
                     </Button>
                 )}
@@ -87,23 +105,27 @@ const ONGSList = ({ data }) => {
             />
             <FlatList
                 data={data?.slice(6, 9)}
-                pagingEnabled
                 showsHorizontalScrollIndicator={false}
-                style={{ marginLeft: 28, marginRight: 22, }}
+                style={{ width: width, paddingHorizontal: 28, marginTop: 0, }}
                 renderItem={({ item }) => (
-                    <Button style={{ marginBottom: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopSingle', { id: item.id }) }}  >
-                        <Row style={{}}>
-                            <Column style={{ width: 220, justifyContent: 'center', }}>
-                                <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
-                                <Label style={{ fontSize: 14, lineHeight: 16, }}>{item?.desc}</Label>
-
+                    <Button style={{ marginBottom: 12, borderRadius: 12, backgroundColor: '#f7f7f7', padding: 16, }} onPress={() => { navigation.navigate('ONGSingle', { id: item.id }) }}>
+                        <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Column style={{ justifyContent: 'center', }}>
+                                <Title style={{ marginTop: 6, width: 180, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item.name.slice(0, 24)}</Title>
+                                <Label style={{ fontSize: 14, lineHeight: 16, width: 180, }}>{item?.descri?.length > 80 ? item?.descri?.slice(0, 80) + '...' : item?.descri}</Label>
+                                <Row style={{ marginTop: 8, }}>
+                                    {item?.categories?.slice(0, 2).map((cat) => (
+                                        <Label key={cat.id} style={{ fontSize: 12, marginRight: 4, fontFamily: 'Font_Bold', color: color.primary, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: color.primary + 20, borderRadius: 100, alignSelf: 'flex-start', }}>{cat?.name}</Label>
+                                    ))}
+                                </Row>
                             </Column>
-                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
                         </Row>
                     </Button>
                 )}
                 keyExtractor={item => item?.id}
             />
+
         </Scroll>
     )
 }
@@ -111,35 +133,71 @@ const ONGSList = ({ data }) => {
 const Cards = () => {
     const { color, margin, } = useContext(ThemeContext);
     const navigation = useNavigation()
-    return (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 40, }}>
-            <Button onPress={() => {navigation.navigate('NotafiscalSend')}} >
-            <MotiView from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1200, }} style={{ width: 240, height: 300, backgroundColor: color.primary, borderRadius: 18, marginRight: 20, marginLeft: 28, overflow: 'hidden', }}>
-                <Column style={{ margin: 20, }}>
-                    <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ganhe +</Title>
-                    <Title style={{ fontSize: 32, lineHeight: 34, marginTop: -5, }}>Moedas</Title>
-                    <Label style={{ color: "#FFF2E3", marginTop: 30, fontFamily: 'Font_Medium', alignSelf: 'flex-start', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Cadastre suas</Label>
-                    <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, alignSelf: 'flex-start', marginBottom: 20, }}>Notas fiscais</Title>
-                </Column>
-                <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: -20, scale: 1.3, }} source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', objectFit: 'cover', }} />
-                <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: 0, scale: 1.3, }} source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
-            </MotiView>
-            </Button>
+    const scrollX = React.useRef(new Animated.Value(0)).current;
+    const pages = [1, 2]
 
-            <Button onPress={() => {navigation.navigate('ShopOffers')}} >
-            <MotiView from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1600, }} style={{ width: 240, height: 300, backgroundColor: color.secundary, borderRadius: 18, marginRight: 20, overflow: 'hidden', }}>
-                <Column style={{ margin: 20, }}>
-                    <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ofertas</Title>
-                    <Title style={{ fontSize: 32, lineHeight: 34, marginTop: -5, color: color.primary, }}>relâmpago</Title>
-                    <Row>
-                        <Label style={{ color: "#FFF2E3", marginTop: 40, fontFamily: 'Font_Medium', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Atualizado {'\n'}a cada <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, zIndex: 99, }}> 6 horas </Title></Label>
+    return (
+        <Column>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}>
+                <Column style={{ width: width, paddingHorizontal: margin.h, }}>
+                    <Row style={{ marginBottom: 12, }}>
+                        <Button onPress={() => { navigation.navigate('ONGCategory', { id: 12, name: 'Animais', }) }} style={{ backgroundColor: color.secundary + 20, flexGrow: 1, borderRadius: 12, }}>
+                            <Column style={{ justifyContent: 'center', padding: 16, paddingTop: 32, }}>
+                                <Dog color={color.secundary} size={28} />
+                                <Title style={{ fontSize: 16, lineHeight: 22, }}>Animais</Title>
+                            </Column>
+                        </Button>
+                        <Column style={{ width: 12, }} />
+                        <Button onPress={() => { navigation.navigate('ONGCategory', { id: 13, name: 'Social', }) }} style={{ backgroundColor: color.secundary + 20, flexGrow: 1, borderRadius: 12, }}>
+                            <Column style={{ justifyContent: 'center', padding: 16, paddingTop: 32, }}>
+                                <Speech color={color.secundary} size={28} />
+                                <Title style={{ fontSize: 16, lineHeight: 22, }}>Social</Title>
+                            </Column>
+                        </Button>
+                    </Row>
+                    <Row style={{ marginBottom: 12, }}>
+                        <Button onPress={() => { navigation.navigate('ONGCategory', { id: 14, name: 'Meio Ambiente' }) }} style={{ backgroundColor: color.secundary + 20, flexGrow: 1, borderRadius: 12, }}>
+                            <Column style={{ justifyContent: 'center', padding: 16, paddingTop: 32, }}>
+                                <Trees color={color.secundary} size={28} />
+                                <Title style={{ fontSize: 16, lineHeight: 22, }}>Meio Ambiente</Title>
+                            </Column>
+                        </Button>
+                        <Column style={{ width: 12, }} />
+                        <Button onPress={() => { navigation.navigate('ONGCategory', { id: 15, name: 'Saúde' }) }} style={{ backgroundColor: color.secundary + 20, flexGrow: 1, borderRadius: 12, }}>
+                            <Column style={{ justifyContent: 'center', padding: 16, paddingTop: 32, }}>
+                                <HeartPulse color={color.secundary} size={28} />
+                                <Title style={{ fontSize: 16, lineHeight: 22, }}>Saúde</Title>
+                            </Column>
+                        </Button>
                     </Row>
                 </Column>
-                <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: -50, scale: 1.2, }} source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', objectFit: 'contain', marginRight: -20, }} />
-                <MotiImage from={{ opacity: 0, translateY: 30, scale: 0, }} animate={{ opacity: 1, translateY: 0, scale: 1.1, }} source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
-            </MotiView>
-            </Button>
+                <Column style={{ width: width, paddingHorizontal: margin.h, }}>
+                    <Button style={{ backgroundColor: color.secundary + 20, flexGrow: 1, borderRadius: 12, marginBottom: 15,}}>
+                            <Column style={{ justifyContent: 'center', padding: 16, paddingTop: 32, }}>
+                                <Title style={{ fontSize: 16, lineHeight: 22, }}>Outras categorias</Title>
+                            </Column>
+                        </Button>
+                </Column>
+            </ScrollView>
 
-        </ScrollView>
+            <Column style={{ backgroundColor: color.secundary + 20, marginRight: 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 5, alignSelf: 'center', marginTop: 0, marginBottom: 14, }}>
+                <ExpandingDot
+                    data={pages}
+                    expandingDotWidth={20}
+                    scrollX={scrollX}
+                    containerStyle={{ position: 'relative', marginTop: 0, top: 0, }}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5,
+                        marginHorizontal: 2,
+                    }}
+                    activeDotColor={color.secundary}
+                    inActiveDotColor={color.secundary + 90}
+                />
+            </Column>
+        </Column>
     )
 }
+
+

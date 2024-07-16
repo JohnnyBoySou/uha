@@ -7,7 +7,7 @@ import { Image } from 'expo-image'
 
 const CardOngs = ({ item, setselectOng, selectOng }) => {
     const navigation = useNavigation()
-    const { color, } = useContext(ThemeContext);
+    const { color, font, margin } = useContext(ThemeContext);
     return (
         <Button  onPress={() => { setselectOng(item.id) }}>
             <Row style={{ marginVertical: 3, paddingHorizontal: 12, borderRadius: 12, paddingVertical: 12, alignItems: 'center', justifyContent: 'space-between', backgroundColor: item.id === selectOng ? color.blue + 30 : 'transparent', }}>
@@ -25,7 +25,6 @@ const CardOngs = ({ item, setselectOng, selectOng }) => {
                 </Button>
             </Row>
         </Button>
-    )
+        )}
 
-}
 export default CardOngs;

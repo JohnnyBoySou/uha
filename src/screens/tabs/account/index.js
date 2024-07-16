@@ -60,7 +60,7 @@ export default function AccountScreen({ navigation, }) {
                 <Column from={{ opacity: 0, translateY: 20 }} animate={{ opacity: 1, translateY: 0, }} delay={600}>
 
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
-                        <Button onPress={() => { navigation.navigate('ONGList') }} style={{ flexGrow: 1, }}>
+                        <Button onPress={() => { navigation.navigate('ONGS') }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
                                     <HeartHandshake color={color.primary} size={36} />
