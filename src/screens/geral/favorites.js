@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { HeartHandshake, Search, ShoppingBag } from 'lucide-react-native';
@@ -55,9 +55,7 @@ export default function FavoritesScreen({ navigation, }) {
                             </Column>
                         </Button>
                     </MotiView>
-
                     <Column style={{ width: 12, }} />
-
                     <MotiView delay={800} from={{ opacity: 0, translateX: 20, }} animate={{ opacity: 1, translateX: 0, }} style={{ width: '48%', }}>
                         <Button onPress={() => { settype('ONGs') }} style={{ backgroundColor: type === 'ONGs' ? color.primary + 20 : color.secundary + 20, flexGrow: 1, borderRadius: 12, }}>
                             <Column style={{ justifyContent: 'center', padding: 16, paddingTop: 32, }}>

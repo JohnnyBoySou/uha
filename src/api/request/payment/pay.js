@@ -3,51 +3,19 @@ import axios from 'axios';
 import getToken from '@hooks/getToken';
 import getBaseURL from '@hooks/getBaseUrl';
 
-
-export async function getExtractDonate() {
+export async function payPix(params) {
     const BASE_URL = await getBaseURL()
     const token = await getToken()
     try {
-        const res = await axios.get(`${BASE_URL}/usuarios/doacoes`, {
+        const res = await axios.post(`${BASE_URL}/usuarios/criadoacaopix`, {
+            'IDinstituicao': params.ong,
+            'valor': params.value,
+        }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return res.data.data;
-    } catch (error) {
-        console.log(error)
-        const err = JSON.parse(error.request.response);
-        throw new Error(err.message)
-    }
-}
-
-export async function getExtractNotas() {
-    const BASE_URL = await getBaseURL()
-    const token = await getToken()
-    try {
-        const res = await axios.get(`${BASE_URL}/usuarios/notas`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return res.data.data;
-    } catch (error) {
-        console.log(error)
-        const err = JSON.parse(error.request.response);
-        throw new Error(err.message)
-    }
-}
-
-export async function getExtractTransacao() {
-    const BASE_URL = await getBaseURL()
-    const token = await getToken()
-    try {
-        const res = await axios.get(`${BASE_URL}/usuarios/transacoes`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return res.data.data;
+        return res.data;
     } catch (error) {
         console.log(error)
         const err = JSON.parse(error.request.response);
@@ -56,19 +24,38 @@ export async function getExtractTransacao() {
 }
 
 
-
-
-
-export async function getExtractRifas() {
+export async function payBoleto(params) {
     const BASE_URL = await getBaseURL()
     const token = await getToken()
     try {
-        const res = await axios.get(`${BASE_URL}/usuarios/rifas`, {
+        const res = await axios.post(`${BASE_URL}/usuarios/criadoacaoboleto`, {
+            'IDinstituicao': params.ong,
+            'valor': params.value,
+        }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return res.data.data;
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        const err = JSON.parse(error.request.response);
+        throw new Error(err.message)
+    }
+}
+
+export async function getStatusPay(transacao) {
+    const BASE_URL = await getBaseURL()
+    const token = await getToken()
+    try {
+        const res = await axios.post(`${BASE_URL}/usuarios/getstatus`, {
+            'IDtransacao': transacao,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return res.data;
     } catch (error) {
         console.log(error)
         const err = JSON.parse(error.request.response);
@@ -77,18 +64,22 @@ export async function getExtractRifas() {
 }
 
 
-
-
-
-
-
-export async function getExtractSingle(type, id) {
+export async function payCredito(params) {
     const BASE_URL = await getBaseURL()
     const token = await getToken()
-    const path = type === 'Notas fiscais' ? `/notas/single/${id}` : type === 'Transações' ? `/transacoes/single/${id}` : type === 'Doação' ? `/doacoes/single/${id}` : type === 'Rifas' ? `/rifas/single/${id}` : null
-    
+
+    const {  ong, value, nome, cvv, mes, ano, numerocartao } = params
+
     try {
-        const res = await axios.get(`${BASE_URL}/usuarios${path}`, {
+        const res = await axios.post(`${BASE_URL}/usuarios/criadoacaocartao`, {
+            "nome": nome,
+            "numerocartao": numerocartao,
+            "cvv": cvv,
+            "mes": mes,
+            "ano": ano,
+            "valor": value,
+            "IDinstituicao": ong,
+        }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

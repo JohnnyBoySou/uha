@@ -51,7 +51,7 @@ export default function DonateONGS({ item, handleOng }) {
                                     </Button>
                                     <Column style={{ marginLeft: 20, }}>
                                         <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', }}>{item?.name.length >= 18 ? item?.name.slice(0, 15) + '...' : item?.name}</Title>
-                                        <Label style={{ fontSize: 12, marginTop: -2, }}>{item?.desc?.length >= 26 ? item?.desc?.slice(0, 26) + '...' : item?.desc}</Label>
+                                        <Label style={{ fontSize: 12, marginTop: -2, }}>{item?.descri?.length >= 26 ? item?.descri?.slice(0, 26) + '...' : item?.descri}</Label>
                                     </Column>
                                 </Row>
                                 <Button onPress={() => { setselectOng(item) }} style={{ marginRight: 6, borderRadius: 5, }} >
