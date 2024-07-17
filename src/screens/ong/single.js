@@ -6,6 +6,7 @@ import { AnimatePresence, } from 'moti';
 import { FlatList } from 'react-native';
 import { getONGSingle } from '@api/request/ongs/ongs';
 
+import { StatusBar } from 'expo-status-bar';
 import { Image } from 'expo-image'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
@@ -63,6 +64,7 @@ export default function ONGSingleScreen({ navigation, route }) {
     if (loading) return <SkeletonList />
     return (
         <Main style={{ backgroundColor: '#fff', }}>
+             <StatusBar style="dark" backgroundColor="#fff" animated />
             <Scroll >
                 <Header title="Detalhes" rose />
                 <Image transition={500} contentFit='cover' source={{ uri: item?.img }} style={{ width: 200, marginTop: 20, alignSelf: 'center', height: 200, borderRadius: 12, backgroundColor: '#FFE0F6', marginBottom: 30, }} />

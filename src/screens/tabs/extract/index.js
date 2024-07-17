@@ -1,31 +1,44 @@
+//main
 import React, { useContext, useState, useRef, useEffect, useCallback } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList, ScrollView, Dimensions, BackHandler } from 'react-native';
 import { Main, Column, Label, Title, Row, SubLabel, Button, ButtonPR, LabelLI } from '@theme/global';
-import { ThemeContext } from 'styled-components/native';
-import { Info, QrCode, Smartphone, BadgePercent, ArrowUp, } from 'lucide-react-native';
-import { AnimatePresence, MotiView } from 'moti';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import TopSheet from '@components/topsheet';
-import Avatar from '@components/avatar';
 
-import { getExtractNotas, getExtractTransacao } from '@request/extract/gets';
+//utils
+import { useIsFocused, useNavigation, useFocusEffect } from '@react-navigation/native';
+import { ThemeContext } from 'styled-components/native';
+
+//components
+import { AnimatePresence, MotiView } from 'moti';
+import { LinearGradient } from 'expo-linear-gradient';
+import Avatar from '@components/avatar';
+import TopSheet from '@components/topsheet';
 import { StatusBar } from 'expo-status-bar';
-import { listUser } from '@api/request/user/user';
 import { Skeleton } from 'moti/skeleton';
+import BottomSheet, { BottomSheetScrollView, } from '@gorhom/bottom-sheet';
+import ExtractSingleScreen from './single';
+
+//icons
+import { Info, QrCode, Smartphone, BadgePercent, ArrowUp, } from 'lucide-react-native';
+import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+
+//requests
+import { getExtractNotas, getExtractTransacao, getExtractDonate, getExtractRifas } from '@request/extract/gets';
+import { listUser } from '@api/request/user/user';
+
+
+const { width, height } = Dimensions.get('window');
 
 export default function ExtractScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    let type = route.params?.type
-    const [page, setpage] = useState('Notas fiscais');
+    const type = route.params?.type
+    const [page, setpage] = useState(type || 'Notas fiscais');
     const [dateSelect, setdateSelect] = useState('Hoje');
     const scrollTags = useRef(null);
     const bts = ['Notas fiscais', 'Transações', 'Doações', 'Rifas',]
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     const isFocused = useIsFocused();
-    
+    const [select, setselect] = useState();
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(page);
     const [transacao, settransacao] = useState([]);
@@ -36,13 +49,24 @@ export default function ExtractScreen({ navigation, route }) {
 
     const selectData = page === 'Doações' ? doacoes : page === 'Transações' ? transacao : page === 'Notas fiscais' ? notas : page === 'Rifas' ? rifas : []
 
+    const [isOpen, setisOpen] = useState(false);
+
+    const modalSelect = useRef(null);
+    const handleSelect = (value) => {
+        setselect(value)
+        setisOpen(true)
+        modalSelect.current?.expand()
+    }
+
     useEffect(() => {
         const fetchData = async () => {
+            modalSelect.current?.snapToIndex(0);
             try {
-                
                 const us = await listUser();
                 const tr = await getExtractTransacao();
                 const nt = await getExtractNotas();
+                const dn = await getExtractDonate();
+                setdoacoes(dn)
                 setuser(us)
                 setnotas(nt)
                 settransacao(tr)
@@ -53,7 +77,8 @@ export default function ExtractScreen({ navigation, route }) {
             }
         };
 
-        if (type !== currentPage) {
+        if (type != currentPage) {
+            console.log(type)
             setCurrentPage(type);
         }
 
@@ -66,6 +91,38 @@ export default function ExtractScreen({ navigation, route }) {
 
     const [actionButton, setactionButton] = useState(false);
     const scrollMain = useRef()
+
+    
+
+    useFocusEffect(
+        useCallback(() => {
+            const onBackPress = () => {
+                if (isOpen) {
+                    modalSelect.current?.snapToIndex(0);
+                    return true;
+                }
+                return false;
+            };
+
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+            return () => {
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            };
+        }, [])
+    );
+
+    const handleAnimate = (index) => {
+        if (index === 0) {
+            console.log(isOpen)
+            setisOpen(false);
+        }else if(index === 1){
+            console.log(isOpen)
+            setisOpen(true);
+        }
+    };
+
+
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             {isFocused && <StatusBar style="light" backgroundColor={color.primary} animated={true} duration={100} />}
@@ -102,8 +159,8 @@ export default function ExtractScreen({ navigation, route }) {
                                 </Column>
                             </Row>
                             <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', }}>
-                               
-                                <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
+
+                                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                                     <Button onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ backgroundColor: "#ffffff40", borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
                                         <MaterialCommunityIcons name="clipboard-edit-outline" size={24} color="#fff" />
                                     </Button>
@@ -183,8 +240,10 @@ export default function ExtractScreen({ navigation, route }) {
                     </MotiView>
                 }
             </AnimatePresence>
+
             <NavBar bts={bts} page={page} setpage={setpage} scrollTags={scrollTags} margin={margin} color={color} font={font} />
-            {loading ? <SkeletonList /> :
+                {loading ?
+                <SkeletonList /> :
                 <FlatList
                     ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
                     data={selectData}
@@ -195,19 +254,25 @@ export default function ExtractScreen({ navigation, route }) {
                     showsVerticalScrollIndicator={false}
                     onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
                     ListFooterComponent={<Column style={{ height: 100, }} />}
-                    renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} />}
+                    renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} handleSelect={handleSelect} />}
                 />}
+
+            <BottomSheet onChange={handleAnimate} ref={modalSelect} index={0} snapPoints={[0.1, 0.99 * height]} containerStyle={{ zIndex: 99, }} handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
+                <BottomSheetScrollView style={{ marginHorizontal: margin.h, }}>
+                    {isOpen && <ExtractSingleScreen id={select?.id} type={select?.type} />}
+                </BottomSheetScrollView>
+            </BottomSheet>
         </Main>
     )
 }
 
-const NavBar = ({ bts, page, setpage,  scrollTags, margin, color, font }) => {
+const NavBar = ({ bts, page, setpage, scrollTags, margin, color, font }) => {
     return (
         <Column>
             <Column style={{ height: 150, }} />
             <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12, }} showsHorizontalScrollIndicator={false}>
                 {bts.map((bt, index) => (
-                    <Button disabled={bt === page} key={index} onPress={() => { setpage(bt)}}
+                    <Button disabled={bt === page} key={index} onPress={() => { setpage(bt) }}
                         style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0, }}>
                         <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
                     </Button>
@@ -247,47 +312,44 @@ const Empty = ({ type }) => {
     )
 }
 
-const CardExtrato = ({ item, index, onLong, type }) => {
-    const navigation = useNavigation();
-    const { color, font, margin } = useContext(ThemeContext);
-    const hour = item?.created_at.slice(11, 16)
-    const cl = item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Cancelado' ? color.red : item.status === 'Expirado' ? '#000000' : '#ffffff'
-    const icon = item?.status === 'Confirmado' ? <Feather color={color.green} name='check' size={24} /> : item?.status === 'Aguardando' ? <Info color={color.blue} size={24} /> : item?.status === 'Cancelado' ? <Feather name='x' size={24} color={color.red} /> : item?.status === 'Expirado' ? <Feather name='loader' color="#000000" size={24} /> : null;
+const CardExtrato = ({ item, onLong, type, handleSelect }) => {
+    const { value, status, label, name, date, created_at } = item
+    const { color, margin } = useContext(ThemeContext);
+    const hour = created_at.slice(11, 16)
+    const cl = status === 'Confirmado' ? color.green : status === 'Aguardando' ? color.blue : status === 'Cancelado' ? color.red : status === 'Expirado' ? '#000000' : '#ffffff'
+    const icon = status === 'Confirmado' ? <Feather color={color.green} name='check' size={24} /> : status === 'Aguardando' ? <Info color={color.blue} size={24} /> : status === 'Cancelado' ? <Feather name='x' size={24} color={color.red} /> : status === 'Expirado' ? <Feather name='loader' color="#000000" size={24} /> : null;
     return (
-        <MotiView from={{ opacity: 0, translateX: 20, }} animate={{ opacity: 1, translateX: 0, }} delay={(index) * 200} transition={{ type: 'timing', duration: 300 }}>
-            <Button onLongPress={onLong} onPress={() => { navigation.navigate('ExtractSingle', { id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
-                <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                        <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                            {icon}
-                        </Column>
-                        <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', textAlign: 'center' }}>{item?.date} </SubLabel>
+        <Button onLongPress={onLong} onPress={() => { handleSelect({ id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
+            <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        {icon}
                     </Column>
+                    <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', textAlign: 'center' }}>{date}</SubLabel>
+                </Column>
 
-                    <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
-                        <Title style={{
-                            color: cl,
-                            fontSize: 24, lineHeight: 24, textAlign: 'right',
-                            textDecoration: item?.type === 'Expirado' ? 'underline' : 'none',
-                            textDecorationLine: item?.status === 'Expirado' ? "line-through" : "none",
-                            textDecorationStyle: item?.status === 'Expirado' ? "solid" : "none",
-                            textDecorationColor: item?.status === 'Expirado' ? "#000" : 'transparent',
-                        }}>
-                            {type == 'Notas fiscais' && item?.value}
-                            {type == 'Transações' && item?.value + ' pontos'}
-                            {type == 'Doações' && 'R$ ' + item?.value}
-                        </Title>
-                        <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -2, }}>{item?.label}</SubLabel>
-                        <Row style={{ alignSelf: 'flex-end', alignItems: 'flex-end' }}>
-                        {item?.name?.length > 0 && 
-                            <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right', fontFamily: 'Font_Bold', color: color.secundary, }}>{item?.name.slice(0, 24)} - </Label>
-                            }<Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{hour}</Label>
-                        </Row>
-                    </Column>
-                </Row>
-            </Button>
-        </MotiView>
-
+                <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
+                    <Title style={{
+                        color: cl,
+                        fontSize: 24, lineHeight: 24, textAlign: 'right',
+                        textDecoration: status === 'Expirado' ? 'underline' : 'none',
+                        textDecorationLine: status === 'Expirado' ? "line-through" : "none",
+                        textDecorationStyle: status === 'Expirado' ? "solid" : "none",
+                        textDecorationColor: status === 'Expirado' ? "#000" : 'transparent',
+                    }}>
+                        {type == 'Notas fiscais' && value}
+                        {type == 'Transações' && value + ' pontos'}
+                        {type == 'Doações' && 'R$ ' + value.slice(0, -3) + ',00'}
+                    </Title>
+                    <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -2, }}>{label}</SubLabel>
+                    <Row style={{ alignSelf: 'flex-end', alignItems: 'flex-end' }}>
+                        {name?.length > 0 &&
+                            <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right', fontFamily: 'Font_Bold', color: color.secundary, }}>{name.slice(0, 24)} - </Label>
+                        }<Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{hour}</Label>
+                    </Row>
+                </Column>
+            </Row>
+        </Button>
     )
 }
 

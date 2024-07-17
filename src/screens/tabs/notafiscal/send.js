@@ -3,11 +3,10 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 
 import * as Haptics from 'expo-haptics';
 import { TextInput, Dimensions, FlatList, Keyboard } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, Button, ButtonOut, ButtonPR, LabelPR, LabelLI } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button,  ButtonPR, LabelPR, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiView, useAnimationState } from 'moti';
+import { AnimatePresence, MotiView,  } from 'moti';
 
-import { ProgressBar } from 'react-native-paper';
 import Avatar from '@components/avatar';
 import Header from '@components/header';
 import BottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';

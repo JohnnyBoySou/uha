@@ -56,7 +56,7 @@ export default function TopSheet({ children, min, max, normal, valueMin, valueNo
 
 
   return (
-    <Animated.View style={[{ width: '100%', top: 0, zIndex: 99, borderBottomLeftRadius: 18,  borderBottomRightRadius: 18, position: 'absolute', overflow: 'hidden', }, animatedStyle]} >
+    <Animated.View style={[{ width: '100%', top: 0, zIndex: 2, borderBottomLeftRadius: 18,  borderBottomRightRadius: 18, position: 'absolute', overflow: 'hidden', }, animatedStyle]} >
       <Column style={{ paddingHorizontal: 28, paddingTop: 60, }}>
         {currentStatus === 'min' && min}
         {currentStatus === 'normal' && normal}

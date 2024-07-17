@@ -27,10 +27,14 @@ import SearchScreen from '@screens/tabs/search';
 
 import DonateScreen from '@screens/donate';
 import DonateValueScreen from '@screens/donate/value';
+import DonateSuccessScreen from '@screens/donate/success';
+
 import DonateHideScreen from '@screens/donate/hide/hide';
 import DonateValueHideScreen from '@screens/donate/hide/value_hide';
 import DonateSuccessHideScreen from '@screens/donate/hide/success_hide';
+
 import DonateCertificadoScreen from '@screens/donate/certificado';
+
 import PayBoletoScreen from '@screens/donate/pay_boleto';
 
 import NotafiscalScreen from '@screens/tabs/notafiscal';
@@ -85,7 +89,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='DonateSuccess'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
@@ -111,8 +115,9 @@ export default function Router() {
             <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="DonateHide" component={DonateHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="DonateSuccessHide" component={DonateSuccessHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="DonateSuccess" component={DonateSuccessScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="DonateCertificado" component={DonateCertificadoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="PayBoleto" component={PayBoletoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

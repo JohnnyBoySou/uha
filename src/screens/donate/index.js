@@ -11,6 +11,7 @@ export default function DonateScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [value, setvalue] = useState('30');
     const [loading, setloading] = useState(false);
+    const a = false
     const handleClick = (digit) => {
         if (digit === '0' && value === '0') {
             return
@@ -47,38 +48,36 @@ export default function DonateScreen({ navigation, }) {
                 </MotiView>
 
                 <Column style={{ alignItems: 'center', backgroundColor: color.secundary, borderTopLeftRadius: 52, borderTopRightRadius: 52, paddingTop: 90, paddingBottom: 150, }}>
-                    
-                    
-                    <MotiView  from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={300}>
-                    <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
-                        <Label style={{ color: '#fff', }}>Total em pontos: </Label>
-                        <Button style={{ borderRadius: 100, }} >
-                            <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary + 20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12, }}>{patinhas}</Label>
-                        </Button>
-                    </Row>
-                    </MotiView>
+
+                    {a &&
+                        <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={300}>
+                            <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
+                                <Label style={{ color: '#fff', }}>Total em pontos: </Label>
+                                <Button style={{ borderRadius: 100, }} >
+                                    <Label style={{ fontFamily: font.bold, color: '#fff', backgroundColor: color.primary + 20, borderRadius: 12, paddingVertical: 5, paddingHorizontal: 12, }}>{patinhas}</Label>
+                                </Button>
+                            </Row>
+                        </MotiView>}
 
                     <Row style={{ paddingTop: 0, paddingBottom: 40, }}>
                         <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={300} transition={{ type: 'timing' }}>
-                            <Button onPress={() => { setvalue(10) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 10,00</Label></Button>
+                            <Button onPress={() => { setvalue(10) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 10,00</Label></Button>
                         </MotiView>
                         <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={600} transition={{ type: 'timing' }}>
-                            <Button onPress={() => { setvalue(30) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, marginHorizontal: 12, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 30,00</Label></Button>
+                            <Button onPress={() => { setvalue(30) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, marginHorizontal: 12, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 30,00</Label></Button>
                         </MotiView>
                         <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={900} transition={{ type: 'timing' }}>
-                            <Button onPress={() => { setvalue(50) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium' }}>R$ 50,00</Label></Button>
+                            <Button onPress={() => { setvalue(50) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 50,00</Label></Button>
                         </MotiView>
                     </Row>
                     <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={500}>
-                    <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean} />
+                        <Keyboard handleClick={handleClick} handleDelete={handleDelete} handleClean={handleClean} />
                     </MotiView>
 
-                    <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={700} style={{ flexGrow: 1,  width: '78%', }}>
-                    <ButtonPR style={{ paddingHorizontal: 24, marginTop: 30, width: '88%', marginHorizontal: 28, }} disabled={loading} onPress={() => { navigation.navigate('DonateValue', { valor: value }) }} >
-                        <>
-                            {loading ? <ActivityIndicator color={color.blue} size={24} style={{ marginHorizontal: 31, marginVertical: 1 }} /> : <LabelLI style={{ color: '#fff', }}>Continuar</LabelLI>}
-                        </>
-                    </ButtonPR>
+                    <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={700} style={{ flexGrow: 1, width: '78%', }}>
+                        <ButtonPR style={{ paddingHorizontal: 24, marginTop: 30, width: '88%', marginHorizontal: 28, }} onPress={() => { navigation.navigate('DonateValue', { valor: value }) }} >
+                            <LabelLI style={{ color: '#fff', }}>Continuar</LabelLI>
+                        </ButtonPR>
                     </MotiView>
                 </Column>
 
