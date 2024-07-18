@@ -183,7 +183,7 @@ const Registrar = ({ type, settype }) => {
                         <Label style={{ color: type === 'Registrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Registrar</Label>
                     </Button>
                 </Row>
-                <KeyboardAvoidingView >
+                <KeyboardAvoidingView behavior="padding">
                     {error && <Error msg={error} show={error.length > 0} />}
                     <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusName ? color.primary : color.off, }}>
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>

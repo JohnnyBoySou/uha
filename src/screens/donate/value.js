@@ -93,7 +93,7 @@ export default function DonateValueScreen({ navigation, route }) {
                         </Column>
                         <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
                     </Row>
-                    {ong ? <Metodos settype={settype} value={valor} ong={ong} modalCredit={modalCredit} modalPix={modalPix} /> : <Help />}
+                    {ong ? <Metodos settype={settype} value={valor} ong={ong} modalCredit={modalCredit} modalPix={modalPix} modalBoleto={modalBoleto}/> : <Help />}
 
                 </Column>
 
@@ -112,9 +112,15 @@ export default function DonateValueScreen({ navigation, route }) {
                 </BottomSheetScrollView>
             </BottomSheet>
 
-            <BottomSheet ref={modalCredit} snapPoints={[0.4, 0.99 * height]} backgroundStyle={{ backgroundColor: '#fff', }} handleIndicatorStyle={{ backgroundColor: "#30303030", width: 80, height: 10, borderRadius: 100, }}>
+            <BottomSheet ref={modalCredit} keyboardBehavior={'fillParent'} snapPoints={[0.4, 0.99 * height]} backgroundStyle={{ backgroundColor: '#fff', }} handleIndicatorStyle={{ backgroundColor: "#30303030", width: 80, height: 10, borderRadius: 100, }}>
                 <BottomSheetScrollView>
                 {type == 'Credito' &&  <PaymentCredito item={item} navigation={navigation} modalCredit={modalCredit} />}
+                </BottomSheetScrollView>
+            </BottomSheet>
+
+            <BottomSheet ref={modalBoleto} keyboardBehavior={'fillParent'} snapPoints={[0.4, 0.99 * height]} backgroundStyle={{ backgroundColor: '#fff', }} handleIndicatorStyle={{ backgroundColor: "#30303030", width: 80, height: 10, borderRadius: 100, }}>
+                <BottomSheetScrollView>
+                {type == 'Boleto' &&  <PaymentBoleto item={item} navigation={navigation} modalBoleto={modalBoleto} />}
                 </BottomSheetScrollView>
             </BottomSheet>
 
@@ -155,7 +161,7 @@ const Metodos = ({  modalPix, modalCredit, modalBoleto, settype }) => {
                     </Row>
                 </Button>
 
-                <Button onPress={() => { modalBoleto.current.expand(); settype('Boleto') }} style={{ borderWidth: 1, borderRadius: 12, borderColor: '#d7d7d790', marginTop: 12, padding: 12, }}>
+                <Button onPress={() => { modalBoleto.current?.expand(); settype('Boleto') }} style={{ borderWidth: 1, borderRadius: 12, borderColor: '#d7d7d790', marginTop: 12, padding: 12, }}>
                     <Row>
                         <Column style={{ padding: 12, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
                             <ScrollText size={24} color={color.primary} />

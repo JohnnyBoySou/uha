@@ -68,15 +68,14 @@ export async function payCredito(params) {
     const BASE_URL = await getBaseURL()
     const token = await getToken()
 
-    const {  ong, value, nome, cvv, mes, ano, numerocartao } = params
-
+    const {  ong, value, nome, cvv, meseano,  numerocartao } = params
     try {
         const res = await axios.post(`${BASE_URL}/usuarios/criadoacaocartao`, {
             "nome": nome,
             "numerocartao": numerocartao,
             "cvv": cvv,
-            "mes": mes,
-            "ano": ano,
+            "mes": meseano.slice(0, 2),
+            "ano": meseano.slice(3, 5),
             "valor": value,
             "IDinstituicao": ong,
         }, {
@@ -86,9 +85,39 @@ export async function payCredito(params) {
         });
         console.log(res.data)
         return res.data;
+    }catch (error) {
+        let errMsg;
+        try {
+            const err = JSON.parse(error.request.response);
+            errMsg = err.message;
+        } catch (e) {
+            errMsg = error.message;
+        }
+        throw new Error(errMsg);
+      }
+}
+
+
+export async function getPaySingle(id) {
+    const BASE_URL = await getBaseURL()
+    const token = await getToken()
+    try {
+        const res = await axios.post(`${BASE_URL}/usuarios/getdadospixboleto`, {
+            'iddoacao': id,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return res.data;
     } catch (error) {
-        console.log(error)
-        const err = JSON.parse(error.request.response);
-        throw new Error(err.message)
+        let errMsg;
+        try {
+            const err = JSON.parse(error.request.response);
+            errMsg = err.message;
+        } catch (e) {
+            errMsg = error.message;
+        }
+        throw new Error(errMsg);
     }
 }

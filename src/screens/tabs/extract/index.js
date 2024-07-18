@@ -25,7 +25,6 @@ import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { getExtractNotas, getExtractTransacao, getExtractDonate, getExtractRifas } from '@request/extract/gets';
 import { listUser } from '@api/request/user/user';
 
-
 const { width, height } = Dimensions.get('window');
 
 export default function ExtractScreen({ navigation, route }) {
@@ -78,7 +77,6 @@ export default function ExtractScreen({ navigation, route }) {
         };
 
         if (type != currentPage) {
-            console.log(type)
             setCurrentPage(type);
         }
 
@@ -91,8 +89,6 @@ export default function ExtractScreen({ navigation, route }) {
 
     const [actionButton, setactionButton] = useState(false);
     const scrollMain = useRef()
-
-    
 
     useFocusEffect(
         useCallback(() => {
@@ -313,11 +309,15 @@ const Empty = ({ type }) => {
 }
 
 const CardExtrato = ({ item, onLong, type, handleSelect }) => {
-    const { value, status, label, name, date, created_at } = item
+    const { value, status, label, name, date, created_at, Status } = item
     const { color, margin } = useContext(ThemeContext);
+    
+    const formatValue = (val) => {
+        return parseInt(val).toLocaleString('pt-BR');
+    };
     const hour = created_at.slice(11, 16)
-    const cl = status === 'Confirmado' ? color.green : status === 'Aguardando' ? color.blue : status === 'Cancelado' ? color.red : status === 'Expirado' ? '#000000' : '#ffffff'
-    const icon = status === 'Confirmado' ? <Feather color={color.green} name='check' size={24} /> : status === 'Aguardando' ? <Info color={color.blue} size={24} /> : status === 'Cancelado' ? <Feather name='x' size={24} color={color.red} /> : status === 'Expirado' ? <Feather name='loader' color="#000000" size={24} /> : null;
+    const cl = status === 'Confirmado' ? color.green : status === 'Aguardando' ? color.blue : status === 'Cancelado' ? color.red : status === 'Expirado' ? '#000000' : Status === 'aprovado' ? color.green : Status === 'aguardando' ? color.blue : '#ffffff'
+    const icon = status === 'Confirmado' ? <Feather color={color.green} name='check' size={24} /> : status === 'Aguardando' ? <Info color={color.blue} size={24} /> : status === 'Cancelado' ? <Feather name='x' size={24} color={color.red} /> : status === 'Expirado' ? <Feather name='loader' color="#000000" size={24} /> : Status === 'aprovado' ? <Feather color={color.green} name='check' size={24} /> : Status === 'aguardando' ? <Info color={color.blue} size={24} /> : null;
     return (
         <Button onLongPress={onLong} onPress={() => { handleSelect({ id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
@@ -339,7 +339,7 @@ const CardExtrato = ({ item, onLong, type, handleSelect }) => {
                     }}>
                         {type == 'Notas fiscais' && value}
                         {type == 'Transações' && value + ' pontos'}
-                        {type == 'Doações' && 'R$ ' + value.slice(0, -3) + ',00'}
+                        {type == 'Doações' && 'R$ ' + formatValue(value.slice(0, -3)) + ',00'}
                     </Title>
                     <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -2, }}>{label}</SubLabel>
                     <Row style={{ alignSelf: 'flex-end', alignItems: 'flex-end' }}>

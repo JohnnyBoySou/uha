@@ -5,19 +5,19 @@ import { Info, ArrowLeft, CircleHelp, CircleAlert } from 'lucide-react-native';
 import { getExtractSingle } from '@request/extract/gets';
 import { MotiImage, MotiView } from 'moti';
 import { Feather } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
 import { Skeleton } from 'moti/skeleton';
 import { useNavigation } from '@react-navigation/native';
 
 export default function ExtractSingleScreen({ id, type }) {
-   
-    const { color, font, margin } = useContext(ThemeContext);
+
+    const { color, font, } = useContext(ThemeContext);
     const [item, setitem] = useState();
     const [ong, setong] = useState();
     const [shop, setshop] = useState();
     const [service, setservice] = useState();
     const [loading, setloading] = useState(true);
     const navigation = useNavigation();
+
     useEffect(() => {
         const fetchData = async () => {
             setloading(true);
@@ -25,7 +25,7 @@ export default function ExtractSingleScreen({ id, type }) {
                 const res = await getExtractSingle(type, id);
                 setservice(res?.service);
                 setshop(res?.shop);
-                setong(res?.ong);
+                setong(res?.ong.length == 1 ? res?.ong[0] : res?.ong);
                 setitem(res);
             } catch (error) {
                 console.log(error);
@@ -35,13 +35,17 @@ export default function ExtractSingleScreen({ id, type }) {
                 }, 500);
             }
         }
-        if(id?.length > 1){
+        if (id != undefined) {
             fetchData()
         }
     }, [id, type]);
 
-    const cl = item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Cancelado' ? color.red : item?.status === 'Expirado' ? '#000000' : '#ffffff'
-    const icon = item?.status === 'Confirmado' ? <Feather color={color.green} name='check' size={46} /> : item?.status === 'Aguardando' ? <Info color={color.blue} size={46} /> : item?.status === 'Cancelado' ? <Feather name='x' size={46} color={color.red} /> : item?.status === 'Expirado' ? <Feather name='loader' color="#000000" size={46} /> : null;
+    const formatValue = (val) => {
+        return parseInt(val).toLocaleString('pt-BR');
+    };
+    const cl = item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Cancelado' ? color.red : item?.status === 'Expirado' ? '#000000' : item?.status === 'Confirmado' ? color.green : item?.status === 'Aguardando' ? color.blue : item?.status === 'Confirmado' ? color.green : item?.status === 'Pagamento confirmado' ? color.green : item?.status === 'Pagamento em análise' ? color.blue : '#ffffff'
+    const icon = item?.status === 'Confirmado' ? <Feather color={color.green} name='check' size={46} /> : item?.status === 'Aguardando' ? <Info color={color.blue} size={46} /> : item?.status === 'Cancelado' ? <Feather name='x' size={46} color={color.red} /> : item?.status === 'Expirado' ? <Feather name='loader' color="#000000" size={46} /> : item?.status === 'Pagamento confirmado' ? <Feather color={color.green} name='check' size={46} /> : item?.status === 'Pagamento em análise' ? <Info color={color.blue} size={46} /> : null
+    const vl = type == 'Notas fiscais' ? item?.value + ' ponto' : type == 'Transações' ? item?.value + ' pontos' : type == 'Doações' ? 'R$ ' + formatValue(item?.value.slice(0, -3)) + ',00' : null
 
     const openQRCode = () => {
         const itm = {
@@ -79,10 +83,63 @@ export default function ExtractSingleScreen({ id, type }) {
 
                     <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={500} >
                         <Label style={{ color: cl, fontSize: 18, textAlign: 'center', marginTop: 16, fontFamily: 'Font_Bold', letterSpacing: -0.5, }}>{item?.status}</Label>
-                        <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: cl, textAlign: 'center', paddingHorizontal: 14, paddingVertical: 8, backgroundColor: cl + 10, alignSelf: 'center', textAlign: 'center', borderRadius: 12, marginVertical: 12, }}>{type == 'Notas fiscais' ? item?.value + ' ponto' : type == 'Transações' ? item?.value + ' pontos' : `R$ ${item?.value},00`}</Title>
+                        <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: cl, textAlign: 'center', paddingHorizontal: 14, paddingVertical: 8, backgroundColor: cl + 10, alignSelf: 'center', textAlign: 'center', borderRadius: 12, marginVertical: 12, }}>{vl}</Title>
                     </MotiView>
 
                 </Column>
+
+                {type == 'Doações' &&
+                    <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800} style={{ paddingVertical: 12, }}>
+                        <Column>
+                            <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
+                                <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
+                                    <Row>
+                                        <MotiImage source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, objectFit: 'cover', }} />
+                                        <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
+                                            <Title style={{ fontSize: 18, }}>{ong?.name?.slice(0, 24)}</Title>
+                                            <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
+                                                <Title style={{ color: color.primary, fontSize: 12, }}>Conhecer ONG</Title>
+                                            </Button>
+                                        </Column>
+                                    </Row>
+
+                                    <Column style={{ borderBottomLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', top: 0, right: 0, }}>
+                                        <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>ONG</LabelPR>
+                                    </Column>
+                                </Row>
+                            </Button>
+
+
+
+                            {item?.status === 'Pagamento confirmado' &&
+                            <Column style={{ marginVertical: 12, }}>
+                            <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
+                                <CircleAlert color={color.label + 90} size={18} />
+                                <Label style={{ fontSize: 14, lineHeight: 16, marginLeft: 8, }}>Os pontos já foram {'\n'}adicionados em sua conta.</Label>
+                            </Row>
+                            <ButtonPR onPress={() => { navigation.navigate('Donate') }} style={{ alignSelf: 'center', }}>
+                                        <LabelPR style={{ fontSize: 16, }}>Nova doação</LabelPR>
+                                    </ButtonPR>
+                            </Column>
+                            }
+
+
+                            {item.status == 'Pagamento em análise' &&
+                                <Column style={{ marginVertical: 12, }}>
+                                    <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
+                                        <CircleAlert color={color.label + 90} size={24} />
+                                        <Label style={{ fontSize: 14, lineHeight: 16, marginLeft: 8,  }}>Os pontos são adicionados após efetuar o pagamento.</Label>
+                                    </Row>
+                                    <ButtonPR onPress={() => { navigation.navigate('ExtractPayment', { id: item.id, type: type, }) }} style={{ alignSelf: 'center', }}>
+                                        <LabelPR style={{ fontSize: 16, }}>Efetuar pagamento</LabelPR>
+                                    </ButtonPR>
+                                </Column>
+                            }
+
+                        </Column>
+                    </MotiView>
+                }
+
                 {type == 'Transações' &&
                     <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800}>
                         <Column style={{ paddingVertical: 12, }}>
@@ -131,35 +188,37 @@ export default function ExtractSingleScreen({ id, type }) {
                     </MotiView>
                 }
 
-                {type == 'Notas fiscais' && <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800} style={{ paddingVertical: 12, }}>
-                    <Column>
-                        <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
-                            <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
-                                <Row>
-                                    <MotiImage source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, objectFit: 'cover', }} />
-                                    <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
-                                        <Title style={{ fontSize: 18, }}>{ong?.name.slice(0, 24)}</Title>
-                                        <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
-                                            <Title style={{ color: color.primary, fontSize: 12, }}>Conhecer ONG</Title>
-                                        </Button>
+                {type == 'Notas fiscais' &&
+                    <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800} style={{ paddingVertical: 12, }}>
+                        <Column>
+                            <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
+                                <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
+                                    <Row>
+                                        <MotiImage source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, objectFit: 'cover', }} />
+                                        <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
+                                            <Title style={{ fontSize: 18, }}>{ong?.name.slice(0, 24)}</Title>
+                                            <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
+                                                <Title style={{ color: color.primary, fontSize: 12, }}>Conhecer ONG</Title>
+                                            </Button>
+                                        </Column>
+                                    </Row>
+
+                                    <Column style={{ borderBottomLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', top: 0, right: 0, }}>
+                                        <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>ONG</LabelPR>
                                     </Column>
                                 </Row>
-
-                                <Column style={{ borderBottomLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', top: 0, right: 0, }}>
-                                    <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>ONG</LabelPR>
-                                </Column>
+                            </Button>
+                            <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
+                                <CircleAlert color={color.label + 90} size={18} />
+                                <Label style={{ fontSize: 14, textAlign: 'center', marginLeft: 4, }}>Esse valor já foi adicionado em sua conta.</Label>
                             </Row>
-                        </Button>
-                        <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
-                            <CircleAlert color={color.label + 90} size={18} />
-                            <Label style={{ fontSize: 14, textAlign: 'center', marginLeft: 4, }}>Esse valor já foi adicionado em sua conta.</Label>
-                        </Row>
-                        <ButtonPR onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ alignSelf: 'center', }}>
-                            <LabelPR style={{ fontSize: 16, }}>Enviar nova nota fiscal</LabelPR>
-                        </ButtonPR>
+                            <ButtonPR onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ alignSelf: 'center', }}>
+                                <LabelPR style={{ fontSize: 16, }}>Enviar nova nota fiscal</LabelPR>
+                            </ButtonPR>
 
-                    </Column>
-                </MotiView>}
+                        </Column>
+                    </MotiView>}
+
             </Scroll>
         </Main>
     )
@@ -169,12 +228,8 @@ export default function ExtractSingleScreen({ id, type }) {
 const SkeletonList = () => {
     return (
         <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-            <Row style={{ justifyContent: 'space-between', marginHorizontal: 28, marginVertical: 22, alignItems: 'center', }}>
-                <Skeleton height={46} width={46} radius={100} colorMode='light' />
-                <Column style={{ width: 42, }} />
+            <Row style={{ justifyContent: 'center', marginHorizontal: 28, marginVertical: 22, alignItems: 'center', }}>
                 <Skeleton height={50} width={160} radius={8} colorMode='light' />
-                <Column style={{ width: 42, }} />
-                <Skeleton height={46} width={46} radius={100} colorMode='light' />
             </Row>
             <Skeleton height={160} width={160} radius={160} colorMode='light' />
             <Column style={{ height: 12, }} />

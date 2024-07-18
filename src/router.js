@@ -51,6 +51,7 @@ import NotafiscalSuccessAnonimoScreen from '@screens/tabs/notafiscal/anonimo/suc
 
 import ExtractScreen from '@screens/tabs/extract';
 import ExtractSingleScreen from '@screens/tabs/extract/single';
+import ExtractPaymentScreen from '@screens/tabs/extract/payment';
 
 import AccountScreen from '@screens/tabs/account';
 import AccountNotifyScreen from '@screens/tabs/account/notify';
@@ -89,7 +90,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='DonateSuccess'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
@@ -139,6 +140,7 @@ export default function Router() {
 
             <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
+            <Stack.Screen name="ExtractPayment" component={ExtractPaymentScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
 
             <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>

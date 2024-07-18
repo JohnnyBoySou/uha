@@ -10,7 +10,6 @@ import Header from '@components/header';
 export default function DonateScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [value, setvalue] = useState('30');
-    const [loading, setloading] = useState(false);
     const a = false
     const handleClick = (digit) => {
         if (digit === '0' && value === '0') {
@@ -61,13 +60,13 @@ export default function DonateScreen({ navigation, }) {
 
                     <Row style={{ paddingTop: 0, paddingBottom: 40, }}>
                         <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={300} transition={{ type: 'timing' }}>
-                            <Button onPress={() => { setvalue(10) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 10,00</Label></Button>
+                            <Button onPress={() => { setvalue('10') }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 10,00</Label></Button>
                         </MotiView>
                         <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={600} transition={{ type: 'timing' }}>
-                            <Button onPress={() => { setvalue(30) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, marginHorizontal: 12, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 30,00</Label></Button>
+                            <Button onPress={() => { setvalue('30') }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, marginHorizontal: 12, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 30,00</Label></Button>
                         </MotiView>
                         <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={900} transition={{ type: 'timing' }}>
-                            <Button onPress={() => { setvalue(50) }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 50,00</Label></Button>
+                            <Button onPress={() => { setvalue('50') }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderRadius: 100, backgroundColor: "#ffffff20", borderColor: "#ffffff80", }}><Label style={{ color: "#fff", fontFamily: 'Font_Medium', fontSize: 16, }}>R$ 50,00</Label></Button>
                         </MotiView>
                     </Row>
                     <MotiView from={{ opacity: 0, translateY: 30, }} animate={{ opacity: 1, translateY: 0, }} delay={500}>

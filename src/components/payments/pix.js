@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { Image, ActivityIndicator } from 'react-native'
-import { Column, Label, Title, Row, Button, LabelLI, ButtonPR } from '@theme/global';
+import { ActivityIndicator } from 'react-native'
+import { Column, Label, Title, Row, Button,  } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { Clipboard as Clip, CircleDashed, X } from 'lucide-react-native';
+import { Clipboard as Clip, X } from 'lucide-react-native';
 import * as Clipboard from 'expo-clipboard';
 import { payPix, getStatusPay } from '@api/request/payment/pay';
 import { MotiImage } from 'moti';
 import { useNavigation } from '@react-navigation/native';
 
 export default function PaymentPix({ item, modalPix }) {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color, } = useContext(ThemeContext);
     const [loading, setloading] = useState(true);
     const [data, setdata] = useState();
     const [clip, setclip] = useState(false);
@@ -28,7 +28,7 @@ export default function PaymentPix({ item, modalPix }) {
             setdata(res)
             statusPay()
             if (res.id) {
-                statusPay(); // Chamada inicial
+                statusPay(); 
                 intervalId.current = setInterval(() => {
                     statusPay();
                 }, 15000);
@@ -42,8 +42,8 @@ export default function PaymentPix({ item, modalPix }) {
 
     const statusPay = async () => {
         try {
-            //const res = await getStatusPay(data.id);
-            const res = {status: 'aprovado'}
+            const res = await getStatusPay(data.id);
+            //const res = {status: 'aprovado'}
             if (res.status === 'aprovado') {
                 setstatus('Pagamento aprovado');
                 clearInterval(intervalId.current);
@@ -61,7 +61,7 @@ export default function PaymentPix({ item, modalPix }) {
 
     useEffect(() => {
         fetchData();
-        return () => clearInterval(intervalId.current); // Limpar intervalo quando o componente for desmontado
+        return () => clearInterval(intervalId.current); 
     }, [item]);
 
     if (loading) return <Column style={{ height: 300, justifyContent: 'center', alignItems: 'center', }}>
@@ -70,7 +70,7 @@ export default function PaymentPix({ item, modalPix }) {
     return (
         <Column style={{ justifyContent: 'center', paddingHorizontal: 28, }}>
             <Title style={{ textAlign: 'center',  }}>Realize o pagamento</Title>
-            <Title style={{ fontSize: 16, lineHeight: 16, marginBottom: 18, marginTop: 8, textAlign: 'center', fontFamily: 'Font_Medium', }}>Status: {status}</Title>
+            <Title style={{ fontSize: 16, lineHeight: 16, marginBottom: 24, marginTop: 8, textAlign: 'center', fontFamily: 'Font_Medium', }}>Status: {status}</Title>
 
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                 <Row>

@@ -33,7 +33,7 @@ export default function DonateSuccessScreen({ navigation, }) {
                         <LabelPR style={{ fontFamily: font.bold, }}>Nova doação</LabelPR>
                     </ButtonPR>
                     <Column style={{ height: 12, }} />
-                    <ButtonOut onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', params: { type: 'Doações' } }) }} style={{ paddingHorizontal: 24, borderColor: color.secundary, }}>
+                    <ButtonOut onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', params: { type: 'Doações' } }) }} style={{ paddingHorizontal: 24, paddingVertical: 12, borderColor: color.secundary, }}>
                         <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Ver minhas doações</Label>
                     </ButtonOut>
                 </Column>

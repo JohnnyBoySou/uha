@@ -46,7 +46,7 @@ export default function DonateONGS({ item, handleOng }) {
                         <Button onPress={() => { setselectOng(item) }} disabled={selectOng?.id === item?.id} key={item?.id} style={{ marginVertical: 3, paddingHorizontal: 12, borderRadius: 12, paddingVertical: 12,  backgroundColor: item?.id === selectOng?.id ? color.blue + 30 : 'transparent', }}>
                             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                                 <Row style={{ alignItems: 'center', }}>
-                                    <Button onPress={() => { navigation.navigate('ONGSingle', { item: item, }) }} >
+                                    <Button onPress={() => { navigation.navigate('ONGSingle', { id: item.id, }) }} >
                                         <Image style={{ width: 64, height: 64, borderRadius: 12, backgroundColor: '#FFE0F6' }} source={{ uri: item?.img }} />
                                     </Button>
                                     <Column style={{ marginLeft: 20, }}>

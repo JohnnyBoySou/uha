@@ -1,10 +1,12 @@
 import styled from 'styled-components/native';
 import { TouchableRipple } from 'react-native-paper';
 
+
 export const Main = styled.SafeAreaView`
   flex: 1;
   background: ${props => props.theme.background};
 `
+
 export const Scroll = styled.ScrollView`
   padding-top: 50px;
   flex: 1;

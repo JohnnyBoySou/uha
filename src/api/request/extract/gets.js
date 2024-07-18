@@ -85,15 +85,13 @@ export async function getExtractRifas() {
 export async function getExtractSingle(type, id) {
     const BASE_URL = await getBaseURL()
     const token = await getToken()
-    const path = type === 'Notas fiscais' ? `/notas/single/${id}` : type === 'Transações' ? `/transacoes/single/${id}` : type === 'Doação' ? `/doacoes/single/${id}` : type === 'Rifas' ? `/rifas/single/${id}` : null
-    
+    const path = type === 'Notas fiscais' ? `/notas/single/${id}` : type === 'Transações' ? `/transacoes/single/${id}` : type === 'Doações' ? `/doacoes/single/${id}` : type === 'Rifas' ? `/rifas/single/${id}` : null
     try {
         const res = await axios.get(`${BASE_URL}/usuarios${path}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(res.data)
         return res.data;
     } catch (error) {
         console.log(error)
