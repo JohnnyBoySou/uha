@@ -6,7 +6,7 @@ import Header from '@components/header';
 import { ArrowLeft, ArrowRight, TriangleAlert, Mail, ArrowLeftRight, X, ImagePlus } from 'lucide-react-native';
 import { MotiView, AnimatePresence, MotiImage } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
-import { getNotifications , getSingleNotification} from '@request/user/notify';
+import { getNotifications, getSingleNotification } from '@request/user/notify';
 
 export default function NotifyScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -15,7 +15,10 @@ export default function NotifyScreen({ navigation, }) {
     const [showtabs, setshowtabs] = useState(true);
     const [cache, setcache] = useState();
     const [single, setsingle] = useState(false);
+    const [alerts, setalerts] = useState();
+
     const a = false;
+    
     const handleAlertas = () => {
         setshowtabs(false)
         setTimeout(() => {
@@ -35,23 +38,34 @@ export default function NotifyScreen({ navigation, }) {
         }, 600);
     }
 
-    const handleItem = (item) => {
-        getSingleNotification(item.id).then(res => {
-            setcache(res)
+    const handleItem = async (item) => {
+        setsingle(true)
+        try {
+            const res = await getSingleNotification(item.id)
+            console.log(res)
             setsingle(true)
-        })
+            setcache(res)
+        } catch (error) {
+            console.log(error)
+        } finally{
+            setloading(false)
+        }
     }
 
 
-    const [alerts, setalerts] = useState();
-    useEffect(()=> {
-        const fecthData = () => {
-            getNotifications().then(res => {
+    useEffect(() => {
+        const fecthData = async () => {
+            try {
+                const res = await getNotifications()
                 setalerts(res)
-            })
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setloading(false);
+            }
         }
         fecthData()
-    },[])
+    }, [])
 
 
 
@@ -60,15 +74,15 @@ export default function NotifyScreen({ navigation, }) {
 
 
     return (
-        <Main style={{backgroundColor: '#fff', }}>
+        <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
 
-                <Header title='Notificações' rose/>
+                <Header title='Notificações' rose />
                 <Row style={{ paddingHorizontal: margin.h, }}>
                     <AnimatePresence>
-                        {type != null && <MotiView  transition={{ duration: 500, type: 'timing'}} from={{ opacity: 0, translateX: -30, }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: 12, borderRadius: 8, }} >
+                        {type != null && <MotiView transition={{ duration: 500, type: 'timing' }} from={{ opacity: 0, translateX: -30, }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, }}><Button onPress={handleClean} rippleColor={color.secundary} style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: color.primary + 20, marginTop: 12, borderRadius: 8, }} >
                             <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                <Title style={{ color: color.primary, fontSize: 18, marginRight: 6, }}>{type}</Title>
+                                <Title style={{ color: color.primary, fontSize: 16, marginRight: 6, lineHeight: 18, fontFamily: 'Font_Bold' }}>{type}</Title>
                                 <X color={color.primary} />
                             </Row>
                         </Button></MotiView>}
@@ -77,23 +91,92 @@ export default function NotifyScreen({ navigation, }) {
 
                 {!single && <>
                     <AnimatePresence>
-                        {showtabs && <MotiView from={{ opacity: 0, translateX: -20, }} transition={{ duration: 200, type: 'timing'}} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20, }}><Column style={{ marginHorizontal: margin.h, marginVertical: 24, }}>
-                            <Button onPress={handleAlertas} style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 0, }}>
+                        {showtabs && <MotiView from={{ opacity: 0, translateX: -20, }} transition={{ duration: 200, type: 'timing' }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20, }}><Column style={{ marginHorizontal: margin.h, marginVertical: 24, }}>
+                            <Button onPress={handleAlertas} style={{ backgroundColor: color.primary+20, borderRadius: 12, padding: 12, marginBottom: 0, }}>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                        <Column style={{ backgroundColor: color.primary, padding: 18, borderRadius: 12, marginRight: 20, }}>
-                                            <TriangleAlert color="#fff" size={38} />
+                                        <Column style={{ backgroundColor: color.primary, padding: 14, borderRadius: 12, marginRight: 20, }}>
+                                            <TriangleAlert color="#fff" size={32} />
                                         </Column>
                                         <Column>
-                                            <Title style={{ fontSize: 20, }}>Alertas</Title>
-                                            <Label style={{ fontSize: 16, }}>Fique de olho em alterações</Label>
+                                            <Title style={{ fontSize: 16, lineHeight: 18, }}>Alertas</Title>
+                                            <Label style={{ fontSize: 12, lineHeight: 14, color: color.secundary+99, }}>Fique de olho em alterações</Label>
                                         </Column>
                                     </Row>
-                                    <ArrowRight size={24} color={color.title} />
+                                    <Column style={{ width: 36, height: 36, borderRadius: 100, backgroundColor: "#fff", justifyContent: 'center', alignItems: 'center',  }}>
+                                        <ArrowRight size={18} color={color.title} />
+                                    </Column>
                                 </Row>
                             </Button>
 
-                            {a && <>
+                          
+
+
+
+                        </Column></MotiView>}
+                    </AnimatePresence>
+
+                    <AnimatePresence>
+                        {type == 'Alertas' &&
+                            <MotiView from={{ opacity: 0, translateY: -20, }} animate={{ opacity: 1, translateY: 0 }} exit={{ opacity: 0, translateY: 20, }} transition={{ type: 'timing' }}>
+                                {loading ? <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 24, }} />
+                                    :
+                                    <MotiView from={{ opacity: 0, translateY: 20, display: 'none' }} animate={{ opacity: 1, translateY: 0, display: 'block' }} delay={500}>
+                                        <FlatList
+                                            style={{ marginHorizontal: margin.h, marginTop: 12, }}
+                                            data={alerts}
+                                            renderItem={({ item }) => <Card item={item} handleItem={() => handleItem(item)} />}
+                                            keyExtractor={(item) => item.id}
+                                        />
+                                    </MotiView>
+                                }
+                            </MotiView>}
+                    </AnimatePresence>
+                </>}
+
+                <AnimatePresence>
+                    {single && 
+                    <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20 }} transition={{ type: 'timing' }}>
+                        <Column style={{ marginHorizontal: margin.h, marginTop: 24, backgroundColor: '#f7f7f7', padding: 20, borderRadius: 12, }}>
+                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                                <Column style={{ paddingRight: 12, }}>
+                                    <Title style={{ fontSize: 18, lineHeight: 20, }}>{cache?.title}</Title>
+                                    <Label style={{ fontSize: 14, }}>{cache?.date} </Label>
+                                </Column>
+                                <Button onPress={() => setsingle(false)} style={{ padding: 6, backgroundColor: color.secundary, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                                    <X size={24} color="#fff" />
+                                </Button>
+                            </Row>
+                            <Label style={{ fontSize: 14, marginTop: 6, }}>{cache?.desc}</Label>
+                        </Column>
+                    </MotiView>}
+                </AnimatePresence>
+            </Scroll>
+
+
+        </Main>
+    )
+}
+
+
+const Card = ({ item, handleItem }) => {
+    const { color, font, margin } = useContext(ThemeContext);
+    return (
+        <Button onPress={handleItem} style={{ padding: 20, borderRadius: 12, borderWidth: 1, borderColor: "#d7d7d7", marginBottom: 12, }}>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
+                <Column style={{ justifyContent: 'center',  }}>
+                    <Title style={{ fontSize: 18, }}>{item.title}</Title>
+                    <Label style={{ fontSize: 14, lineHeight: 16, }}>{item.date}</Label>
+                </Column>
+                <Column style={{ width: 45, height: 45, backgroundColor: color.secundary+20, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
+                    <ArrowRight size={24} color={color.secundary} />
+                </Column>
+            </Row>
+        </Button>
+    )
+}
+
+/**  {a && <>
                                 <Button onPress={() => { settype('Mensagens') }} style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
                                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                                         <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
@@ -139,66 +222,4 @@ export default function NotifyScreen({ navigation, }) {
                                         <ArrowRight size={24} color={color.title} />
                                     </Row>
                                 </Button>
-                            </>}
-
-
-
-                        </Column></MotiView>}
-                    </AnimatePresence>
-
-                    <AnimatePresence>
-                        {type == 'Alertas' &&
-                            <MotiView from={{ opacity: 0, translateY: -20, }} animate={{ opacity: 1, translateY: 0 }} exit={{ opacity: 0, translateY: 20, }} transition={{type: 'timing'}}>
-                                {loading ? <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 24, }} />
-                                    :
-                                    <MotiView from={{ opacity: 0, translateY: 20, display: 'none' }} animate={{ opacity: 1, translateY: 0, display: 'block' }} delay={500}>
-                                        <FlatList
-                                            style={{ marginHorizontal: margin.h, marginTop: 12, }}
-                                            data={alerts}
-                                            renderItem={({ item }) => <Card item={item} handleItem={() => handleItem(item)} />}
-                                            keyExtractor={(item, index) => index.toString()}
-                                        />
-                                    </MotiView>
-                                }
-                            </MotiView>}
-                    </AnimatePresence>
-                </>}
-                <AnimatePresence>
-                    {single && <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20 }} transition={{type: 'timing'}}>
-                        <Column style={{ marginHorizontal: margin.h, marginTop: 24,  backgroundColor: '#fff', padding: 20, borderRadius: 12, }}>
-                            <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
-                                <Column style={{ paddingRight: 12, }}>
-                                    <Title style={{ fontSize: 18, lineHeight: 20, }}>{cache.title}</Title>
-                                    <Label style={{ fontSize: 14, }}>{cache.date} - Publicado em {cache.publish_date}</Label>
-                                </Column>
-                                <Button onPress={() => setsingle(false)} style={{ padding: 6, backgroundColor: color.secundary, borderRadius: 100, justifyContent: 'center', alignItems: 'center',  }}>
-                                    <X size={24} color="#fff" />
-                                </Button>
-                            </Row>
-                            <MotiImage source={{uri: cache?.img}} style={{ width: 300, height: 140, objectFit: 'cover', alignSelf: 'center', marginVertical: 12, borderRadius: 12,  }} />
-                            <Label style={{ fontSize: 14, marginTop: 6, }}>{cache?.desc}</Label>
-                        </Column>
-                    </MotiView>}
-                </AnimatePresence>
-            </Scroll>
-
-
-        </Main>
-    )
-}
-
-
-const Card = ({ item, handleItem }) => {
-    const { color, font, margin } = useContext(ThemeContext);
-    return (
-        <Button onPress={handleItem} >
-            <Row style={{ justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
-                <Column>
-                    <Title style={{ fontSize: 20, }}>{item.title}</Title>
-                    <Label style={{ fontSize: 16 }}>{item.date}</Label>
-                </Column>
-                <ArrowRight size={24} color="#111" />
-            </Row>
-        </Button>
-    )
-}
+                            </>} */

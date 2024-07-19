@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, } from 'react';
-import { ActivityIndicator, TextInput, Dimensions, Vibration, KeyboardAvoidingView } from 'react-native';
+import { ActivityIndicator, TextInput, Vibration } from 'react-native';
 import { Column, Label, Title, Row, Button, } from '@theme/global';
 import { payCredito, } from '@api/request/payment/pay';
 import { MotiImage, MotiView } from 'moti';

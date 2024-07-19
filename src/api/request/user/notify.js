@@ -1,10 +1,37 @@
 import axios from 'axios';
-import alerts from '@data/alerts/alerts';
-import alert_single from '@data/alerts/alert_single';
+import getToken  from '@hooks/getToken';
+import getBaseURL from '@hooks/getBaseUrl';
+
+
 
 export async function getNotifications(){
-    return alerts
+    const token = await getToken()
+    const BASE_URL = await getBaseURL()
+    try {
+      const res = await axios.get(`${BASE_URL}/usuarios/notificacoes`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      });
+      return res.data.data;
+  } catch (error) {
+      const err = JSON.parse(error.request.response);
+      throw new Error(err.message)
+    }
 }
+
 export async function getSingleNotification(id){
-    return alert_single.find(alert => alert.id === id);
+    const token = await getToken()
+    const BASE_URL = await getBaseURL()
+    try {
+      const res = await axios.get(`${BASE_URL}/usuarios/notificacao/${id}`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      });
+      return res.data;
+  } catch (error) {
+      const err = JSON.parse(error.request.response);
+      throw new Error(err.message)
+    }
 }
