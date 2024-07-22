@@ -1,6 +1,6 @@
 //main
 import React, { useContext, useState, useRef, useEffect, useCallback } from 'react';
-import { FlatList, ScrollView, Dimensions, BackHandler, RefreshControl, ActivityIndicator } from 'react-native';
+import { FlatList, ScrollView, Dimensions, BackHandler, StyleSheet, PanResponder, ActivityIndicator } from 'react-native';
 import { Main, Column, Label, Title, Row, SubLabel, Button, ButtonPR, LabelLI } from '@theme/global';
 
 //utils
@@ -17,6 +17,8 @@ import { Skeleton } from 'moti/skeleton';
 import BottomSheet, { BottomSheetScrollView, } from '@gorhom/bottom-sheet';
 import ExtractSingleScreen from './single';
 
+import { Image } from 'expo-image';
+
 //icons
 import { Info, QrCode, Smartphone, BadgePercent, ArrowUp, } from 'lucide-react-native';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -24,7 +26,19 @@ import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 //requests
 import { getExtractNotas, getExtractTransacao, getExtractDonate, getExtractRifas } from '@request/extract/gets';
 import { listUser } from '@api/request/user/user';
-import { Car } from 'lucide-react-native';
+
+
+import Animated, {
+    useAnimatedScrollHandler,
+    useSharedValue,
+    useAnimatedStyle,
+    withTiming,
+    interpolate,
+    withDelay,
+} from 'react-native-reanimated';
+
+
+import refreshIcon from '@imgs/logo_u.png';
 
 const { width, height } = Dimensions.get('window');
 
@@ -85,7 +99,7 @@ export default function ExtractScreen({ navigation, route }) {
             setLoading(true);
             fetchData();
         }
-    }, [isFocused, type, currentPage]);
+    }, [type, currentPage]);
 
 
     const [actionButton, setactionButton] = useState(false);
@@ -119,11 +133,15 @@ export default function ExtractScreen({ navigation, route }) {
         }
     };
 
-
-
+    const scrollPosition = useSharedValue(0);
+    const scrollHandler = useAnimatedScrollHandler({
+        onScroll: (event) => {
+            scrollPosition.value = event.contentOffset.y;
+        },
+    });
     const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = useCallback(async () => {
+    const onRefresh = async () => {
         setRefreshing(true);
         setLoading(true);
         try {
@@ -138,14 +156,98 @@ export default function ExtractScreen({ navigation, route }) {
         } catch (error) {
             console.error(error);
         } finally {
-            setRefreshing(false);
-            setLoading(false);
+            setTimeout(() => {
+                setRefreshing(false);
+                setLoading(false);
+                pullDownPosition.value = withTiming(0, { duration: 180 });
+            }, 2000);
         }
-    }, []);
+    }
+
+    const isReadyToRefresh = useSharedValue(false);
+    const pullDownPosition = useSharedValue(0);
+    const onPanRelease = () => {
+        pullDownPosition.value = withTiming(isReadyToRefresh.value ? 175 : 0, {
+            duration: 180,
+        });
+
+        if (isReadyToRefresh.value) {
+            isReadyToRefresh.value = false;
+            onRefresh()
+        }
+    };
+    const panResponderRef = React.useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: (event, gestureState) =>
+                scrollPosition.value <= 0 && gestureState.dy >= 0,
+            onPanResponderMove: (event, gestureState) => {
+                const maxDistance = 100;
+                pullDownPosition.value = Math.max(Math.min(maxDistance, gestureState.dy), 0);
+                pullDownPosition.value = Math.max(gestureState.dy, 0);
+
+                if (
+                    pullDownPosition.value >= maxDistance / 2 &&
+                    isReadyToRefresh.value === false
+                ) {
+                    isReadyToRefresh.value = true;
+                    console.log('Ready to refresh');
+                }
+
+                if (
+                    pullDownPosition.value < maxDistance / 2 &&
+                    isReadyToRefresh.value === true
+                ) {
+                    isReadyToRefresh.value = false;
+                    console.log('Will not refresh on release');
+                }
+            },
+            onPanResponderRelease: onPanRelease,
+            onPanResponderTerminate: onPanRelease,
+        })
+    );
+
+    const pullDownStyles = useAnimatedStyle(() => {
+        const translateY = Math.min(pullDownPosition.value, 50);
+        return {
+            transform: [
+                {
+                    height: translateY,
+                },
+            ],
+        };
+    });
+
+    const refreshContainerStyles = useAnimatedStyle(() => {
+        return {
+            height: pullDownPosition.value,
+        };
+    });
+
+    const refreshIconStyles = useAnimatedStyle(() => {
+        const scale = Math.min(1, Math.max(0, pullDownPosition.value / 75));
+
+        return {
+            opacity: refreshing
+                ? withDelay(100, withTiming(0, { duration: 20 }))
+                : Math.max(0, pullDownPosition.value - 25) / 50,
+            transform: [
+                {
+                    scaleX: refreshing ? withTiming(0.15, { duration: 120 }) : scale,
+                },
+                {
+                    scaleY: scale,
+                },
+                {
+                    rotate: `${pullDownPosition.value * 3}deg`,
+                },
+            ],
+        };
+    }, [refreshing]);
+
 
 
     return (
-        <Main style={{ backgroundColor: '#fff', }}>
+        <Main style={{ backgroundColor: '#fff', }} pointerEvents={refreshing ? 'none' : 'auto'}>
             {isFocused && <StatusBar style="light" backgroundColor={color.primary} animated={true} duration={100} />}
             <TopSheet
                 valueMin={150}
@@ -263,36 +365,41 @@ export default function ExtractScreen({ navigation, route }) {
             </AnimatePresence>
 
             <NavBar bts={bts} page={page} setpage={setpage} scrollTags={scrollTags} margin={margin} color={color} font={font} />
-            {loading ?
-                <SkeletonList /> :
-                <FlatList
-                    onRefresh={onRefresh}
-                    refreshing={refreshing}
 
-                    refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                        tintColor={color.primary}
-                        colors={['#303030']}
-                        style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}>
-                            {refreshing && <ActivityIndicator size={24} color={color.primary} /> }
-                    </RefreshControl>}
+            <Animated.View style={[styles.refreshContainer, refreshContainerStyles]}>
+                {refreshing ?
+                    <Column style={{ height: 200, backgroundColor: 'red', }}>
+                        <ActivityIndicator size="large" color={color.blue} />
+                    </Column>
+                    :
+                    <Column style={{ height: 200,  }}>
+                        <Animated.Image
+                            source={refreshIcon}
+                            style={[styles.refreshIcon, refreshIconStyles]}
+                        />
+                    </Column>
+                }
+            </Animated.View>
 
-                    ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
-                    data={selectData}
-                    keyExtractor={(item) => item.id}
-                    ListEmptyComponent={<Empty type={page} />}
-                    ref={scrollMain}
-                    initialNumToRender={5}
-                    showsVerticalScrollIndicator={false}
-                    onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
-                    ListFooterComponent={<Column style={{ height: 100, }} />}
-                    renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} handleSelect={handleSelect} />}
-                />}
+
+            <Animated.View style={pullDownStyles} {...panResponderRef.current.panHandlers}>
+                {loading ?
+                    <SkeletonList /> :
+                    <Animated.FlatList
+                        onScroll={scrollHandler}
+                        scrollEventThrottle={16}
+                        ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
+                        data={selectData}
+                        keyExtractor={(item) => item.id}
+                        ListEmptyComponent={<Empty type={page} />}
+                        ref={scrollMain}
+                        initialNumToRender={5}
+                        showsVerticalScrollIndicator={false}
+                        onScroll={(event) => { const scrolling = event.nativeEvent.contentOffset.y; if (scrolling > 20) { setactionButton(true); } else { setactionButton(false); } }}
+                        ListFooterComponent={<Column style={{ height: 100, }} />}
+                        renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} handleSelect={handleSelect} />}
+                    />}
+            </Animated.View>
 
             <BottomSheet onChange={handleAnimate} ref={modalSelect} index={0} snapPoints={[0.1, 0.99 * height]} containerStyle={{ zIndex: 99, }} handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
                 <BottomSheetScrollView style={{ marginHorizontal: margin.h, }}>
@@ -305,7 +412,27 @@ export default function ExtractScreen({ navigation, route }) {
 
 
 
-
+const styles = StyleSheet.create({
+    root: {
+        flex: 1,
+        backgroundColor: '#ffabe7',
+    },
+    refreshContainer: {
+        backgroundColor: '#f7f7f7',
+        height: 0,
+        borderRadius: 12,
+        justifyContent: 'center',
+        maxHeight: 200,
+        alignItems: 'center',
+    },
+    refreshIcon: {
+        width: 84,
+        height: 84,
+        objectFit: 'contain',
+        backgroundColor: "#FE25BD",
+        borderRadius: 100,
+    },
+});
 
 
 const NavBar = ({ bts, page, setpage, scrollTags, margin, color, font }) => {
@@ -492,3 +619,5 @@ const SkeletonList = () => {
         </Column>
     )
 }
+
+
