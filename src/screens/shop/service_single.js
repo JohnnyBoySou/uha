@@ -74,6 +74,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     const handleBuyService = async () => {
         try {
             setLoadingBuy(true);
+            setError()
             const res = await sendCodeService(item.id);
             const itm = {
                 date: res.create,
@@ -91,12 +92,13 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                 },
             };
 
-            setLoadingBuy(false);
-            setsuccess(true);
-            setError()
+            setTimeout(() => {
+                setLoadingBuy(false);
+                setsuccess(true);
+            }, 1000);
             setTimeout(() => {
                 navigation.navigate('ShopQRCode', { item: itm, })
-            }, 800);
+            }, 3000);
         } catch (err) {
             setLoadingBuy(false);
             setsuccess(false);

@@ -175,8 +175,8 @@ export default function Router() {
 function Tabs (){
     const route = useRoute();
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home'
-      return (
-          <Tab.Navigator initialRouteName="Home" 
+        return (
+            <Tab.Navigator initialRouteName="Home" 
               screenOptions={{
                 headerShown: false,
                 backBehavior: 'none',

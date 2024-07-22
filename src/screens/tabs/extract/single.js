@@ -9,7 +9,6 @@ import { Skeleton } from 'moti/skeleton';
 import { useNavigation } from '@react-navigation/native';
 
 export default function ExtractSingleScreen({ id, type }) {
-
     const { color, font, } = useContext(ThemeContext);
     const [item, setitem] = useState();
     const [ong, setong] = useState();
@@ -25,7 +24,7 @@ export default function ExtractSingleScreen({ id, type }) {
                 const res = await getExtractSingle(type, id);
                 setservice(res?.service);
                 setshop(res?.shop);
-                setong(res?.ong.length == 1 ? res?.ong[0] : res?.ong);
+                setong(res?.ong?.length == 1 ? res?.ong[0] : res?.ong);
                 setitem(res);
             } catch (error) {
                 console.log(error);
@@ -70,7 +69,7 @@ export default function ExtractSingleScreen({ id, type }) {
     if (loading) return <SkeletonList />
     return (
         <Main style={{ backgroundColor: '#fff', zIndex: 99, }}>
-            <Scroll style={{ paddingTop: 10, }}>
+           
                 <Column >
                     <Title style={{ color: color.secundary, fontSize: 20, lineHeight: 22, textAlign: 'center', }}>{item?.type}</Title>
                     <Label style={{ color: color.secundary, fontSize: 12, lineHeight: 14, textAlign: 'center', }}>{item?.date}</Label>
@@ -147,12 +146,12 @@ export default function ExtractSingleScreen({ id, type }) {
                                 <Button onPress={() => { navigation.navigate('ShopServiceSingle', { id: service.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 16, zIndex: 2, }} >
                                     <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
                                         <Row>
-                                            <MotiImage source={{ uri: service?.img }} style={{ width: 106, height: 106, borderRadius: 8, objectFit: 'cover', }} />
+                                            <MotiImage source={{ uri: service?.img }} style={{ width:  74, height: 74, borderRadius: 8, objectFit: 'cover', }} />
                                             <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
-                                                <Title style={{ fontSize: 18, }}>{service?.name.slice(0, 24)}</Title>
-                                                <Title style={{ color: color.primary, fontSize: 16, }}>{service?.pontos} pontos</Title>
-                                                <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
-                                                    <Title style={{ color: color.primary, fontSize: 12, }}>Comprar novamente</Title>
+                                                <Title style={{ fontSize: 16, lineHeight: 16, }}>{service?.name.slice(0, 24)}</Title>
+                                                <Title style={{ color: color.primary, fontSize: 12, lineHeight: 14, }}>{service?.pontos} pontos</Title>
+                                                <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 8, marginTop: 8, paddingHorizontal: 12, }}>
+                                                    <Title style={{ color: color.primary, fontSize: 12, lineHeight: 12, }}>Comprar novamente</Title>
                                                 </Button>
                                             </Column>
                                         </Row>
@@ -161,10 +160,10 @@ export default function ExtractSingleScreen({ id, type }) {
                                 <Button onPress={() => { navigation.navigate('ShopSingle', { id: shop.id, }) }} style={{ backgroundColor: '#f7f7f7', borderRadius: 16, paddingTop: 30, marginTop: -30, marginBottom: 10, marginHorizontal: 14, }} >
                                     <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
                                         <Row>
-                                            <MotiImage source={{ uri: shop?.img }} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover', }} />
+                                            <MotiImage source={{ uri: shop?.img }} style={{ width: 46, height: 46, borderRadius: 8, objectFit: 'cover', }} />
                                             <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
-                                                <Title style={{ fontSize: 18, }}>{shop?.name.slice(0, 24)}</Title>
-                                                <Label style={{ fontSize: 14, color: color.secundary + 99, }}>Ver mais</Label>
+                                                <Title style={{ fontSize: 16, lineHeight: 18, }}>{shop?.name.slice(0, 24)}</Title>
+                                                <Label style={{ fontSize: 12, color: color.secundary + 99, lineHeight: 12, }}>Ver mais</Label>
                                             </Column>
                                         </Row>
                                         <Column style={{ borderTopLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', bottom: 0, right: 0, }}>
@@ -174,7 +173,7 @@ export default function ExtractSingleScreen({ id, type }) {
                                 </Button>
                             </Column>
                         </Column>
-                        <Column >
+                        <Column>
                             {item?.status === 'Aguardando' && <>
                                 <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
                                     <CircleAlert color={color.label + 90} size={18} />
@@ -219,7 +218,7 @@ export default function ExtractSingleScreen({ id, type }) {
                         </Column>
                     </MotiView>}
 
-            </Scroll>
+            
         </Main>
     )
 }

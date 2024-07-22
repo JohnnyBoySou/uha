@@ -1,6 +1,6 @@
 //main
 import React, { useContext, useState, useRef, useEffect, useCallback } from 'react';
-import { FlatList, ScrollView, Dimensions, BackHandler } from 'react-native';
+import { FlatList, ScrollView, Dimensions, BackHandler, RefreshControl, ActivityIndicator } from 'react-native';
 import { Main, Column, Label, Title, Row, SubLabel, Button, ButtonPR, LabelLI } from '@theme/global';
 
 //utils
@@ -8,7 +8,7 @@ import { useIsFocused, useNavigation, useFocusEffect } from '@react-navigation/n
 import { ThemeContext } from 'styled-components/native';
 
 //components
-import { AnimatePresence, MotiView } from 'moti';
+import { AnimatePresence, MotiImage, MotiView } from 'moti';
 import { LinearGradient } from 'expo-linear-gradient';
 import Avatar from '@components/avatar';
 import TopSheet from '@components/topsheet';
@@ -24,6 +24,7 @@ import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 //requests
 import { getExtractNotas, getExtractTransacao, getExtractDonate, getExtractRifas } from '@request/extract/gets';
 import { listUser } from '@api/request/user/user';
+import { Car } from 'lucide-react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -112,11 +113,35 @@ export default function ExtractScreen({ navigation, route }) {
         if (index === 0) {
             console.log(isOpen)
             setisOpen(false);
-        }else if(index === 1){
+        } else if (index === 1) {
             console.log(isOpen)
             setisOpen(true);
         }
     };
+
+
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        setLoading(true);
+        try {
+            const us = await listUser();
+            const tr = await getExtractTransacao();
+            const nt = await getExtractNotas();
+            const dn = await getExtractDonate();
+            setdoacoes(dn)
+            setuser(us)
+            setnotas(nt)
+            settransacao(tr)
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setRefreshing(false);
+            setLoading(false);
+        }
+    }, []);
 
 
     return (
@@ -238,9 +263,25 @@ export default function ExtractScreen({ navigation, route }) {
             </AnimatePresence>
 
             <NavBar bts={bts} page={page} setpage={setpage} scrollTags={scrollTags} margin={margin} color={color} font={font} />
-                {loading ?
+            {loading ?
                 <SkeletonList /> :
                 <FlatList
+                    onRefresh={onRefresh}
+                    refreshing={refreshing}
+
+                    refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        tintColor={color.primary}
+                        colors={['#303030']}
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                            {refreshing && <ActivityIndicator size={24} color={color.primary} /> }
+                    </RefreshControl>}
+
                     ListHeaderComponent={<Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />}
                     data={selectData}
                     keyExtractor={(item) => item.id}
@@ -261,6 +302,11 @@ export default function ExtractScreen({ navigation, route }) {
         </Main>
     )
 }
+
+
+
+
+
 
 const NavBar = ({ bts, page, setpage, scrollTags, margin, color, font }) => {
     return (
@@ -311,7 +357,7 @@ const Empty = ({ type }) => {
 const CardExtrato = ({ item, onLong, type, handleSelect }) => {
     const { value, status, label, name, date, created_at, Status } = item
     const { color, margin } = useContext(ThemeContext);
-    
+
     const formatValue = (val) => {
         return parseInt(val).toLocaleString('pt-BR');
     };

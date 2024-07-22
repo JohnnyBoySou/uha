@@ -102,6 +102,7 @@ export default function HomeScreen({ navigation, }) {
                     <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: color.secundary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
                         <Label style={{ fontFamily: font.bold, color: color.secundary, fontSize: 16, }}>Central de ajuda</Label>
                     </Button>
+                    <Column style={{width: 24, }} />
                     <Button onPress={() => { navigation.navigate('Donate',) }} style={{ backgroundColor: color.primary + 20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, }}>
                         <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
                     </Button>
