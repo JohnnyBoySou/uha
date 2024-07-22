@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
-import { ArrowLeft, ArrowRight, TriangleAlert, Mail, ArrowLeftRight, X, ImagePlus } from 'lucide-react-native';
-import { MotiView, AnimatePresence, MotiImage } from 'moti';
+import { ArrowRight, TriangleAlert, X } from 'lucide-react-native';
+import { MotiView, AnimatePresence } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
 import { getNotifications, getSingleNotification } from '@request/user/notify';
 
@@ -42,7 +42,6 @@ export default function NotifyScreen({ navigation, }) {
         setsingle(true)
         try {
             const res = await getSingleNotification(item.id)
-            console.log(res)
             setsingle(true)
             setcache(res)
         } catch (error) {

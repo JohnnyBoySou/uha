@@ -8,7 +8,7 @@ import { View, LogBox } from 'react-native';
 import Router from './src/router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import light from './src/theme/light';
-
+import dark from './src/theme/dark';
 preventAutoHideAsync();
 
 export default function App() {

@@ -12,7 +12,7 @@ const { width, height } = Dimensions.get('window');
 export default function NotafiscalScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     return (
-        <Main style={{ backgroundColor: '#fff', }}>
+        <Main style={{ backgroundColor: color.background, }}>
             <StatusBar style="dark" backgroundColor="#fff" animated />
             <Scroll>
                 <Header title="Nota fiscal" rose />

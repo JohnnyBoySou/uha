@@ -34,7 +34,7 @@ export default function AccountScreen({ navigation, }) {
     const [dark, setdark] = useState(false);
 
     return (
-        <Main style={{ backgroundColor: '#fff', }}>
+        <Main style={{ backgroundColor: color.background, }}>
             <StatusBar style="dark" backgroundColor="#fff" animated />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>

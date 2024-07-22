@@ -4,8 +4,7 @@ import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import { TextInput, FlatList, Image, ActivityIndicator } from 'react-native';
 import { Search, CircleHelp } from 'lucide-react-native';
-import { getSearch } from '@api/request/search';
-import CardOffers from '@components/cardOffers';
+import { getSearch } from '@api/request/search'; 
 
 export default function SearchScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -32,7 +31,7 @@ export default function SearchScreen({ navigation, route }) {
         }
     }
     return (
-        <Main style={{ backgroundColor: "#fff", }}>
+        <Main style={{ backgroundColor: color.background, }}>
             <Scroll>
                 <Header title="Pesquisar" rose />
                 <Column style={{ marginHorizontal: margin.h, marginVertical: 20, flex: 1, }}>

@@ -17,8 +17,8 @@ export const ShopsCards = ({ data, loading }) => {
         return <LoadShops />;
     }
     return (
-        <Column style={{ backgroundColor: color.background }}>
-            <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, backgroundColor: color.background }}>
+        <Column style={{ }}>
+            <Column style={{ paddingHorizontal: margin.h, paddingTop: 20, paddingBottom: 15, }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                     <Title style={{ fontSize: 22 }}>Estabelecimentos</Title>
                     <Button onPress={() => { navigation.navigate('Shop') }} style={{ backgroundColor: color.primary + 20, borderRadius: 100, paddingVertical: 6, paddingHorizontal: 12 }}>
@@ -27,7 +27,7 @@ export const ShopsCards = ({ data, loading }) => {
                 </Row>
             </Column>
             <FlatList
-                style={{ backgroundColor: color.background }}
+                style={{}}
                 data={memoizedData}
                 ListFooterComponent={<Column style={{ width: 28 }} />}
                 ListHeaderComponent={<Column style={{ width: 28 }} />}

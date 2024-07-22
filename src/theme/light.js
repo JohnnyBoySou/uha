@@ -1,5 +1,6 @@
 export default{
   background: "#FFF2E3",
+  bg: '#FFFFFF',
   color: {
     primary: "#FE25BD",
     secundary: "#5C0D45",
@@ -14,7 +15,7 @@ export default{
     title: "#111111",
     label: "#5E5E5E",
     off: '#00000020',
-    background: '#FFF2E3',
+    background: '#FFFFFF',
     text: '#FFF2E3',
   },
   size: {

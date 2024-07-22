@@ -32,7 +32,7 @@ import { useNavigation } from '@react-navigation/native';
 const { width } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation, }) {
-    const { color, font, margin, } = useContext(ThemeContext);
+    const { color, font, margin, background} = useContext(ThemeContext);
 
     const [offerS, setOffers] = useState([]);
     const [shopS, setShops] = useState([]);
@@ -89,24 +89,24 @@ export default function HomeScreen({ navigation, }) {
                 </Button>
                 <MenuHandle />
                 <Carrousel />
-                <Column style={{ backgroundColor: color.background, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
+                <Column style={{ backgroundColor: background, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
                     <OffersCards data={offers} loading={loading} />
                     <ShopsCards data={shops} loading={loading} />
                     <Donate />
                     <ServicesCards data={services} loading={loading} />
                     <ONGSCards data={ongs} loading={loading} />
                     <Categorias />
-                </Column>
 
-                <Row style={{ justifyContent: 'space-evenly', alignItems: 'center', paddingHorizontal: margin.h, backgroundColor: color.background, paddingBottom: 100, paddingTop: 10, }}>
-                    <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: color.secundary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
-                        <Label style={{ fontFamily: font.bold, color: color.secundary, fontSize: 16, }}>Central de ajuda</Label>
-                    </Button>
-                    <Column style={{width: 24, }} />
-                    <Button onPress={() => { navigation.navigate('Donate',) }} style={{ backgroundColor: color.primary + 20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, }}>
-                        <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
-                    </Button>
-                </Row>
+                    <Row style={{ justifyContent: 'space-evenly', alignItems: 'center', paddingHorizontal: margin.h, paddingBottom: 100, paddingTop: 10, }}>
+                        <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: color.secundary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
+                            <Label style={{ fontFamily: font.bold, color: color.secundary, fontSize: 16, }}>Central de ajuda</Label>
+                        </Button>
+                        <Column style={{width: 24, }} />
+                        <Button onPress={() => { navigation.navigate('Donate',) }} style={{ backgroundColor: color.primary + 20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, }}>
+                            <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
+                        </Button>
+                    </Row>
+                </Column>
 
                 <Column style={{ height: 50, }} />
             </Scroll>
@@ -151,7 +151,7 @@ const Categorias = () => {
     }, [transformIcon]);
     if(loading) return <ActivityIndicator size="large" color={color.primary} />;
     return (
-        <Column style={{ paddingHorizontal: margin.h, backgroundColor: color.background, paddingTop: 20 }}>
+        <Column style={{ paddingHorizontal: margin.h,  paddingTop: 20 }}>
             <Title style={{ fontSize: 22 }}>Categorias</Title>
             <FlatList
                 data={categories}
@@ -260,7 +260,7 @@ const Donate = () => {
     ], []);
 
     return (
-        <Column style={{ backgroundColor: color.background, paddingTop: 30, paddingBottom: 2, marginBottom: -2 }}>
+        <Column style={{ paddingTop: 30, paddingBottom: 2, marginBottom: -2 }}>
             <Title style={{ marginLeft: 28, marginBottom: 14, fontSize: 22 }}>Doe anonimamente</Title>
             <FlatList
                 ref={flatListRef}
