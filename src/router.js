@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator, TransitionPresets, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute } from '@react-navigation/native';
+//import { createNativeStackNavigator, TransitionPresets } from '@react-navigation/native-stack';
 
 import OnboardingScreen from '@screens/auth/onboarding';
 import AuthLoginScreen from '@screens/auth/login';
@@ -78,7 +79,11 @@ import QuestionsChatScreen from '@screens/questions/chat';
 import QuestionsChatStatusScreen from '@screens/questions/chat_status';
 
 import RankingScreen from '@screens/ranking';
+import ComunidadeScreen from '@screens/comunidade';
+import StickersScreen from '@screens/comunidade/stickers';
+import StickerSingleScreen from '@screens/comunidade/sticker_single';
 
+//const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -92,81 +97,84 @@ export default function Router() {
     <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
           
-            <Stack.Screen name="Async" component={AsyncStaticScreen} options={{...TransitionPresets.RevealFromBottomAndroid   , }}/>
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
-            <Stack.Screen name="AuthLogin" component={AuthLoginScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
+            <Stack.Screen name="Async" component={AsyncStaticScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="Onboarding" component={OnboardingScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="AuthLogin" component={AuthLoginScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Tabs" component={Tabs} options={{...TransitionPresets.SlideFromRightIOS  ,  backBehavior: 'none',}}/>
+            <Stack.Screen name="Tabs" component={Tabs} options={{ backBehavior: 'none',}} />
 
-            <Stack.Screen name="Notify" component={NotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Share" component={ShareScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
-            <Stack.Screen name="Recibo" component={ReciboScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="Favorites" component={FavoritesScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Notify" component={NotifyScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="Share" component={ShareScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="Recibo" component={ReciboScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="Favorites" component={FavoritesScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
             
-            <Stack.Screen name="CategorySingle" component={CategorySingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="CategorySingle" component={CategorySingleScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Shop" component={ShopScreen} options={{...TransitionPresets.SlideFromRightIOS  , }}/>
-            <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ShopSingle" component={ShopSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ShopQRCode" component={ShopQRCodeScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ShopOffers" component={ShopOffersScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Shop" component={ShopScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ShopServiceSingle" component={ShopServiceSingleScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ShopSingle" component={ShopSingleScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ShopQRCode" component={ShopQRCodeScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ShopOffers" component={ShopOffersScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Ranking" component={RankingScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Ranking" component={RankingScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="Comunidade" component={ComunidadeScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="Stickers" component={StickersScreen} options={{ ...TransitionPresets.SlideFromRightIOS}} />
+            <Stack.Screen name="StickerSingle" component={StickerSingleScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Donate" component={DonateScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="DonateHide" component={DonateHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="DonateSuccessHide" component={DonateSuccessHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="DonateSuccess" component={DonateSuccessScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="DonateCertificado" component={DonateCertificadoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Donate" component={DonateScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="DonateValue" component={DonateValueScreen} options={{ ...TransitionPresets.SlideFromRightIOS}} />
+            <Stack.Screen name="DonateHide" component={DonateHideScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="DonateSuccessHide" component={DonateSuccessHideScreen} options={{ ...TransitionPresets.SlideFromRightIOS}} />
+            <Stack.Screen name="DonateSuccess" component={DonateSuccessScreen} options={{ ...TransitionPresets.SlideFromRightIOS}} />
+            <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="DonateCertificado" component={DonateCertificadoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="PayBoleto" component={PayBoletoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="PayBoleto" component={PayBoletoScreen} />
 
-            <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Notafiscal" component={NotafiscalScreen} />
+            <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} />
 
-            <Stack.Screen name="NotafiscalSendAnonimo" component={NotafiscalSendAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="NotafiscalONGSAnonimo" component={NotafiscalONGSAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="NotafiscalSendAnonimo" component={NotafiscalSendAnonimoScreen} />
+            <Stack.Screen name="NotafiscalONGSAnonimo" component={NotafiscalONGSAnonimoScreen} />
 
-            <Stack.Screen name="NotafiscalSuccessAnonimo" component={NotafiscalSuccessAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="NotafiscalErrorAnonimo" component={NotafiscalErrorAnonimoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="NotafiscalSuccessAnonimo" component={NotafiscalSuccessAnonimoScreen} />
+            <Stack.Screen name="NotafiscalErrorAnonimo" component={NotafiscalErrorAnonimoScreen} />
 
 
-            <Stack.Screen name="NotafiscalSelect" component={NotafiscalSelectScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="NotafiscalSelect" component={NotafiscalSelectScreen} />
+            <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} />
+            <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} />
+            <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} />
 
-            <Stack.Screen name="Extract" component={ExtractScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{...TransitionPresets.ModalPresentationIOS   , }}/>
-            <Stack.Screen name="ExtractPayment" component={ExtractPaymentScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Extract" component={ExtractScreen} />
+            <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen}/>
+            <Stack.Screen name="ExtractPayment" component={ExtractPaymentScreen} />
 
-            <Stack.Screen name="Account" component={AccountScreen} options={{...TransitionPresets.SlideFromRightIOS, }}/>
-            <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="AccountAccess" component={AccountAccessInfoScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="AccountTerms" component={AccountTermsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="AccountReset" component={AccountResetScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Account" component={AccountScreen} />
+            <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} />
+            <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
+            <Stack.Screen name="AccountAccess" component={AccountAccessInfoScreen} />
+            <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} />
+            <Stack.Screen name="AccountTerms" component={AccountTermsScreen} />
+            <Stack.Screen name="AccountReset" component={AccountResetScreen} />
 
-            <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ONGList" component={ONGListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ONGS" component={ONGSScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="ONGCategory" component={ONGCategoryScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="ONGSingle" component={ONGSingleScreen} />
+            <Stack.Screen name="ONGList" component={ONGListScreen} />
+            <Stack.Screen name="ONGS" component={ONGSScreen} />
+            <Stack.Screen name="ONGCategory" component={ONGCategoryScreen} />
 
-            <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RaspadinhasShop" component={RaspadinhasShopScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} />
+            <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} />
+            <Stack.Screen name="RaspadinhasShop" component={RaspadinhasShopScreen} />
 
-            <Stack.Screen name="Rifas" component={RifasScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RifasSingle" component={RifasSingleScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="RifasBuy" component={RifasBuyScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Rifas" component={RifasScreen} />
+            <Stack.Screen name="RifasSingle" component={RifasSingleScreen} />
+            <Stack.Screen name="RifasBuy" component={RifasBuyScreen} />
 
-            <Stack.Screen name="Questions" component={QuestionsScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="QuestionsChat" component={QuestionsChatScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
-            <Stack.Screen name="QuestionsChatStatus" component={QuestionsChatStatusScreen} options={{...TransitionPresets.SlideFromRightIOS   , }}/>
+            <Stack.Screen name="Questions" component={QuestionsScreen} />
+            <Stack.Screen name="QuestionList" component={QuestionListScreen} />
+            <Stack.Screen name="QuestionsChat" component={QuestionsChatScreen} />
+            <Stack.Screen name="QuestionsChatStatus" component={QuestionsChatStatusScreen} />
         </Stack.Navigator>
     </NavigationContainer>
    );
@@ -252,16 +260,12 @@ function Tabs (){
   }
   
 
-  /**
-   Transitions:
-      ModalSlideFromBottomIOS
-      SlideFromRightIOS
-      SlideFromRightIOS
-      FadeFromBottomAndroid 
-      RevealFromBottomAndroid
-      ScaleFromCenterAndroid 
-      DefaultTransition 
-      ModalTransition
-
-
+  /*
+  fade
+  fade_from_bottom
+  flip: flip the screen, requires presentation: "modal" (iOS only)
+  simple_push
+  slide_from_bottom
+  slide_from_right
+  slide_from_left
   */

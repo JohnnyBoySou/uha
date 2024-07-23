@@ -11,6 +11,7 @@
         "@hooks/*": ["src/hooks/*"],
         "@theme/*": ["src/theme/*"],
         "@imgs/*": ["src/assets/imgs/*"],
+        "@stk/*": ["src/assets/stickers/*"],
         "@anim/*": ["src/assets/anim/*"],
         "@icons/*": ["src/assets/icones/*"],
         "@lottie/*": ["src/assets/lottie/*"],

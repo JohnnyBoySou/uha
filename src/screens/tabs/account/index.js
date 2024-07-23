@@ -9,7 +9,7 @@ import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, H
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -68,12 +68,12 @@ export default function AccountScreen({ navigation, }) {
                                 <SubLabel>ONGs</SubLabel>
                             </Column>
                         </Button>
-                        <Button onPress={() => { navigation.navigate('Shop') }} style={{ flexGrow: 1, }}>
+                        <Button onPress={() => { navigation.navigate('Stickers') }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20, }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                <ShoppingBag color={color.primary} size={32} strokeWidth={2} />
+                                <MaterialCommunityIcons name="sticker-emoji" size={32} color={color.primary}/>
                                 </Column>
-                                <SubLabel>Shop</SubLabel>
+                                <SubLabel>Stickers</SubLabel>
                             </Column>
                         </Button>
                         <Button onPress={() => { navigation.navigate('Favorites') }} style={{ flexGrow: 1, }}>

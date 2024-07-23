@@ -354,7 +354,6 @@ export default function ExtractScreen({ navigation, route }) {
 
             <Animated.View style={[{maxHeight: 100, borderTopLeftRadius: 12, borderTopRightRadius: 12, marginHorizontal: 28,  marginBottom: refreshing ? 50 : 0, backgroundColor: refreshing ? color.blue : color.primary}, refreshContainerStyles]}>
                 {refreshing ?
-
                     <Column style={{height: 100,  borderRadius: 12, }}>
                         <Column style={{ height: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', borderTopLeftRadius: 12, borderTopRightRadius: 12, }}>
                             <ActivityIndicator size="large" color="#fff" />
@@ -397,25 +396,6 @@ export default function ExtractScreen({ navigation, route }) {
         </Main>
     )
 }
-
-
-
-const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        backgroundColor: '#ffabe7',
-    },
-    refreshContainer: {
-        backgroundColor: '#f7f7f7',
-        borderRadius: 12,
-        justifyContent: 'center',
-        maxHeight: 100,
-        alignItems: 'center',
-    },
-    refreshIcon: {
-       
-    },
-});
 
 
 const NavBar = ({ bts, page, setpage, scrollTags, margin, color, font }) => {

@@ -157,7 +157,6 @@ export const ButtonIcon = styled.View`
 export const Label = styled.Text`
   color: ${props => props.theme.color.label};
   font-size: 18px;
-  line-height: 20px;
   font-family: ${props => props.theme.font.book};
 `;
 
@@ -174,7 +173,6 @@ export const SubLabel = styled.Text`
 export const Title = styled.Text`
   color: ${props => props.theme.color.secundary};
   letter-spacing: -.5px;
-  line-height: 26px;
   font-size: 24px;
   font-family: ${props => props.theme.font.bold};
 `;
