@@ -83,6 +83,7 @@ import RankingScreen from '@screens/ranking';
 import ComunidadeScreen from '@screens/comunidade';
 import StickersScreen from '@screens/comunidade/stickers';
 import StickerSingleScreen from '@screens/comunidade/sticker_single';
+import AboutScreen from '@screens/geral/about';
 
 //const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -96,7 +97,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Certificate'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
@@ -108,6 +109,8 @@ export default function Router() {
             <Stack.Screen name="Share" component={ShareScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
             <Stack.Screen name="Recibo" component={ReciboScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
             <Stack.Screen name="Favorites" component={FavoritesScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            
+            <Stack.Screen name="About" component={AboutScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
             
             <Stack.Screen name="CategorySingle" component={CategorySingleScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
