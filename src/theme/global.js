@@ -155,7 +155,7 @@ export const ButtonIcon = styled.View`
 
 
 export const Label = styled.Text`
-  color: ${props => props.theme.color.label};
+  color: ${props => props.theme.color.secundary+99};
   font-size: 18px;
   font-family: ${props => props.theme.font.book};
 `;

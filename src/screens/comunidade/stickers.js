@@ -1,94 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Main, Scroll, Column, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Plus } from 'lucide-react-native';
 import { MotiImage } from 'moti';
+import { Skeleton } from 'moti/skeleton';
 import Header from '@components/header';
-import { FlatList } from 'react-native';
+import { FlatList, StyleProp } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Check from '@components/check';
 import { StatusBar } from 'expo-status-bar';
+import { getStickers } from '@api/request/user/stickers';
 
 export default function StickersScreen({ navigation, }) {
     const { color, margin, font, background } = useContext(ThemeContext);
     const [porcentageView, setporcentageView] = useState(false);
-    const libs = [
-        {
-            id: 1,
-            name: 'Animal',
-            image: require('@stk/animal.png'),
-            bg: "#ffb800",
-            total: 30,
-            receive: 12,
-            cl: true,
-        },
-        {
-            id: 2,
-            name: 'Social',
-            image: require('@stk/animal.png'),
-            bg: "#efbbe0",
-            total: 20,
-            receive: 6,
-        },
-        {
-            id: 3,
-            name: 'Climática',
-            image: require('@stk/climatica.png'),
-            bg: "#FF2E00",
-            total: 20,
-            receive: 15,
-            cl: true,
-        },
-        {
-            id: 4,
-            name: 'LGBT+',
-            image: require('@stk/lgbt.png'),
-            bg: "#5C0D45",
-            total: 20,
-            receive: 1,
-            cl: true,
-        },
-        
-        
-    ]
-    const libs2 = [
-        {
-            id: 10,
-            name: 'Ambiental',
-            image: require('@stk/ambiental.png'),
-            bg: "#19ac42",
-            total: 20,
-            receive: 10,
-            cl: true,
-        },
-        {
-            id: 11,
-            name: 'Mulheres',
-            image: require('@stk/mulher.png'),
-            bg: "#ff26bd",
-            total: 30,
-            receive: 13,
-            cl: true,
-        },
-        {
-            id: 12,
-            name: 'Desigualdade \nracial',
-            image: require('@stk/diversidade.png'),
-            bg: "#411b1b",
-            total: 15,
-            receive: 6,
-            cl: true,
-        },
-        {
-            id: 13,
-            name: 'PCD',
-            image: require('@stk/pcd.png'),
-            bg: "#9747FF",
-            total: 13,
-            receive: 6,
-            cl: true,
-        },
-    ]
+    const [data, setdata] = useState([]);
+    const [loading, setloading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await getStickers();
+                setdata(res);
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setloading(false)
+            }
+        }
+        fetchData();
+    }, []);
 
     return (
         <Main>
@@ -110,6 +51,9 @@ export default function StickersScreen({ navigation, }) {
                             </Row>
                         </Button>
                     </Row>
+
+
+                    {loading ? <SkeletonList /> :
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 20, }}>
                             <Column style={{ flexGrow: 2, }}>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center',  backgroundColor:"#fff", borderRadius: 16, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 16, }}>
@@ -119,36 +63,65 @@ export default function StickersScreen({ navigation, }) {
                                 </Button>
                                 </Row>
                             <FlatList
-                                data={libs}
+                                data={data?.slice(0, 4)}
                                 renderItem={({ item, index }) => <CardSticker item={item} index={index} bar={porcentageView}/>}
                                 keyExtractor={item => item.id}
                                 />
                             </Column>
                             <Column style={{width: 12, }} />
                             <FlatList
-                                data={libs2}
+                                data={data?.slice(4, 8)}
                                 renderItem={({ item , index}) => <CardSticker  item={item} bar={porcentageView} index={index}/>}
                                 keyExtractor={item => item.id}
                             />
-                            
-                      
-                    </Row>
+                    </Row>}
+
+
                 </Column>
                 <Column style={{ height: 60, }} />
             </Scroll>
         </Main>
     )
 }
+
+
+const SkeletonList = () => {
+return(
+    <Row style={{ marginVertical: 20, justifyContent: 'space-between', alignSelf: 'center', }}>
+        <Column style={{ flexGrow: 1, }}>
+            <Skeleton height={60} width={150} radius={12} colorMode='light' />
+            <Column style={{height: 16 }} />
+            <Skeleton height={200} width={150} radius={12} colorMode='light' />
+            <Column style={{height: 16 }} />
+            <Skeleton height={200} width={150} radius={12} colorMode='light' />
+            <Column style={{height: 16 }} />
+            <Skeleton height={200} width={150} radius={12} colorMode='light' />
+        </Column>
+        <Column style={{ flexGrow: 1, }}>
+            <Skeleton height={220} width={150} radius={12} colorMode='light' />
+            <Column style={{height: 16 }} />
+            <Skeleton height={220} width={150} radius={12} colorMode='light' />
+            <Column style={{height: 16 }} />
+            <Skeleton height={220} width={150} radius={12} colorMode='light' />
+        </Column>
+    </Row>
+)}
+
+
+
+
+
+
 const CardSticker = ({ item, index, bar }) => {
-    const { id, name, image, bg, total, receive, cl} = item;
+    const { id, name, img, bg, total, receive, cl} = item;
     const navigation = useNavigation();
     const { color, margin, font} = useContext(ThemeContext);
     const porcentage = (receive / total) * 100;
    
     return (
-        <Button onPress={() => { navigation.navigate('StickerSingle', { id: id, name: name, image: image, bg: bg, total: total, receive: receive }) }} style={{ flexGrow: 1, backgroundColor: bg, borderRadius: 16, padding: 16, marginBottom: 12, }}>
+        <Button onPress={() => { navigation.navigate('StickerSingle', { id: id, name: name, image: img, bg: bg, total: total, receive: receive }) }} style={{ flexGrow: 1, backgroundColor: bg, borderRadius: 16, padding: 16, marginBottom: 12, }}>
             <Column>
-                <MotiImage from={{ opacity: 0, scale: 0, rotateZ: '360deg' }} animate={{ opacity: 1, scale: 1, rotateZ: '0deg' }} delay={index * 300} style={{ width: 86, height: 86, objectFit: 'cover', alignSelf: 'center' }} source={image} />
+                <MotiImage from={{ opacity: 0, scale: 0, rotateZ: '360deg' }} animate={{ opacity: 1, scale: 1, rotateZ: '0deg' }} delay={index * 300} style={{ width: 86, height: 86, objectFit: 'cover', alignSelf: 'center' }} source={img} />
                 <Title style={{ fontSize: 18, lineHeight: 20, marginVertical: 6, color: cl ? "#fff" : color.secundary,  }}>{name} {bar ? porcentage.toFixed(0) + '%' : ''}</Title>
                 
                 {bar ? 
