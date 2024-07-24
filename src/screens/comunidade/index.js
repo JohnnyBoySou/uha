@@ -13,6 +13,8 @@ export default function ComunidadeScreen({ navigation, }) {
     return(
         <Main>
             <Scroll>
+                <Header title="Comunidade" />
+                <Column></Column>
 
             </Scroll>
         </Main>

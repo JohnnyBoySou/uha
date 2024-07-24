@@ -53,6 +53,7 @@ import NotafiscalSuccessAnonimoScreen from '@screens/tabs/notafiscal/anonimo/suc
 import ExtractScreen from '@screens/tabs/extract';
 import ExtractSingleScreen from '@screens/tabs/extract/single';
 import ExtractPaymentScreen from '@screens/tabs/extract/payment';
+import CertificateScreen from '@screens/tabs/extract/certificate';
 
 import AccountScreen from '@screens/tabs/account';
 import AccountNotifyScreen from '@screens/tabs/account/notify';
@@ -95,7 +96,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Router() {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Stickers'>
+        <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Certificate'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
             <Stack.Screen name="Onboarding" component={OnboardingScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
@@ -149,6 +150,8 @@ export default function Router() {
             <Stack.Screen name="Extract" component={ExtractScreen} />
             <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen}/>
             <Stack.Screen name="ExtractPayment" component={ExtractPaymentScreen} />
+
+            <Stack.Screen name="Certificate" component={CertificateScreen} />
 
             <Stack.Screen name="Account" component={AccountScreen} />
             <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} />
