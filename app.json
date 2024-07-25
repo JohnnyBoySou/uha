@@ -37,11 +37,37 @@
         {
           "mode": "development"
         }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "autoHide": true
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "13.4"
+          }
+        }
       ]
     ],
     "extra": {
-      "oneSignalAppleId": "<YOUR APP ID HERE>",
-      "oneSignalAndroidId": "<YOUR APP ID HERE>"
+      "oneSignalAppId": "6adc66cd-c5f6-4db5-b36c-b39b946a9729"
     }
   }
 }

@@ -19,6 +19,8 @@ import validator from 'validator';
 import { TextInputMask } from 'react-native-masked-text'
 import { resetPassword, resetPasswordCode, resetPasswordNew, verifyEmail } from '@api/request/user/user';
 
+import { OneSignal } from 'react-native-onesignal'
+
 export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState();
@@ -364,8 +366,7 @@ const Entrar = ({ type, settype, email, setemail }) => {
         //request api
 
         try {
-            const res = await getUser(email, password);
-            console.log(res)
+            const res = await getUser(email, password); 
             if (res?.status === 'Pendente') {
                 seterror('Confirme seu e-mail para ativar sua conta. Aguarde um momento...')
                 setTimeout(() => {
@@ -387,7 +388,8 @@ const Entrar = ({ type, settype, email, setemail }) => {
                     "remember": remember,
                     "moedas": res.moedas,
                     "pontos": res.points,
-                };
+                }; 
+                OneSignal.login(res.uiid)
                 const preferences = await createPreferences(saveUser)
                 setTimeout(() => {
                     navigation.replace('Tabs')
@@ -528,7 +530,6 @@ const ConfirmEmail = ({ email }) => {
             try {
                 const res = await verifyEmail(email, digit1 + digit2 + digit3 + digit4)
                 if (res) {
-                    console.log(res)
                     setloading(false)
                     setsuccess('Email verificado com sucesso! Aguarde um momento...')
                     const saveUser = {
@@ -539,6 +540,7 @@ const ConfirmEmail = ({ email }) => {
                         "moedas": res.moedas,
                         "pontos": res.points,
                     };
+                    OneSignal.login(res.uiid)
                     const preferences = await createPreferences(saveUser)
                     setTimeout(() => {
                         navigation.replace('Tabs')
