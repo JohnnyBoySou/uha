@@ -17,12 +17,13 @@ import Success from '@components/success';
 
 import validator from 'validator';
 import { TextInputMask } from 'react-native-masked-text'
-import { resetPassword, resetPasswordCode, resetPasswordNew } from '@api/request/user/user';
+import { resetPassword, resetPasswordCode, resetPasswordNew, verifyEmail } from '@api/request/user/user';
 
 export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState();
     const [type, settype] = useState('Entrar');
+    const [email, setemail] = useState();
     const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Graças a pessoas generosas como você, levamos conforto e segurança a quem mais precisa.' } : { title: 'Redefinir senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
     const handleExit = (value) => {
         settype(value)
@@ -45,11 +46,13 @@ export default function AuthLoginScreen({ navigation, }) {
 
             <ScrollView keyboardShouldPersistTaps="handled" style={{ paddingTop: 10, marginTop: 20, paddingHorizontal: margin.h, paddingVertical: 12, backgroundColor: "#fff", borderTopLeftRadius: 24, borderTopRightRadius: 24, }}>
                 <Pressable onPress={() => { navigation.goBack() }} style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#30303030", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
-                {type == 'Entrar' && <Entrar type={type} settype={settype} loading={loading} />}
+                {type == 'Entrar' && <Entrar type={type} settype={settype} loading={loading} setemail={setemail} email={email} />}
 
-                {type == 'Registrar' && <Registrar type={type} settype={settype} />}
+                {type == 'Registrar' && <Registrar type={type} settype={settype} setemail={setemail} email={email} />}
 
                 {type == 'ForgetPassword' && <ForgetPassword handleExit={handleExit} />}
+
+                {type === 'ConfirmEmail' && <ConfirmEmail handleExit={handleExit} email={email} />}
             </ScrollView>
 
 
@@ -58,9 +61,8 @@ export default function AuthLoginScreen({ navigation, }) {
 }
 
 
-const Registrar = ({ type, settype }) => {
+const Registrar = ({ type, settype, email, setemail }) => {
     const passStrong = useRef()
-    const navigation = useNavigation();
     const [pass, setpass] = useState(true);
     const [remember, setremember] = useState(true);
     const { color, font, margin, } = useContext(ThemeContext);
@@ -72,17 +74,18 @@ const Registrar = ({ type, settype }) => {
     const [focusName, setfocusName] = useState();
     const [focusWhatsapp, setfocusWhatsapp] = useState();
 
+
     const [loading, setloading] = useState(false);
 
-    const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
     const [cpf, setcpf] = useState('');
     const [whatsapp, setwhatsapp] = useState('');
     const [cep, setcep] = useState('');
     const [name, setname] = useState('');
     const [code, setcode] = useState('');
-    const [error, setError] = useState();
 
+    const [error, setError] = useState();
+    const [success, setsuccess] = useState();
     const checkPasswordStrength = (password) => {
         const criteria = {
             length: password?.length >= 8,
@@ -138,37 +141,23 @@ const Registrar = ({ type, settype }) => {
             "is_whatsapp_send": remember == true ? 1 : 0,
         };
 
-        //request api
-        await registerUser(params).then(async (res) => {
-            if (res.token) {
-                const saveUser = {
-                    "avatar": null,
-                    "name": res.name,
-                    "email": res.email,
-                    "password": password,
-                    "token": res.token,
-                    "remember": remember,
-                    "moedas": res.moedas,
-                    "pontos": res.points,
-                    "cpf": cpf,
-                    "whatsapp": whatsapp,
-                    "cep": cep,
-                };
-                await createPreferences(saveUser).then(res => {
-                    if (res) {
-                        navigation.replace('Tabs')
-                        setloading(false)
-                    }
-                })
-                setloading(false)
+        try {
+            const res = await registerUser(params)
+            if (res?.status === 'Pendente') {
+                setsuccess('Confirme seu e-mail para ativar sua conta. Aguarde um momento...')
+                setTimeout(() => {
+                    settype('ConfirmEmail')
+                }, 1500);
+                return
             }
+        } catch (error) {
+            setError(error.message)
+        } finally {
+            setloading(false);
+        }
 
-        }).catch(err => {
-            setError(err.message)
-            setloading(false)
-        }).finally(() => {
-            setloading(false)
-        })
+
+
     }
     return (
 
@@ -183,8 +172,9 @@ const Registrar = ({ type, settype }) => {
                         <Label style={{ color: type === 'Registrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Registrar</Label>
                     </Button>
                 </Row>
+                {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
+
                 <KeyboardAvoidingView behavior="padding">
-                    {error && <Error msg={error} show={error.length > 0} />}
                     <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusName ? color.primary : color.off, }}>
                         <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                             <User color={focusName ? color.primary : color.secundary} size={22} />
@@ -313,7 +303,9 @@ const Registrar = ({ type, settype }) => {
 
                     <Label style={{ fontFamily: font.medium, fontSize: 16, textAlign: 'center', marginHorizontal: 6, marginBottom: 30, }}>Ao registrar-se você concorda com os <U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
                 </KeyboardAvoidingView>
+
             </MotiView>
+
             <BottomSheet ref={passStrong} snapPoints={[0.1, 200]}>
                 <Column style={{ marginHorizontal: margin.h, marginVertical: margin.v, }}>
                     <SubLabel style={{ color: color.secundary, fontSize: 18, }}>Requisitos para a senha</SubLabel>
@@ -340,7 +332,7 @@ const Registrar = ({ type, settype }) => {
     )
 }
 
-const Entrar = ({ type, settype, }) => {
+const Entrar = ({ type, settype, email, setemail }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext)
     const a = false;
@@ -350,12 +342,13 @@ const Entrar = ({ type, settype, }) => {
 
     const passref = useRef(null);
 
-    const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
     const [pass, setpass] = useState(true);
     const [remember, setremember] = useState(true);
     const [loading, setloading] = useState();
+
     const [error, seterror] = useState();
+    const [success, setsuccess] = useState();
     const handleLogin = async () => {
         seterror('')
         //prenchimento obrigatório
@@ -369,30 +362,44 @@ const Entrar = ({ type, settype, }) => {
         }
         setloading(true);
         //request api
-        await getUser(email, password).then(async (res) => {
-            const params = {
-                "avatar": res.avatar,
-                "name": res.name,
-                "email": res.email,
-                "password": password,
-                "token": res.token,
-                "remember": remember,
-                "moedas": res.moedas,
-                "pontos": res.points,
-            };
-            await createPreferences(params).then(res => {
-                if (res) {
+
+        try {
+            const res = await getUser(email, password);
+            console.log(res)
+            if (res?.status === 'Pendente') {
+                seterror('Confirme seu e-mail para ativar sua conta. Aguarde um momento...')
+                setTimeout(() => {
+                    settype('ConfirmEmail')
+                }, 1500);
+                return
+            }
+            else if (res?.status == 'Inativo') {
+                seterror('Sua conta foi desativada, entre em contato com o suporte')
+                return
+            }
+            else if (res?.status === 'Ativo') {
+                setsuccess('Login realizado com sucesso! Aguarde um momento...')
+                const saveUser = {
+                    "avatar": null,
+                    "name": res.name,
+                    "email": res.email,
+                    "token": res.token,
+                    "remember": remember,
+                    "moedas": res.moedas,
+                    "pontos": res.points,
+                };
+                const preferences = await createPreferences(saveUser)
+                setTimeout(() => {
                     navigation.replace('Tabs')
-                    setloading(false)
-                }
-            })
-        }).catch(err => {
-            seterror(err.message)
+                }, 1500);
+            }
+        } catch (error) {
+            seterror(error.message)
+            console.log(error)
+        } finally {
             setloading(false)
-        }).finally(() => {
-            setloading(false)
-        })
-    };
+        }
+    }
     return (
         <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
             <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
@@ -405,7 +412,7 @@ const Entrar = ({ type, settype, }) => {
                 </Button>
             </Row>
             <KeyboardAvoidingView behavior="padding"  >
-                {error && <Error msg={error} show={error.length > 0} />}
+                {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 
                 <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
                     <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -499,6 +506,138 @@ const Entrar = ({ type, settype, }) => {
         </MotiView>
     )
 }
+
+
+
+
+
+
+
+const ConfirmEmail = ({ email }) => {
+    const { color, font, margin, } = useContext(ThemeContext);
+    const [loading, setloading] = useState(false);
+    const [error, seterror] = useState();
+    const [success, setsuccess] = useState();
+    const navigation = useNavigation();
+
+    const handleVerify = async () => {
+        seterror()
+        setsuccess()
+        setloading(true)
+        if (digit1?.length === 1 && digit2?.length === 1 && digit3?.length === 1 && digit4?.length === 1) {
+            try {
+                const res = await verifyEmail(email, digit1 + digit2 + digit3 + digit4)
+                if (res) {
+                    console.log(res)
+                    setloading(false)
+                    setsuccess('Email verificado com sucesso! Aguarde um momento...')
+                    const saveUser = {
+                        "avatar": res.avatar ? res.avatar : null,
+                        "name": res.name,
+                        "email": res.email,
+                        "token": res.token,
+                        "moedas": res.moedas,
+                        "pontos": res.points,
+                    };
+                    const preferences = await createPreferences(saveUser)
+                    setTimeout(() => {
+                        navigation.replace('Tabs')
+                    }, 1500);
+                }
+            } catch (error) {
+                console.log(error)
+                seterror(error.message)
+            } finally {
+                setloading(false)
+            }
+        } else {
+            seterror('Preencha o código de verificação')
+            setloading(false)
+        }
+    }
+
+
+    const [digit1, setdigit1] = useState();
+    const [digit2, setdigit2] = useState();
+    const [digit3, setdigit3] = useState();
+    const [digit4, setdigit4] = useState();
+
+    const [focus1, setfocus1] = useState();
+    const [focus2, setfocus2] = useState();
+    const [focus3, setfocus3] = useState();
+    const [focus4, setfocus4] = useState();
+
+    const fc1 = useRef()
+    const fc2 = useRef()
+    const fc3 = useRef()
+    const fc4 = useRef()
+
+    return (
+        <MotiView from={{ translateY: 20, opacity: 0 }} animate={{ translateY: 0, opacity: 1, }} transition={{ type: 'timing' }}>
+            <Column>
+                <Column style={{ marginTop: 24, }}>
+                    <Title style={{ color: color.secundary, marginBottom: 8, }}>Código de verificação</Title>
+                    <Label>Confira seu e-mail e copie o código enviado.</Label>
+                </Column>
+                {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
+
+                <Row style={{ borderRadius: 8, marginTop: 24, justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, }}>
+                    <TextInput
+                        onFocus={() => setfocus1(true)}
+                        onBlur={() => setfocus1(false)}
+                        value={digit1}
+                        onSubmitEditing={() => { fc2.current?.focus() }}
+                        ref={fc1}
+                        selectionColor='transparent'
+                        onChangeText={(e) => { setdigit1(e); if (e.length === 1) fc2.current?.focus() }}
+                        keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus1 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
+                    <TextInput
+                        onFocus={() => setfocus2(true)}
+                        onBlur={() => setfocus2(false)}
+                        value={digit2}
+                        ref={fc2}
+                        onSubmitEditing={() => { fc3.current?.focus() }}
+                        underlineColorAndroid='transparent'
+                        selectionColor='transparent'
+                        onChangeText={(e) => { setdigit2(e); if (e.length === 1) fc3.current?.focus() }}
+                        keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus2 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
+                    <TextInput
+                        onFocus={() => setfocus3(true)}
+                        onBlur={() => setfocus3(false)}
+                        value={digit3}
+                        onSubmitEditing={() => { fc4.current?.focus() }}
+                        ref={fc3}
+                        selectionColor='transparent'
+                        onChangeText={(e) => { setdigit3(e); if (e.length === 1) fc4.current?.focus() }}
+                        keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus3 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
+                    <TextInput
+                        onFocus={() => setfocus4(true)}
+                        onBlur={() => setfocus4(false)}
+                        value={digit4}
+                        ref={fc4}
+                        selectionColor='transparent'
+                        onSubmitEditing={handleVerify}
+                        onChangeText={(e) => setdigit4(e)}
+                        keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus4 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
+                </Row>
+                <ButtonPR disabled={loading} onPress={handleVerify} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
+                    <Row>
+                        {loading ? <ActivityIndicator animating={loading} color="#fff" size={27} /> : <LabelPR>Verificar código</LabelPR>}
+                    </Row>
+                </ButtonPR>
+            </Column>
+
+            <Column style={{ height: 40, }} />
+        </MotiView>
+    )
+}
+
+
+
+
+
+
+
 
 
 const ForgetPassword = ({ handleExit }) => {

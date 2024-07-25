@@ -180,8 +180,16 @@ const Configs = [
         img: require('@icons/ic1.png'),
     },
     {
+        title: 'Sobre nós',
+        description: 'Conheça a Uha!',
+        icon: 'bell',
+        check: null,
+        screen: 'About',
+        img: require('@icons/ic3.png'),
+    },
+    {
         title: 'Notificações',
-        description: 'Configure como desejar',
+        description: 'Configure como desejar ',
         icon: 'bell',
         check: null,
         screen: 'AccountNotify',

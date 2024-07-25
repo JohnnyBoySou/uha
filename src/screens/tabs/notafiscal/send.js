@@ -12,7 +12,7 @@ import Header from '@components/header';
 import BottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import Octicons from '@expo/vector-icons/Octicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { NotepadText, Trash, Trash2, X, } from 'lucide-react-native';
+import { NotepadText, X, } from 'lucide-react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { verifyNota } from '@api/request/notafiscal/nota';

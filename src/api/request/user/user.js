@@ -21,31 +21,38 @@ export const getUser = async (email, password) => {
 
 export const registerUser = async (params) => {
   const BASE_URL = await getBaseURL();
-  const sanitizedEmail = validator.normalizeEmail(params.email);
-  const sanitizedPassword = validator.escape(params.password);
-  const sanitizedName = validator.escape(params.name);
-  const sanitizedCpf = validator.escape(params.cpf);
-  const sanitizedWhatsapp = validator.escape(params.whatsapp);
-  const sanitizedCep = validator.escape(params.cep);
-  const sanitizedCode = params.code?.length > 0 ? validator.escape(params.code) : 0;
-  const is = parseInt(params.is_whatsapp_send)
+  console.log(params)
+
+  const sanitizedParams = {
+    email: validator.normalizeEmail(params.email),
+    password: validator.escape(params.password),
+    name: validator.escape(params.name),
+    cpf: validator.escape(params.cpf),
+    whatsapp: validator.escape(params.whatsapp),
+    cep: validator.escape(params.cep),
+    code: params.code?.length > 0 ? validator.escape(params.code) : 0,
+    is_whatsapp_send: parseInt(params.is_whatsapp_send),
+  };
+
   try {
-    const res = await axios.post(`${BASE_URL}/usuarios/register`, {
-      email: sanitizedEmail,
-      password: sanitizedPassword,
-      name: sanitizedName,
-      cpf: sanitizedCpf,
-      whatsapp: sanitizedWhatsapp,
-      cep: sanitizedCep,
-      code: sanitizedCode,
-      is_whatsapp_send: is,
-    });
-    return res.data;
+    const {data} = await axios.post(`${BASE_URL}/usuarios/register`, sanitizedParams);
+    console.log(data)
+    return data;
   } catch (error) {
+    console.log('Error:', error.message);
+    if (error.request) {
+      console.log('Request data:', error.request);
+    } else {
+      console.log('Error message:', error.message);
+    }
     const err = JSON.parse(error.request.response);
     throw new Error(err.message)
   }
 };
+
+
+
+
 
 export const resetPassword = async (email) => {
   const BASE_URL = await getBaseURL();
@@ -89,7 +96,7 @@ export const resetPasswordNew = async (params) => {
     return res.data;
   } catch (error) {
     console.log('Error:', error.message);
-     if (error.request) {
+    if (error.request) {
       console.log('Request data:', error.request);
     } else {
       console.log('Error message:', error.message);
@@ -155,3 +162,18 @@ export const listUser = async () => {
 }
 
 
+export const verifyEmail = async (email, code) => {
+  console.log(email,code)
+  try {
+    const res = await axios.post(`${await getBaseURL()}/usuarios/validacodigo`, {
+      email: validator.normalizeEmail(email),
+      codigo: code,
+    });
+    console.log(res)
+    return res.data
+  } catch (error) {
+    console.log(error)
+    const err = JSON.parse(error?.request?.response);
+    throw new Error(err.message)
+  }
+};
