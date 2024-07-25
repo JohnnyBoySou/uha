@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ThemeProvider } from 'styled-components/native';
 import { preventAutoHideAsync, hideAsync } from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { View, LogBox, Platform } from 'react-native';
+import { View, LogBox } from 'react-native';
 import Router from './src/router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import light from './src/theme/light';
@@ -20,9 +20,9 @@ export default function App() {
   useEffect(() => {
 
     const handleNotification = () => {
-      //LogBox.ignoreAllLogs(true);
+      LogBox.ignoreAllLogs(true);
       OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
-      OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+      //OneSignal.Debug.setLogLevel(LogLevel.Verbose);
       OneSignal.Notifications.requestPermission(true);
     }
 
