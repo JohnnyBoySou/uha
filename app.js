@@ -4,19 +4,29 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ThemeProvider } from 'styled-components/native';
 import { preventAutoHideAsync, hideAsync } from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { View, LogBox } from 'react-native';
+import { View, LogBox, Platform } from 'react-native';
 import Router from './src/router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import light from './src/theme/light';
 import dark from './src/theme/dark';
+
+import { LogLevel, OneSignal } from 'react-native-onesignal';
+import Constants from "expo-constants";
+
+
+OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+
 preventAutoHideAsync();
+
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-
+  const id = Platform.OS === 'ios' ? Constants.expoConfig.extra.oneSignalAppleId : Constants.expoConfig.extra.oneSignalAndroidId
   useEffect(() => {
+    OneSignal.Notifications.requestPermission(true);
+    OneSignal.initialize(id);
+    
     LogBox.ignoreAllLogs(true);
-
     async function loadResourcesAndDataAsync() {
       try {
         await Font.loadAsync({

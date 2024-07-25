@@ -12,7 +12,8 @@
       "backgroundColor": "#FF26BD"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.engd.uha"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +31,17 @@
         {
           "cameraPermission": "Permita que Uha! acesse sua câmera"
         }
+      ],
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development"
+        }
       ]
-    ]
+    ],
+    "extra": {
+      "oneSignalAppleId": "<YOUR APP ID HERE>",
+      "oneSignalAndroidId": "<YOUR APP ID HERE>"
+    }
   }
 }
