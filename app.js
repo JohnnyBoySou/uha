@@ -9,8 +9,9 @@ import Router from './src/router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import light from './src/theme/light';
 preventAutoHideAsync();
-import { OneSignal, LogLevel } from 'react-native-onesignal';
-import Constants  from 'expo-constants';
+import { OneSignal } from 'react-native-onesignal';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
 
 export default function App() {
 
@@ -18,12 +19,20 @@ export default function App() {
 
   useEffect(() => {
 
-    const handleNotification = () => {
+    const handleNotification = async () => {
       LogBox.ignoreAllLogs(true);
-      const key = process.env.EXPO_PUBLIC_KEY || Constants.expoConfig.extra.oneSignalAppId || '6adc66cd-c5f6-4db5-b36c-b39b946a9729';
-      if(key != null){
+      const key = process.env.EXPO_PUBLIC_KEY || Constants.expoConfig.extra.oneSignalAppId;
+      if (key != null) {
         OneSignal.initialize(key);
-        OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+      }
+      let { status } = await Notifications.getPermissionsAsync();
+      if (status !== 'granted') {
+        const { status: newStatus } = await Notifications.requestPermissionsAsync();
+        status = newStatus;
+        console.log('status', status)
+      }
+      if (status !== 'granted') {
+        console.log('permitido')
       }
     }
 

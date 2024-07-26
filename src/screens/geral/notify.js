@@ -7,11 +7,9 @@ import { ArrowRight, TriangleAlert, X } from 'lucide-react-native';
 import { MotiView, AnimatePresence } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
 import { getNotifications, getSingleNotification } from '@request/user/notify';
-//import { OneSignal } from 'react-native-onesignal';
-import * as Notifications from 'expo-notifications';
 
-
-export default function NotifyScreen({ navigation, }) {
+export default function NotifyScreen({ navigation, route }) {
+    const { message } = route.params || {};
     const { color, font, margin } = useContext(ThemeContext);
     const [type, settype] = useState(null);
     const [loading, setloading] = useState();
@@ -20,7 +18,6 @@ export default function NotifyScreen({ navigation, }) {
     const [single, setsingle] = useState(false);
     const [alerts, setalerts] = useState();
 
-    const a = false;
 
     const handleAlertas = () => {
         setshowtabs(false)
@@ -43,8 +40,10 @@ export default function NotifyScreen({ navigation, }) {
 
     const handleItem = async (item) => {
         setsingle(true)
+        console.log(item.id)
         try {
             const res = await getSingleNotification(item.id)
+            console.log(res)
             setsingle(true)
             setcache(res)
         } catch (error) {
@@ -58,23 +57,6 @@ export default function NotifyScreen({ navigation, }) {
     useEffect(() => {
         const fecthData = async () => {
             try {
-                async function requestNotificationPermission() {
-                    let { status } = await Notifications.getPermissionsAsync();
-                    if (status !== 'granted') {
-                        const { status: newStatus } = await Notifications.requestPermissionsAsync();
-                        status = newStatus;
-                        console.log('status', status)
-                    }
-                    if (status !== 'granted') {
-                        console.log('permitido')
-                    }
-                }
-                requestNotificationPermission();
-                /* 
-                OneSignal.Notifications.requestPermission(true).then((permission) => {
-                    console.log(permission);
-                });
-                    */
                 const res = await getNotifications()
                 setalerts(res)
             } catch (error) {

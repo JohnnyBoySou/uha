@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute, useLinking  } from '@react-navigation/native';
 //import { createNativeStackNavigator, TransitionPresets } from '@react-navigation/native-stack';
 
 import OnboardingScreen from '@screens/auth/onboarding';
@@ -94,9 +94,24 @@ import Octicons from '@expo/vector-icons/Octicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
+const linking = {
+  prefixes: ['uha://'],
+  config: {
+    screens: {
+      Notify: {
+        path: 'notify',
+        parse: {
+          message: (message) => `${message}`,
+        },
+      },
+    },
+  },
+};
+
+
 export default function Router() {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
         <Stack.Navigator screenOptions={{headerShown: false,}} initialRouteName='Async'>
           
             <Stack.Screen name="Async" component={AsyncStaticScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
