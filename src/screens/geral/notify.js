@@ -18,7 +18,6 @@ export default function NotifyScreen({ navigation, route }) {
     const [single, setsingle] = useState(false);
     const [alerts, setalerts] = useState();
 
-
     const handleAlertas = () => {
         setshowtabs(false)
         setTimeout(() => {
@@ -40,7 +39,6 @@ export default function NotifyScreen({ navigation, route }) {
 
     const handleItem = async (item) => {
         setsingle(true)
-        console.log(item.id)
         try {
             const res = await getSingleNotification(item.id)
             console.log(res)
@@ -52,7 +50,6 @@ export default function NotifyScreen({ navigation, route }) {
             setloading(false)
         }
     }
-
 
     useEffect(() => {
         const fecthData = async () => {
@@ -161,12 +158,14 @@ export default function NotifyScreen({ navigation, route }) {
 
 const Card = ({ item, handleItem }) => {
     const { color, font, margin } = useContext(ThemeContext);
+    const { date, } = item
+    const title = 'Combo massa pra caramba com um texto muito longo para que o texto seja cortado'
     return (
         <Button onPress={handleItem} style={{ padding: 20, borderRadius: 12, borderWidth: 1, borderColor: "#d7d7d7", marginBottom: 12, }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                <Column style={{ justifyContent: 'center', }}>
-                    <Title style={{ fontSize: 18, }}>{item.title}</Title>
-                    <Label style={{ fontSize: 14, lineHeight: 16, }}>{item.date}</Label>
+                <Column style={{ justifyContent: 'center', width: '80%', }}>
+                    <Title style={{ fontSize: 18,  }}>{title.length > 52 ? title.slice(0, 52) + '...' : title}</Title>
+                    <Label style={{ fontSize: 14, lineHeight: 16, }}>{date}</Label>
                 </Column>
                 <Column style={{ width: 45, height: 45, backgroundColor: color.secundary + 20, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
                     <ArrowRight size={24} color={color.secundary} />
