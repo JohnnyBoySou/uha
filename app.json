@@ -28,15 +28,17 @@
     },
     "plugins": [
       [
-        "expo-camera",
+        "onesignal-expo-plugin",
         {
-          "cameraPermission": "Permita que o Uha! acesse sua câmera."
+          "mode": "development",
+          "smallIcons": ["./assets/small_icon.png"],
+          "largeIcons": ["./assets/large_icon.png"]
         }
       ],
       [
-        "onesignal-expo-plugin",
+        "expo-camera",
         {
-          "mode": "production"
+          "cameraPermission": "Permita que o Uha! acesse sua câmera."
         }
       ],
       [
@@ -60,7 +62,9 @@
           }
         }
       ]
-    ]
-     
+    ],
+    "extra": {
+      "oneSignalAppId": "6adc66cd-c5f6-4db5-b36c-b39b946a9729"
+    }
   }
 }

@@ -9,8 +9,8 @@ import Router from './src/router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import light from './src/theme/light';
 preventAutoHideAsync();
-
 import { OneSignal, LogLevel } from 'react-native-onesignal';
+import Constants  from 'expo-constants';
 
 export default function App() {
 
@@ -20,7 +20,7 @@ export default function App() {
 
     const handleNotification = () => {
       //LogBox.ignoreAllLogs(true);
-      const key = process.env.ONESIGNAL_KEY;
+      const key = process.env.ONESIGNAL_KEY || Constants.expoConfig.extra.oneSignalAppId;
       if(key != null){
         OneSignal.initialize(key);
         OneSignal.Debug.setLogLevel(LogLevel.Verbose);

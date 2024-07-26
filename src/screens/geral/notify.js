@@ -57,7 +57,9 @@ export default function NotifyScreen({ navigation, }) {
     useEffect(() => {
         const fecthData = async () => {
             try {
-                OneSignal.Notifications.requestPermission(true);
+                OneSignal.Notifications.requestPermission(true).then((permission) => {
+                    console.log(permission);
+                });
                 const res = await getNotifications()
                 setalerts(res)
             } catch (error) {
