@@ -317,7 +317,7 @@ const MenuHandle = () => {
         },
         {
             onPress: () => navigation.navigate('Donate'),
-            icon: <Image source={require('@icons/pontos.png')} resizeMode='contain' style={{ width: 34, height: 34 }} />,
+            icon: <Image contentFit='contain' source={require('@icons/pontos.png')} style={{ width: 34, height: 34 }} />,
             label: 'Doação',
         },
         {

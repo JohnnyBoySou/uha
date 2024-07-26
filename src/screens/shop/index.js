@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { FlatList, Dimensions, Animated, Image, } from 'react-native';
+import { FlatList, Dimensions, Animated, } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Search, } from 'lucide-react-native';

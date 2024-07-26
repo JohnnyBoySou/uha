@@ -383,21 +383,23 @@ const Entrar = ({ type, settype, email, setemail }) => {
                 setsuccess('Login realizado com sucesso! Aguarde um momento...')
                 const saveUser = {
                     "avatar": null,
-                    "name": res.name,
-                    "email": res.email,
-                    "token": res.token,
+                    "name": res?.name,
+                    "email": res?.email,
+                    "token": res?.token,
                     "remember": remember,
-                    "moedas": res.moedas,
-                    "pontos": res.points,
+                    "moedas": res?.moedas,
+                    "pontos": res?.points,
                 }; 
-                console.log(res?.uiid)
-                const res = OneSignal.login(res.uiid)
-                console.log(res)
+                if(res.uiid){
+                    OneSignal.login(res.uiid)
+                }
                 const preferences = await createPreferences(saveUser)
-                console.log(preferences)
-                setTimeout(() => {
-                    navigation.replace('Tabs')
-                }, 1500);
+                if(preferences){
+                    setTimeout(() => {
+                        navigation.replace('Tabs')
+                    }, 1500);
+
+                }
             }
         } catch (error) {
             seterror(error.message)

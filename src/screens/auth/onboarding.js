@@ -1,11 +1,10 @@
 import React, { useContext, useRef } from 'react';
-import {Animated,  ScrollView, Dimensions } from 'react-native';
+import {Animated,  ScrollView, Dimensions, Image } from 'react-native';
 import { Main, Column, Row, Title, ButtonPR, LabelSE, LabelLI, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 const { height, width } = Dimensions.get('window');
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
-import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar'
 
 export default function OnboardingScreen({ navigation, }) {
