@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState, useMemo,  } from 'react';
+import React, { useContext, useEffect, useState,  } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
 import { FlatList, Dimensions } from 'react-native';
-import { MotiImage, MotiView } from 'moti';
+import { MotiView } from 'moti';
 import { getSingleCategory } from '@api/request/category';
 import { useNavigation } from '@react-navigation/native';
-import { Bike, Bone, Brush, Car, Hospital, Minus, Pizza, Plus, Search, Shirt, ShoppingBag, } from 'lucide-react-native';
-
+import { Bike, Bone, Brush, Car, Hospital, Pizza, Shirt, } from 'lucide-react-native';
+import { Image } from 'expo-image'
 const { width } = Dimensions.get('window');
 
 export default function CategorySingleScreen({ navigation, route }) {
@@ -78,7 +78,7 @@ const CardList = ({item}) => {
                             ))}
                         </Row>
                     </Column>
-                    <MotiImage source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                    <Image  contentFit='cover' source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, backgroundColor: "#fff", }} />
                 </Row>
             </Button>
         </Column>

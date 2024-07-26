@@ -89,7 +89,7 @@ export default function PaymentBoleto({ item, modalBoleto }) {
                 </Button>
             </Row>
             <Column style={{ borderRadius: 18, backgroundColor: "#f7f7f7", paddingVertical: 28, justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
-                <MotiImage from={{ opacity: 0,}} animate={{ opacity: 1,  }} delay={300} source={{ uri: data?.barcode }} style={{ width: 250, marginBottom: 12, height: 100, borderRadius: 12, objectFit: 'contain'}} />
+                <Image from={{ opacity: 0,}} animate={{ opacity: 1,  }} delay={300} source={{ uri: data?.barcode }} style={{ width: 250, marginBottom: 12, height: 100, borderRadius: 12,}} contentFit="contain" />
                 <Row style={{ justifyContent: 'center', paddingVertical: 8, alignItems: 'center', position: 'absolute', bottom: 0, paddingHorizontal: 12, backgroundColor: color.blue, borderTopLeftRadius: 10, borderTopRightRadius: 10, }}>
                     <Title style={{ fontSize: 16, lineHeight: 16, color: '#fff', marginLeft: 6, }}>{data?.Message?.slice(0, -1)}</Title>
                 </Row>

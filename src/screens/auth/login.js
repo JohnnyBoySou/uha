@@ -14,6 +14,7 @@ import { getUser, registerUser } from '@api/request/user/user';
 
 import Error from '@components/error';
 import Success from '@components/success';
+import { Image } from 'expo-image';
 
 import validator from 'validator';
 import { TextInputMask } from 'react-native-masked-text'
@@ -38,7 +39,7 @@ export default function AuthLoginScreen({ navigation, }) {
                 <Button onPress={() => { navigation.goBack() }} style={{ width: 46, height: 32, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}>
                     <ArrowLeft color={color.secundary} />
                 </Button>
-                <MotiImage source={require('@imgs/logo.png')} style={{ objectFit: 'contain', width: 100, }} />
+                <Image source={require('@imgs/logo.png')} contentFit="contain" style={{width: 100, }} />
             </Row>
 
             <Column style={{ marginHorizontal: margin.h, paddingVertical: 22, }}>
@@ -389,8 +390,11 @@ const Entrar = ({ type, settype, email, setemail }) => {
                     "moedas": res.moedas,
                     "pontos": res.points,
                 }; 
-                OneSignal.login(res.uiid)
+                console.log(res?.uiid)
+                const res = OneSignal.login(res.uiid)
+                console.log(res)
                 const preferences = await createPreferences(saveUser)
+                console.log(preferences)
                 setTimeout(() => {
                     navigation.replace('Tabs')
                 }, 1500);

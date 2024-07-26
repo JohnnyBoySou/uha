@@ -7,6 +7,7 @@ import * as Clipboard from 'expo-clipboard';
 import { payPix, getStatusPay } from '@api/request/payment/pay';
 import { MotiImage } from 'moti';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 
 export default function PaymentPixList({ item,}) {
     const { color, } = useContext(ThemeContext);
@@ -54,7 +55,7 @@ export default function PaymentPixList({ item,}) {
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                 <Row>
                     <Column style={{ padding: 12, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
-                        <MotiImage source={require('@icons/pix.png')} style={{ width: 24, height: 24, objectFit: 'contain', }} />
+                        <Image transition={400} source={require('@icons/pix.png')} style={{ width: 24, height: 24, }} contentFit='contain' />
                     </Column>
                     <Column style={{ justifyContent: 'center', marginLeft: 12, }}>
                         <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', lineHeight: 18, }}>Pix</Title>
@@ -67,7 +68,7 @@ export default function PaymentPixList({ item,}) {
             </Row>
 
             <Column style={{ borderRadius: 18, backgroundColor: "#f7f7f7", paddingVertical: 28, justifyContent: 'center', alignItems: 'center', marginVertical: 20, }}>
-                <MotiImage from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} delay={300} source={{ uri: item?.qrcode }} style={{ width: 250, marginBottom: 12, height: 250, borderRadius: 12, }} />
+                <Image transition={500} contentFit='contain' source={{ uri: item?.qrcode }} style={{ width: 250, marginBottom: 12, height: 250, borderRadius: 12, }} />
                 <Row style={{ justifyContent: 'center', paddingVertical: 8, alignItems: 'center', position: 'absolute', bottom: 0, paddingHorizontal: 12, backgroundColor: color.blue, borderTopLeftRadius: 10, borderTopRightRadius: 10, }}>
                     <Title style={{ fontSize: 16, lineHeight: 16, color: '#fff', marginLeft: 6, }}>{item?.Message?.slice(0, -1)}</Title>
                 </Row>

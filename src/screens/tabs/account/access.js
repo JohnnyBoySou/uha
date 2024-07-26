@@ -4,7 +4,7 @@ import { Main, Scroll, Column, Label, Title, Row ,  Button,} from '@theme/global
 import { ThemeContext } from 'styled-components/native';
 import { MessagesSquare, Info, ScrollText } from 'lucide-react-native';
 import Header from '@components/header';
-import { MotiImage } from 'moti';
+import { Image } from 'expo-image'
 import { useNavigation } from '@react-navigation/native';
 
 export default function AccountAccessInfoScreen({ navigation, }) {
@@ -32,7 +32,7 @@ const Card = ({ item }) => {
         <Button onPress={() => {navigation.navigate(item.screen)}} style={{  borderRadius: 12,  }}>
     <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: color.off, alignItems: 'center', paddingBottom: 12,  }}>
         <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6",  }}>
-            <MotiImage from={{ opacity: 0 }} animate={{ opacity: 1 }} delay={1000} source={item.img} style={{ width: 32, height: 32, objectFit: 'contain' }}/>
+            <Image contentFit="contain"  transition={400} source={item.img} style={{ width: 32, height: 32,  }}/>
         </Column>
         <Column style={{ marginHorizontal: 20, }}>
             <Title style={{ fontSize: 18, marginRight: 6, }}>{item?.title}</Title>

@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiImage } from 'moti';
+import { AnimatePresence } from 'moti';
 import { ArrowLeft, Search } from 'lucide-react-native';
-import { useIsFocused, useNavigation, } from '@react-navigation/native';
+import { useNavigation, } from '@react-navigation/native';
 import { getOffers, } from '@request/shop/index';
 import { Skeleton } from 'moti/skeleton';
+import { Image } from 'expo-image'
 
 export default function ShopOffersScreen({ navigation, route }) {
     const { color, margin } = useContext(ThemeContext);
@@ -98,9 +99,10 @@ const CardOffer = React.memo(({ item, onPress }) => {
             onPress={onPress}
         >
             <Column style={{ justifyContent: 'center', width: 148 }}>
-                <MotiImage 
+                <Image 
+                    contentFit="cover" 
                     source={{ uri: item.img }} 
-                    style={{ width: 148, height: 154, marginBottom: 8, borderTopLeftRadius: 8, borderTopRightRadius: 8, objectFit: 'cover' }} 
+                    style={{ width: 148, height: 154, marginBottom: 8, borderTopLeftRadius: 8, borderTopRightRadius: 8,  }} 
                 />
                 <Column style={{ paddingHorizontal: 12, paddingBottom: 14 }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>

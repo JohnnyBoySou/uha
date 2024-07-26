@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 import { Search, } from 'lucide-react-native';
 import { useIsFocused, useNavigation, } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar'
-
+import { Image } from 'expo-image';
 import Header from '@components/header';
 
 import { ExpandingDot } from "react-native-animated-pagination-dots";
@@ -127,7 +127,7 @@ const Promos = ({ data, title, loading }) => {
                                 ))}
                             </Row>
                         </Column>
-                        <Image source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                        <Image contentFit="cover" source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, backgroundColor: "#fff", }} />
                     </Row>
                 </Button>
             </Column>
@@ -214,8 +214,8 @@ const Cards = () => {
                         <Label style={{ color: "#FFF2E3", marginTop: 30, fontFamily: 'Font_Medium', alignSelf: 'flex-start', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Cadastre suas</Label>
                         <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, alignSelf: 'flex-start', marginBottom: 20, }}>Notas fiscais</Title>
                     </Column>
-                    <Image source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', objectFit: 'cover', }} />
-                    <Image source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
+                    <Image contentFit="cover" source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', }} />
+                    <Image contentFit="cover" source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
                 </Column>
             </Button>
 
@@ -228,8 +228,8 @@ const Cards = () => {
                             <Label style={{ color: "#FFF2E3", marginTop: 40, fontFamily: 'Font_Medium', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Atualizado {'\n'}a cada <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, zIndex: 99, }}> 6 horas </Title></Label>
                         </Row>
                     </Column>
-                    <Image source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', objectFit: 'contain', marginRight: -20, }} />
-                    <Image source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
+                    <Image contentFit="contain" source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', marginRight: -20, }} />
+                    <Image contentFit="contain" source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
                 </Column>
             </Button>
 

@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft, UserRoundSearch } from 'lucide-react-native';
-import { MotiImage, MotiView, AnimatePresence } from 'moti';
+import { MotiImage } from 'moti';
 import BottomSheet, { } from '@gorhom/bottom-sheet'
-import Avatar from '@components/avatar';
 import { StatusBar } from 'expo-status-bar';
 import { rankList } from '@api/request/rank/rank';
-import TopSheet from '../../components/topsheet';
+import TopSheet from '@components/topsheet';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { Image } from 'expo-image'
 
 export default function RankingScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -142,7 +141,7 @@ const Podium = ({ rank }) => {
             </Row>
             <Row style={{ justifyContent: 'center', alignItems: 'flex-end', marginHorizontal: margin.h, marginTop: 40, }}>
                 <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, paddingHorizontal: 12,}}>
-                    <MotiImage source={{ uri: rank[1].avatar }} style={{ width: 62, height: 62, marginBottom: 12, borderRadius: 100, marginTop: -40, backgroundColor: color.secundary, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
+                    <Image contentFit="cover" source={{ uri: rank[1].avatar }} style={{ width: 62, height: 62, marginBottom: 12, borderRadius: 100, marginTop: -40, backgroundColor: color.secundary, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
                     <Title style={{ fontSize: 24, color: color.secundary, }}>#{rank[1]?.posicao}</Title>
                     <Title style={{ fontSize: 14, }}>{rank[1]?.name.slice(0, 10)}</Title>
                     <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height: 1, backgroundColor: color.off, }} />
@@ -150,8 +149,8 @@ const Podium = ({ rank }) => {
                     <Label style={{ color: color.primary, fontSize: 12, marginTop: -8, }}>pontos</Label>
                 </Column>
                 <Column style={{ backgroundColor: '#fff',  paddingHorizontal: 12, justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, marginHorizontal: 12, }}>
-                    <MotiImage source={{ uri: rank[0].avatar }} style={{ width: 62, height: 62, marginBottom: 12, backgroundColor: color.primary, borderRadius: 100, marginTop: -40, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
-                    <MotiImage source={require('@icons/top.png')} style={{ width: 22, height: 30, objectFit: 'contain', marginTop: -25, marginBottom: 10, }} />
+                    <Image contentFit="cover" source={{ uri: rank[0].avatar }} style={{ width: 62, height: 62, marginBottom: 12, backgroundColor: color.primary, borderRadius: 100, marginTop: -40, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
+                    <Image contentFit="contain" source={require('@icons/top.png')} style={{ width: 22, height: 30, marginTop: -25, marginBottom: 10, }} />
                     <Title style={{ fontSize: 24, color: color.primary, }}>#{rank[0]?.posicao}</Title>
                     <Title style={{ fontSize: 14, }}>{rank[0]?.name.slice(0, 10)}</Title>
                     <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height: 1, backgroundColor: color.off, }} />
@@ -160,7 +159,7 @@ const Podium = ({ rank }) => {
                     <SubLabel style={{ color: color.primary, fontSize: 12, lineHeight: 12,  marginTop: 6, textAlign: 'center', }}>Campeão {'\n'}de doações</SubLabel>
                 </Column>
                 <Column style={{ backgroundColor: '#fff',  paddingHorizontal: 12, justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, }}>
-                    <MotiImage source={{ uri: rank[2].avatar }} style={{ width: 62, height: 62, marginBottom: 12, backgroundColor: color.blue, borderRadius: 100, marginTop: -40, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
+                    <Image contentFit="cover" source={{ uri: rank[2].avatar }} style={{ width: 62, height: 62, marginBottom: 12, backgroundColor: color.blue, borderRadius: 100, marginTop: -40, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
                     <Title style={{ fontSize: 24, color: color.secundary, }}>#{rank[2]?.posicao}</Title>
                     <Title style={{ fontSize: 14, }}>{rank[2]?.name.slice(0, 10)}</Title>
                     <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height: 1, backgroundColor: color.off, }} />

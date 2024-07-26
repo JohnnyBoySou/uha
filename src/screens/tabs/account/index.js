@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, } from 'react';
-import { FlatList, Pressable, Image } from 'react-native';
+import { FlatList, Pressable,  } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, ButtonSE, LabelSE, SubLabel, Button, LineL, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
@@ -10,6 +10,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Image} from 'expo-image'
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -142,7 +143,7 @@ const Card = ({ item, index }) => {
             <Button onPress={() => { navigation.navigate(item.screen) }} >
                 <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: "#00000012", alignItems: 'center', paddingBottom: 12, }}>
                     <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6", }}>
-                        <Image source={item.img} style={{ width: 28, height: 28, objectFit: 'contain' }} />
+                        <Image contentFit='contain' source={item.img} style={{ width: 28, height: 28,  }} />
                     </Column>
                     <Column style={{ marginHorizontal: 20, }}>
                         <Row style={{ alignItems: 'center', }}>

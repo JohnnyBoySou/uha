@@ -1,11 +1,11 @@
 import React, { useContext, useState, useRef } from 'react';
-import { Main, Scroll, Column, Label, Title, Row, Button, LabelLI, LabelPR, ButtonPR } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button, LabelPR, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { ArrowLeft, Clipboard as Clip, CircleDashed, Edit, CreditCard, Banknote, ScrollText } from 'lucide-react-native';
+import { ArrowLeft, Edit, CreditCard, ScrollText } from 'lucide-react-native';
 import { Dimensions } from 'react-native';
 import CheckBox from '@components/checkbox';
 import Avatar from '@components/avatar';
-import { AnimatePresence, MotiImage, MotiView } from 'moti';
+import { MotiView } from 'moti';
 import { Snackbar } from 'react-native-paper';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import DonateONGS from './ongs';
@@ -16,7 +16,7 @@ import { Image } from 'expo-image'
 import PaymentCredito from '@components/payments/credito';
 import PaymentPix from '@components/payments/pix';
 import PaymentBoleto from '@components/payments/boleto';
-import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -139,7 +139,7 @@ const Metodos = ({  modalPix, modalCredit, modalBoleto, settype }) => {
                 <Button onPress={() => { modalPix.current.expand(); settype('Pix') }} style={{ justifyContent: 'center', borderColor: '#d7d7d790', borderWidth: 1, padding: 12, borderRadius:12, }}>
                     <Row>
                         <Column style={{ padding: 12, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
-                            <MotiImage source={require('@icons/pix.png')} style={{ width: 24, height: 24, objectFit: 'contain', }} />
+                            <Image transition={200} contentFit='contain' source={require('@icons/pix.png')} style={{ width: 24, height: 24, }} />
                         </Column>
                         <Column style={{ justifyContent: 'center', marginHorizontal: 20, }}>
                             <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', lineHeight: 18, }}>Pix</Title>

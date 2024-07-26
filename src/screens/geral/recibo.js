@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Main, Scroll, Column, Title, Row, ButtonPR, LabelPR, Label } from '@theme/global';
 import styled, { ThemeContext } from 'styled-components/native';
-import { MotiImage } from 'moti';
-import { ButtonSE, LabelSE } from './../../theme/global';
+import { ButtonSE, LabelSE } from '@theme/global';
 import recibo from '@api/data/recibo';
+import { Image } from 'expo-image';
 
 export default function ReciboScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -14,7 +14,7 @@ export default function ReciboScreen({ navigation, }) {
                 <Column style={{  marginHorizontal: margin.h, }}>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center',   }}>
                     <Title>Recibo de doação</Title>
-                    <MotiImage source={require('@imgs/logo_recibo.png')} style={{ width: 100, objectFit: 'contain', }}/>
+                    <Image contentFit='contain' source={require('@imgs/logo_recibo.png')} style={{ width: 100, }}/>
                 </Row>
 
                 <Title style={{ fontSize: 36, fontFamily: font.bold, lineHeight: 38, marginBottom: 30, }}>Valor: R$ {item?.value}</Title>

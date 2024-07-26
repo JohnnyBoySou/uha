@@ -3,6 +3,7 @@
     "name": "Uha!",
     "slug": "uha",
     "version": "3.0.0",
+    "scheme": "uha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -29,27 +30,21 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Permita que Uha! acesse sua câmera"
+          "cameraPermission": "Permita que o Uha! acesse sua câmera."
         }
       ],
       [
         "onesignal-expo-plugin",
         {
-          "mode": "development"
+          "mode": "production"
         }
       ],
       [
         "expo-media-library",
         {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "photosPermission": "Permita que o Uha! acesse suas fotos.",
+          "savePhotosPermission": "Permita que o Uha! salve as fotos.",
           "isAccessMediaLocationEnabled": true
-        }
-      ],
-      [
-        "expo-splash-screen",
-        {
-          "autoHide": true
         }
       ],
       [
@@ -65,9 +60,7 @@
           }
         }
       ]
-    ],
-    "extra": {
-      "oneSignalAppId": "6adc66cd-c5f6-4db5-b36c-b39b946a9729"
-    }
+    ]
+     
   }
 }

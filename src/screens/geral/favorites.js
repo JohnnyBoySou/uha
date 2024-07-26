@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { HeartHandshake, Search, ShoppingBag } from 'lucide-react-native';
-import { MotiImage, MotiView } from 'moti';
+import {MotiView } from 'moti';
 import Octicons from '@expo/vector-icons/Octicons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { getFavs } from '@api/user/favorites';
@@ -147,7 +147,7 @@ const Products = ({ data }) => {
                 renderItem={({ item }) => (
                     <Button style={{ borderRadius: 12, backgroundColor: '#f7f7f7', flexGrow: 1, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                         <Column style={{ justifyContent: 'center', padding: 6, }}>
-                            <MotiImage source={{ uri: item.img }} style={{ height: 140, borderRadius: 8, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <Image contentFit='cover' source={{ uri: item.img }} style={{ height: 140, borderRadius: 8, backgroundColor: "#fff", }} />
                             <Column style={{ paddingHorizontal: 6, paddingVertical: 2, }}>
                                 <Title style={{ marginTop: 6, fontSize: 14, lineHeight: 16, marginBottom: 2, width: 100, }}>{item.name.slice(0, 42)}</Title>
                                 <Row style={{}}>

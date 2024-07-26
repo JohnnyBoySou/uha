@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { Image } from "react-native";
+import React, { useContext } from "react"; 
 import { Button, Column, Row, Title } from "@theme/global";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "styled-components/native";
+import { Image } from 'expo-image';
 
 const CardOffers = ({item}) => {
     const navigation = useNavigation()
@@ -10,7 +10,7 @@ const CardOffers = ({item}) => {
     return(
     <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
     <Column style={{ justifyContent: 'center', width: 124, }}>
-        <Image source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 12, borderTopRightRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+        <Image source={{ uri: item.img }} style={{ width: 124, height: 124, borderTopLeftRadius: 12, borderTopRightRadius: 12,backgroundColor: "#fff", }} contentFit="cover" />
         {item?.sell_porcentage && <Row style={{ backgroundColor: '#d7d7d7', }}>
             <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
         </Row>}

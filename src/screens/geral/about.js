@@ -1,12 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, Button, ButtonPR, LabelPR } from '@theme/global';
+import React, { useContext } from 'react';
+import { Main, Scroll, Column, Label, Title, Row, ButtonPR, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { HeartHandshake, Infinity, Search, ShoppingBag } from 'lucide-react-native';
-import { MotiImage, MotiView } from 'moti';
+import { Infinity } from 'lucide-react-native';  
 import Header from '@components/header';
-import { Image } from 'expo-image';
-import { Skeleton } from 'moti/skeleton';
+import { Image } from 'expo-image'; 
 
 export default function AboutScreen({ navigation, }) {
     const { color, margin, font } = useContext(ThemeContext);
@@ -24,7 +21,7 @@ export default function AboutScreen({ navigation, }) {
 
                     <Row style={{ marginVertical: 20, }}>
                         <Column style={{ width: 150, height: 180, borderRadius: 16, backgroundColor: color.primary,justifyContent: 'flex-end'  }}>
-                            <MotiImage source={require('@imgs/logo_white_nobg.png')} style={{ width: 100, height: 50, objectFit: 'contain', alignSelf: 'center', marginBottom: 12, }}/>
+                            <Image contentFit='contain' source={require('@imgs/logo_white_nobg.png')} style={{ width: 100, height: 50, alignSelf: 'center', marginBottom: 12, }}/>
                         </Column>
                         <Column style={{ width: 150, height: 180, marginLeft: 18, borderRadius: 16, backgroundColor: color.secundary, justifyContent: 'center', alignItems: 'center',  }}>   
                             <Title style={{ color: "#fff", fontSize: 18, }}>Boa ação{'\n'}     é <Title style={{ color: color.primary, fontSize: 18, }}>doação</Title>!</Title>
@@ -56,7 +53,7 @@ export default function AboutScreen({ navigation, }) {
                         <Title style={{ fontSize: 18 }}>Faça parte da UHA!</Title>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
                             <Label style={{ width: '70%', fontSize: 16, lineHeight: 18, }}>Junte-se a nós e ajude a construir um futuro melhor, apoiando quem mais precisa</Label>
-                            <MotiImage  style={{ width: 80, height: 80, objectFit: 'contain', alignSelf: 'center', marginLeft: 10, backgroundColor: '#fff', borderRadius: 12,  }}/>
+                            <Image contentFit='contain'  style={{ width: 80, height: 80,  alignSelf: 'center', marginLeft: 10, backgroundColor: '#fff', borderRadius: 12,  }}/>
                         </Row>
                     </Column>
                 </Column>

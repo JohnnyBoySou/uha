@@ -2,9 +2,10 @@ import React, { useContext, useState } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, U } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
-import { TextInput, FlatList, Image, ActivityIndicator } from 'react-native';
+import { TextInput, FlatList,  ActivityIndicator } from 'react-native';
 import { Search, CircleHelp } from 'lucide-react-native';
 import { getSearch } from '@api/request/search'; 
+import { Image } from 'expo-image';
 
 export default function SearchScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -85,7 +86,7 @@ const ServicesList = ({ data }) => {
                 renderItem={({ item }) =>
                     <Button style={{ marginRight: 12, borderRadius: 12, }} onPress={() => { navigation.navigate('ShopServiceSingle', { id: item.id }) }}>
                         <Column style={{ justifyContent: 'center', width: 124, }}>
-                            <Image source={{ uri: item.Avatar }} style={{ width: 124, height: 124, borderTopLeftRadius: 12, borderTopRightRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <Image  contentFit='cover' source={{ uri: item.Avatar }} style={{ width: 124, height: 124, borderTopLeftRadius: 12, borderTopRightRadius: 12,  backgroundColor: "#fff", }} />
                             {item?.sell_porcentage && <Row style={{ backgroundColor: '#d7d7d7', }}>
                                 <Column style={{ backgroundColor: color.primary, height: 4, width: item?.sell_porcentage + '%', }} />
                             </Row>}
@@ -122,7 +123,7 @@ const ShopsList = ({ data }) => {
                             <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item?.name?.slice(0, 24)}</Title>
                             <Label style={{ fontSize: 12, lineHeight: 14, color: color.secundary + 99, }}>{item?.infomacoes?.length > 72 ? item?.infomacoes?.slice(0, 72) + '...' : item?.infomacoes}</Label>
                         </Column>
-                        <Image source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                        <Image  contentFit='cover' source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12,   backgroundColor: "#fff", }} />
                     </Row>
                 </Button>}
                 keyExtractor={item => item.id}
@@ -148,7 +149,7 @@ const ONGSList = ({ data }) => {
                             <Title style={{ marginTop: 6, fontSize: 18, lineHeight: 18, marginBottom: 4, }}>{item?.name?.slice(0, 24)}</Title>
                             <Label style={{ fontSize: 12, lineHeight: 14, color: color.secundary + 99, }}>{item?.infomacoes?.length > 72 ? item?.infomacoes.slice(0, 72) + '...' : item?.infomacoes}</Label>
                         </Column>
-                        <Image source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                        <Image  contentFit='cover' source={{ uri: item?.avatar }} style={{ width: 112, height: 112, borderRadius: 12,   backgroundColor: "#fff", }} />
                     </Row>
                 </Button>}
                 keyExtractor={item => item.id}

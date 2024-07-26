@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Main, Scroll, Column, Label, Title, Button, LabelLI, Row, } from '@theme/global';
+import React, { useContext, useState, useEffect } from 'react';
+import { Main, Scroll, Column, Label, Title, Button, Row, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
-import { MotiImage, MotiView } from 'moti';
 import { FlatList, ScrollView, Dimensions, Animated } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +11,7 @@ import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { Dog, HeartPulse, Speech, Trees } from 'lucide-react-native'
 import { SkeletonList } from './category';
 
+import { Image } from 'expo-image'
 const { width } = Dimensions.get('window')
 
 export default function ONGSScreen({ navigation, route }) {
@@ -75,7 +75,7 @@ const ONGSList = ({ data }) => {
                                     ))}
                                 </Row>
                             </Column>
-                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <Image contentFit="cover" source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12,  backgroundColor: "#fff", }} />
                         </Row>
                     </Button>
                 )}
@@ -97,7 +97,7 @@ const ONGSList = ({ data }) => {
                                     ))}
                                 </Row>
                             </Column>
-                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <Image contentFit="cover" source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12, backgroundColor: "#fff", }} />
                         </Row>
                     </Button>
                 )}
@@ -119,7 +119,7 @@ const ONGSList = ({ data }) => {
                                     ))}
                                 </Row>
                             </Column>
-                            <MotiImage source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                            <Image contentFit="cover" source={{ uri: item?.img }} style={{ width: 112, height: 112, borderRadius: 12,  backgroundColor: "#fff", }} />
                         </Row>
                     </Button>
                 )}

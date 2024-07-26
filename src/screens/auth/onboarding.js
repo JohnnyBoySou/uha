@@ -1,11 +1,11 @@
-import React, { useContext, useRef, useState, useEffect } from 'react';
+import React, { useContext, useRef } from 'react';
 import {Animated,  ScrollView, Dimensions } from 'react-native';
-import { Main, Column, Row, Title, Label, ButtonPR, ButtonSE, LabelSE, ButtonLI, LabelLI, Scroll, Button } from '@theme/global';
+import { Main, Column, Row, Title, ButtonPR, LabelSE, LabelLI, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { MotiImage, MotiView } from 'moti';
 const { height, width } = Dimensions.get('window');
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
+import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar'
 
 export default function OnboardingScreen({ navigation, }) {
@@ -25,7 +25,7 @@ export default function OnboardingScreen({ navigation, }) {
             <StatusBar style="dark" translucent animated={true}/>
             <Column style={{ flex: 1, }}>
                 <Row style={{ position: 'absolute', top: 50, left: 10, right: 10, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
-                    <MotiImage source={require('@imgs/logo.png')} style={{ objectFit: 'contain', width: 100, }} />
+                    <Image source={require('@imgs/logo.png')} contentFit='contain' style={{  width: 100, }} />
                         
                     <Column style={{ backgroundColor: color.secundary + 20, marginRight: 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 5, alignSelf: 'center', marginTop: 10, marginBottom: 14, }}>
                         <ExpandingDot
@@ -56,9 +56,9 @@ export default function OnboardingScreen({ navigation, }) {
                     showsHorizontalScrollIndicator={false}
                     scrollEventThrottle={64}
                 >
-                    <MotiImage source={require('@imgs/wall1.png')} style={{ height: 1.2 * height, width: width, objectFit: 'cover' }} />
-                    <MotiImage source={require('@imgs/wall2.png')} style={{ height: 1.2 * height, width: width, objectFit: 'cover' }} />
-                    <MotiImage source={require('@imgs/wall3.png')} style={{ height: 1.2 * height, width: width, objectFit: 'cover' }} />
+                    <Image transition={100} contentFit='cover' source={require('@imgs/wall1.png')} style={{ height: 1.2 * height, width: width,  }} />
+                    <Image transition={200} contentFit='cover' source={require('@imgs/wall2.png')} style={{ height: 1.2 * height, width: width,  }} />
+                    <Image transition={300} contentFit='cover' source={require('@imgs/wall3.png')} style={{ height: 1.2 * height, width: width,  }} />
                 </ScrollView>
 
 

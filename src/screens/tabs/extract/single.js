@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Main, Scroll, Column, Label, Title, Row, Button, ButtonPR, LabelPR } from '@theme/global';
+import { Main, Column, Label, Title, Row, Button, ButtonPR, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { Info, ArrowLeft, CircleHelp, CircleAlert } from 'lucide-react-native';
+import { Info, CircleAlert } from 'lucide-react-native';
 import { getExtractSingle } from '@request/extract/gets';
-import { MotiImage, MotiView } from 'moti';
+import { MotiView } from 'moti';
 import { Feather } from '@expo/vector-icons';
 import { Skeleton } from 'moti/skeleton';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image'
 
 export default function ExtractSingleScreen({ id, type }) {
     const { color, font, } = useContext(ThemeContext);
@@ -93,7 +94,7 @@ export default function ExtractSingleScreen({ id, type }) {
                         <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
                             <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
                                 <Row>
-                                    <MotiImage source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, objectFit: 'cover', }} />
+                                    <Image contentFit='cover' source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, }} />
                                     <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
                                         <Title style={{ fontSize: 18, }}>{ong?.name?.slice(0, 24)}</Title>
                                         <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
@@ -149,7 +150,7 @@ export default function ExtractSingleScreen({ id, type }) {
                             <Button onPress={() => { navigation.navigate('ShopServiceSingle', { id: service.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 16, zIndex: 2, }} >
                                 <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
                                     <Row>
-                                        <MotiImage source={{ uri: service?.img }} style={{ width: 74, height: 74, borderRadius: 8, objectFit: 'cover', }} />
+                                        <Image  contentFit='cover' source={{ uri: service?.img }} style={{ width: 74, height: 74, borderRadius: 8,  }} />
                                         <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
                                             <Title style={{ fontSize: 16, lineHeight: 16, }}>{service?.name.slice(0, 24)}</Title>
                                             <Title style={{ color: color.primary, fontSize: 12, lineHeight: 14, }}>{service?.pontos} pontos</Title>
@@ -163,7 +164,7 @@ export default function ExtractSingleScreen({ id, type }) {
                             <Button onPress={() => { navigation.navigate('ShopSingle', { id: shop.id, }) }} style={{ backgroundColor: '#f7f7f7', borderRadius: 16, paddingTop: 30, marginTop: -30, marginBottom: 10, marginHorizontal: 14, }} >
                                 <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
                                     <Row>
-                                        <MotiImage source={{ uri: shop?.img }} style={{ width: 46, height: 46, borderRadius: 8, objectFit: 'cover', }} />
+                                        <Image  contentFit='cover' source={{ uri: shop?.img }} style={{ width: 46, height: 46, borderRadius: 8, }} />
                                         <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
                                             <Title style={{ fontSize: 16, lineHeight: 18, }}>{shop?.name.slice(0, 24)}</Title>
                                             <Label style={{ fontSize: 12, color: color.secundary + 99, lineHeight: 12, }}>Ver mais</Label>
@@ -196,7 +197,7 @@ export default function ExtractSingleScreen({ id, type }) {
                         <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
                             <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
                                 <Row>
-                                    <MotiImage source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, objectFit: 'cover', }} />
+                                    <Image source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, }} />
                                     <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
                                         <Title style={{ fontSize: 18, }}>{ong?.name.slice(0, 24)}</Title>
                                         <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>

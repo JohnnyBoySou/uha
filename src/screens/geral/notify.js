@@ -7,6 +7,8 @@ import { ArrowRight, TriangleAlert, X } from 'lucide-react-native';
 import { MotiView, AnimatePresence } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
 import { getNotifications, getSingleNotification } from '@request/user/notify';
+import { OneSignal } from 'react-native-onesignal';
+
 
 export default function NotifyScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -18,7 +20,7 @@ export default function NotifyScreen({ navigation, }) {
     const [alerts, setalerts] = useState();
 
     const a = false;
-    
+
     const handleAlertas = () => {
         setshowtabs(false)
         setTimeout(() => {
@@ -46,7 +48,7 @@ export default function NotifyScreen({ navigation, }) {
             setcache(res)
         } catch (error) {
             console.log(error)
-        } finally{
+        } finally {
             setloading(false)
         }
     }
@@ -55,6 +57,7 @@ export default function NotifyScreen({ navigation, }) {
     useEffect(() => {
         const fecthData = async () => {
             try {
+                OneSignal.Notifications.requestPermission(true);
                 const res = await getNotifications()
                 setalerts(res)
             } catch (error) {
@@ -91,7 +94,7 @@ export default function NotifyScreen({ navigation, }) {
                 {!single && <>
                     <AnimatePresence>
                         {showtabs && <MotiView from={{ opacity: 0, translateX: -20, }} transition={{ duration: 200, type: 'timing' }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20, }}><Column style={{ marginHorizontal: margin.h, marginVertical: 24, }}>
-                            <Button onPress={handleAlertas} style={{ backgroundColor: color.primary+20, borderRadius: 12, padding: 12, marginBottom: 0, }}>
+                            <Button onPress={handleAlertas} style={{ backgroundColor: color.primary + 20, borderRadius: 12, padding: 12, marginBottom: 0, }}>
                                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                                         <Column style={{ backgroundColor: color.primary, padding: 14, borderRadius: 12, marginRight: 20, }}>
@@ -99,16 +102,16 @@ export default function NotifyScreen({ navigation, }) {
                                         </Column>
                                         <Column>
                                             <Title style={{ fontSize: 16, lineHeight: 18, }}>Alertas</Title>
-                                            <Label style={{ fontSize: 12, lineHeight: 14, color: color.secundary+99, }}>Fique de olho em alterações</Label>
+                                            <Label style={{ fontSize: 12, lineHeight: 14, color: color.secundary + 99, }}>Fique de olho em alterações</Label>
                                         </Column>
                                     </Row>
-                                    <Column style={{ width: 36, height: 36, borderRadius: 100, backgroundColor: "#fff", justifyContent: 'center', alignItems: 'center',  }}>
+                                    <Column style={{ width: 36, height: 36, borderRadius: 100, backgroundColor: "#fff", justifyContent: 'center', alignItems: 'center', }}>
                                         <ArrowRight size={18} color={color.title} />
                                     </Column>
                                 </Row>
                             </Button>
 
-                          
+
 
 
 
@@ -134,21 +137,21 @@ export default function NotifyScreen({ navigation, }) {
                 </>}
 
                 <AnimatePresence>
-                    {single && 
-                    <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20 }} transition={{ type: 'timing' }}>
-                        <Column style={{ marginHorizontal: margin.h, marginTop: 24, backgroundColor: '#f7f7f7', padding: 20, borderRadius: 12, }}>
-                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                <Column style={{ paddingRight: 12, }}>
-                                    <Title style={{ fontSize: 18, lineHeight: 20, }}>{cache?.title}</Title>
-                                    <Label style={{ fontSize: 14, }}>{cache?.date} </Label>
-                                </Column>
-                                <Button onPress={() => setsingle(false)} style={{ padding: 6, backgroundColor: color.secundary, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                                    <X size={24} color="#fff" />
-                                </Button>
-                            </Row>
-                            <Label style={{ fontSize: 14, marginTop: 6, }}>{cache?.desc}</Label>
-                        </Column>
-                    </MotiView>}
+                    {single &&
+                        <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20 }} transition={{ type: 'timing' }}>
+                            <Column style={{ marginHorizontal: margin.h, marginTop: 24, backgroundColor: '#f7f7f7', padding: 20, borderRadius: 12, }}>
+                                <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                                    <Column style={{ paddingRight: 12, }}>
+                                        <Title style={{ fontSize: 18, lineHeight: 20, }}>{cache?.title}</Title>
+                                        <Label style={{ fontSize: 14, }}>{cache?.date} </Label>
+                                    </Column>
+                                    <Button onPress={() => setsingle(false)} style={{ padding: 6, backgroundColor: color.secundary, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                                        <X size={24} color="#fff" />
+                                    </Button>
+                                </Row>
+                                <Label style={{ fontSize: 14, marginTop: 6, }}>{cache?.desc}</Label>
+                            </Column>
+                        </MotiView>}
                 </AnimatePresence>
             </Scroll>
 
@@ -157,68 +160,19 @@ export default function NotifyScreen({ navigation, }) {
     )
 }
 
-
 const Card = ({ item, handleItem }) => {
     const { color, font, margin } = useContext(ThemeContext);
     return (
         <Button onPress={handleItem} style={{ padding: 20, borderRadius: 12, borderWidth: 1, borderColor: "#d7d7d7", marginBottom: 12, }}>
-            <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
-                <Column style={{ justifyContent: 'center',  }}>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Column style={{ justifyContent: 'center', }}>
                     <Title style={{ fontSize: 18, }}>{item.title}</Title>
                     <Label style={{ fontSize: 14, lineHeight: 16, }}>{item.date}</Label>
                 </Column>
-                <Column style={{ width: 45, height: 45, backgroundColor: color.secundary+20, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
+                <Column style={{ width: 45, height: 45, backgroundColor: color.secundary + 20, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
                     <ArrowRight size={24} color={color.secundary} />
                 </Column>
             </Row>
         </Button>
     )
 }
-
-/**  {a && <>
-                                <Button onPress={() => { settype('Mensagens') }} style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
-                                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                        <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                            <Column style={{ backgroundColor: color.secundary, padding: 18, borderRadius: 12, marginRight: 20, }}>
-                                                <Mail color={color.primary} size={38} />
-                                            </Column>
-                                            <Column>
-                                                <Title style={{ fontSize: 20, }}>Mensagens</Title>
-                                                <Label style={{ fontSize: 16, }}>Todas as novidades estão aqui</Label>
-                                            </Column>
-                                        </Row>
-
-                                        <ArrowRight size={24} color={color.title} />
-                                    </Row>
-                                </Button>
-                                <Button onPress={() => { settype('Movimentações') }} style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
-                                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                        <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                            <Column style={{ backgroundColor: '#FFE0F6', padding: 18, borderRadius: 12, marginRight: 20, }}>
-                                                <ArrowLeftRight color={color.secundary} size={38} />
-                                            </Column>
-                                            <Column>
-                                                <Title style={{ fontSize: 20, }}>Movimentações</Title>
-                                                <Label style={{ fontSize: 16, }}>Acompanhe suas transações</Label>
-                                            </Column>
-                                        </Row>
-
-                                        <ArrowRight size={24} color={color.title} />
-                                    </Row>
-                                </Button>
-                                <Button onPress={() => { settype('Rifas') }} style={{ borderBottomWidth: 2, borderBottomColor: color.off, paddingBottom: 12, marginTop: 12, }}>
-                                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                        <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
-                                            <Column style={{ backgroundColor: '#fff', padding: 18, borderRadius: 12, marginRight: 20, }}>
-                                                <MotiImage source={require('@icons/ac7.png')} style={{ width: 32, height: 32, objectFit: 'contain' }} />
-                                            </Column>
-                                            <Column>
-                                                <Title style={{ fontSize: 20, }}>Números da sorte</Title>
-                                                <Label style={{ fontSize: 16, }}>Acompanhe suas rifas</Label>
-                                            </Column>
-                                        </Row>
-
-                                        <ArrowRight size={24} color={color.title} />
-                                    </Row>
-                                </Button>
-                            </>} */

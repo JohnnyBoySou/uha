@@ -75,7 +75,7 @@ export default function PaymentPix({ item, modalPix }) {
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                 <Row>
                     <Column style={{ padding: 12, backgroundColor: '#FFE0F6', borderRadius: 12, }}>
-                        <MotiImage source={require('@icons/pix.png')} style={{ width: 24, height: 24, objectFit: 'contain', }} />
+                        <Image transition={300} source={require('@icons/pix.png')} style={{ width: 24, height: 24,  }} contentFit='contain'/>
                     </Column>
                     <Column style={{ justifyContent: 'center', marginLeft: 12, }}>
                         <Title style={{ fontSize: 16, fontFamily: 'Font_Bold', lineHeight: 18, }}>Pix</Title>

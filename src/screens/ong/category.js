@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState, useMemo, } from 'react';
+import React, { useContext, useEffect, useState, } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, ButtonPR, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
-import { FlatList, Dimensions, StyleProp } from 'react-native';
-import { MotiImage, MotiView } from 'moti';
+import { FlatList, Dimensions } from 'react-native';
+import { MotiView } from 'moti';
+import { Image } from 'expo-image'
 import { getONGCategorieSingle } from '@api/request/ongs/ongs';
 import { useNavigation } from '@react-navigation/native';
 import { Dog, HeartPulse, Speech, Trees, Pizza } from 'lucide-react-native'
@@ -128,7 +129,7 @@ const CardList = ({ item }) => {
                             ))}
                         </Row>
                     </Column>
-                    <MotiImage source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, objectFit: 'cover', backgroundColor: "#fff", }} />
+                    <Image contentFit="cover" source={{ uri: item?.img }} style={{ width: 108, height: 108, marginRight: 8, marginLeft: 20, borderRadius: 12, backgroundColor: "#fff", }} />
                 </Row>
             </Button>
         </Column>

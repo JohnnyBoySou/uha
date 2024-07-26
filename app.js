@@ -11,7 +11,6 @@ import light from './src/theme/light';
 preventAutoHideAsync();
 
 import { OneSignal, LogLevel } from 'react-native-onesignal';
-import Constants from "expo-constants";
 
 export default function App() {
 
@@ -20,10 +19,12 @@ export default function App() {
   useEffect(() => {
 
     const handleNotification = () => {
-      LogBox.ignoreAllLogs(true);
-      OneSignal.initialize(Constants.expoConfig.extra.oneSignalAppId);
-      //OneSignal.Debug.setLogLevel(LogLevel.Verbose);
-      OneSignal.Notifications.requestPermission(true);
+      //LogBox.ignoreAllLogs(true);
+      const key = process.env.ONESIGNAL_KEY;
+      if(key != null){
+        OneSignal.initialize(key);
+        OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+      }
     }
 
     handleNotification();
