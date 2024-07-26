@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF26BD"
       },
-      "package": "com.engd.uha"
+      "package": "com.engd.uha",
+      "blockedPermissions": ["android.permission.RECORD_AUDIO", "android.permission.READ_MEDIA_AUDIO", "android.permission.READ_MEDIA_VIDEO"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

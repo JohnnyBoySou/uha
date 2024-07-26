@@ -19,8 +19,8 @@ export default function App() {
   useEffect(() => {
 
     const handleNotification = () => {
-      //LogBox.ignoreAllLogs(true);
-      const key = process.env.ONESIGNAL_KEY || Constants.expoConfig.extra.oneSignalAppId;
+      LogBox.ignoreAllLogs(true);
+      const key = process.env.EXPO_PUBLIC_KEY || Constants.expoConfig.extra.oneSignalAppId || '6adc66cd-c5f6-4db5-b36c-b39b946a9729';
       if(key != null){
         OneSignal.initialize(key);
         OneSignal.Debug.setLogLevel(LogLevel.Verbose);

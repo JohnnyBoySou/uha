@@ -7,7 +7,8 @@ import { ArrowRight, TriangleAlert, X } from 'lucide-react-native';
 import { MotiView, AnimatePresence } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
 import { getNotifications, getSingleNotification } from '@request/user/notify';
-import { OneSignal } from 'react-native-onesignal';
+//import { OneSignal } from 'react-native-onesignal';
+import * as Notifications from 'expo-notifications';
 
 
 export default function NotifyScreen({ navigation, }) {
@@ -57,9 +58,23 @@ export default function NotifyScreen({ navigation, }) {
     useEffect(() => {
         const fecthData = async () => {
             try {
+                async function requestNotificationPermission() {
+                    let { status } = await Notifications.getPermissionsAsync();
+                    if (status !== 'granted') {
+                        const { status: newStatus } = await Notifications.requestPermissionsAsync();
+                        status = newStatus;
+                        console.log('status', status)
+                    }
+                    if (status !== 'granted') {
+                        console.log('permitido')
+                    }
+                }
+                requestNotificationPermission();
+                /* 
                 OneSignal.Notifications.requestPermission(true).then((permission) => {
                     console.log(permission);
                 });
+                    */
                 const res = await getNotifications()
                 setalerts(res)
             } catch (error) {
