@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Dimensions } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import Header from '@components/header';
@@ -7,6 +7,9 @@ import { ArrowRight, TriangleAlert, X } from 'lucide-react-native';
 import { MotiView, AnimatePresence } from 'moti';
 import { ActivityIndicator } from 'react-native-paper';
 import { getNotifications, getSingleNotification } from '@request/user/notify';
+import RenderHtml from 'react-native-render-html';
+
+const { width, height } = Dimensions.get('window');
 
 export default function NotifyScreen({ navigation, route }) {
     const { message } = route.params || {};
@@ -67,10 +70,6 @@ export default function NotifyScreen({ navigation, route }) {
 
 
 
-
-
-
-
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <Scroll>
@@ -123,6 +122,7 @@ export default function NotifyScreen({ navigation, route }) {
                                         <FlatList
                                             style={{ marginHorizontal: margin.h, marginTop: 12, }}
                                             data={alerts}
+                                            ListFooterComponent={<Column style={{ width: 28, height: 70 }} />}
                                             renderItem={({ item }) => <Card item={item} handleItem={() => handleItem(item)} />}
                                             keyExtractor={(item) => item.id}
                                         />
@@ -135,17 +135,15 @@ export default function NotifyScreen({ navigation, route }) {
                 <AnimatePresence>
                     {single &&
                         <MotiView from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0 }} exit={{ opacity: 0, translateX: 20 }} transition={{ type: 'timing' }}>
-                            <Column style={{ marginHorizontal: margin.h, marginTop: 24, backgroundColor: '#f7f7f7', padding: 20, borderRadius: 12, }}>
-                                <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                    <Column style={{ paddingRight: 12, }}>
-                                        <Title style={{ fontSize: 18, lineHeight: 20, }}>{cache?.title}</Title>
-                                        <Label style={{ fontSize: 14, }}>{cache?.date} </Label>
-                                    </Column>
-                                    <Button onPress={() => setsingle(false)} style={{ padding: 6, backgroundColor: color.secundary, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                                        <X size={24} color="#fff" />
-                                    </Button>
-                                </Row>
-                                <Label style={{ fontSize: 14, marginTop: 6, }}>{cache?.desc}</Label>
+                            <Column style={{ marginHorizontal: margin.h, marginTop: 24, backgroundColor: '#f7f7f7', padding: 20, borderRadius: 12, width: 0.86 * width }}>
+                                <Button onPress={() => setsingle(false)} style={{ padding: 6, position: 'absolute', top: 10, right: 10, backgroundColor: color.secundary, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                                    <X size={18} color="#fff" />
+                                </Button>
+                                <Title style={{ fontSize: 16, lineHeight: 18, width: '80%', marginBottom: 6,}}>{cache?.title}</Title>
+                                <RenderHtml
+                                    contentWidth={0.8 * width}
+                                    source={{ html: cache?.desc }}
+                                />
                             </Column>
                         </MotiView>}
                 </AnimatePresence>
@@ -158,13 +156,12 @@ export default function NotifyScreen({ navigation, route }) {
 
 const Card = ({ item, handleItem }) => {
     const { color, font, margin } = useContext(ThemeContext);
-    const { date, } = item
-    const title = 'Combo massa pra caramba com um texto muito longo para que o texto seja cortado'
+    const { date, title } = item
     return (
         <Button onPress={handleItem} style={{ padding: 20, borderRadius: 12, borderWidth: 1, borderColor: "#d7d7d7", marginBottom: 12, }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                 <Column style={{ justifyContent: 'center', width: '80%', }}>
-                    <Title style={{ fontSize: 18,  }}>{title.length > 52 ? title.slice(0, 52) + '...' : title}</Title>
+                    <Title style={{ fontSize: 18, }}>{title?.length > 52 ? title.slice(0, 52) + '...' : title}</Title>
                     <Label style={{ fontSize: 14, lineHeight: 16, }}>{date}</Label>
                 </Column>
                 <Column style={{ width: 45, height: 45, backgroundColor: color.secundary + 20, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>

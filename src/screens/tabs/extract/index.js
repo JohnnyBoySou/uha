@@ -8,7 +8,7 @@ import { useIsFocused, useNavigation, useFocusEffect } from '@react-navigation/n
 import { ThemeContext } from 'styled-components/native';
 
 //components
-import { AnimatePresence, MotiView } from 'moti';
+import { AnimatePresence, MotiImage, MotiView } from 'moti';
 import { LinearGradient } from 'expo-linear-gradient';
 import Avatar from '@components/avatar';
 import TopSheet from '@components/topsheet';
@@ -19,7 +19,7 @@ import ExtractSingleScreen from './single';
 
 
 //icons
-import { Info, QrCode, Smartphone, BadgePercent, ArrowUp, } from 'lucide-react-native';
+import { Info, QrCode, Smartphone, BadgePercent, ArrowUp, X, } from 'lucide-react-native';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 //requests
@@ -114,11 +114,12 @@ export default function ExtractScreen({ navigation, route }) {
                 return false;
             };
 
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            const subscription = BackHandler.addEventListener(
+                'hardwareBackPress',
+                onBackPress
+            );
 
-            return () => {
-                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-            };
+            return () => subscription.remove();
         }, [])
     );
 
@@ -136,7 +137,7 @@ export default function ExtractScreen({ navigation, route }) {
             scrollPosition.value = event.contentOffset.y;
         },
     });
-   
+
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async () => {
         setRefreshing(true);
@@ -187,7 +188,6 @@ export default function ExtractScreen({ navigation, route }) {
                     isReadyToRefresh.value === false
                 ) {
                     isReadyToRefresh.value = true;
-                    console.log('Ready to refresh');
                 }
 
                 if (
@@ -195,7 +195,6 @@ export default function ExtractScreen({ navigation, route }) {
                     isReadyToRefresh.value === true
                 ) {
                     isReadyToRefresh.value = false;
-                    console.log('Will not refresh on release');
                 }
             },
             onPanResponderRelease: onPanRelease,
@@ -231,24 +230,26 @@ export default function ExtractScreen({ navigation, route }) {
     }, [refreshing]);
 
 
-
     return (
         <Main style={{ backgroundColor: '#fff', }} pointerEvents={refreshing ? 'none' : 'auto'}>
             {isFocused && <StatusBar style="light" backgroundColor={color.primary} animated={true} duration={100} />}
             <TopSheet
-                valueMin={150}
+                valueMin={170}
                 valueNormal={300}
-                valueMax={730}
+                valueMax={630}
                 min={
                     <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Column>
-                                <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', }}>Notas fiscais</Title>
-                                <Title style={{ color: "#fff" }}>{user?.NotasDoadas}</Title>
+                                <Title style={{ color: "#fff", fontSize: 14, fontFamily: 'Font_Medium', marginBottom: 4, }}>Notas fiscais</Title>
+                                {loading ? <Skeleton colorMode="light" radius={6} height={30} width={70} /> :
+                                    <Title style={{ color: "#fff", marginTop: -4, fontSize: 28, fontFamily: font.black, }}>{user?.NotasDoadas}</Title>}
                             </Column>
-                            <Column>
-                                <Title style={{ color: "#fff", textAlign: 'right', fontSize: 14, fontFamily: 'Font_Medium', }}>Saldo em Pontos</Title>
-                                <Title style={{ color: "#fff", textAlign: 'right' }}>{user?.PontosAtuais}</Title>
+                            <MotiImage from={{ opacity: 0, scale: 0, rotate: '20deg' }} animate={{ opacity: 1, scale: 1, rotate: '0deg' }} source={require('@imgs/logo_white_nobg.png')} style={{ width: 110, height: 80, objectFit: 'contain' }} />
+                            <Column style={{ alignItems: 'flex-end', }}>
+                                <Title style={{ color: "#fff", textAlign: 'right', fontSize: 14, fontFamily: 'Font_Medium', marginBottom: 4, }}>Saldo em Pontos</Title>
+                                {loading ? <Column style={{ alignSelf: 'flex-end' }}><Skeleton colorMode="light" radius={6} height={30} width={80} /></Column> :
+                                    <Title style={{ color: "#fff", textAlign: 'right', marginTop: -4, fontSize: 28, fontFamily: font.black, }}>{user?.PontosAtuais}</Title>}
                             </Column>
                         </Row>
                     </MotiView>
@@ -352,20 +353,20 @@ export default function ExtractScreen({ navigation, route }) {
 
             <NavBar bts={bts} page={page} setpage={setpage} scrollTags={scrollTags} margin={margin} color={color} font={font} />
 
-            <Animated.View style={[{maxHeight: 100, borderTopLeftRadius: 12, borderTopRightRadius: 12, marginHorizontal: 28,  marginBottom: refreshing ? 50 : 0, backgroundColor: refreshing ? color.blue : color.primary}, refreshContainerStyles]}>
+            <Animated.View style={[{ maxHeight: 100, borderTopLeftRadius: 12, borderTopRightRadius: 12, marginHorizontal: 28, marginBottom: refreshing ? 50 : 0, backgroundColor: refreshing ? color.blue : color.primary }, refreshContainerStyles]}>
                 {refreshing ?
-                    <Column style={{height: 100,  borderRadius: 12, }}>
+                    <Column style={{ height: 100, borderRadius: 12, }}>
                         <Column style={{ height: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', borderTopLeftRadius: 12, borderTopRightRadius: 12, }}>
                             <ActivityIndicator size="large" color="#fff" />
                         </Column>
-                        <Column style={{height: 40,  backgroundColor: '#f7f7f7', flexGrow: 1, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, }} />
+                        <Column style={{ height: 40, backgroundColor: '#f7f7f7', flexGrow: 1, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, }} />
                     </Column>
                     :
-                    <Column style={{ height: 100, justifyContent: 'center', alignItems: 'center',  }}>
+                    <Column style={{ height: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <Animated.Image
                             source={refreshIcon}
                             exiting={ZoomOut}
-                            style={[{ width: 74, height: 74, objectFit: 'contain', backgroundColor: "#FE25BD", borderRadius: 100,}, refreshIconStyles]}
+                            style={[{ width: 74, height: 74, objectFit: 'contain', backgroundColor: "#FE25BD", borderRadius: 100, }, refreshIconStyles]}
                         />
                     </Column>
                 }
@@ -390,6 +391,12 @@ export default function ExtractScreen({ navigation, route }) {
 
             <BottomSheet onChange={handleAnimate} ref={modalSelect} index={0} snapPoints={[0.1, 0.99 * height]} containerStyle={{ zIndex: 99, }} handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
                 <BottomSheetScrollView style={{ marginHorizontal: margin.h, }}>
+                    <Row style={{ alignSelf: 'flex-end' }}>
+                        <Button onPress={() => { modalSelect.current.close() }} style={{ width: 42, backgroundColor: color.secundary, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <X size={24} color="#fff" />
+                        </Button>
+
+                    </Row>
                     {isOpen && <ExtractSingleScreen id={select?.id} type={select?.type} />}
                 </BottomSheetScrollView>
             </BottomSheet>
@@ -401,12 +408,12 @@ export default function ExtractScreen({ navigation, route }) {
 const NavBar = ({ bts, page, setpage, scrollTags, margin, color, font }) => {
     return (
         <Column>
-            <Column style={{ height: 150, }} />
+            <Column style={{ height: 170, }} />
             <ScrollView ref={scrollTags} horizontal style={{ paddingHorizontal: margin.h, marginVertical: 12, }} showsHorizontalScrollIndicator={false}>
                 {bts.map((bt, index) => (
                     <Button disabled={bt === page} key={index} onPress={() => { setpage(bt) }}
                         style={{ backgroundColor: bt === page ? color.primary : 'transparent', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 100, margin: 0, }}>
-                        <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', alignSelf: 'center', }}>{bt}</Label>
+                        <Label style={{ color: bt === page ? "#fff" : color.secundary, fontFamily: font.bold, fontSize: 16, textAlign: 'center', alignSelf: 'center', }}>{bt === 'Transações' ? 'Meus pedidos' : bt}</Label>
                     </Button>
                 ))}
                 <Column style={{ width: 60, height: 12, }} />
@@ -447,7 +454,7 @@ const Empty = ({ type }) => {
 const CardExtrato = ({ item, onLong, type, handleSelect }) => {
     const { value, status, label, name, date, created_at, Status } = item
     const { color, margin } = useContext(ThemeContext);
-
+    console.log(item)
     const formatValue = (val) => {
         return parseInt(val).toLocaleString('pt-BR');
     };
@@ -459,11 +466,15 @@ const CardExtrato = ({ item, onLong, type, handleSelect }) => {
             <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
                 <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                        {icon}
+                        {type === 'Transações' ? <>{status === 'Aguardando' && <MaterialCommunityIcons name="qrcode-scan" size={24} color={color.blue} />}</>: icon}
                     </Column>
                     <SubLabel style={{ marginTop: 6, fontSize: 12, fontFamily: 'Font_Medium', textAlign: 'center' }}>{date}</SubLabel>
                 </Column>
-
+                    {type === 'Transações' &&
+                    <Row style={{ width: 120, backgroundColor: cl + 20, borderRadius: 6, paddingVertical: 6, paddingHorizontal: 6, }}>
+                        <MotiImage style={{ width: 32, height: 32, backgroundColor: '#f7f7f7', borderRadius: 6, }} source={{ uri: item.img }} />
+                        <Label style={{ fontSize: 12, marginHorizontal: 6, fontFamily: 'Font_Medium', color: color.secundary,  }}>{name?.slice(0, 24)}</Label>
+                    </Row>}
                 <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
                     <Title style={{
                         color: cl,
@@ -479,9 +490,7 @@ const CardExtrato = ({ item, onLong, type, handleSelect }) => {
                     </Title>
                     <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -2, }}>{label}</SubLabel>
                     <Row style={{ alignSelf: 'flex-end', alignItems: 'flex-end' }}>
-                        {name?.length > 0 &&
-                            <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right', fontFamily: 'Font_Bold', color: color.secundary, }}>{name.slice(0, 24)} - </Label>
-                        }<Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{hour}</Label>
+                        <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{hour}</Label>
                     </Row>
                 </Column>
             </Row>

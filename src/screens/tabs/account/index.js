@@ -100,15 +100,7 @@ export default function AccountScreen({ navigation, }) {
                     />
 
 
-                    <Row style={{ alignItems: 'center', marginVertical: 8, justifyContent: 'space-between', }}>
-                        <Row style={{ alignItems: 'center', }}>
-                            <Moon size={24} color="#5C0D45" />
-                            <Title style={{ fontSize: 18, marginLeft: 12, }}>Modo de luz escuro</Title>
-                        </Row>
-                        <Pressable onPress={() => setdark(!dark)}>
-                            <Check status={dark} />
-                        </Pressable>
-                    </Row>
+                   
                     <FlatList
                         style={{}}
                         data={Links}
@@ -139,7 +131,7 @@ const Card = ({ item, index }) => {
     const { color, font, margin } = useContext(ThemeContext);
     const navigation = useNavigation();
     return (
-        <Column from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={(index + 3) * 300}>
+        <Column from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={(index + 3) * 600}>
             <Button onPress={() => { navigation.navigate(item.screen) }} >
                 <Row style={{ marginBottom: 12, borderBottomWidth: 2, borderBottomColor: "#00000012", alignItems: 'center', paddingBottom: 12, }}>
                     <Column style={{ padding: 18, borderRadius: 12, backgroundColor: "#FFE0F6", }}>

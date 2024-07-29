@@ -16,14 +16,18 @@ import { getSingleService, } from '@request/shop/index';
 import { sendCodeService } from '@api/request/shop/qrcode';
 import { veriFav, addFav, delFav } from '@api/user/favorites';
 import { Skeleton } from 'moti/skeleton';
-import { Check, X } from 'lucide-react-native';
+import { Check, CircleAlert, X } from 'lucide-react-native';
 
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withSequence, withSpring, withTiming } from 'react-native-reanimated';
+import { useIsFocused } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window');
 
+import SucessAnim from '@anim/sucess';
+import { QRCode } from 'react-native-qrcode-svg';
+import { StatusBar } from 'expo-status-bar';
 
 export default function ShopServiceSingleScreen({ navigation, route }) {
-    const { color, margin } = useContext(ThemeContext);
+    const { color, margin, font } = useContext(ThemeContext);
     const { id } = route.params;
     const [item, setItem] = useState(null);
     const [shop, setShop] = useState(null);
@@ -32,6 +36,16 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
     const [loadingBuy, setLoadingBuy] = useState(false);
     const [success, setsuccess] = useState(false);
     const [error, setError] = useState(null);
+    const isFocused = useIsFocused()
+
+
+
+
+    useEffect(() => {
+        setLoadingBuy(false);
+        setsuccess(false);
+        setError(null);
+    }, [isFocused])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -91,11 +105,8 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                     id: item.id,
                 },
             };
-
-            setTimeout(() => {
-                setLoadingBuy(false);
-                setsuccess(true);
-            }, 1000);
+            setLoadingBuy(false);
+            setsuccess(true);
             setTimeout(() => {
                 navigation.navigate('ShopQRCode', { item: itm, })
             }, 3000);
@@ -107,7 +118,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
         } finally {
             setTimeout(() => {
                 setLoadingBuy(false);
-            }, 1000);
+            }, 500);
         }
     };
 
@@ -123,6 +134,7 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>
+            <StatusBar style={success ? 'light' : 'dark'} backgroundColor={isFocused && success ? color.green : "#fff"} animated={true} />
             <Scroll>
                 <Header title="Detalhes" rose />
                 <Carrousel data={item?.imgs} />
@@ -183,7 +195,19 @@ export default function ShopServiceSingleScreen({ navigation, route }) {
                         </Row>
                     </Column>
                 </Column>
-                <Column style={{height: 170, }} />
+
+                <Row style={{ backgroundColor: color.blue + 20, marginHorizontal: 20, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', borderRadius: 12, padding: 12, marginTop: 12, }}>
+                    <Column style={{ backgroundColor: '#ffffff90', borderRadius: 100, justifyContent: 'center', alignItems: 'center', width: 52, height: 52, }}>
+                        <CircleAlert size={26} color={color.blue} />
+                    </Column>
+
+                    <Column style={{ marginLeft: 20, width: 220, }}>
+                        <Title style={{ color: color.blue, fontSize: 16, }}>Como usar?</Title>
+                        <Label style={{ color: color.blue + 99, fontSize: 14, lineHeight: 16, fontFamily: font.medium, }}>Gere o QR Code e apresente-o no estabelecimento para trocar pelo serviço ou produto.</Label>
+                    </Column>
+                </Row>
+                <Column style={{ height: 170, }} />
+
             </Scroll>
 
             <BuyService item={item} handleBuyService={handleBuyService} loading={loadingBuy} error={error} success={success} />
@@ -245,28 +269,33 @@ const BuyService = ({ handleBuyService, loading, error, success, item }) => {
     });
 
     return (
-        <Animated.View style={[{ position: 'absolute', bottom: 20, borderRadius: 100, alignSelf: 'center', zIndex: 99, backgroundColor: 'red', }, animatedStyle]}>
-            {!success && <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                <Button onPress={() => handleBuyService()} disabled={loading || error?.length > 0} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
-                    <Row>
-                        {loading && <ActivityIndicator size="large" color="#fff" />}
-                        {!loading && <>
-                            {!error && <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />}
-                            {error && <Feather name="x" size={24} color="#fff" />}
-                        </>}
-                    </Row>
-                </Button>
-                {!loading && <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} transition={{ type: 'timing', delay: 200, }}><Label style={{ color: '#fff', fontFamily: 'Font_Medium', lineHeight: 16, marginRight: 20, fontSize: 16, }}>{error?.length > 0 ? error : 'Gerar QRCODE '}</Label></MotiView>}
-            </Row>}
 
-            {success &&
-                <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} transition={{ type: 'timing', duration: 500, }} delay={500} style={{ justifyContent: 'center', alignItems: 'center', flex: 1, }}>
-                    <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} style={{ width: 100, height: 100, borderRadius: 100, backgroundColor: "#ffffff50", justifyContent: 'center', alignItems: 'center', }}>
-                        <Check size={60} color="#fff" />
-                    </MotiView>
-                    <Title style={{ color: '#fff', textAlign: 'center', fontSize: 28, lineHeight: 28, marginTop: 20, }}>Troca realizada com sucesso!</Title>
-                    <Title style={{ color: '#fff', textAlign: 'center', fontFamily: 'Font_Medium', fontSize: 22, lineHeight: 22, marginTop: 12, }}>Redirecionando {'\n'}ao resgatar...</Title>
-                </MotiView>}
+        <Animated.View style={[{ position: 'absolute', bottom: 20, borderRadius: 100, alignSelf: 'center', zIndex: 99, backgroundColor: 'red', }, animatedStyle]}>
+            <Button onPress={() => handleBuyService()} disabled={loading || error?.length > 0}>
+                <>
+                    {!success && <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                        <Button style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                            <Row>
+                                {loading && <ActivityIndicator size="large" color="#fff" />}
+                                {!loading && <>
+                                    {!error && <MaterialCommunityIcons name="qrcode-scan" size={24} color="#fff" />}
+                                    {error && <Feather name="x" size={24} color="#fff" />}
+                                </>}
+                            </Row>
+                        </Button>
+                        {!loading && <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} transition={{ type: 'timing', delay: 200, }}><Label style={{ color: '#fff', fontFamily: 'Font_Medium', lineHeight: 16, marginRight: 20, fontSize: 16, }}>{error?.length > 0 ? error : 'Gerar QRCODE '}</Label></MotiView>}
+                    </Row>}
+                </>
+            </Button>
+
+            {success && <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} transition={{ type: 'timing', delay: 200, }} style={{ justifyContent: 'center', alignItems: 'center', marginTop: 120, }}>
+                <SucessAnim />
+                <Title style={{ fontSize: 32, lineHeight: 34, textAlign: 'center', marginTop: 24, color: '#fff', }}>Parabéns!</Title>
+                <Label style={{ textAlign: 'center', color: '#fff', width: 300, marginBottom: 12, }}>Você trocou seus pontos por um serviço com sucesso! Estamos gerando seu QRCode aguarde um momento...</Label>
+                <ActivityIndicator size={24} color={'#fff'} />
+            </MotiView>
+            }
+
         </Animated.View>
     );
 };

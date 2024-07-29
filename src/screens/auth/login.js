@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, Alert, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { ActivityIndicator, Pressable, Alert, TextInput, KeyboardAvoidingView, ScrollView, Vibration } from 'react-native';
 import { Main, Column, Title, Row, Label, Button, ButtonPR, LabelPR, U, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiImage, MotiView } from 'moti';
-import { Eye, EyeOff, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser, Gift } from 'lucide-react-native'
+import { Eye, EyeOff, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser, Gift, Vibrate, X } from 'lucide-react-native'
 import CheckBox from '@components/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import Octicons from '@expo/vector-icons/Octicons';
@@ -32,6 +32,8 @@ export default function AuthLoginScreen({ navigation, }) {
         settype(value)
     }
 
+    const visible = type === 'Entrar' || type === 'Registrar' ? true : false
+
     return (
         <Main style={{ backgroundColor: color.secundary, paddingTop: 60, }}>
             <StatusBar style="light" backgroundColor={color.secundary} animated />
@@ -39,7 +41,7 @@ export default function AuthLoginScreen({ navigation, }) {
                 <Button onPress={() => { navigation.goBack() }} style={{ width: 46, height: 32, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}>
                     <ArrowLeft color={color.secundary} />
                 </Button>
-                <Image source={require('@imgs/logo.png')} contentFit="contain" style={{width: 100, }} />
+                <Image source={require('@imgs/logo.png')} contentFit="contain" style={{ width: 100, }} />
             </Row>
 
             <Column style={{ marginHorizontal: margin.h, paddingVertical: 22, }}>
@@ -49,22 +51,32 @@ export default function AuthLoginScreen({ navigation, }) {
 
             <ScrollView keyboardShouldPersistTaps="handled" style={{ paddingTop: 10, marginTop: 20, paddingHorizontal: margin.h, paddingVertical: 12, backgroundColor: "#fff", borderTopLeftRadius: 24, borderTopRightRadius: 24, }}>
                 <Pressable onPress={() => { navigation.goBack() }} style={{ width: 80, height: 8, borderRadius: 100, backgroundColor: "#30303030", alignSelf: 'center', marginBottom: 20, marginTop: 0, }} />
-                {type == 'Entrar' && <Entrar type={type} settype={settype} loading={loading} setemail={setemail} email={email} />}
 
-                {type == 'Registrar' && <Registrar type={type} settype={settype} setemail={setemail} email={email} />}
+                {visible && <Row >
+                    <Button onPress={() => { settype('Entrar') }} style={{ paddingVertical: 10, flexGrow: 2, backgroundColor: type === 'Entrar' ? color.primary + 20 : color.secundary + 20, borderRadius: 100, paddingHorizontal: 20, justifyContent: 'center', alignItems: 'center', }}>
+                        <Label style={{ color: type === 'Entrar' ? color.primary : color.secundary, fontFamily: font.bold, textAlign: 'center', textDecorationLine: type == 'Entrar' ? 'underline' : 'none', }}>Entrar</Label>
+                    </Button>
+                    <Column style={{ width: 12, }} />
+                    <Button onPress={() => { settype('Registrar') }} style={{ paddingVertical: 10, backgroundColor: type === 'Registrar' ? color.primary + 20 : color.secundary + 20, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, justifyContent: 'center', alignItems: 'center', }}>
+                        <Label style={{ color: type === 'Registrar' ? color.primary : color.secundary, fontFamily: font.bold, textAlign: 'center', textDecorationLine: type == 'Registrar' ? 'underline' : 'none', }}>Criar conta</Label>
+                    </Button>
+                </Row>}
+
+                {type == 'Entrar' && <Entrar settype={settype} loading={loading} setemail={setemail} email={email} />}
+
+                {type == 'Registrar' && <Registrar settype={settype} setemail={setemail} email={email} />}
 
                 {type == 'ForgetPassword' && <ForgetPassword handleExit={handleExit} />}
 
                 {type === 'ConfirmEmail' && <ConfirmEmail handleExit={handleExit} email={email} />}
             </ScrollView>
 
-
         </Main>
     )
 }
 
 
-const Registrar = ({ type, settype, email, setemail }) => {
+const Registrar = ({ settype, email, setemail }) => {
     const passStrong = useRef()
     const [pass, setpass] = useState(true);
     const [remember, setremember] = useState(true);
@@ -113,7 +125,7 @@ const Registrar = ({ type, settype, email, setemail }) => {
         //prenchimento obrigatório
 
         if (!name || name.length < 5) {
-            return setError('Nome completo deve ter pelo menos 5 caracteres');
+            return setError('Nome completo deve ter pelo menos 5 letras');
         }
 
         if (!validateCPF(cpf)) {
@@ -146,15 +158,12 @@ const Registrar = ({ type, settype, email, setemail }) => {
 
         try {
             const res = await registerUser(params)
-            if (res?.status === 'Pendente') {
-                setsuccess('Confirme seu e-mail para ativar sua conta. Aguarde um momento...')
-                setTimeout(() => {
-                    settype('ConfirmEmail')
-                }, 1500);
-                return
-            }
+            setsuccess('Confirme seu e-mail para ativar sua conta. Aguarde um momento...')
+            settype('ConfirmEmail')
+
         } catch (error) {
             setError(error.message)
+            Vibration.vibrate(300);
         } finally {
             setloading(false);
         }
@@ -166,16 +175,6 @@ const Registrar = ({ type, settype, email, setemail }) => {
 
         <Column>
             <MotiView from={{ translateX: 20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
-                <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
-                    <Button onPress={() => { settype('Entrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Entrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                        <Label style={{ color: type === 'Entrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Entrar</Label>
-                    </Button>
-                    <Column style={{ width: 12, }} />
-                    <Button onPress={() => { settype('Registrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Registrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                        <Label style={{ color: type === 'Registrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Registrar</Label>
-                    </Button>
-                </Row>
-                {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 
                 <KeyboardAvoidingView behavior="padding">
                     <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusName ? color.primary : color.off, }}>
@@ -272,6 +271,7 @@ const Registrar = ({ type, settype, email, setemail }) => {
                             style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='Código de indicação' placeholderTextColor="11111140" />
                     </Row>
 
+
                     <AnimatePresence>
                         {password?.length >= 1 &&
                             <MotiView from={{ opacity: 0, translateX: -20, }} animate={{ opacity: 1, translateX: 0, }} exit={{ opacity: 0, translateX: -20, }} transition={{ type: 'timing', duration: 200, }}>
@@ -289,12 +289,25 @@ const Registrar = ({ type, settype, email, setemail }) => {
                         }
                     </AnimatePresence>
 
-                    <Pressable style={{ alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20, }} onPress={() => { setremember(!remember) }} >
-                        <CheckBox status={remember} />
-                        <Label style={{ fontFamily: font.bold, fontSize: 14, marginLeft: 6, }}>Permito se contatado por WhatsApp</Label>
-                    </Pressable>
+                    <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
+                        <Column style={{ flexGrow: 1, }}>
+                            <Pressable style={{  flexDirection: 'row',  alignItems: 'center', }} onPress={() => { setremember(!remember) }} >
+                                <CheckBox status={remember} />
+                                <Label style={{ fontFamily: font.bold, fontSize: 14, lineHeight: 14, marginLeft: 6, color: remember ? color.blue : color.label, }}>Permito ser contatado {'\n'}por WhatsApp</Label>
+                            </Pressable>
+                        </Column>
+                        <Button onPress={() => { settype('Entrar') }} style={{ borderRadius: 8, backgroundColor: color.primary+10, padding: 12, }}>
+                            <Column style={{  }}>
+                                <Label style={{ fontFamily: font.medium, color: color.secundary+99, textAlign: 'right', fontSize: 14, }}>Já possui uma conta?</Label>
+                                <Label style={{ fontFamily: font.bold, textAlign: 'right', fontSize: 14, lineHeight: 14, color: color.primary,  }}>Entre por aqui</Label>
+                            </Column>
+                        </Button>
+                    </Row>
+                    <Label style={{ fontFamily: font.medium, textAlign: 'center', fontSize: 14,  marginHorizontal: 6, marginTop: 12, }}>Ao registrar-se você concorda com os {'\n'}<U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
 
-                    <ButtonPR disabled={loading} onPress={handleRegister} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
+                    {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
+
+                    <ButtonPR disabled={loading} onPress={handleRegister} style={{ marginTop: 20, backgroundColor: color.secundary, marginBottom: 20, }}>
                         <Row>
                             {loading ?
                                 <ActivityIndicator animating={loading} color="#fff" size={27} />
@@ -303,8 +316,9 @@ const Registrar = ({ type, settype, email, setemail }) => {
                             }
                         </Row>
                     </ButtonPR>
+                    <Column style={{height: 70, }} />
 
-                    <Label style={{ fontFamily: font.medium, fontSize: 16, textAlign: 'center', marginHorizontal: 6, marginBottom: 30, }}>Ao registrar-se você concorda com os <U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
+
                 </KeyboardAvoidingView>
 
             </MotiView>
@@ -335,7 +349,7 @@ const Registrar = ({ type, settype, email, setemail }) => {
     )
 }
 
-const Entrar = ({ type, settype, email, setemail }) => {
+const Entrar = ({ settype, email, setemail }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext)
     const a = false;
@@ -367,12 +381,12 @@ const Entrar = ({ type, settype, email, setemail }) => {
         //request api
 
         try {
-            const res = await getUser(email, password); 
+            const res = await getUser(email, password);
             if (res?.status === 'Pendente') {
                 seterror('Confirme seu e-mail para ativar sua conta. Aguarde um momento...')
                 setTimeout(() => {
                     settype('ConfirmEmail')
-                }, 1500);
+                }, 1000);
                 return
             }
             else if (res?.status == 'Inativo') {
@@ -380,7 +394,7 @@ const Entrar = ({ type, settype, email, setemail }) => {
                 return
             }
             else if (res?.status === 'Ativo') {
-                setsuccess('Login realizado com sucesso! Aguarde um momento...')
+                setsuccess('Logado com sucesso! Aguarde um momento...')
                 const saveUser = {
                     "avatar": null,
                     "name": res?.name,
@@ -389,16 +403,13 @@ const Entrar = ({ type, settype, email, setemail }) => {
                     "remember": remember,
                     "moedas": res?.moedas,
                     "pontos": res?.points,
-                }; 
-                if(res.uiid){
+                };
+                if (res.uiid) {
                     OneSignal.login(res.uiid)
                 }
                 const preferences = await createPreferences(saveUser)
-                if(preferences){
-                    setTimeout(() => {
-                        navigation.replace('Tabs')
-                    }, 1500);
-
+                if (preferences) {
+                    navigation.replace('Tabs')
                 }
             }
         } catch (error) {
@@ -410,17 +421,8 @@ const Entrar = ({ type, settype, email, setemail }) => {
     }
     return (
         <MotiView from={{ translateX: -20, opacity: 0, }} animate={{ translateX: 0, opacity: 1, }} transition={{ type: 'timing' }}>
-            <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
-                <Button onPress={() => { settype('Entrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Entrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                    <Label style={{ color: type === 'Entrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Entrar</Label>
-                </Button>
-                <Column style={{ width: 12, }} />
-                <Button onPress={() => { settype('Registrar') }} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Registrar' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                    <Label style={{ color: type === 'Registrar' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Registrar</Label>
-                </Button>
-            </Row>
+
             <KeyboardAvoidingView behavior="padding"  >
-                {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 
                 <Row style={{ borderRadius: 8, marginTop: 15, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
                     <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
@@ -455,13 +457,15 @@ const Entrar = ({ type, settype, email, setemail }) => {
                 <Row style={{ justifyContent: 'space-between', marginTop: 16, alignItems: 'center', }}>
                     <Pressable style={{ alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} onPress={() => { setremember(!remember) }} >
                         <CheckBox status={remember} />
-                        <Label style={{ fontFamily: font.bold, fontSize: 14, marginLeft: 6, }}>Manter conectado</Label>
+                        <Label style={{ fontFamily: font.bold, fontSize: 14, marginLeft: 6, color: remember ? color.blue : color.label, }}>Manter conectado</Label>
                     </Pressable>
                     <Pressable onPress={() => { settype('ForgetPassword') }} style={{ alignSelf: 'center', }}>
                         <Label style={{ color: color.secundary, fontFamily: font.bold, fontSize: 14, textDecorationStyle: 'solid', textDecorationLine: "underline", }}>Esqueci minha senha</Label>
                     </Pressable>
                 </Row>
             </KeyboardAvoidingView>
+
+            {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 
             <ButtonPR onPress={handleLogin} disabled={loading} style={{ marginTop: 30, }}>
                 <Row>
@@ -473,55 +477,18 @@ const Entrar = ({ type, settype, email, setemail }) => {
                 </Row>
             </ButtonPR>
 
-
-            {a &&
-                <>
-                    <Row style={{ marginTop: 30, justifyContent: 'center', alignItems: 'center', }}>
-                        <Column style={{ flexGrow: 1, height: 2, backgroundColor: color.off, }} />
-                        <Label style={{ fontFamily: font.medium, textAlign: 'center', marginHorizontal: 6, }}>ou entre com</Label>
-                        <Column style={{ flexGrow: 1, height: 2, backgroundColor: color.off, }} />
-                    </Row>
-
-                    <Row style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 24, }}>
-                        <Button style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6, }} >
-                            <Column>
-                                <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
-                                    <MotiImage source={require('@icons/facebook.png')} style={{ width: 28, height: 28, }} />
-                                </Column>
-                                <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Facebook</Label>
-                            </Column>
-                        </Button>
-                        <Button style={{ justifyContent: 'center', marginHorizontal: 20, alignItems: 'center', borderRadius: 6, }} >
-                            <Column>
-                                <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
-                                    <MotiImage source={require('@icons/google.png')} style={{ width: 28, height: 28, }} />
-                                </Column>
-                                <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Google</Label>
-                            </Column>
-                        </Button>
-                        <Button style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 6, }} >
-                            <Column>
-                                <Column style={{ backgroundColor: "#20202010", padding: 18, borderRadius: 12, }}>
-                                    <MotiImage source={require('@icons/apple.png')} style={{ width: 28, height: 28, }} />
-                                </Column>
-                                <Label style={{ fontSize: 14, textAlign: 'center', fontFamily: 'Font_Medium', marginTop: 10, }}>Apple ID</Label>
-                            </Column>
-                        </Button>
-                    </Row>
-                </>
-            }
+            <Button onPress={() => { settype('Registrar') }} style={{  borderRadius: 8, backgroundColor: color.primary+10, padding: 16, marginTop: 20, alignSelf: 'center', }} >
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Label style={{ fontFamily: font.medium }}>Não possui uma conta?</Label>
+                    <Label style={{ fontFamily: font.bold, color: color.primary, letterSpacing: -0.6, marginTop: -6, }}>Clique aqui para começar</Label>
+                </Column>
+            </Button>
 
         </MotiView>
     )
 }
 
-
-
-
-
-
-
-const ConfirmEmail = ({ email }) => {
+const ConfirmEmail = ({ email, handleExit }) => {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState();
@@ -536,7 +503,6 @@ const ConfirmEmail = ({ email }) => {
             try {
                 const res = await verifyEmail(email, digit1 + digit2 + digit3 + digit4)
                 if (res) {
-                    setloading(false)
                     setsuccess('Email verificado com sucesso! Aguarde um momento...')
                     const saveUser = {
                         "avatar": res.avatar ? res.avatar : null,
@@ -550,7 +516,7 @@ const ConfirmEmail = ({ email }) => {
                     const preferences = await createPreferences(saveUser)
                     setTimeout(() => {
                         navigation.replace('Tabs')
-                    }, 1500);
+                    }, 500);
                 }
             } catch (error) {
                 console.log(error)
@@ -640,15 +606,7 @@ const ConfirmEmail = ({ email }) => {
     )
 }
 
-
-
-
-
-
-
-
-
-const ForgetPassword = ({ handleExit }) => {
+const ForgetPassword = ({ handleExit, }) => {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState();
@@ -680,23 +638,27 @@ const ForgetPassword = ({ handleExit }) => {
         })
     }
 
-    const handleVerify = () => {
+    const handleVerify = async () => {
         seterror()
         setsuccess()
         setloading(true)
         if (digit1?.length === 1 && digit2?.length === 1 && digit3?.length === 1 && digit4?.length === 1) {
-            resetPasswordCode(email, digit1 + digit2 + digit3 + digit4).then(res => {
-                if (res.codigo) {
+            try {
+                const res = await resetPasswordCode(email, digit1 + digit2 + digit3 + digit4)
+                if (res?.codigo) {
                     setcode(res?.codigo)
                     settype('Nova senha')
                 } else {
                     seterror(res)
                 }
-            }).catch(err => {
-                console.log(err)
-            }).finally(() => {
+            } catch (error) {
+                console.log(error)
+
+            }
+            finally {
                 setloading(false)
-            })
+            }
+
         }
     }
 
@@ -761,22 +723,17 @@ const ForgetPassword = ({ handleExit }) => {
 
     return (
         <MotiView from={{ translateY: 20, opacity: 0 }} animate={{ translateY: 0, opacity: 1, }} transition={{ type: 'timing' }}>
-            <Row style={{ backgroundColor: '#FFE0F6', padding: 12, borderRadius: 100, }}>
-                <Button onPress={() => { handleExit('Entrar') }} disabled={type === 'Nova senha'} style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Redefinir' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                    <Label style={{ color: type === 'Redefinir' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Redefinir</Label>
-                </Button>
-                <Column style={{ width: 12, }} />
-                <Button style={{ paddingVertical: 10, borderRadius: 100, flexGrow: 1, paddingHorizontal: 20, backgroundColor: type === 'Nova senha' ? '#fff' : 'transparent', justifyContent: 'center', alignItems: 'center', }}>
-                    <Label style={{ color: type === 'Nova senha' ? color.secundary : color.secundary + 99, fontFamily: font.bold, textAlign: 'center', }}>Nova senha</Label>
+
+            <Row style={{ alignSelf: 'flex-end', position: 'absolute', top: 0, zIndex: 99, }}>
+                <Button onPress={() => handleExit('Entrar')} style={{ width: 42, backgroundColor: color.secundary, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                    <X size={24} color="#fff" />
                 </Button>
             </Row>
-
-            {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 
             {type === 'Redefinir' && <Column>
 
                 {step == 1 && <Column>
-                    <Column style={{ marginTop: 24, }}>
+                    <Column style={{ marginTop: 12, }}>
                         <Title style={{ marginBottom: 6, color: color.secundary, }}>Preencha seu e-mail</Title>
                         <Label>Vamos te enviar um e-mail com o código de verificação para redefinir sua senha.</Label>
                     </Column>
@@ -793,6 +750,8 @@ const ForgetPassword = ({ handleExit }) => {
                             onSubmitEditing={handleSend}
                             keyboardType='email-address' style={{ fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='E-mail' placeholderTextColor="#11111190" />
                     </Row>
+                    {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
+
                     <ButtonPR disabled={loading} onPress={handleSend} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
                         <Row>
                             {loading ? <ActivityIndicator animating={loading} color="#fff" size={27} /> : <LabelPR>Enviar código</LabelPR>}
@@ -845,6 +804,8 @@ const ForgetPassword = ({ handleExit }) => {
                             onChangeText={(e) => setdigit4(e)}
                             keyboardType='numeric' style={{ fontFamily: font.bold, textAlign: 'center', borderRadius: 24, borderWidth: 2, borderColor: focus4 ? color.primary : color.off, fontSize: 28, justifyContent: 'center', alignItems: 'center', width: 64, height: 64, }} placeholder='*' placeholderTextColor="#11111190" maxLength={1} />
                     </Row>
+                    {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
+
                     <ButtonPR disabled={loading} onPress={handleVerify} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
                         <Row>
                             {loading ? <ActivityIndicator animating={loading} color="#fff" size={27} /> : <LabelPR>Verificar código</LabelPR>}
@@ -910,6 +871,8 @@ const ForgetPassword = ({ handleExit }) => {
                     {passwordCriteria?.repeat ? <Octicons name="check-circle-fill" size={18} color={color.green} /> : <Octicons name="x-circle-fill" size={18} color={color.red} />}
                     <Label style={{ fontSize: 16, marginLeft: 12, fontFamily: 'Font_Medium', color: '#111', }}>Repita a senha.</Label>
                 </Row>
+
+                {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 
                 <ButtonPR disabled={loading || !isPasswordStrong()} onPress={handleReset} style={{ marginTop: 30, backgroundColor: color.secundary, marginBottom: 20, }}>
                     <Row>

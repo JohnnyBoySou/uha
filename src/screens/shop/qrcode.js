@@ -61,7 +61,7 @@ export default function ShopQRCodeScreen({ navigation, route }) {
                                     logoMargin={6}
                                 />
                             </Column>
-                            <Title style={{ marginVertical: 10, fontSize: 18, textAlign: 'center' }}>Aponte a câmera</Title>
+                            <Title style={{ marginVertical: 10, fontSize: 18, textAlign: 'center' }}>Apresente o QRCode no estabelecimento</Title>
 
                             <Row style={{ marginHorizontal: - 64, justifyContent: 'center', alignItems: 'center', marginTop: 10, }}>
                                 <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
@@ -70,10 +70,8 @@ export default function ShopQRCodeScreen({ navigation, route }) {
                                 </Column>
                                 <Column style={{ width: 42, height: 42, backgroundColor: color.primary, borderRadius: 100, }} />
                             </Row>
-                            <Row style={{ marginVertical: 10, alignSelf: 'center', }}>
-                                <Title style={{ fontFamily: font.medium, fontSize: 18, }}>Ou digite o </Title>
-                                <Title style={{ fontFamily: font.bold, fontSize: 18, }}>código manual</Title>
-                            </Row>
+                            <Title style={{ fontFamily: font.medium, fontSize: 18, textAlign: 'center', marginBottom: 12, }}>Ou apresente o <Title style={{ fontFamily: font.bold, fontSize: 18, }}>código abaixo</Title>{'\n'}para o atendente</Title>
+                              
 
                             <Button onPress={handleClipboard} >
                                 <Row style={{ borderWidth: 2, borderStyle: 'dashed', padding: 12, borderRadius: 12, justifyContent: 'center', alignItems: 'center', borderColor: clip ? color.green : color.secundary, }}>

@@ -7,6 +7,7 @@ import * as Clipboard from 'expo-clipboard';
 import { payPix, getStatusPay } from '@api/request/payment/pay';
 import { MotiImage } from 'moti';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 
 export default function PaymentPix({ item, modalPix }) {
     const { color, } = useContext(ThemeContext);

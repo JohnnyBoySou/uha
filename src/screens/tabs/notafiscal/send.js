@@ -3,9 +3,9 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 
 import * as Haptics from 'expo-haptics';
 import { TextInput, Dimensions, FlatList, Keyboard } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, Button,  ButtonPR, LabelPR, } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button, ButtonPR, LabelPR, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiView,  } from 'moti';
+import { AnimatePresence, MotiView, } from 'moti';
 
 import Avatar from '@components/avatar';
 import Header from '@components/header';
@@ -145,6 +145,9 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                 </Row>
             </Scroll>
 
+
+
+
             <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ backgroundColor: error || success ? '#00000080' : 'transparent', position: 'absolute', top: 0, width: width, height: 1.1 * height, justifyContent: 'center', alignItems: 'center', }}>
                 <AnimatePresence >
                     {loading ? <MessageAwait /> : <>
@@ -153,32 +156,56 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                 </AnimatePresence>
             </MotiView>
 
-            <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', justifyContent: 'space-between', alignItems: 'center', bottom: 35, left: 35, right: 35, flexGrow: 1, flexDirection: 'row', }}>
+            <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', justifyContent: 'space-between', bottom: 35, left: 35, }}>
+
+
+
+            <Button onPress={() => { modalListNotas.current.expand() }} style={{borderRadius: 100,}}>
+            <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#ed18ad", borderRadius: 100, paddingRight: 24, }}>
                 <Row>
                     {notas?.length >= 1 && <MotiView from={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} style={{ width: 24, height: 24, borderRadius: 100, position: 'absolute', top: 42, left: 40, zIndex: 99, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}>
                         <Title style={{ fontSize: 14, lineHeight: 16, }}>{notas?.length}</Title>
                     </MotiView>}
-                    <Button onPress={() => { modalListNotas.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                    <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
                         <NotepadText size={32} color="#fff" />
-                    </Button>
+                    </Column>
                 </Row>
-
-                <Button onPress={() => { modalDigitNota.current.expand() }} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
-                    <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
+                <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Minha{notas.length > 1 ? 's' : ''} nota{notas.length > 1 ? 's' : ''}</Title>
+            </Row>
+            </Button>
+                <Button onPress={() => { modalDigitNota.current.expand() }} style={{borderRadius: 100, marginVertical: 12,}}>
+                    <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#0f93db", borderRadius: 100, paddingRight: 24, }}>
+                        <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
+                            <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
+                        </Column>
+                        <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Digitar nota</Title>
+                    </Row>
                 </Button>
 
-                {notas?.length == 0 && <MotiView from={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} style={{ width: 62, height: 62, borderRadius: 100, }} />}
-                {notas?.length >= 1 && <MotiView from={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}><Button onPress={handleFinish} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.green, justifyContent: 'center', alignItems: 'center', }}>
-                    <MaterialCommunityIcons name="check" size={32} color="#fff" />
-                </Button></MotiView>}
+                <Button disabled={notas.length == 0} onPress={handleFinish} style={{ opacity: notas.length === 0 ? 0.5 : 1, borderRadius: 100, }}>
+
+                    <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#22a868", borderRadius: 100, paddingRight: 24, }}>
+                        <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.green, justifyContent: 'center', alignItems: 'center',}}>
+                            <MaterialCommunityIcons name="check" size={32} color="#fff" />
+                        </Column>
+                        <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Enviar nota{notas.length > 1 ? 's' : ''}</Title>
+                    </Row>
+
+                </Button>
+
+
+
+
             </MotiView>
+
+
 
             <BottomSheet ref={modalListNotas} snapPoints={[0.1, 0.7 * height]} handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
                 <BottomSheetScrollView style={{ marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                         <Title style={{ textAlign: 'center', marginVertical: 12, }}>Minhas notas</Title>
-                        <Button onPress={() => { modalListNotas.current.close() }} style={{ backgroundColor: color.red + 20, width: 45, height: 45, borderRadius: 12, justifyContent: 'center', alignItems: 'center', }}>
-                            <X size={24} color={color.red} />
+                        <Button onPress={() => { modalListNotas.current.close() }} style={{ width: 42, backgroundColor: color.secundary, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <X size={24} color="#fff" />
                         </Button>
                     </Row>
 
@@ -204,8 +231,14 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                 </ButtonPR>}
             </BottomSheet>
 
-            <BottomSheet ref={modalDigitNota} snapPoints={[0.1, 340]} keyboardBlurBehavior handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
+            <BottomSheet ref={modalDigitNota} snapPoints={[0.1, 360]} keyboardBlurBehavior handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
                 <BottomSheetView style={{ marginHorizontal: margin.h, }}>
+                    <Row style={{ alignSelf: 'flex-end', position: 'absolute', top: 0, zIndex: 99, }}>
+                        <Button onPress={() => { modalDigitNota.current.close() }} style={{ width: 42, backgroundColor: color.secundary, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                            <X size={24} color="#fff" />
+                        </Button>
+
+                    </Row>
                     <Title style={{ textAlign: 'center', marginVertical: 12, }}>Digitar o código</Title>
                     <Column style={{ width: 300, alignSelf: 'center', }}>
                         <TextInput

@@ -55,7 +55,7 @@ export default function PaymentCredito({ item, modalCredit, }) {
         }
     }
 
-    const visible = nome && cvv.length === 3 && mes.length === 5 && numerocartao.length === 16 ? true : false
+    const visible = nome.length > 0 && cvv.length === 3 && mes.length === 5 && numerocartao.length === 19 ? true : false
 
     return (
         <Column style={{ paddingHorizontal: 28,  }}>
@@ -157,13 +157,13 @@ export default function PaymentCredito({ item, modalCredit, }) {
                 </Row>
             </Column>
             
-            <BuyService handleBuyService={handleBuyService} loading={loading} error={error} success={success} visible={visible} />
+            <BuyService handleBuyService={handleBuyService} loading={loading} error={error} success={success} disabled={!visible} />
             <Column style={{height: 100, }} />
         </Column>
     )
 }
 
-const BuyService = ({ handleBuyService, loading, error, success, visible }) => {
+const BuyService = ({ handleBuyService, loading, error, success, disabled }) => {
     const { color } = useContext(ThemeContext);
     const widthValue = useSharedValue(162);
     const heightValue = useSharedValue(62);
@@ -213,11 +213,10 @@ const BuyService = ({ handleBuyService, loading, error, success, visible }) => {
             borderRadius: radiusValue.value,
         };
     });
-    if (visible === false) return null
     return (
         <Animated.View entering={FadeInDown} exiting={FadeOutDown} style={[{ borderRadius: 100, position: 'absolute', bottom: 20, alignSelf: 'center', zIndex: 99, backgroundColor: 'red', }, animatedStyle]}>
             {!success && <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                <Button onPress={() => handleBuyService()} disabled={loading} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                <Button onPress={() => handleBuyService()} disabled={loading || disabled} style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: error?.length > 0 ? color.red : color.primary, justifyContent: 'center', alignItems: 'center', }}>
                     <Row>
                         {loading && <ActivityIndicator size="large" color="#fff" />}
                         {!loading && <>

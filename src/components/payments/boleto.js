@@ -5,8 +5,8 @@ import { ThemeContext } from 'styled-components/native';
 import { Clipboard as Clip, ScrollText, X } from 'lucide-react-native';
 import * as Clipboard from 'expo-clipboard';
 import { payBoleto, getStatusPay } from '@api/request/payment/pay';
-import { MotiImage } from 'moti';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 
 export default function PaymentBoleto({ item, modalBoleto }) {
     const { color, } = useContext(ThemeContext);

@@ -6,6 +6,7 @@ import { TextInput, FlatList,  ActivityIndicator } from 'react-native';
 import { Search, CircleHelp } from 'lucide-react-native';
 import { getSearch } from '@api/request/search'; 
 import { Image } from 'expo-image';
+import { useNavigation } from '@react-navigation/native';
 
 export default function SearchScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -73,7 +74,9 @@ export default function SearchScreen({ navigation, route }) {
 
 const ServicesList = ({ data }) => {
     const { color, font, margin } = useContext(ThemeContext);
+    const navigation = useNavigation();
     if (data?.length == 0) return <></>
+
     return (
         <Column style={{ marginHorizontal: 28, }}>
             <Title>Serviços</Title>
@@ -109,6 +112,7 @@ const ServicesList = ({ data }) => {
 
 const ShopsList = ({ data }) => {
     const { color, font, margin } = useContext(ThemeContext);
+    const navigation = useNavigation();
     if (data?.length == 0) return <></>
     return (
         <Column style={{ marginHorizontal: 28, }}>
@@ -135,6 +139,7 @@ const ShopsList = ({ data }) => {
 
 const ONGSList = ({ data }) => {
     const { color, font, margin } = useContext(ThemeContext);
+    const navigation = useNavigation();
     if (data?.length == 0) return <></>
     return (
         <Column style={{ marginHorizontal: 28, }}>
