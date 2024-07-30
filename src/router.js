@@ -148,54 +148,54 @@ export default function Router() {
             <Stack.Screen name="DonateValueHide" component={DonateValueHideScreen}  options={{ ...TransitionPresets.SlideFromRightIOS}}/>
             <Stack.Screen name="DonateCertificado" component={DonateCertificadoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="PayBoleto" component={PayBoletoScreen} />
+            <Stack.Screen name="PayBoleto" component={PayBoletoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Notafiscal" component={NotafiscalScreen} />
-            <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} />
+            <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="NotafiscalSendAnonimo" component={NotafiscalSendAnonimoScreen} />
-            <Stack.Screen name="NotafiscalONGSAnonimo" component={NotafiscalONGSAnonimoScreen} />
+            <Stack.Screen name="NotafiscalSendAnonimo" component={NotafiscalSendAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="NotafiscalONGSAnonimo" component={NotafiscalONGSAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="NotafiscalSuccessAnonimo" component={NotafiscalSuccessAnonimoScreen} />
-            <Stack.Screen name="NotafiscalErrorAnonimo" component={NotafiscalErrorAnonimoScreen} />
+            <Stack.Screen name="NotafiscalSuccessAnonimo" component={NotafiscalSuccessAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="NotafiscalErrorAnonimo" component={NotafiscalErrorAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
 
-            <Stack.Screen name="NotafiscalSelect" component={NotafiscalSelectScreen} />
-            <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} />
-            <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} />
-            <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} />
+            <Stack.Screen name="NotafiscalSelect" component={NotafiscalSelectScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Extract" component={ExtractScreen} />
-            <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen}/>
-            <Stack.Screen name="ExtractPayment" component={ExtractPaymentScreen} />
+            <Stack.Screen name="Extract" component={ExtractScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ExtractPayment" component={ExtractPaymentScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Certificate" component={CertificateScreen} />
+            <Stack.Screen name="Certificate" component={CertificateScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Account" component={AccountScreen} />
-            <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} />
-            <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
-            <Stack.Screen name="AccountAccess" component={AccountAccessInfoScreen} />
-            <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} />
-            <Stack.Screen name="AccountTerms" component={AccountTermsScreen} />
-            <Stack.Screen name="AccountReset" component={AccountResetScreen} />
+            <Stack.Screen name="Account" component={AccountScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="AccountNotify" component={AccountNotifyScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="AccountAccess" component={AccountAccessInfoScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="AccountTerms" component={AccountTermsScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="AccountReset" component={AccountResetScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="ONGSingle" component={ONGSingleScreen} />
-            <Stack.Screen name="ONGList" component={ONGListScreen} />
-            <Stack.Screen name="ONGS" component={ONGSScreen} />
-            <Stack.Screen name="ONGCategory" component={ONGCategoryScreen} />
+            <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ONGList" component={ONGListScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ONGS" component={ONGSScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="ONGCategory" component={ONGCategoryScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} />
-            <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} />
-            <Stack.Screen name="RaspadinhasShop" component={RaspadinhasShopScreen} />
+            <Stack.Screen name="Raspadinhas" component={RaspadinhasScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="RaspadinhasSingle" component={RaspadinhasSingleScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="RaspadinhasShop" component={RaspadinhasShopScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Rifas" component={RifasScreen} />
-            <Stack.Screen name="RifasSingle" component={RifasSingleScreen} />
-            <Stack.Screen name="RifasBuy" component={RifasBuyScreen} />
+            <Stack.Screen name="Rifas" component={RifasScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="RifasSingle" component={RifasSingleScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="RifasBuy" component={RifasBuyScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
 
-            <Stack.Screen name="Questions" component={QuestionsScreen} />
-            <Stack.Screen name="QuestionList" component={QuestionListScreen} />
-            <Stack.Screen name="QuestionsChat" component={QuestionsChatScreen} />
-            <Stack.Screen name="QuestionsChatStatus" component={QuestionsChatStatusScreen} />
+            <Stack.Screen name="Questions" component={QuestionsScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="QuestionList" component={QuestionListScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="QuestionsChat" component={QuestionsChatScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
+            <Stack.Screen name="QuestionsChatStatus" component={QuestionsChatStatusScreen} options={{ ...TransitionPresets.SlideFromRightIOS}}/>
         </Stack.Navigator>
     </NavigationContainer>
    );

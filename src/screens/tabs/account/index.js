@@ -11,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image} from 'expo-image'
+import { Skeleton } from 'moti/skeleton';
 
 export default function AccountScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -49,10 +50,12 @@ export default function AccountScreen({ navigation, }) {
 
                 <Column from={{ opacity: 0, translateX: 20 }} animate={{ opacity: 1, translateX: 0, }} delay={200} style={{ backgroundColor: color.primary, paddingHorizontal: 20, paddingVertical: 16, borderRadius: 24, marginHorizontal: margin.h, marginVertical: 18, }}>
                     <Label style={{ color: "#fff", }}>Pontos disponíveis para uso</Label>
-                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, color: "#fff", }}>{user?.PontosAtuais}</Title>
+                    {loading ? <Column style={{ marginVertical: 6 , }}><Skeleton height={32} width={100} colorMode='light'/></Column> :
+                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, marginTop: 4, color: "#fff", }}>{user?.PontosAtuais}</Title>}
                     <LineL />
                     <Label style={{ color: "#fff", marginTop: 12, }}>Notas fiscais doadas</Label>
-                    <Label style={{ color: "#fff", }}>{user?.NotasDoadas}</Label>
+                    {loading ? <Column style={{ marginVertical: 6 , }}><Skeleton height={32} width={70} colorMode='light'/></Column> :
+                    <Label style={{ color: "#fff", fontSize: 32, fontFamily: font.bold, lineHeight: 34, marginBottom: 6, marginTop: 4, }}>{user?.NotasDoadas}</Label>}
                     <ButtonSE onPress={() => { navigation.navigate('Shop') }} style={{ marginTop: 24, alignSelf: 'flex-end', paddingHorizontal: 32, }}  >
                         <LabelSE style={{ color: color.background, }}>Utilizar pontos</LabelSE>
                     </ButtonSE>
@@ -180,14 +183,7 @@ const Configs = [
         screen: 'About',
         img: require('@icons/ic3.png'),
     },
-    {
-        title: 'Notificações',
-        description: 'Configure como desejar ',
-        icon: 'bell',
-        check: null,
-        screen: 'AccountNotify',
-        img: require('@icons/ic2.png'),
-    },
+   
   
     
     {
@@ -212,11 +208,6 @@ const Links = [
         screen: 'Questions',
     },
     {
-        title: 'Acesso à informação',
-        icon: <Info size={24} color="#5C0D45" />,
-        screen: 'AccountAccess',
-    },
-    {
         title: 'Termos e condições',
         icon: <ScrollText size={24} color="#5C0D45" />,
         screen: 'AccountTerms',
@@ -225,6 +216,14 @@ const Links = [
 
 
 /**
+ *  {
+        title: 'Notificações',
+        description: 'Configure como desejar ',
+        icon: 'bell',
+        check: null,
+        screen: 'AccountNotify',
+        img: require('@icons/ic2.png'),
+    },
  *  {
         title: 'Histórico de Pontos',
         description: 'Acompanhe as movimentações',

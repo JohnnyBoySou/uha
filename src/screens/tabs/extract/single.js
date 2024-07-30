@@ -153,7 +153,7 @@ export default function ExtractSingleScreen({ id, type }) {
                                         <Image  contentFit='cover' source={{ uri: service?.img }} style={{ width: 74, height: 74, borderRadius: 8,  }} />
                                         <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
                                             <Title style={{ fontSize: 16, lineHeight: 16, }}>{service?.name.slice(0, 24)}</Title>
-                                            <Title style={{ color: color.primary, fontSize: 12, lineHeight: 14, }}>{service?.pontos} pontos</Title>
+                                            <Title style={{ color: color.primary, fontSize: 12, lineHeight: 14, }}>{service?.pontos} ponto{service?.pontos > 1 ? 's' : ''}</Title>
                                             <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 8, marginTop: 8, paddingHorizontal: 12, }}>
                                                 <Title style={{ color: color.primary, fontSize: 12, lineHeight: 12, }}>Comprar novamente</Title>
                                             </Button>
