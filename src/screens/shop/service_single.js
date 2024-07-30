@@ -228,7 +228,7 @@ const BuyService = ({ handleBuyService, loading, error, success, item }) => {
         if (success && !loading) {
             // Sucesso
             widthValue.value = withTiming(width, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
-            heightValue.value = withTiming(height, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
+            heightValue.value = withTiming(height * 1.13, { duration: 600, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
             bottomValue.value = withSpring(0);
             radiusValue.value = withTiming(0, { duration: 300, easing: Easing.bezier(0.25, 0.1, 0.25, 1) });
             backgroundValue.value = withSpring(color.green);
@@ -265,12 +265,13 @@ const BuyService = ({ handleBuyService, loading, error, success, item }) => {
             backgroundColor: backgroundValue.value,
             bottom: bottomValue.value,
             borderRadius: radiusValue.value,
+            position: 'absolute',
         };
     });
 
     return (
 
-        <Animated.View style={[{ position: 'absolute', bottom: 20, borderRadius: 100, alignSelf: 'center', zIndex: 99, backgroundColor: 'red', }, animatedStyle]}>
+        <Animated.View style={[{  borderRadius: 100, alignSelf: 'center', zIndex: 99,  }, animatedStyle]}>
             <Button onPress={() => handleBuyService()} disabled={loading || error?.length > 0}>
                 <>
                     {!success && <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>

@@ -32,7 +32,7 @@ import { useNavigation } from '@react-navigation/native';
 const { width } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation, }) {
-    const { color, font, margin, background} = useContext(ThemeContext);
+    const { color, font, margin, background } = useContext(ThemeContext);
 
     const [offerS, setOffers] = useState([]);
     const [shopS, setShops] = useState([]);
@@ -69,7 +69,7 @@ export default function HomeScreen({ navigation, }) {
             <StatusBar style="dark" backgroundColor="#fff" animated={true} />
             <Scroll>
                 <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, paddingTop: 10, }}>
-                    <Image source={require('@imgs/logo_black_nobg.png')} transition={1000} contentFit="contain" style={{ width: 100, height: 40,   }} />
+                    <Image source={require('@imgs/logo_black_nobg.png')} transition={1000} contentFit="contain" style={{ width: 100, height: 40, }} />
                     <Row style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <Notify />
                         <Column style={{ width: 16, }} />
@@ -101,7 +101,7 @@ export default function HomeScreen({ navigation, }) {
                         <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ borderWidth: 2, borderColor: color.secundary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, }}>
                             <Label style={{ fontFamily: font.bold, color: color.secundary, fontSize: 16, }}>Central de ajuda</Label>
                         </Button>
-                        <Column style={{width: 24, }} />
+                        <Column style={{ width: 24, }} />
                         <Button onPress={() => { navigation.navigate('Donate',) }} style={{ backgroundColor: color.primary + 20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 100, }}>
                             <Label style={{ fontFamily: font.bold, color: color.primary, fontSize: 16, }}>Fazer doação</Label>
                         </Button>
@@ -149,9 +149,9 @@ const Categorias = () => {
         };
         fetchData();
     }, [transformIcon]);
-    if(loading) return <ActivityIndicator size="large" color={color.primary} />;
+    if (loading) return <ActivityIndicator size="large" color={color.primary} />;
     return (
-        <Column style={{ paddingHorizontal: margin.h,  paddingTop: 20 }}>
+        <Column style={{ paddingHorizontal: margin.h, paddingTop: 20 }}>
             <Title style={{ fontSize: 22 }}>Categorias</Title>
             <FlatList
                 data={categories}
@@ -161,7 +161,7 @@ const Categorias = () => {
                 style={{ marginVertical: margin.v, marginTop: 0 }}
                 renderItem={({ item }) => (
                     <Button style={{ borderBottomWidth: 1, borderColor: color.off, paddingVertical: 12, borderRadius: 12 }} onPress={() => { navigation.navigate('CategorySingle', { item: item, id: item.id, icon: item.icon }) }}>
-                        <Row style={{ alignItems: 'center',  paddingHorizontal: 4, }}>
+                        <Row style={{ alignItems: 'center', paddingHorizontal: 4, }}>
                             <Column style={{ width: 62, height: 62, borderRadius: 10, marginRight: 12, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center' }}>
                                 {item?.icon}
                             </Column>
@@ -248,7 +248,7 @@ const Donate = () => {
         return (
             <Column style={{ width: width, justifyContent: 'center', alignItems: 'center' }}>
                 <Button onPress={() => { navigation.navigate('DonateHide') }} style={{ borderRadius: 24, }}>
-                    <Image source={link} style={{ width: width * 0.86, height: 170,   borderRadius: 24 }} />
+                    <Image source={link} style={{ width: width * 0.86, height: 170, borderRadius: 24 }} />
                 </Button>
             </Column>
         );
@@ -325,30 +325,43 @@ const MenuHandle = () => {
             icon: <ShoppingBag color={color.primary} size={32} strokeWidth={2} />,
             label: 'Shop',
         },
-    ], [navigation, color]);
-
-    const extraMenuItems = useMemo(() => [
-        {
-            onPress: () => navigation.navigate('Raspadinhas'),
-            icon: <FontAwesome5 name="hand-sparkles" size={30} color={color.primary} />,
-            label: 'Raspadinhas',
-        },
         {
             onPress: () => navigation.navigate('Ranking'),
             icon: <AntDesign name="staro" size={32} color={color.primary} />,
             label: 'Ranking',
         },
+    ], [navigation, color]);
+
+    const extraMenuItems = useMemo(() => [
         {
             onPress: () => navigation.navigate('Favorites'),
             icon: <AntDesign name="hearto" size={32} color={color.primary} />,
             label: 'Favoritos',
         },
-        {
+
+    ], [navigation, color]);
+
+    /* {
+          {
             onPress: () => navigation.navigate('Rifas'),
             icon: <Ionicons name="ticket-outline" size={28} color={color.primary} />,
             label: 'Rifas',
         },
-    ], [navigation, color]);
+        onPress: () => navigation.navigate('Raspadinhas'),
+        icon: <FontAwesome5 name="hand-sparkles" size={30} color={color.primary} />,
+        label: 'Raspadinhas',
+         <Column style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Button onPress={toggleMenu} rippleColor={color.secundary} style={{ backgroundColor: `${color.primary}20`, padding: 18, borderRadius: 12 }}>
+                        <Row>
+                            {showMenu ? <Minus size={32} color={color.primary} /> : <Plus size={32} color={color.primary} />}
+                        </Row>
+                    </Button>
+                    <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.secundary, textAlign: 'center' }}>{showMenu ? 'Menos' : 'Mais'}</Label>
+                </Column>
+    },*/
+
+
+
     return (
         <MotiView state={menu} style={{ overflow: 'hidden' }} transition={{ type: 'timing' }}>
             <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginHorizontal: margin.h, marginBottom: 24 }}>
@@ -360,14 +373,7 @@ const MenuHandle = () => {
                         <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.secundary, textAlign: 'center' }}>{item.label}</Label>
                     </Column>
                 ))}
-                <Column style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Button onPress={toggleMenu} rippleColor={color.secundary} style={{ backgroundColor: `${color.primary}20`, padding: 18, borderRadius: 12 }}>
-                        <Row>
-                            {showMenu ? <Minus size={32} color={color.primary} /> : <Plus size={32} color={color.primary} />}
-                        </Row>
-                    </Button>
-                    <Label style={{ marginTop: 4, fontFamily: font.medium, fontSize: 14, color: color.secundary, textAlign: 'center' }}>{showMenu ? 'Menos' : 'Mais'}</Label>
-                </Column>
+               
             </Row>
 
             <AnimatePresence>

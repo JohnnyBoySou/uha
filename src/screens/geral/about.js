@@ -80,14 +80,6 @@ export default function AboutScreen({ navigation, }) {
                     <Label style={{ fontSize: 14, lineHeight: 16, marginVertical: 6, }}>Ajudar quem precisa não precisa ser chato, monótono ou público. Com nossa plataforma, você contribui do seu jeito, no seu tempo e da forma que mais lhe agrada.</Label>
                    
                    
-                   
-                    <Row style={{ marginTop: 20, }}>
-                        <Column style={{ flexGrow: 1, height: 180, borderRadius: 20, backgroundColor: color.primary  }}>
-                        </Column>
-                        <Column style={{width: 16, }} />
-                        <Column style={{ flexGrow: 1, height: 180, borderRadius: 20, backgroundColor: color.secundary,  }}>   
-                        </Column>
-                    </Row>
                     <Title style={{ fontSize: 20, lineHeight: 20,  marginTop: 20,}}>Nossa Gratidão</Title>
                     <Label style={{ fontSize: 14, lineHeight: 16, marginVertical: 6, }}>Graças a pessoas generosas como você, levamos conforto e segurança a quem precisa, estimulando uma corrente do bem. Aproveite para colecionar bons momentos com nossos parceiros e sinta-se abraçado por nós e por todos que você ajudou.</Label>
                    

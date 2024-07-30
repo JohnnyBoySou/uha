@@ -152,7 +152,7 @@ const Registrar = ({ settype, email, setemail }) => {
             "cpf": cpf,
             "whatsapp": whatsapp,
             "cep": cep,
-            "code": code,
+            "code": code.toUpperCase(),
             "is_whatsapp_send": remember == true ? 1 : 0,
         };
 
@@ -267,6 +267,7 @@ const Registrar = ({ settype, email, setemail }) => {
                             onFocus={() => setfocusCode(true)}
                             onBlur={() => setfocusCode(false)}
                             value={code}
+                            maxLength={10}
                             onChangeText={(e) => setcode(e)}
                             style={{ color: color.secundary, fontFamily: font.medium, fontSize: 18, paddingVertical: 12, width: '78%', }} placeholder='Código de indicação' placeholderTextColor="11111140" />
                     </Row>
@@ -293,13 +294,13 @@ const Registrar = ({ settype, email, setemail }) => {
                         <Column style={{ flexGrow: 1, }}>
                             <Pressable style={{  flexDirection: 'row',  alignItems: 'center', }} onPress={() => { setremember(!remember) }} >
                                 <CheckBox status={remember} />
-                                <Label style={{ fontFamily: font.bold, fontSize: 14, lineHeight: 14, marginLeft: 6, color: remember ? color.blue : color.label, }}>Permito ser contatado {'\n'}por WhatsApp</Label>
+                                <Label style={{ fontFamily: font.bold, fontSize: 14, lineHeight: 14, marginLeft: 6, color: remember ? color.blue : color.label, }}>Permito ser {'\n'}contatado por{'\n'}WhatsApp</Label>
                             </Pressable>
                         </Column>
                         <Button onPress={() => { settype('Entrar') }} style={{ borderRadius: 8, backgroundColor: color.primary+10, padding: 12, }}>
                             <Column style={{  }}>
-                                <Label style={{ fontFamily: font.medium, color: color.secundary+99, textAlign: 'right', fontSize: 14, }}>Já possui uma conta?</Label>
-                                <Label style={{ fontFamily: font.bold, textAlign: 'right', fontSize: 14, lineHeight: 14, color: color.primary,  }}>Entre por aqui</Label>
+                                <Label style={{ fontFamily: font.medium, color: color.secundary+99, textAlign: 'right', fontSize: 12, lineHeight: 12, }}>Já possui uma conta?</Label>
+                                <Label style={{ fontFamily: font.bold, textAlign: 'right', fontSize: 14, lineHeight: 16, color: color.primary,  }}>Entre por aqui</Label>
                             </Column>
                         </Button>
                     </Row>
@@ -316,7 +317,7 @@ const Registrar = ({ settype, email, setemail }) => {
                             }
                         </Row>
                     </ButtonPR>
-                    <Column style={{height: 70, }} />
+                    <Column style={{height: 40, }} />
 
 
                 </KeyboardAvoidingView>

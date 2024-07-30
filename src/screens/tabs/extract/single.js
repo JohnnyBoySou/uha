@@ -8,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import { Skeleton } from 'moti/skeleton';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image'
+import { ScrollView } from 'react-native';
 
 export default function ExtractSingleScreen({ id, type }) {
     const { color, font, } = useContext(ThemeContext);
@@ -69,160 +70,159 @@ export default function ExtractSingleScreen({ id, type }) {
 
     if (loading) return <SkeletonList />
     return (
-        <Main style={{ backgroundColor: '#fff', zIndex: 99, }}>
+        <Main style={{ backgroundColor: 'transparent', marginTop: 5, }}>
+                <Column >
+                    <Title style={{ color: color.secundary, fontSize: 20, lineHeight: 22, textAlign: 'center', }}>{item?.type}</Title>
+                    <Label style={{ color: color.secundary, fontSize: 12, lineHeight: 14, textAlign: 'center', }}>{item?.date}</Label>
 
-            <Column >
-                <Title style={{ color: color.secundary, fontSize: 20, lineHeight: 22, textAlign: 'center', }}>{item?.type}</Title>
-                <Label style={{ color: color.secundary, fontSize: 12, lineHeight: 14, textAlign: 'center', }}>{item?.date}</Label>
+                    <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} transition={{ type: 'spring', }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: cl + 10, width: 152, height: 152, borderRadius: 100, alignSelf: 'center', }}>
+                        <Column style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: cl + 30, width: 102, height: 102, borderRadius: 100, alignSelf: 'center', }}>
+                            {icon}
+                        </Column>
+                    </MotiView>
 
-                <MotiView from={{ opacity: 0, scale: 0, }} animate={{ opacity: 1, scale: 1, }} transition={{ type: 'spring', }} style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: cl + 10, width: 152, height: 152, borderRadius: 100, alignSelf: 'center', }}>
-                    <Column style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: cl + 30, width: 102, height: 102, borderRadius: 100, alignSelf: 'center', }}>
-                        {icon}
-                    </Column>
-                </MotiView>
+                    <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={500} >
+                        <Label style={{ color: cl, fontSize: 18, textAlign: 'center', marginTop: 16, fontFamily: 'Font_Bold', letterSpacing: -0.5, }}>{item?.status}</Label>
+                        <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: cl, textAlign: 'center', paddingHorizontal: 14, paddingVertical: 8, backgroundColor: cl + 10, alignSelf: 'center', textAlign: 'center', borderRadius: 12, marginVertical: 12, }}>{vl}</Title>
+                    </MotiView>
 
-                <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={500} >
-                    <Label style={{ color: cl, fontSize: 18, textAlign: 'center', marginTop: 16, fontFamily: 'Font_Bold', letterSpacing: -0.5, }}>{item?.status}</Label>
-                    <Title style={{ fontSize: 32, fontFamily: font.bold, lineHeight: 46, color: cl, textAlign: 'center', paddingHorizontal: 14, paddingVertical: 8, backgroundColor: cl + 10, alignSelf: 'center', textAlign: 'center', borderRadius: 12, marginVertical: 12, }}>{vl}</Title>
-                </MotiView>
+                </Column>
 
-            </Column>
-
-            {type == 'Doações' &&
-                <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800} style={{ paddingVertical: 12, }}>
-                    <Column>
-                        <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
-                            <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
-                                <Row>
-                                    <Image contentFit='cover' source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, }} />
-                                    <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
-                                        <Title style={{ fontSize: 18, }}>{ong?.name?.slice(0, 24)}</Title>
-                                        <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
-                                            <Title style={{ color: color.primary, fontSize: 12, }}>Conhecer ONG</Title>
-                                        </Button>
-                                    </Column>
-                                </Row>
-
-                                <Column style={{ borderBottomLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', top: 0, right: 0, }}>
-                                    <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>ONG</LabelPR>
-                                </Column>
-                            </Row>
-                        </Button>
-
-
-
-                        {item?.status === 'Pagamento confirmado' &&
-                            <Column style={{ marginVertical: 12, }}>
-                                <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
-                                    <CircleAlert color={color.label + 90} size={18} />
-                                    <Label style={{ fontSize: 14, lineHeight: 16, marginLeft: 8, }}>Os pontos já foram {'\n'}adicionados em sua conta.</Label>
-                                </Row>
-                                <ButtonPR onPress={() => { navigation.navigate('Donate') }} style={{ alignSelf: 'center', paddingVertical: 8, paddingHorizontal: 16, }}>
-                                    <LabelPR style={{ fontSize: 16, }}>Nova doação</LabelPR>
-                                </ButtonPR>
-                                <ButtonPR onPress={() => { navigation.navigate('Certificate') }} style={{ alignSelf: 'center', marginTop: 10, backgroundColor: color.primary + 20, paddingVertical: 8, paddingHorizontal: 16, }}>
-                                    <LabelPR style={{ fontSize: 16, color: color.primary }}>Ver certificado</LabelPR>
-                                </ButtonPR>
-                            </Column>
-                        }
-
-
-                        {item.status == 'Pagamento em análise' &&
-                            <Column style={{ marginVertical: 12, }}>
-                                <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
-                                    <CircleAlert color={color.label + 90} size={24} />
-                                    <Label style={{ fontSize: 14, lineHeight: 16, marginLeft: 8, }}>Os pontos são adicionados após efetuar o pagamento.</Label>
-                                </Row>
-                                <ButtonPR onPress={() => { navigation.navigate('ExtractPayment', { id: item.id, type: type, }) }} style={{ alignSelf: 'center', }}>
-                                    <LabelPR style={{ fontSize: 16, }}>Efetuar pagamento</LabelPR>
-                                </ButtonPR>
-                            </Column>
-                        }
-
-                    </Column>
-                </MotiView>
-            }
-
-            {type == 'Transações' &&
-                <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800}>
-                    <Column style={{ paddingVertical: 12, }}>
+                {type == 'Doações' &&
+                    <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800} style={{ paddingVertical: 12, }}>
                         <Column>
-                            <Button onPress={() => { navigation.navigate('ShopServiceSingle', { id: service.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 16, zIndex: 2, }} >
+                            <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
                                 <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
                                     <Row>
-                                        <Image  contentFit='cover' source={{ uri: service?.img }} style={{ width: 74, height: 74, borderRadius: 8,  }} />
+                                        <Image contentFit='cover' source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, }} />
                                         <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
-                                            <Title style={{ fontSize: 16, lineHeight: 16, }}>{service?.name.slice(0, 24)}</Title>
-                                            <Title style={{ color: color.primary, fontSize: 12, lineHeight: 14, }}>{service?.pontos} ponto{service?.pontos > 1 ? 's' : ''}</Title>
-                                            <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 8, marginTop: 8, paddingHorizontal: 12, }}>
-                                                <Title style={{ color: color.primary, fontSize: 12, lineHeight: 12, }}>Comprar novamente</Title>
+                                            <Title style={{ fontSize: 18, }}>{ong?.name?.slice(0, 24)}</Title>
+                                            <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
+                                                <Title style={{ color: color.primary, fontSize: 12, }}>Conhecer ONG</Title>
                                             </Button>
                                         </Column>
                                     </Row>
+
+                                    <Column style={{ borderBottomLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', top: 0, right: 0, }}>
+                                        <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>ONG</LabelPR>
+                                    </Column>
                                 </Row>
                             </Button>
-                            <Button onPress={() => { navigation.navigate('ShopSingle', { id: shop.id, }) }} style={{ backgroundColor: '#f7f7f7', borderRadius: 16, paddingTop: 30, marginTop: -30, marginBottom: 10, marginHorizontal: 14, }} >
-                                <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
-                                    <Row>
-                                        <Image  contentFit='cover' source={{ uri: shop?.img }} style={{ width: 46, height: 46, borderRadius: 8, }} />
-                                        <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
-                                            <Title style={{ fontSize: 16, lineHeight: 18, }}>{shop?.name.slice(0, 24)}</Title>
-                                            <Label style={{ fontSize: 12, color: color.secundary + 99, lineHeight: 12, }}>Ver mais</Label>
+
+
+
+                            {item?.status === 'Pagamento confirmado' &&
+                                <Column style={{ marginVertical: 12, }}>
+                                    <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
+                                        <CircleAlert color={color.label + 90} size={18} />
+                                        <Label style={{ fontSize: 14, lineHeight: 16, marginLeft: 8, }}>Os pontos já foram {'\n'}adicionados em sua conta.</Label>
+                                    </Row>
+                                    <ButtonPR onPress={() => { navigation.navigate('Donate') }} style={{ alignSelf: 'center', paddingVertical: 8, paddingHorizontal: 16, }}>
+                                        <LabelPR style={{ fontSize: 16, }}>Nova doação</LabelPR>
+                                    </ButtonPR>
+                                    <ButtonPR onPress={() => { navigation.navigate('Certificate') }} style={{ alignSelf: 'center', marginTop: 10, backgroundColor: color.primary + 20, paddingVertical: 8, paddingHorizontal: 16, }}>
+                                        <LabelPR style={{ fontSize: 16, color: color.primary }}>Ver certificado</LabelPR>
+                                    </ButtonPR>
+                                </Column>
+                            }
+
+
+                            {item.status == 'Pagamento em análise' &&
+                                <Column style={{ marginVertical: 12, }}>
+                                    <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
+                                        <CircleAlert color={color.label + 90} size={24} />
+                                        <Label style={{ fontSize: 14, lineHeight: 16, marginLeft: 8, }}>Os pontos são adicionados após efetuar o pagamento.</Label>
+                                    </Row>
+                                    <ButtonPR onPress={() => { navigation.navigate('ExtractPayment', { id: item.id, type: type, }) }} style={{ alignSelf: 'center', }}>
+                                        <LabelPR style={{ fontSize: 16, }}>Efetuar pagamento</LabelPR>
+                                    </ButtonPR>
+                                </Column>
+                            }
+
+                        </Column>
+                    </MotiView>
+                }
+
+                {type == 'Transações' &&
+                    <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800}>
+                        <Column style={{ paddingVertical: 12, }}>
+                            <Column>
+                                <Button onPress={() => { navigation.navigate('ShopServiceSingle', { id: service.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 16, zIndex: 2, }} >
+                                    <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
+                                        <Row>
+                                            <Image contentFit='cover' source={{ uri: service?.img }} style={{ width: 74, height: 74, borderRadius: 8, }} />
+                                            <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
+                                                <Title style={{ fontSize: 16, lineHeight: 16, }}>{service?.name.slice(0, 24)}</Title>
+                                                <Title style={{ color: color.primary, fontSize: 12, lineHeight: 14, }}>{service?.pontos} ponto{service?.pontos > 1 ? 's' : ''}</Title>
+                                                <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 8, marginTop: 8, paddingHorizontal: 12, }}>
+                                                    <Title style={{ color: color.primary, fontSize: 12, lineHeight: 12, }}>Comprar novamente</Title>
+                                                </Button>
+                                            </Column>
+                                        </Row>
+                                    </Row>
+                                </Button>
+                                <Button onPress={() => { navigation.navigate('ShopSingle', { id: shop.id, }) }} style={{ backgroundColor: '#f7f7f7', borderRadius: 16, paddingTop: 30, marginTop: -30, marginBottom: 10, marginHorizontal: 14, }} >
+                                    <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
+                                        <Row>
+                                            <Image contentFit='cover' source={{ uri: shop?.img }} style={{ width: 46, height: 46, borderRadius: 8, }} />
+                                            <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
+                                                <Title style={{ fontSize: 16, lineHeight: 18, }}>{shop?.name.slice(0, 24)}</Title>
+                                                <Label style={{ fontSize: 12, color: color.secundary + 99, lineHeight: 12, }}>Ver mais</Label>
+                                            </Column>
+                                        </Row>
+                                        <Column style={{ borderTopLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', bottom: 0, right: 0, }}>
+                                            <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>Estabelecimento</LabelPR>
                                         </Column>
                                     </Row>
-                                    <Column style={{ borderTopLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', bottom: 0, right: 0, }}>
-                                        <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>Estabelecimento</LabelPR>
+                                </Button>
+                            </Column>
+                        </Column>
+                        <Column>
+                            {item?.status === 'Aguardando' && <>
+                                <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
+                                    <CircleAlert color={color.label + 90} size={18} />
+                                    <Label style={{ fontSize: 14, textAlign: 'center', marginLeft: 4, }}>Você ainda não utilizou esse serviço.</Label>
+                                </Row>
+                                <ButtonPR onPress={openQRCode} style={{ alignSelf: 'center', }}>
+                                    <LabelPR style={{ fontSize: 16, }}>Abrir QRCode</LabelPR>
+                                </ButtonPR>
+                            </>}
+                        </Column>
+                    </MotiView>
+                }
+
+                {type == 'Notas fiscais' &&
+                    <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800} style={{ paddingVertical: 12, }}>
+                        <Column>
+                            <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
+                                <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
+                                    <Row>
+                                        <Image source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, }} />
+                                        <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
+                                            <Title style={{ fontSize: 18, }}>{ong?.name.slice(0, 24)}</Title>
+                                            <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
+                                                <Title style={{ color: color.primary, fontSize: 12, }}>Conhecer ONG</Title>
+                                            </Button>
+                                        </Column>
+                                    </Row>
+
+                                    <Column style={{ borderBottomLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', top: 0, right: 0, }}>
+                                        <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>ONG</LabelPR>
                                     </Column>
                                 </Row>
                             </Button>
-                        </Column>
-                    </Column>
-                    <Column>
-                        {item?.status === 'Aguardando' && <>
                             <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
                                 <CircleAlert color={color.label + 90} size={18} />
-                                <Label style={{ fontSize: 14, textAlign: 'center', marginLeft: 4, }}>Você ainda não utilizou esse serviço.</Label>
+                                <Label style={{ fontSize: 14, textAlign: 'center', marginLeft: 4, }}>Esse valor já foi adicionado em sua conta.</Label>
                             </Row>
-                            <ButtonPR onPress={openQRCode} style={{ alignSelf: 'center', }}>
-                                <LabelPR style={{ fontSize: 16, }}>Abrir QRCode</LabelPR>
+                            <ButtonPR onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ alignSelf: 'center', }}>
+                                <LabelPR style={{ fontSize: 16, }}>Enviar nova nota fiscal</LabelPR>
                             </ButtonPR>
-                        </>}
-                    </Column>
-                </MotiView>
-            }
 
-            {type == 'Notas fiscais' &&
-                <MotiView from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0 }} delay={800} style={{ paddingVertical: 12, }}>
-                    <Column>
-                        <Button onPress={() => { navigation.navigate('ONGSingle', { id: ong.id, }) }} style={{ borderColor: '#D7D7D7', backgroundColor: '#fff', borderWidth: 1, borderRadius: 12, zIndex: 2, marginBottom: 12, }} >
-                            <Row style={{ alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12, }}>
-                                <Row>
-                                    <Image source={{ uri: ong?.img }} style={{ width: 72, height: 72, borderRadius: 8, }} />
-                                    <Column style={{ marginLeft: 12, justifyContent: 'center', }}>
-                                        <Title style={{ fontSize: 18, }}>{ong?.name.slice(0, 24)}</Title>
-                                        <Button style={{ backgroundColor: color.primary + 20, alignSelf: 'flex-start', borderRadius: 100, paddingVertical: 2, marginTop: 8, paddingHorizontal: 12, }}>
-                                            <Title style={{ color: color.primary, fontSize: 12, }}>Conhecer ONG</Title>
-                                        </Button>
-                                    </Column>
-                                </Row>
+                        </Column>
+                    </MotiView>}
 
-                                <Column style={{ borderBottomLeftRadius: 8, backgroundColor: color.primary, paddingHorizontal: 8, paddingVertical: 4, position: 'absolute', top: 0, right: 0, }}>
-                                    <LabelPR style={{ fontSize: 12, fontFamily: 'Font_Medium', marginRight: 4, }}>ONG</LabelPR>
-                                </Column>
-                            </Row>
-                        </Button>
-                        <Row style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 12, }}>
-                            <CircleAlert color={color.label + 90} size={18} />
-                            <Label style={{ fontSize: 14, textAlign: 'center', marginLeft: 4, }}>Esse valor já foi adicionado em sua conta.</Label>
-                        </Row>
-                        <ButtonPR onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ alignSelf: 'center', }}>
-                            <LabelPR style={{ fontSize: 16, }}>Enviar nova nota fiscal</LabelPR>
-                        </ButtonPR>
-
-                    </Column>
-                </MotiView>}
-
-
+                <Column style={{height: 120, }} />
         </Main>
     )
 }

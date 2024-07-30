@@ -1,6 +1,6 @@
 //main
 import React, { useContext, useState, useRef, useEffect, useCallback } from 'react';
-import { View, ScrollView, Dimensions, BackHandler, StyleSheet, PanResponder, ActivityIndicator } from 'react-native';
+import { ScrollView, Dimensions, BackHandler, PanResponder, ActivityIndicator } from 'react-native';
 import { Main, Column, Label, Title, Row, SubLabel, Button, ButtonPR, LabelLI } from '@theme/global';
 
 //utils
@@ -8,7 +8,7 @@ import { useIsFocused, useNavigation, useFocusEffect } from '@react-navigation/n
 import { ThemeContext } from 'styled-components/native';
 
 //components
-import { AnimatePresence, MotiImage, MotiView } from 'moti';
+import { MotiImage, MotiView } from 'moti';
 import { LinearGradient } from 'expo-linear-gradient';
 import Avatar from '@components/avatar';
 import TopSheet from '@components/topsheet';
@@ -23,7 +23,7 @@ import { Info, QrCode, Smartphone, BadgePercent, ArrowUp, X, } from 'lucide-reac
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 //requests
-import { getExtractNotas, getExtractTransacao, getExtractDonate, getExtractRifas } from '@request/extract/gets';
+import { getExtractNotas, getExtractTransacao, getExtractDonate, } from '@request/extract/gets';
 import { listUser } from '@api/request/user/user';
 
 
@@ -44,10 +44,10 @@ const { width, height } = Dimensions.get('window');
 export default function ExtractScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const type = route.params?.type
-    const [page, setpage] = useState(type || 'Notas fiscais');
+    const [page, setpage] = useState(type || 'Transações');
     const [dateSelect, setdateSelect] = useState('Hoje');
     const scrollTags = useRef(null);
-    const bts = ['Notas fiscais', 'Transações', 'Doações', 'Rifas',]
+    const bts = ['Transações', 'Notas fiscais', 'Doações',]
     const dates = ['Hoje', '15 dias', 'Mensal', 'Anual']
 
     const isFocused = useIsFocused();
@@ -100,8 +100,6 @@ export default function ExtractScreen({ navigation, route }) {
         }
     }, [type, currentPage]);
 
-
-    const [actionButton, setactionButton] = useState(false);
     const scrollMain = useRef()
 
     useFocusEffect(
@@ -343,13 +341,6 @@ export default function ExtractScreen({ navigation, route }) {
                     </MotiView>
                 }
             />
-            <AnimatePresence>
-                {actionButton &&
-                    <MotiView from={{ opacity: 0, scale: .6, }} animate={{ opacity: 1, scale: 1, }} transition={{ type: 'timing' }} exit={{ opacity: 0, scale: .7, }} style={{ position: 'absolute', bottom: 100, right: 30, zIndex: 99, }}>
-                        <Button onPress={() => { scrollMain.current.scrollToOffset({ offset: 0, animated: true, }) }} style={{ width: 52, height: 52, borderRadius: 100, backgroundColor: "#ffcff1", justifyContent: 'center', alignItems: 'center', }}><ArrowUp size={26} color={color.primary} /></Button>
-                    </MotiView>
-                }
-            </AnimatePresence>
 
             <NavBar bts={bts} page={page} setpage={setpage} scrollTags={scrollTags} margin={margin} color={color} font={font} />
 
@@ -375,7 +366,7 @@ export default function ExtractScreen({ navigation, route }) {
                 <SkeletonList /> :
                 <Animated.FlatList
                     onScroll={scrollHandler}
-                    scrollEventThrottle={16}
+                    scrollEventThrottle={32}
                     data={selectData}
                     ListHeaderComponent={<Animated.View {...panResponderRef.current.panHandlers}>
                         <Header dates={dates} dateSelect={dateSelect} setdateSelect={setdateSelect} />
@@ -383,20 +374,19 @@ export default function ExtractScreen({ navigation, route }) {
                     keyExtractor={(item) => item.id}
                     ListEmptyComponent={<Empty type={page} />}
                     ref={scrollMain}
-                    initialNumToRender={5}
+                    initialNumToRender={7}
+                    maxToRenderPerBatch={7}
+                    windowSize={7}
                     showsVerticalScrollIndicator={false}
                     ListFooterComponent={<Column style={{ height: 100, }} />}
                     renderItem={({ item, index }) => <CardExtrato type={page} item={item} index={index} handleSelect={handleSelect} />}
                 />}
 
             <BottomSheet onChange={handleAnimate} ref={modalSelect} index={0} snapPoints={[0.1, 0.98 * height]} containerStyle={{ zIndex: 99, }} handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
-                <BottomSheetScrollView style={{ marginHorizontal: margin.h, }}>
-                    <Row style={{ alignSelf: 'flex-end' }}>
-                        <Button onPress={() => { modalSelect.current.close() }} style={{ width: 42, backgroundColor: color.secundary, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                            <X size={24} color="#fff" />
-                        </Button>
-
-                    </Row>
+                <BottomSheetScrollView showsVerticalScrollIndicator={false} style={{ marginHorizontal: margin.h, }}>
+                    <Button onPress={() => { modalSelect.current.close() }} style={{ width: 42, position: 'absolute', zIndex: 99, top: 0, right: 0, backgroundColor: color.secundary, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        <X size={24} color="#fff" />
+                    </Button>
                     {isOpen && <ExtractSingleScreen id={select?.id} type={select?.type} />}
                 </BottomSheetScrollView>
             </BottomSheet>
@@ -462,56 +452,72 @@ const CardExtrato = ({ item, onLong, type, handleSelect }) => {
     const icon = status === 'Confirmado' ? <Feather color={color.green} name='check' size={24} /> : status === 'Aguardando' ? <Info color={color.blue} size={24} /> : status === 'Cancelado' ? <Feather name='x' size={24} color={color.red} /> : status === 'Expirado' ? <Feather name='loader' color="#000000" size={24} /> : Status === 'aprovado' ? <Feather color={color.green} name='check' size={24} /> : Status === 'aguardando' ? <Info color={color.blue} size={24} /> : null;
     return (
         <Button onLongPress={onLong} onPress={() => { handleSelect({ id: item.id, type: type, }) }} style={{ paddingHorizontal: margin.h, }}>
-            <Row style={{ marginBottom: 16, justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, }}>
-                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-                    <Column style={{ backgroundColor: cl + 20, width: 54, height: 54, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
-                        {type === 'Transações' ? <>{status === 'Aguardando' && <MaterialCommunityIcons name="qrcode-scan" size={20} color={color.blue} />}</>: icon}
-                    </Column>
-                    
-                    {type === 'Transações' && status === 'Aguardando' && <SubLabel style={{ color: cl, fontSize: 12, lineHeight: 12, textAlign: 'center', marginTop: 6, }}>Pronto{'\n'}para resgatar</SubLabel>}
-                    {type === 'Doações' && Status === 'aguardando' && <SubLabel style={{ color: cl, fontSize: 12, lineHeight: 12, textAlign: 'center', marginTop: 6, }}>Efetue o{'\n'}pagamento</SubLabel>}
-                    {type === 'Notas fiscais' && <SubLabel style={{ color: cl, fontSize: 12, lineHeight: 12, textAlign: 'center', marginTop: 6, }}>Adicionado{'\n'}na sua conta</SubLabel>}
-                </Column>
-                    
-                    {type === 'Transações' &&
-                    <Row style={{ width: 130, backgroundColor: '#f7f7f7', alignItems: 'center', borderRadius: 6, paddingVertical: 6, paddingHorizontal: 6, }}>
-                        <MotiImage style={{ width: 32, height: 32, backgroundColor: '#f7f7f7', borderRadius: 6, }} source={{ uri: item.img }} />
-                        <Label style={{ fontSize: 12, marginHorizontal: 6, fontFamily: 'Font_Bold', width: 70, color: color.secundary,  }}>{name.length > 20 ? name?.slice(0, 20) + '...' : name}</Label>
-                    </Row>}
-                    {type === 'Notas fiscais' &&
-                    <Row style={{ width: 130, backgroundColor: "#f7f7f7",  alignItems: 'center',  borderRadius: 8, paddingVertical: 6, paddingHorizontal: 6, }}>
-                        <MotiImage style={{ width: 32, height: 32, backgroundColor: '#f7f7f7', borderRadius: 6,  }} source={{ uri: item.img }} />
-                        <Column>
-                            <Label style={{ fontSize: 12, marginHorizontal: 6, fontFamily: 'Font_Book', color: color.secundary,  }}>ONG</Label>
-                            <Label style={{ fontSize: 14, marginHorizontal: 6, fontFamily: 'Font_Bold', marginTop: -5, color: color.secundary,  }}>{ong?.length > 8 ? ong?.slice(0, 8) + '...' : ong}</Label>
-                        </Column>
-                    </Row>}
-                    {type === 'Doações' &&
-                    <Row style={{ width: 130, backgroundColor: "#f7f7f7",  alignItems: 'center',  borderRadius: 8, paddingVertical: 6, paddingHorizontal: 6, }}>
-                        <MotiImage style={{ width: 32, height: 32, backgroundColor: '#f7f7f7', borderRadius: 6,  }} source={{ uri: item.img }} />
-                        <Column>
-                            <Label style={{ fontSize: 12, marginHorizontal: 6, fontFamily: 'Font_Book', color: color.secundary,  }}>ONG</Label>
-                            <Label style={{ fontSize: 14, marginHorizontal: 6, fontFamily: 'Font_Bold', marginTop: -5, color: color.secundary,  }}>{ong?.length > 8 ? ong?.slice(0, 8) + '...' : ong}</Label>
-                        </Column>
-                    </Row>}
+            <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', borderLeftWidth: 2, borderLeftColor: cl, }}>
 
-                <Column style={{ borderRightWidth: 2, borderRightColor: cl + 50, paddingRight: 20, }}>
-                    <Title style={{
-                        color: cl,
-                        fontSize: 24, lineHeight: 24, textAlign: 'right',
-                        textDecoration: status === 'Expirado' ? 'underline' : 'none',
-                        textDecorationLine: status === 'Expirado' ? "line-through" : "none",
-                        textDecorationStyle: status === 'Expirado' ? "solid" : "none",
-                        textDecorationColor: status === 'Expirado' ? "#000" : 'transparent',
-                    }}>
-                        {type == 'Notas fiscais' && value}
-                        {type == 'Transações' && value + ' ponto' + (value > 1 ? 's' : '')}
-                        {type == 'Doações' && 'R$ ' + formatValue(value.slice(0, -3)) + ',00'}
-                    </Title>
-                    <SubLabel style={{ color: cl, fontSize: 14, textAlign: 'right', marginTop: -2, }}>{type == 'Notas fiscais' ? 'Ponto resgatado' : label}</SubLabel>
-                    <Row style={{ alignSelf: 'flex-end', alignItems: 'flex-end' }}>
-                        <Label style={{ fontSize: 14, marginVertical: 4, textAlign: 'right' }}>{date} - {hour}</Label>
+
+                {type === 'Transações' &&
+                    <Row style={{ borderRadius: 6, paddingVertical: 4, paddingHorizontal: 6, }}>
+                        <MotiImage style={{ width: 54, height: 54, borderRadius: 12, marginLeft: 8, }} source={{ uri: item.img }} />
+                        <Column style={{ justifyContent: 'center', marginLeft: 8, }}>
+                            <Label style={{ fontSize: 16, fontFamily: 'Font_Bold', color: color.secundary, }}>{name.length > 20 ? name?.slice(0, 20) + '...' : name}</Label>
+                            <Title style={{
+                                color: cl,
+                                fontSize: 14, lineHeight: 14, textAlign: 'left',
+                                textDecoration: status === 'Expirado' ? 'underline' : 'none',
+                                textDecorationLine: status === 'Expirado' ? "line-through" : "none",
+                                textDecorationStyle: status === 'Expirado' ? "solid" : "none",
+                                textDecorationColor: status === 'Expirado' ? "#000" : 'transparent',
+                            }}>
+                                {type == 'Notas fiscais' && value}
+                                {type == 'Transações' && value + ' ponto' + (value > 1 ? 's' : '')}
+                                {type == 'Doações' && 'R$ ' + formatValue(value?.slice(0, -3)) + ',00'}
+                            </Title>
+                        </Column>
                     </Row>
+                }
+                {type === 'Doações' &&
+                    <Row style={{ borderRadius: 6, paddingVertical: 4, paddingHorizontal: 6, }}>
+                        <MotiImage style={{ width: 54, height: 54, borderRadius: 12, marginLeft: 8, }} source={{ uri: item.img }} />
+                        <Column style={{ justifyContent: 'center', marginLeft: 8, }}>
+                            <Label style={{ fontSize: 16, fontFamily: 'Font_Bold', color: color.secundary, }}>{ong?.length > 12 ? ong?.slice(0, 12) + '...' : ong}</Label>
+                            <Title style={{
+                                color: cl,
+                                fontSize: 14, lineHeight: 14, textAlign: 'left',
+                                textDecoration: status === 'Expirado' ? 'underline' : 'none',
+                                textDecorationLine: status === 'Expirado' ? "line-through" : "none",
+                                textDecorationStyle: status === 'Expirado' ? "solid" : "none",
+                                textDecorationColor: status === 'Expirado' ? "#000" : 'transparent',
+                            }}>
+                                {type == 'Notas fiscais' && value + ' ponto'}
+                                {type == 'Doações' && 'R$ ' + formatValue(value?.slice(0, -3)) + ',00'}
+                            </Title>
+                        </Column>
+                    </Row>
+                }
+
+                {type === 'Notas fiscais' &&
+                    <Row style={{ borderRadius: 6, paddingVertical: 4, paddingHorizontal: 6, }}>
+                        <MotiImage style={{ width: 54, height: 54, borderRadius: 12, marginLeft: 8, }} source={{ uri: item.img }} />
+                        <Column style={{ justifyContent: 'center', marginLeft: 8, }}>
+                            <Label style={{ fontSize: 16, fontFamily: 'Font_Bold', color: color.secundary, }}>{ong?.length > 20 ? ong?.slice(0, 20) + '...' : ong}</Label>
+                            <Title style={{
+                                color: cl,
+                                fontSize: 14, lineHeight: 14, textAlign: 'left',
+                                textDecoration: status === 'Expirado' ? 'underline' : 'none',
+                                textDecorationLine: status === 'Expirado' ? "line-through" : "none",
+                                textDecorationStyle: status === 'Expirado' ? "solid" : "none",
+                                textDecorationColor: status === 'Expirado' ? "#000" : 'transparent',
+                            }}>
+                                {type == 'Notas fiscais' && value + ' ponto'}
+                                {type == 'Doações' && 'R$ ' + formatValue(value?.slice(0, -3)) + ',00'}
+                            </Title>
+                        </Column>
+                    </Row>
+                }
+
+                <Column style={{ marginVertical: 14, }}>
+                    <SubLabel style={{ color: "#fff", fontSize: 12, textAlign: 'right', backgroundColor: cl, paddingHorizontal: 4, paddingVertical: 2, borderRadius: 8, alignSelf: 'flex-end' }}>{type == 'Notas fiscais' ? 'Ponto resgatado' : label}</SubLabel>
+                    <Label style={{ fontSize: 12, marginTop: 5, textAlign: 'right' }}>{date} {hour}</Label>
                 </Column>
             </Row>
         </Button>

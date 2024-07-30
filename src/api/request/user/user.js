@@ -21,7 +21,6 @@ export const getUser = async (email, password) => {
 
 export const registerUser = async (params) => {
   const BASE_URL = await getBaseURL();
-  console.log(params)
 
   const sanitizedParams = {
     email: validator.normalizeEmail(params.email),
@@ -30,13 +29,12 @@ export const registerUser = async (params) => {
     cpf: validator.escape(params.cpf),
     whatsapp: validator.escape(params.whatsapp),
     cep: validator.escape(params.cep),
-    code: params.code?.length > 0 ? validator.escape(params.code) : 0,
+    codigoUsado: params.code?.length > 0 ? validator.escape(params.code) : 0,
     is_whatsapp_send: parseInt(params.is_whatsapp_send),
   };
 
   try {
     const {data} = await axios.post(`${BASE_URL}/usuarios/register`, sanitizedParams);
-    console.log(data)
     return data;
   } catch (error) {
     console.log('Error:', error.message);
@@ -177,3 +175,21 @@ export const verifyEmail = async (email, code) => {
     throw new Error(err.message)
   }
 };
+
+
+export const indicacaoUser = async () => {
+  const token = await getToken()
+  const BASE_URL = await getBaseURL();
+  try {
+    const res = await axios.get(`${BASE_URL}/usuarios/indicacao`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error)
+    const err = JSON.parse(error?.request?.response);
+    throw new Error(err.message)
+  }
+}

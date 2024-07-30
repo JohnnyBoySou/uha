@@ -14,7 +14,7 @@ export default function AccountFAQScreen({ navigation, }) {
             <Scroll style={{}}>
                 <Header title="Dúvidas frequentes" rose />
 
-                <MotiView from={{opacity: 0, scale: 0.5, }} animate={{ opacity: 1, scale: 1, }} transition={{ type: 'spring', duration: 500, }} style={{ width: 80, height: 80, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginTop: 20, }}>
+                <MotiView from={{ opacity: 0, scale: 0.5, }} animate={{ opacity: 1, scale: 1, }} transition={{ type: 'spring', duration: 500, }} style={{ width: 80, height: 80, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginTop: 20, }}>
                     <MessageCircleQuestion size={38} color="#fff" />
                 </MotiView>
                 <FlatList
@@ -63,24 +63,16 @@ const Card = ({ item, index }) => {
             card.transitionTo('from')
             menu.transitionTo('from')
         }
-    },[open])
+    }, [open])
     return (
-        <MotiView state={card} from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing', duration: 500, }} style={{ borderWidth: 1, overflow: 'hidden', borderColor: color.off, marginBottom: 16, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 12, }}>
-                
-                <Row style={{ justifyContent: 'space-between', alignItems: 'center',  }}>
-                    <Title style={{ fontSize: 18, lineHeight: 18, marginRight: 6, width: '80%', }}>{item?.q}</Title>
-                    <Button onPress={() => { setopen(!open) }}  style={{ borderRadius: 100, width: 42, height: 42, justifyContent: 'center', alignItems: 'center', backgroundColor: color.secundary+20, }}>
-                        <MotiView state={menu} transition={{type: 'timing', duration: 500,}}>
-                            <ChevronUp size={24} color={color.secundary}/>
-                        </MotiView>
-                    </Button>
-                </Row>
-                <Column style={{ paddingHorizontal: 20, marginHorizontal: -20, paddingVertical: 6,}}>
-                <AnimatePresence>
-                {open && <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} transition={{ type: 'timing',  }}><Label style={{ fontSize: 16, }}>{item?.r}</Label></MotiView>}
-                </AnimatePresence>
-                </Column>
-        </MotiView>
+        <Column from={{ opacity: 0, translateY: 20, }} animate={{ opacity: 1, translateY: 0, }} transition={{ type: 'timing', duration: 500, }} style={{ borderWidth: 1, borderColor: color.off, marginBottom: 16, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 12, }}>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
+                <Title style={{ fontSize: 18, lineHeight: 18, marginRight: 6, }}>{item?.q}</Title>
+
+            </Row>
+            <Label style={{ fontSize: 16, }}>{item?.r}</Label>
+            
+        </Column>
     )
 }
 
