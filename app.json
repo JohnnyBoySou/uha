@@ -2,7 +2,7 @@
   "expo": {
     "name": "Uha!",
     "slug": "uha",
-    "version": "3.0.0",
+    "version": "1.0.0",
     "scheme": "uha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,7 +22,18 @@
         "backgroundColor": "#FF26BD"
       },
       "package": "com.engd.uha",
-      "blockedPermissions": ["android.permission.RECORD_AUDIO", "android.permission.READ_MEDIA_AUDIO", "android.permission.READ_MEDIA_VIDEO"]
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_MEDIA_AUDIO",
+        "android.permission.READ_MEDIA_VIDEO"
+      ],
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,9 +42,14 @@
       [
         "onesignal-expo-plugin",
         {
-          "mode": "development",
-          "smallIcons": ["./assets/small_icon.png"],
-          "largeIcons": ["./assets/large_icon.png"]
+          "mode": "production",
+          "smallIcons": [
+            "./assets/small_icon.png"
+          ],
+          "largeIcons": [
+            "./assets/large_icon.png"
+          ],
+          "smallIconAccentColor": "#FF26BD"
         }
       ],
       [
@@ -65,7 +81,27 @@
       ]
     ],
     "extra": {
-      "oneSignalAppId": "6adc66cd-c5f6-4db5-b36c-b39b946a9729"
+      "oneSignalAppId": "6adc66cd-c5f6-4db5-b36c-b39b946a9729",
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "OneSignalNotificationServiceExtension",
+                  "bundleIdentifier": "com.engd.uha.OneSignalNotificationServiceExtension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.engd.uha.onesignal"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "bc8b6d9d-fc7b-4566-aae5-54cf615fddbe"
+      }
     }
   }
 }
