@@ -39,7 +39,6 @@ export default function ShareScreen({ navigation, }) {
             <Scroll style={{}}>
                 <Header rose />
                 <Column style={{ marginHorizontal: margin.h, marginTop: 12, }}>
-                    <Label style={{ color: color.secundary + 99, }}>Campanha</Label>
                     <Title>Indique e ganhe</Title>
                 </Column>
                 <Row style={{ marginVertical: 20, marginLeft: 28, }}>
@@ -64,12 +63,8 @@ export default function ShareScreen({ navigation, }) {
                     </Row>
                 </Button>
                 <Column style={{ marginHorizontal: margin.h, }}>
-                    <Title style={{ marginTop: 0, fontSize: 22, marginBottom: 8, }}>Conheça a campanha</Title>
-                    <Label style={{ fontSize: 16, color: color.secundary + 99, }}>A cada 5 amigos que se cadastrarem e doarem  você recebe 50 Pontos e seu amigo 30 para usar no serviço ou produto que quiser </Label>
-
-                    <Title style={{ marginTop: 16, fontSize: 22, marginBottom: 8, }}>Como participar</Title>
-                    <Label style={{ fontSize: 16, color: color.secundary + 99, }}>Envie o link abaixo para 5 amigos ou mais, eles baixam o aplicativo, utilizam seu código pessoal  no cadastro e realizam uma doação, assim que a doação for confirmada você recebe 50 Pontos e seu amigo 30 Pontos bônus acrescentadas ao valor da doação!</Label>
-
+                    <Title style={{ marginTop: 0, fontSize: 22, marginBottom: 8, }}>Como participar</Title>
+                    <Label style={{ fontSize: 16, color: color.secundary + 99, }}>Para cada amigo que se cadastrar utilizando o seu código de indicação, você receberá 10 pontos, e o amigo também receberá 10 pontos para usar no serviço ou produto de sua escolha!</Label>
 
                     <Column style={{ backgroundColor: color.secundary, marginTop: 20, paddingHorizontal: 24, paddingVertical: 24, borderRadius: 24, marginVertical: 12, }}>
                         <Label style={{ color: color.background, fontSize: 14, }}>Seus pontos recebidos na campanha</Label>

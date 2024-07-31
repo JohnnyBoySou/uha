@@ -72,12 +72,12 @@ export default function AccountScreen({ navigation, }) {
                                 <SubLabel>ONGs</SubLabel>
                             </Column>
                         </Button>
-                        <Button onPress={() => { navigation.navigate('Stickers') }} style={{ flexGrow: 1, }}>
+                        <Button onPress={() => { navigation.navigate('Ranking') }} style={{ flexGrow: 1, }}>
                             <Column style={{ justifyContent: 'center', alignItems: 'center', flexGrow: 1, marginHorizontal: 20, }}>
                                 <Column style={{ padding: 20, paddingVertical: 30, width: '100%', marginBottom: 8, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFE0F6", borderRadius: 12, }}>
-                                <MaterialCommunityIcons name="sticker-emoji" size={32} color={color.primary}/>
+                                <AntDesign name="staro" size={32} color={color.primary}/>
                                 </Column>
-                                <SubLabel>Stickers</SubLabel>
+                                <SubLabel>Ranking</SubLabel>
                             </Column>
                         </Button>
                         <Button onPress={() => { navigation.navigate('Favorites') }} style={{ flexGrow: 1, }}>
