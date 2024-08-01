@@ -183,12 +183,17 @@ const Configs = [
         screen: 'About',
         img: require('@icons/ic3.png'),
     },
-   
-  
-    
+    {
+        title: 'Enviar dúvida',
+        description: 'Registre sua pergunta',
+        icon: 'log-out',
+        check: null,
+        screen: 'Share',
+        img: require('@icons/ic7.png'),
+    },
     {
         title: 'Indique e ganhe',
-        description: 'Participe da campanha',
+        description: 'Ganhe pontos',
         icon: 'log-out',
         check: null,
         screen: 'Share',
