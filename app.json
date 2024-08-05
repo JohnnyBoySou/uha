@@ -16,7 +16,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.engd.uha",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
@@ -96,6 +96,7 @@
     ],
     "extra": {
       "oneSignalAppId": "6adc66cd-c5f6-4db5-b36c-b39b946a9729",
+      "clarifyAppId": "nijxbawueq",
       "eas": {
         "build": {
           "experimental": {

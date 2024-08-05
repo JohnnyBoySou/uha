@@ -18,8 +18,7 @@ import { Image } from 'expo-image';
 
 import validator from 'validator';
 import { TextInputMask } from 'react-native-masked-text'
-import { resetPassword, resetPasswordCode, resetPasswordNew, verifyEmail } from '@api/request/user/user';
-
+import { resetPassword, resetPasswordCode, resetPasswordNew, verifyEmail } from '@api/request/user/user'; 
 import { OneSignal } from 'react-native-onesignal'
 
 export default function AuthLoginScreen({ navigation, }) {
@@ -411,6 +410,7 @@ const Entrar = ({ settype, email, setemail }) => {
                 if (res.uiid) {
                     OneSignal.login(res.uiid)
                 }
+                
                 const preferences = await createPreferences(saveUser)
                 if (preferences) {
                     navigation.replace('Tabs')

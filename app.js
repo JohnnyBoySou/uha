@@ -12,6 +12,7 @@ preventAutoHideAsync();
 import { OneSignal } from 'react-native-onesignal';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
+import { initialize } from 'react-native-clarity';
 
 export default function App() {
 
@@ -21,8 +22,10 @@ export default function App() {
     const handleNotification = async () => {
       LogBox.ignoreAllLogs(true);
       const key = process.env.EXPO_PUBLIC_KEY || Constants.expoConfig.extra.oneSignalAppId;
+      const keyClarify = process.env.EXPO_PRIVATE_CLARIFY || Constants.expoConfig.extra.clarifyAppId;
       if (key != null) {
         OneSignal.initialize(key);
+        initialize(keyClarify);
       }
       let { status } = await Notifications.getPermissionsAsync();
       if (status !== 'granted') {

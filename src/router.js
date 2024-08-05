@@ -111,7 +111,7 @@ const linking = {
 export default function Router() {
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Terms'>
+      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Questions'>
 
         <Stack.Screen name="Async" component={AsyncStaticScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
