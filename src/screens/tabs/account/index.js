@@ -213,9 +213,9 @@ const Links = [
         screen: 'Questions',
     },
     {
-        title: 'Termos e condições',
+        title: 'Termos de uso',
         icon: <ScrollText size={24} color="#5C0D45" />,
-        screen: 'AccountTerms',
+        screen: 'Terms',
     },
 ]
 

@@ -94,22 +94,3 @@ const Configs = [
     },
     
 ]
-
-const Links = [
-    {
-        title: 'Central de ajuda',
-        icon: <Info size={24} color="#111"/>
-    },
-    {
-        title: 'Feedback e sugestões',
-        icon: <MessagesSquare size={24} color="#111"/>,
-    },
-    {
-        title: 'Acesso à informação',
-        icon: <Info size={24} color="#111"/>
-    },
-    {
-        title: 'Termos e condições',
-        icon: <ScrollText size={24} color="#111"/>
-    },
-]

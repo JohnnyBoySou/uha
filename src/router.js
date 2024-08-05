@@ -3,6 +3,7 @@ import { createStackNavigator, TransitionPresets, } from '@react-navigation/stac
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute, useLinking } from '@react-navigation/native';
 //import { createNativeStackNavigator, TransitionPresets } from '@react-navigation/native-stack';
+import analytics from "@react-native-firebase/analytics";
 
 import OnboardingScreen from '@screens/auth/onboarding';
 import AuthLoginScreen from '@screens/auth/login';
@@ -109,9 +110,29 @@ const linking = {
 
 
 export default function Router() {
+  const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
+
   return (
-    <NavigationContainer linking={linking}>
-      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Questions'>
+    <NavigationContainer linking={linking}
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+        if (previousRouteName !== currentRouteName) {
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+        }
+        routeNameRef.current = currentRouteName;
+      }}
+    >
+      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Async'>
 
         <Stack.Screen name="Async" component={AsyncStaticScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
