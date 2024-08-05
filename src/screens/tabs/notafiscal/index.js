@@ -50,15 +50,15 @@ const Carrousel = () => {
         return (
             <Column style={{ width: width }}>
                 <Button>
-                    <MotiImage source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12, backgroundColor: "#FFF2E3", }} />
+                    <MotiImage source={{uri: link}} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12, backgroundColor: "#FFF2E3", }} />
                 </Button>
             </Column>
         )
     }
     const data = [
-        { id: 1, title: '1', img: require('@imgs/nota1.png') },
-        { id: 2, title: '2', img: require('@imgs/nota2.png') },
-        { id: 3, title: '3', img: require('@imgs/nota3.png') },
+        { id: 1, title: '1', img: 'https://uha.digital/app/banners/nota1.png' },
+        { id: 2, title: '2', img: 'https://uha.digital/app/banners/nota2.png' },
+        { id: 3, title: '3', img: 'https://uha.digital/app/banners/nota3.png' },
     ]
     const flatListRef = useRef(null);
     const scrollX = useRef(new Animated.Value(0)).current;

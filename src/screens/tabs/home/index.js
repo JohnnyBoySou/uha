@@ -187,15 +187,15 @@ export const Carrousel = () => {
         return (
             <Column style={{ width: width, justifyContent: 'center', alignItems: 'center' }}>
                 <Button onPress={() => { navigation.navigate(item?.route) }} style={{ borderRadius: 24 }}>
-                    <Image source={link} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
+                    <Image source={{uri: link}} style={{ width: 320, height: 170, borderRadius: 24, marginRight: 12 }} />
                 </Button>
             </Column>
         );
     }, [navigation]);
 
     const home = useMemo(() => [
-        { id: '2', title: '2', img: require('@imgs/carrousel2.png'), route: 'Notafiscal' },
-        { id: '3', title: '3', img: require('@imgs/carrousel3.png'), route: 'ShopOffers' },
+        { id: '2', title: '2', img: 'https://uha.digital/app/banners/carrousel2.png', route: 'Notafiscal' },
+        { id: '3', title: '3', img:  'https://uha.digital/app/banners/carrousel3.png', route: 'ShopOffers' },
     ], []);
 
     return (
@@ -248,15 +248,15 @@ const Donate = () => {
         return (
             <Column style={{ width: width, justifyContent: 'center', alignItems: 'center' }}>
                 <Button onPress={() => { navigation.navigate('DonateHide') }} style={{ borderRadius: 24, }}>
-                    <Image source={link} style={{ width: width * 0.86, height: 170, borderRadius: 24 }} />
+                    <Image source={{uri: link}} style={{ width: width * 0.86, height: 170, borderRadius: 24 }} />
                 </Button>
             </Column>
         );
     }, [navigation]);
 
     const home = useMemo(() => [
-        { id: '1', title: '1', img: require('@imgs/doe1.png') },
-        { id: '2', title: '2', img: require('@imgs/doe2.png') },
+        { id: '1', title: '1', img: 'https://uha.digital/banners/doe1.png' },
+        { id: '2', title: '2', img: 'https://uha.digital/banners/doe1.png' },
     ], []);
 
     return (

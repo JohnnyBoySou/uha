@@ -18,6 +18,7 @@ import CardOffers from '@components/cardOffers';
 import CardServices from '@components/cardServices';
 import LoadOffers from '@components/loadOffers';
 import LoadServices from '@components/loadServices';
+import { MotiImage } from 'moti';
 
 const { width } = Dimensions.get('window');
 
@@ -207,30 +208,11 @@ const Cards = () => {
     return (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10, }}>
             <Button onPress={() => { navigation.navigate('NotafiscalSend') }} >
-                <Column from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1200, }} style={{ width: 240, height: 300, backgroundColor: color.primary, borderRadius: 18, marginRight: 20, marginLeft: 28, overflow: 'hidden', }}>
-                    <Column style={{ margin: 20, }}>
-                        <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ganhe +</Title>
-                        <Title style={{ fontSize: 32, lineHeight: 34, marginTop: -5, }}>Moedas</Title>
-                        <Label style={{ color: "#FFF2E3", marginTop: 30, fontFamily: 'Font_Medium', alignSelf: 'flex-start', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Cadastre suas</Label>
-                        <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, alignSelf: 'flex-start', marginBottom: 20, }}>Notas fiscais</Title>
-                    </Column>
-                    <Image contentFit="cover" source={require('@imgs/nt.png')} style={{ width: 140, zIndex: 9, height: 130, alignSelf: 'flex-end', }} />
-                    <Image contentFit="cover" source={require('@imgs/nt4.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
-                </Column>
+                <MotiImage source={{ uri: 'https://uha.digital/app/banners/shop1.png'}} from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1200, }} style={{ width: 240, height: 300, backgroundColor: color.primary, borderRadius: 18, marginRight: 20, marginLeft: 28, }}/>
             </Button>
 
             <Button onPress={() => { navigation.navigate('ShopOffers') }} >
-                <Column from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1600, }} style={{ width: 240, height: 300, backgroundColor: color.secundary, borderRadius: 18, marginRight: 20, overflow: 'hidden', }}>
-                    <Column style={{ margin: 20, }}>
-                        <Title style={{ color: '#FFF2E3', fontSize: 32, lineHeight: 36, marginTop: 10, }}>Ofertas</Title>
-                        <Title style={{ fontSize: 32, lineHeight: 34, marginTop: -5, color: color.primary, }}>relâmpago</Title>
-                        <Row>
-                            <Label style={{ color: "#FFF2E3", marginTop: 40, fontFamily: 'Font_Medium', paddingHorizontal: 6, fontSize: 24, lineHeight: 28, }}>Atualizado {'\n'}a cada <Title style={{ backgroundColor: '#fff', marginTop: 8, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 16, fontSize: 20, zIndex: 99, }}> 6 horas </Title></Label>
-                        </Row>
-                    </Column>
-                    <Image contentFit="contain" source={require('@imgs/nt7.png')} style={{ width: 140, height: 120, zIndex: -9, alignSelf: 'flex-end', marginRight: -20, }} />
-                    <Image contentFit="contain" source={require('@imgs/nt5.png')} style={{ width: 140, height: 130, position: 'absolute', left: -20, bottom: -40, }} />
-                </Column>
+                <MotiImage source={{ uri: 'https://uha.digital/app/banners/shop2.png'}} from={{ opacity: 0, translateX: 40, }} animate={{ opacity: 1, translateX: 0, }} transition={{ type: 'timing', delay: 1600, }} style={{ width: 240, height: 300, backgroundColor: color.secundary, borderRadius: 18, marginRight: 20,  }}/>
             </Button>
 
         </ScrollView>
