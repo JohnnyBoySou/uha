@@ -34,7 +34,7 @@ export const registerUser = async (params) => {
   };
 
   try {
-    const {data} = await axios.post(`${BASE_URL}/usuarios/register`, sanitizedParams);
+    const { data } = await axios.post(`${BASE_URL}/usuarios/register`, sanitizedParams);
     return data;
   } catch (error) {
     console.log('Error:', error.message);
@@ -161,7 +161,7 @@ export const listUser = async () => {
 
 
 export const verifyEmail = async (email, code) => {
-  console.log(email,code)
+  console.log(email, code)
   try {
     const res = await axios.post(`${await getBaseURL()}/usuarios/validacodigo`, {
       email: validator.normalizeEmail(email),
@@ -193,3 +193,28 @@ export const indicacaoUser = async () => {
     throw new Error(err.message)
   }
 }
+
+
+
+
+export const excludeUser = async (password, message) => {
+  
+  const token = await getToken()
+  const BASE_URL = await getBaseURL();
+  try {
+    const res = await axios.post(`${BASE_URL}/usuarios/exclusao`, {
+      password: password,
+      message: message,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }); 
+    return res.data
+  } catch (error) {
+    console.log(error)
+    const err = JSON.parse(error?.request?.response);
+    throw new Error(err.message)
+  }
+};
+

@@ -5,7 +5,7 @@ import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
 import Check from '@components/check';
-import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, HeartHandshake, ShoppingBag } from 'lucide-react-native';
+import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, HeartHandshake, ShoppingBag, TriangleAlert } from 'lucide-react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
@@ -121,6 +121,12 @@ export default function AccountScreen({ navigation, }) {
                             <Avatar />
                         </Pressable>
                     </Row>
+                        <Button onPress={() => { navigation.navigate('AccountExclude') }} style={{ marginVertical: 8, }}>
+                            <Row style={{ alignItems: 'center', }}>
+                                <TriangleAlert size={24} color={color.red} />
+                                <Title style={{ fontSize: 18, marginLeft: 12, color: color.red, }}>Excluir conta</Title>
+                            </Row>
+                        </Button>
                 </Column>
 
 

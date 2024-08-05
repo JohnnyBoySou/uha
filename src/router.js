@@ -62,6 +62,7 @@ import AccountAccessInfoScreen from '@screens/tabs/account/access';
 import AccountFAQScreen from '@screens/tabs/account/faq';
 import TermsScreen from '@screens/geral/terms';
 import AccountResetScreen from '@screens/tabs/account/reset'
+import AccountExcludeScreen from '@screens/tabs/account/exclude';
 
 import ONGSingleScreen from '@screens/ong/single';
 import ONGListScreen from '@screens/ong/list';
@@ -196,6 +197,7 @@ export default function Router() {
         <Stack.Screen name="AccountAccess" component={AccountAccessInfoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="AccountFAQ" component={AccountFAQScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="AccountReset" component={AccountResetScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+        <Stack.Screen name="AccountExclude" component={AccountExcludeScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
 
         <Stack.Screen name="ONGSingle" component={ONGSingleScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="ONGList" component={ONGListScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />

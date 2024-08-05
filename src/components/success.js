@@ -9,7 +9,7 @@ const Success = ({ msg }) => {
             <Column style={{ width: 32, height: 32, backgroundColor: '#ffffff40', borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                 <CheckCircle size={18} color="#fff" />
             </Column>
-            <Title style={{ fontSize: 14, marginLeft: 12, color: '#fff', textAlign: 'center', }}>{msg}</Title>
+            <Title style={{ fontSize: 14, marginLeft: 12, color: '#fff', marginRight: 20, }}>{msg}</Title>
         </MotiView>
     )
 }

@@ -255,8 +255,8 @@ const Donate = () => {
     }, [navigation]);
 
     const home = useMemo(() => [
-        { id: '1', title: '1', img: 'https://uha.digital/banners/doe1.png' },
-        { id: '2', title: '2', img: 'https://uha.digital/banners/doe1.png' },
+        { id: '1', title: '1', img: 'https://uha.digital/app/banners/doe1.png' },
+        { id: '2', title: '2', img: 'https://uha.digital/app/banners/doe2.png' },
     ], []);
 
     return (
