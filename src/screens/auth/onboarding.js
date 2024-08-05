@@ -75,7 +75,7 @@ export default function OnboardingScreen({ navigation, }) {
                 </ScrollView>
 
 
-                <Column style={{ paddingHorizontal: margin.h, width: '100%', position: 'absolute', bottom: 0, paddingBottom: 60, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
+                <Column style={{ paddingHorizontal: margin.h, width: '100%', position: 'absolute', bottom: 0, paddingBottom: 40, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
                     <ButtonPR onPress={() => { navigation.navigate('AuthLogin') }} style={{ marginTop: 24, marginHorizontal: 40, }} >
                         <LabelSE>Próximo</LabelSE>
                     </ButtonPR>

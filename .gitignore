@@ -38,7 +38,5 @@ yarn-error.*
 .env
 android
 ios
-google-services.json
-GoogleService-Info.plist
 
 hooks/firebase.txt
