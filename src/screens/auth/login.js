@@ -77,6 +77,7 @@ export default function AuthLoginScreen({ navigation, }) {
 
 
 const Registrar = ({ settype, email, setemail }) => {
+    const navigation = useNavigation();
     const passStrong = useRef()
     const [pass, setpass] = useState(true);
     const [remember, setremember] = useState(true);
@@ -304,7 +305,9 @@ const Registrar = ({ settype, email, setemail }) => {
                             </Column>
                         </Button>
                     </Row>
-                    <Label style={{ fontFamily: font.medium, textAlign: 'center', fontSize: 14,  marginHorizontal: 6, marginTop: 12, }}>Ao registrar-se você concorda com os {'\n'}<U>Termos de Uso</U> e <U>Politica de Privacidade</U></Label>
+                    <Pressable onPress={() => {navigation.navigate('Terms')}} >
+                        <Label style={{ fontFamily: font.medium, textAlign: 'center', fontSize: 14,  marginHorizontal: 6, marginTop: 12, }}>Ao registrar-se você concorda com os {'\n'}<U>Termos de Uso e Politica de Privacidade</U></Label>
+                    </Pressable>
 
                     {success ? <Success msg={success} show={true} /> : error ? <Error msg={error} show={true} /> : null}
 

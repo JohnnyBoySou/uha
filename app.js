@@ -18,7 +18,6 @@ export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-
     const handleNotification = async () => {
       LogBox.ignoreAllLogs(true);
       const key = process.env.EXPO_PUBLIC_KEY || Constants.expoConfig.extra.oneSignalAppId;

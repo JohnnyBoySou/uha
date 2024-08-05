@@ -6,10 +6,13 @@ import getBaseURL from '@hooks/getBaseUrl';
 export const registrarFeedback = async (message, type) => {
     const BASE_URL = await getBaseURL();
     const token = await getToken();
-    const url = type === 'duvida' ? `${BASE_URL}/usuarios/registrarduvida` : type === 'reclamacao' ? `${BASE_URL}/usuarios/registrareclamacao` : type === 'sugestao' ? `${BASE_URL}/usuarios/registrarsugestao` : '';
 
+    const typeAss = type == 'duvida' ? 'Dúvida' : type == 'reclamacao' ? 'Reclamação' : 'Sugestão';
+    const url =`${BASE_URL}/usuarios/feedback/cadastro`;
     try {
-        const response = await axios.post(url, { message: validator.escape(message),},{headers: {Authorization: `Bearer ${token}`,},});
+        const response = await axios.post(url, { 
+            type: typeAss,
+            message: validator.escape(message),},{headers: {Authorization: `Bearer ${token}`,},});
         return response.data;
     } catch (error) {
         console.error("Error revalidating token:", error);
