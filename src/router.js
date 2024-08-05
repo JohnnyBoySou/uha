@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator, TransitionPresets, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute, useLinking } from '@react-navigation/native';
-//import { createNativeStackNavigator, TransitionPresets } from '@react-navigation/native-stack';
 import analytics from "@react-native-firebase/analytics";
 
 import OnboardingScreen from '@screens/auth/onboarding';
@@ -85,7 +84,6 @@ import StickersScreen from '@screens/comunidade/stickers';
 import StickerSingleScreen from '@screens/comunidade/sticker_single';
 import AboutScreen from '@screens/geral/about';
 
-//const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 

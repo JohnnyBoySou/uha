@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "307602157666",
-    "project_id": "uha-fbe41",
-    "storage_bucket": "uha-fbe41.appspot.com"
+    "project_number": "880191548528",
+    "project_id": "uha-342a5",
+    "storage_bucket": "uha-342a5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:307602157666:android:80640ff06b6ec1c8a3213b",
+        "mobilesdk_app_id": "1:880191548528:android:8ec790c907b853b10018b5",
         "android_client_info": {
           "package_name": "com.engd.uha"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAEjqSV5UFOgqHrP2xNizSNENZCM67huDA"
+          "current_key": "AIzaSyAUIJMGpI-_2aEafbL5Q_DEMN16vTF_Y90"
         }
       ],
       "services": {
