@@ -36,12 +36,13 @@ export async function sendNotafiscal( params ){
 
 export async function sendNotafiscalAnonima( params ){
     const BASE_URL = await getBaseURL();
-    const { id, notas} = params
+    const { id, notas, origin} = params
     try {
         const response = await axios.post(`${BASE_URL}/usuarios/doar/variasanonima`, 
         {
             instituicao_id: id,
             notas: notas,
+            email: origin,
         });
         console.log(response.data)
         return response.data.message;

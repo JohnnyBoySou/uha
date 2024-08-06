@@ -198,7 +198,7 @@ export const indicacaoUser = async () => {
 
 
 export const excludeUser = async (password, message) => {
-  
+
   const token = await getToken()
   const BASE_URL = await getBaseURL();
   try {
@@ -209,7 +209,23 @@ export const excludeUser = async (password, message) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }); 
+    });
+    return res.data
+  } catch (error) {
+    console.log(error)
+    const err = JSON.parse(error?.request?.response);
+    throw new Error(err.message)
+  }
+};
+
+
+
+export const verifyEstabelecimento = async (email) => {
+  const BASE_URL = await getBaseURL();
+  try {
+    const res = await axios.post(`${BASE_URL}/usuarios/emailestabelecimento`, {
+      email: email,
+    });
     return res.data
   } catch (error) {
     console.log(error)

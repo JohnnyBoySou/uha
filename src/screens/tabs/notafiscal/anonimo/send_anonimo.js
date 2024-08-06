@@ -26,6 +26,7 @@ export default function NotafiscalSendAnonimoScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const [value, setvalue] = useState(null);
     const type = route.params?.type;
+    const origin = route.params?.origin;
     const [notas, setNotas] = useState([]);
     const modalDigitNota = useRef(null);
     const modalListNotas = useRef(null);
@@ -83,7 +84,7 @@ export default function NotafiscalSendAnonimoScreen({ navigation, route }) {
     }
 
     const handleFinish = () => {
-        navigation.navigate('NotafiscalONGSAnonimo', { notas: notas });
+        navigation.navigate('NotafiscalONGSAnonimo', { notas: notas, origin: origin, });
     };
 
     const handleRemove = (item) => {

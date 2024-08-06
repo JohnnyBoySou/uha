@@ -15,6 +15,7 @@ export default function NotafiscalONGSAnonimoScreen({ navigation, route, }){
     const [loading, setloading] = useState(true);
     const [loadingLoad, setloadingLoad] = useState();
     const notas = route.params?.notas ? route.params?.notas : '';
+    const origin = route.params?.origin ? route.params?.origin : '';
     const [selectOng, setselectOng] = useState();
     const [ongs, setongs] = useState();
 
@@ -23,6 +24,7 @@ export default function NotafiscalONGSAnonimoScreen({ navigation, route, }){
         const params = {
             notas: notas,
             id: selectOng,
+            origin: origin,
         }
         sendNotafiscalAnonima(params).then((res) => {
             if (res) {
