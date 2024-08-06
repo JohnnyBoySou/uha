@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import getToken from '@hooks/getToken';
 import getBaseURL from '@hooks/getBaseUrl';
+import { getOrigin } from '../../user/origin';
 
 export async function sendNotafiscal(params) {
     const BASE_URL = await getBaseURL();
@@ -18,7 +19,6 @@ export async function sendNotafiscal(params) {
                     Authorization: `Bearer ${token}`,
                 },
             });
-        console.log(response.data)
         return response.data.message;
     } catch (error) {
         let errMsg;
@@ -35,8 +35,8 @@ export async function sendNotafiscal(params) {
 
 export async function sendNotafiscalAnonima(params) {
     const BASE_URL = await getBaseURL();
-    const { id, notas, origin } = params
-    console.log(params)
+    const origin = await getOrigin();
+    const { id, notas,} = params
     try {
         const response = await axios.post(`${BASE_URL}/usuarios/doar/variasanonima`,
             {

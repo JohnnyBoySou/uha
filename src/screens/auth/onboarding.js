@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import Error from '@components/error';
 import Success from '@components/success';
 import { verifyEstabelecimento } from '@api/request/user/user';
+import { createOrigin } from '@api/user/origin';
 
 export default function OnboardingScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
@@ -127,6 +128,8 @@ const SelectType = () => {
         try {
             const res = await verifyEstabelecimento(email)
             setsuccess(res?.message)
+            const org = await createOrigin(email)
+            console.log(org)
             setTimeout(() => {
                 navigation.push('NotafiscalSendAnonimo', { origin: email,})
             }, 1000);
