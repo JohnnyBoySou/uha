@@ -222,6 +222,7 @@ export const excludeUser = async (password, message) => {
 
 export const verifyEstabelecimento = async (email) => {
   const BASE_URL = await getBaseURL();
+  console.log(email)
   try {
     const res = await axios.post(`${BASE_URL}/usuarios/emailestabelecimento`, {
       email: email,

@@ -3,15 +3,10 @@ import axios from 'axios';
 import getToken from '@hooks/getToken';
 import getBaseURL from '@hooks/getBaseUrl';
 
-export async function getONGs(){
-    const token = await getToken();
+export async function getONGs(page = 1){
     const BASE_URL = await getBaseURL();
     try {
-        const res = await axios.post(`${BASE_URL}/usuarios/instituicoes`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const res = await axios.post(`${BASE_URL}/usuarios/instituicoes?page=${page}`,);
         return res.data.data;
     } catch (error) {
         const err = JSON.parse(error.request.response);
