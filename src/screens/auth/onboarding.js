@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Animated, ScrollView, Dimensions, Image, ActivityIndicator, TextInput } from 'react-native';
 import { Main, Column, Row, Title, ButtonPR, LabelSE, LabelLI, Button, Label, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
@@ -8,7 +8,7 @@ import { ExpandingDot } from "react-native-animated-pagination-dots";
 import BottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { StatusBar } from 'expo-status-bar'
 import { Mail, SquareUserRound, Store, X } from 'lucide-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import Error from '@components/error';
 import Success from '@components/success';
@@ -23,6 +23,11 @@ export default function OnboardingScreen({ navigation, }) {
 
     const modalEstabelecimento = useRef(null);
     const imgs = ['https://uha.digital/app/onboarding/1.jpg', 'https://uha.digital/app/onboarding/2.jpg', 'https://uha.digital/app/onboarding/3.jpg']
+
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        modalEstabelecimento.current?.close()
+    }, [isFocused])
 
     return (
         <Main style={{ backgroundColor: '#fff', }}>

@@ -110,8 +110,12 @@ export default function NotafiscalSendAnonimoScreen({ navigation, route }) {
                 </Button>
             </Row>
             <Scroll>
-
-                <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, flex: 1, marginTop: 40, }}>
+                <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 30, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
+                    <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua câmera para o {'\n'}QR Code da nota fiscal</Label>
+                    <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
+                    <Octicons name="question" size={22} color="#fff" />
+                </Row>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, flex: 1, marginTop: -20, }}>
                     <Column style={{ width: 250, height: 250, justifyContent: 'space-between', marginTop: 100, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Column>
@@ -135,11 +139,7 @@ export default function NotafiscalSendAnonimoScreen({ navigation, route }) {
                         </Row>
                     </Column>
                 </Column>
-                <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 20, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
-                    <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua câmera para o {'\n'}QR Code da nota fiscal</Label>
-                    <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
-                    <Octicons name="question" size={22} color="#fff" />
-                </Row>
+
             </Scroll>
 
             <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ backgroundColor: error || success ? '#00000080' : 'transparent', position: 'absolute', top: 0, width: width, height: 1.1 * height, justifyContent: 'center', alignItems: 'center', }}>

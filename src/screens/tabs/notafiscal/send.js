@@ -112,8 +112,12 @@ export default function NotafiscalSendScreen({ navigation, route }) {
             </Row>
             <Scroll>
 
-
-                <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, flex: 1, marginTop: 40, }}>
+                <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 30, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
+                    <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua câmera para o {'\n'}QR Code da nota fiscal</Label>
+                    <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
+                    <Octicons name="question" size={22} color="#fff" />
+                </Row>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, flex: 1, marginTop: -20, }}>
                     <Column style={{ width: 250, height: 250, justifyContent: 'space-between', marginTop: 100, }}>
                         <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
                             <Column>
@@ -138,11 +142,7 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                     </Column>
                 </Column>
 
-                <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 20, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
-                    <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua câmera para o {'\n'}QR Code da nota fiscal</Label>
-                    <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
-                    <Octicons name="question" size={22} color="#fff" />
-                </Row>
+
             </Scroll>
 
 
@@ -160,20 +160,20 @@ export default function NotafiscalSendScreen({ navigation, route }) {
 
 
 
-            <Button onPress={() => { modalListNotas.current.expand() }} style={{borderRadius: 100,}}>
-            <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#ed18ad", borderRadius: 100, paddingRight: 24, }}>
-                <Row>
-                    {notas?.length >= 1 && <MotiView from={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} style={{ width: 24, height: 24, borderRadius: 100, position: 'absolute', top: 42, left: 40, zIndex: 99, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}>
-                        <Title style={{ fontSize: 14, lineHeight: 16, }}>{notas?.length}</Title>
-                    </MotiView>}
-                    <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
-                        <NotepadText size={32} color="#fff" />
-                    </Column>
-                </Row>
-                <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Minha{notas.length > 1 ? 's' : ''} nota{notas.length > 1 ? 's' : ''}</Title>
-            </Row>
-            </Button>
-                <Button onPress={() => { modalDigitNota.current.expand() }} style={{borderRadius: 100, marginVertical: 12,}}>
+                <Button onPress={() => { modalListNotas.current.expand() }} style={{ borderRadius: 100, }}>
+                    <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#ed18ad", borderRadius: 100, paddingRight: 24, }}>
+                        <Row>
+                            {notas?.length >= 1 && <MotiView from={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} style={{ width: 24, height: 24, borderRadius: 100, position: 'absolute', top: 42, left: 40, zIndex: 99, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', }}>
+                                <Title style={{ fontSize: 14, lineHeight: 16, }}>{notas?.length}</Title>
+                            </MotiView>}
+                            <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
+                                <NotepadText size={32} color="#fff" />
+                            </Column>
+                        </Row>
+                        <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Minha{notas.length > 1 ? 's' : ''} nota{notas.length > 1 ? 's' : ''}</Title>
+                    </Row>
+                </Button>
+                <Button onPress={() => { modalDigitNota.current.expand() }} style={{ borderRadius: 100, marginVertical: 12, }}>
                     <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#0f93db", borderRadius: 100, paddingRight: 24, }}>
                         <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
                             <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />
@@ -185,7 +185,7 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                 <Button disabled={notas.length == 0} onPress={handleFinish} style={{ opacity: notas.length === 0 ? 0.5 : 1, borderRadius: 100, }}>
 
                     <Row style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#22a868", borderRadius: 100, paddingRight: 24, }}>
-                        <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.green, justifyContent: 'center', alignItems: 'center',}}>
+                        <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.green, justifyContent: 'center', alignItems: 'center', }}>
                             <MaterialCommunityIcons name="check" size={32} color="#fff" />
                         </Column>
                         <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Enviar nota{notas.length > 1 ? 's' : ''}</Title>
