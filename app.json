@@ -2,7 +2,7 @@
   "expo": {
     "name": "Uha!",
     "slug": "uha",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "scheme": "uha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,11 +16,11 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.engd.uha",
-      "buildNumber": "3.0.0"
+      "buildNumber": "4.0.0"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF26BD"

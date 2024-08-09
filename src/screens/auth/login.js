@@ -25,7 +25,7 @@ export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState();
     const [type, settype] = useState('Entrar');
-    const [email, setemail] = useState();
+    const [email, setemail] = useState('engd.teste@gmail.com');
     const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Graças a pessoas generosas como você, levamos conforto e segurança a quem mais precisa.' } : { title: 'Redefinir senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
     const handleExit = (value) => {
         settype(value)
@@ -92,7 +92,7 @@ const Registrar = ({ settype, email, setemail }) => {
 
     const [loading, setloading] = useState(false);
 
-    const [password, setpassword] = useState('');
+    const [password, setpassword] = useState('engenhariadigit@L2003');
     const [cpf, setcpf] = useState('');
     const [whatsapp, setwhatsapp] = useState('');
     const [cep, setcep] = useState('');
@@ -362,7 +362,7 @@ const Entrar = ({ settype, email, setemail }) => {
 
     const passref = useRef(null);
 
-    const [password, setpassword] = useState('');
+    const [password, setpassword] = useState('engenhariadigit@L2003');
     const [pass, setpass] = useState(true);
     const [remember, setremember] = useState(true);
     const [loading, setloading] = useState();
