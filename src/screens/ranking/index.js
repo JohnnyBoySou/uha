@@ -11,6 +11,7 @@ import TopSheet from '@components/topsheet';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image'
+import { Skeleton } from 'moti/skeleton';
 
 export default function RankingScreen() {
     const { color, margin } = useContext(ThemeContext);
@@ -24,13 +25,13 @@ export default function RankingScreen() {
             setloading(true);
             try {
                 const res = await rankList();
-                console.log(res)
                 const dataArray = Object.values(res.rank);
                 setrank(dataArray)
                 setposition(res.minhaposicaorealativa);
             } catch (error) {
-
-            } finally { setloading(false) }
+                console.log(error)
+            } finally {// setloading(false) 
+            }
         }
         fetchData();
     }, [])
@@ -59,7 +60,6 @@ export default function RankingScreen() {
                 </Column>
             </BottomSheet>
             <Button onPress={() => { modalUser.current?.expand() }} style={{ width: 52, height: 52, borderRadius: 100, backgroundColor: "#00A3FF", justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 30, right: 30, }}><UserRoundSearch size={24} color="#fff" /></Button>
-
         </Main>
     )
 }
@@ -240,8 +240,19 @@ const PodiumMax = ({ rank }) => {
 }
 
 const SkeletonBody = () => {
+    const { color, margin } = useContext(ThemeContext);
     return (
         <Column>
+            <Row style={{ backgroundColor: color.primary, borderBottomLeftRadius: 32, paddingTop: 80, paddingBottom: 40, borderBottomRightRadius: 32, paddingHorizontal: margin.h, justifyContent: 'center', alignItems: 'flex-end',  }}>
+                <Skeleton colorMode='light' width={80} height={120} radius={12} />
+                <Column style={{width: 12, }} />
+                <Skeleton colorMode='light' width={80} height={170} radius={12} />
+                <Column style={{width: 12, }} />
+                <Skeleton colorMode='light' width={80} height={120} radius={12} />
+            </Row>
+            <Column style={{ paddingHorizontal: margin.h, marginTop: 32, justifyContent: 'center', alignItems: 'center',  }}></Column>
+            <Skeleton colorMode='light' width={120} height={40} radius={8} />
+            <Skeleton colorMode='light' width={120} height={40} radius={8} />
         </Column>
     )
 }
