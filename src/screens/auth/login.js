@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, Alert, TextInput, KeyboardAvoidingView, ScrollView, Vibration } from 'react-native';
+import { ActivityIndicator, Pressable, TextInput, KeyboardAvoidingView, ScrollView, Vibration } from 'react-native';
 import { Main, Column, Title, Row, Label, Button, ButtonPR, LabelPR, U, SubLabel } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
-import { AnimatePresence, MotiImage, MotiView } from 'moti';
-import { Eye, EyeOff, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser, Gift, Vibrate, X } from 'lucide-react-native'
+import { AnimatePresence, MotiView } from 'moti';
+import { Eye, EyeOff, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser, Gift, X } from 'lucide-react-native'
 import CheckBox from '@components/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import Octicons from '@expo/vector-icons/Octicons';
@@ -25,7 +25,7 @@ export default function AuthLoginScreen({ navigation, }) {
     const { color, font, margin, } = useContext(ThemeContext);
     const [loading, setloading] = useState();
     const [type, settype] = useState('Entrar');
-    const [email, setemail] = useState('engd.teste@gmail.com');
+    const [email, setemail] = useState('');
     const message = type === 'Entrar' || type === 'Registrar' ? { title: 'Bem-vindo!', message: 'Graças a pessoas generosas como você, levamos conforto e segurança a quem mais precisa.' } : { title: 'Redefinir senha', message: 'Escolha uma senha segura e não a compartilhe com ninguém.' }
     const handleExit = (value) => {
         settype(value)
@@ -74,7 +74,6 @@ export default function AuthLoginScreen({ navigation, }) {
     )
 }
 
-
 const Registrar = ({ settype, email, setemail }) => {
     const navigation = useNavigation();
     const passStrong = useRef()
@@ -92,7 +91,7 @@ const Registrar = ({ settype, email, setemail }) => {
 
     const [loading, setloading] = useState(false);
 
-    const [password, setpassword] = useState('engenhariadigit@L2003');
+    const [password, setpassword] = useState('');
     const [cpf, setcpf] = useState('');
     const [whatsapp, setwhatsapp] = useState('');
     const [cep, setcep] = useState('');
@@ -355,14 +354,11 @@ const Registrar = ({ settype, email, setemail }) => {
 const Entrar = ({ settype, email, setemail }) => {
     const navigation = useNavigation();
     const { color, font, margin } = useContext(ThemeContext)
-    const a = false;
-
     const [focusEmail, setfocusEmail] = useState(false);
     const [focusPass, setfocusPass] = useState(false);
-
     const passref = useRef(null);
 
-    const [password, setpassword] = useState('engenhariadigit@L2003');
+    const [password, setpassword] = useState('');
     const [pass, setpass] = useState(true);
     const [remember, setremember] = useState(true);
     const [loading, setloading] = useState();

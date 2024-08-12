@@ -2,7 +2,7 @@
   "expo": {
     "name": "Uha!",
     "slug": "uha",
-    "version": "4.0.0",
+    "version": "7.0.0",
     "scheme": "uha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,12 +15,17 @@
     "ios": {
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
-      "bundleIdentifier": "com.engd.uha",
-      "buildNumber": "4.0.0"
+      "bundleIdentifier": "com.engd.uha.OneSignalNotificationServiceExtension",
+      "buildNumber": "7.0.0",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
+        "NSLocationWhenInUseUsageDescription": "This app uses location services to find events near you.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location services to find events near you."
+      }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 4,
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF26BD"
@@ -104,7 +109,7 @@
               "appExtensions": [
                 {
                   "targetName": "OneSignalNotificationServiceExtension",
-                  "bundleIdentifier": "com.engd.uha.OneSignalNotificationServiceExtension",
+                  "bundleIdentifier": "com.engd.uha",
                   "entitlements": {
                     "com.apple.security.application-groups": [
                       "group.com.engd.uha.onesignal"

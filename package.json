@@ -1,6 +1,6 @@
 {
   "name": "uha",
-  "version": "4.0.0",
+  "version": "7.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

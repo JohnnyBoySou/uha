@@ -459,7 +459,7 @@ const CardExtrato = ({ item, onLong, type, handleSelect }) => {
                     <Row style={{ borderRadius: 6, paddingVertical: 4, paddingHorizontal: 6, }}>
                         <MotiImage style={{ width: 54, height: 54, borderRadius: 12, marginLeft: 8, }} source={{ uri: item.img }} />
                         <Column style={{ justifyContent: 'center', marginLeft: 8, }}>
-                            <Label style={{ fontSize: 16, fontFamily: 'Font_Bold', color: color.secundary, }}>{name.length > 20 ? name?.slice(0, 20) + '...' : name}</Label>
+                            <Label style={{ fontSize: 16, fontFamily: 'Font_Bold', color: color.secundary, }}>{name.length > 12 ? name?.slice(0, 12) + '...' : name}</Label>
                             <Title style={{
                                 color: cl,
                                 fontSize: 14, lineHeight: 14, textAlign: 'left',
@@ -499,7 +499,7 @@ const CardExtrato = ({ item, onLong, type, handleSelect }) => {
                     <Row style={{ borderRadius: 6, paddingVertical: 4, paddingHorizontal: 6, }}>
                         <MotiImage style={{ width: 54, height: 54, borderRadius: 12, marginLeft: 8, }} source={{ uri: item.img }} />
                         <Column style={{ justifyContent: 'center', marginLeft: 8, }}>
-                            <Label style={{ fontSize: 16, fontFamily: 'Font_Bold', color: color.secundary, }}>{ong?.length > 20 ? ong?.slice(0, 20) + '...' : ong}</Label>
+                            <Label style={{ fontSize: 16, fontFamily: 'Font_Bold', color: color.secundary, }}>{ong?.length > 12 ? ong?.slice(0, 12) + '...' : ong}</Label>
                             <Title style={{
                                 color: cl,
                                 fontSize: 14, lineHeight: 14, textAlign: 'left',

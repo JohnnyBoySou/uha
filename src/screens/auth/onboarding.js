@@ -33,7 +33,7 @@ export default function OnboardingScreen({ navigation, }) {
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style="dark" translucent animated={true} />
             <Column style={{ flex: 1, }}>
-                <Row style={{ position: 'absolute', top: 50, left: 10, right: 10, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
+                <Row style={{ position: 'absolute', top: 30, left: 10, right: 10, zIndex: 99, justifyContent: 'space-between', alignItems: 'center', }}>
                     <Image source={require('@imgs/logo.png')} contentFit='cover' style={{ width: 100, height: 60, }} />
 
                     <Column style={{ backgroundColor: color.secundary + 20, marginRight: 20, borderRadius: 100, paddingVertical: 4, paddingHorizontal: 5, alignSelf: 'center', marginTop: 10, marginBottom: 14, }}>
@@ -60,43 +60,63 @@ export default function OnboardingScreen({ navigation, }) {
                     ref={scrollViewRef}
                     pagingEnabled
                     horizontal
-                    style={{ position: 'absolute', top: -60, left: 0, right: 0, }}
                     onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false, })}
                     showsHorizontalScrollIndicator={false}
                     scrollEventThrottle={64}>
-                    <Column style={{ height: height, width: width, }}>
-                        <Image transition={100} contentFit='cover' source={{ uri: imgs[0] }} style={{ height: 0.65 * height, width: width, borderRadius: 32, }} />
-                        <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
-                            <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Apoie ONGs de todo o Brasil.</Title>
-                            <Label style={{ textAlign: 'center', color: '#4f1a40', marginTop: 12, fontSize: 18, lineHeight: 22, letterSpacing: -0.6, }}>Com o Uha!, você pode fazer a diferença doando cupons fiscais e contribuições financeiras para ONGs em todo o país. Junte-se a nós e ajude a transformar vidas!</Label>
+                    <Column style={{ width: width, height: height, }}>
+                        <Image transition={0} contentFit='cover' source={{ uri: imgs[0] }} style={{ height: '60%', width: width, borderRadius: 32, }} />
+                        <Column style={{ height: '40%', }}>
+                            <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
+                                <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Apoie ONGs de todo o Brasil.</Title>
+                                <Label style={{ textAlign: 'center', color: '#4f1a40', marginTop: 12, fontSize: 18, lineHeight: 22, letterSpacing: -0.6, }}>Com o Uha!, você pode fazer a diferença doando cupons fiscais e contribuições financeiras para ONGs em todo o país. Junte-se a nós e ajude a transformar vidas!</Label>
+                            </Column>
+                            <Column style={{ paddingHorizontal: margin.h, width: '100%', paddingBottom: 40, }}>
+                                <ButtonPR onPress={() => { navigation.navigate('AuthLogin') }} style={{ marginTop: 24, marginHorizontal: 40, }} >
+                                    <LabelSE>Próximo</LabelSE>
+                                </ButtonPR>
+                                <Button onPress={() => { modalEstabelecimento.current.expand() }} style={{ marginTop: 8, alignSelf: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 100, }} >
+                                    <LabelLI style={{ textDecorationLine: 'underline', textDecorationStyle: 'solid', color: '#fff', textAlign: 'center', color: color.secundary, }}>Doar anonimamente</LabelLI>
+                                </Button>
+                            </Column>
+                        </Column>
+
+                    </Column>
+                    <Column style={{ width: width, height: height, }}>
+                        <Image transition={100} contentFit='cover' source={{ uri: imgs[1] }} style={{ height: '60%', width: width, borderRadius: 32, }} />
+                        <Column style={{ height: '40%', }}>
+                            <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
+                                <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Acumule pontos toda vez que ajudar.</Title>
+                                <Label style={{ textAlign: 'center', color: '#4f1a40', marginTop: 12, fontSize: 18, lineHeight: 22, letterSpacing: -0.6, }}>Cada vez que você doa cupons fiscais ou faz contribuições financeiras, você acumula pontos. Quanto mais você ajuda, mais pontos você ganha. É simples e recompensador</Label>
+                            </Column>
+                            <Column style={{ paddingHorizontal: margin.h, paddingBottom: 40, }}>
+                                <ButtonPR onPress={() => { navigation.navigate('AuthLogin') }} style={{ marginTop: 24, marginHorizontal: 40, }} >
+                                    <LabelSE>Próximo</LabelSE>
+                                </ButtonPR>
+                                <Button onPress={() => { modalEstabelecimento.current.expand() }} style={{ marginTop: 8, alignSelf: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 100, }} >
+                                    <LabelLI style={{ textDecorationLine: 'underline', textDecorationStyle: 'solid', color: '#fff', textAlign: 'center', color: color.secundary, }}>Doar anonimamente</LabelLI>
+                                </Button>
+                            </Column>
                         </Column>
                     </Column>
-                    <Column style={{ height: height, width: width, }}>
-                        <Image transition={200} contentFit='cover' source={{ uri: imgs[1] }} style={{ height: 0.65 * height, width: width, borderRadius: 32, }} />
-                        <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
-                            <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Acumule pontos toda vez que ajudar.</Title>
-                            <Label style={{ textAlign: 'center', color: '#4f1a40', marginTop: 12, fontSize: 18, lineHeight: 22, letterSpacing: -0.6, }}>Cada vez que você doa cupons fiscais ou faz contribuições financeiras, você acumula pontos. Quanto mais você ajuda, mais pontos você ganha. É simples e recompensador</Label>
-                        </Column>
-                    </Column>
-                    <Column style={{ height: height, width: width, }}>
-                        <Image transition={300} contentFit='cover' source={{ uri: imgs[2] }} style={{ height: 0.65 * height, width: width, borderRadius: 32, }} />
-                        <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
-                            <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Troque pontos por serviços e produtos.</Title>
-                            <Label style={{ textAlign: 'center', color: '#4f1a40', marginTop: 12, fontSize: 18, lineHeight: 22, letterSpacing: -0.6, }}>Use os pontos que você acumulou para trocar por uma variedade de serviços e produtos oferecidos pelos nossos parceiros. Fazer o bem nunca foi tão gratificante!</Label>
+                    <Column style={{ width: width, height: height, }}>
+                        <Image transition={200} contentFit='cover' source={{ uri: imgs[2] }} style={{ height: '60%', width: width, borderRadius: 32, }} />
+                        <Column style={{ height: '40%', }}>
+                            <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
+                                <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Troque pontos por serviços e produtos.</Title>
+                                <Label style={{ textAlign: 'center', color: '#4f1a40', marginTop: 12, fontSize: 18, lineHeight: 22, letterSpacing: -0.6, }}>Use os pontos que você acumulou para trocar por uma variedade de serviços e produtos oferecidos pelos nossos parceiros. Fazer o bem nunca foi tão gratificante!</Label>
+                            </Column>
+                            <Column style={{ paddingHorizontal: margin.h, paddingBottom: 40, }}>
+                                <ButtonPR onPress={() => { navigation.navigate('AuthLogin') }} style={{ marginTop: 24, marginHorizontal: 40, }} >
+                                    <LabelSE>Próximo</LabelSE>
+                                </ButtonPR>
+                                <Button onPress={() => { modalEstabelecimento.current.expand() }} style={{ marginTop: 8, alignSelf: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 100, }} >
+                                    <LabelLI style={{ textDecorationLine: 'underline', textDecorationStyle: 'solid', color: '#fff', textAlign: 'center', color: color.secundary, }}>Doar anonimamente</LabelLI>
+                                </Button>
+                            </Column>
                         </Column>
                     </Column>
                 </ScrollView>
-
-
-                <Column style={{ paddingHorizontal: margin.h, width: '100%', position: 'absolute', bottom: 0, paddingBottom: 40, borderTopLeftRadius: 32, borderTopRightRadius: 32, }}>
-                    <ButtonPR onPress={() => { navigation.navigate('AuthLogin') }} style={{ marginTop: 24, marginHorizontal: 40, }} >
-                        <LabelSE>Próximo</LabelSE>
-                    </ButtonPR>
-                    <Button onPress={() => { modalEstabelecimento.current.expand() }} style={{ marginTop: 8, alignSelf: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 100, }} >
-                        <LabelLI style={{ textDecorationLine: 'underline', textDecorationStyle: 'solid', color: '#fff', textAlign: 'center', color: color.secundary, }}>Doar anonimamente</LabelLI>
-                    </Button>
-                </Column>
-            </Column >
+            </Column>
 
 
             <BottomSheet ref={modalEstabelecimento} snapPoints={[0.1, 400]} keyboardBlurBehavior handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
@@ -136,7 +156,7 @@ const SelectType = () => {
             const org = await createOrigin(email)
             console.log(org)
             setTimeout(() => {
-                navigation.push('NotafiscalSendAnonimo', { origin: email,})
+                navigation.push('NotafiscalSendAnonimo', { origin: email, })
             }, 1000);
         } catch (error) {
             console.log(error)
@@ -150,7 +170,7 @@ const SelectType = () => {
         <Column>
             {verify ? <Column>
                 <Title style={{ fontSize: 18, }}>Digite o email do seu estabelecimento *</Title>
-                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off,  }}>
+                <Row style={{ borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: focusEmail ? color.primary : color.off, }}>
                     <Column style={{ justifyContent: 'center', width: 52, height: 52, alignItems: 'center', borderRadius: 100, }}>
                         <Mail color={focusEmail ? color.primary : color.secundary} size={22} />
                     </Column>

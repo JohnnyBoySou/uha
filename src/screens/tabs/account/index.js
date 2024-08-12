@@ -4,12 +4,11 @@ import { Main, Scroll, Column, Label, Title, Row, ButtonSE, LabelSE, SubLabel, B
 import { ThemeContext } from 'styled-components/native';
 import Avatar from '@components/avatar';
 import Notify from '@components/notify';
-import Check from '@components/check';
-import { CircleCheck, MessagesSquare, Info, ScrollText, Moon, CircleX, LogOut, HeartHandshake, ShoppingBag, TriangleAlert } from 'lucide-react-native';
+import { CircleCheck, MessagesSquare, Info, ScrollText, CircleX, LogOut, HeartHandshake, TriangleAlert } from 'lucide-react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { listUser } from '@api/request/user/user';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Image} from 'expo-image'
 import { Skeleton } from 'moti/skeleton';
 
@@ -128,8 +127,6 @@ export default function AccountScreen({ navigation, }) {
                             </Row>
                         </Button>
                 </Column>
-
-
                 <Column style={{ height: 120, width: 1, }} />
             </Scroll>
         </Main>
@@ -137,7 +134,7 @@ export default function AccountScreen({ navigation, }) {
 }
 
 const Card = ({ item, index }) => {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color } = useContext(ThemeContext);
     const navigation = useNavigation();
     return (
         <Column from={{ opacity: 0, translateX: 30 }} animate={{ opacity: 1, translateX: 0, }} delay={(index + 3) * 600}>
@@ -149,10 +146,10 @@ const Card = ({ item, index }) => {
                     <Column style={{ marginHorizontal: 20, }}>
                         <Row style={{ alignItems: 'center', }}>
                             <Title style={{ fontSize: 16, marginRight: 6, }}>{item?.title}</Title>
-                            {item.check && <CircleCheck color={color.primary} size={18} />}
-                            {item.check == false && <CircleX color={color.red} size={18} />}
+                            {item?.check && <CircleCheck color={color.primary} size={18} />}
+                            {item?.check == false && <CircleX color={color.red} size={18} />}
                         </Row>
-                        <Label style={{ fontSize: 14, marginTop: -5, color: color.secundary + 99, }}>{item?.description}</Label>
+                        <Label style={{ fontSize: 14, color: color.secundary + 99, }}>{item?.description}</Label>
                     </Column>
                 </Row>
             </Button>

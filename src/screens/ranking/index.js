@@ -12,9 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image'
 
-export default function RankingScreen({ navigation, }) {
-    const { color, font, margin } = useContext(ThemeContext);
-    const [actionButton, setactionButton] = useState(false);
+export default function RankingScreen() {
+    const { color, margin } = useContext(ThemeContext);
     const modalUser = useRef(null)
     const [loading, setloading] = useState(true);
     const [rank, setrank] = useState();
@@ -25,6 +24,7 @@ export default function RankingScreen({ navigation, }) {
             setloading(true);
             try {
                 const res = await rankList();
+                console.log(res)
                 const dataArray = Object.values(res.rank);
                 setrank(dataArray)
                 setposition(res.minhaposicaorealativa);
@@ -35,14 +35,15 @@ export default function RankingScreen({ navigation, }) {
         fetchData();
     }, [])
 
-    if (loading) { return <></> }
+
+    if (loading) { return <SkeletonBody /> }
     return (
         <Main style={{ backgroundColor: '#fff' }}>
             <StatusBar backgroundColor={color.primary} style="light" animated={true} />
             <Scroll style={{ marginTop: -20, }} >
                 <TopSheet valueMin={380} valueNormal={380} valueMax={600}
                     min={<Podium rank={rank} />} normal={<Podium rank={rank} />} max={<PodiumMax rank={rank} />} />
-                
+
                 <Column style={{ height: 380, }} />
 
                 <TopRank rank={rank} />
@@ -64,8 +65,8 @@ export default function RankingScreen({ navigation, }) {
 }
 
 const RankItem = ({ item }) => {
-    const { color, font, margin } = useContext(ThemeContext);
-    const { avatar, name, TotalPontos, posicao } = item
+    const { color } = useContext(ThemeContext);
+    const { name, TotalPontos, posicao } = item
     return (
         <Row style={{ marginBottom: 10, paddingBottom: 10, borderBottomWidth: 0.5, borderBottomColor: color.off, }}>
             <Title style={{ textAlign: 'center', width: 60, fontSize: 20, color: item?.posicao % 2 ? color.primary + 80 : color.primary }}>{posicao}</Title>
@@ -76,7 +77,7 @@ const RankItem = ({ item }) => {
 }
 
 const MyRankItem = ({ item }) => {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { color } = useContext(ThemeContext);
 
     const anterior = item?.posicaoanterior
     const minha = item?.minhaposicao
@@ -106,7 +107,7 @@ const MyRankItem = ({ item }) => {
 }
 
 const TopRank = ({ rank }) => {
-    const { color, font, margin } = useContext(ThemeContext);
+    const { margin } = useContext(ThemeContext);
     return (
         <Column>
             <Title style={{ textAlign: 'center', marginTop: 28, }}>Top 10</Title>
@@ -128,9 +129,10 @@ const TopRank = ({ rank }) => {
 const Podium = ({ rank }) => {
     const { color, margin, } = useContext(ThemeContext);
     const navigation = useNavigation()
+    if (rank == undefined) return <></>
     return (
         <Column>
-            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop:-10, }}>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginTop: -10, }}>
                 <Button onPress={() => { navigation.goBack() }} style={{ backgroundColor: "#fff", width: 42, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                     <ArrowLeft color={color.secundary} />
                 </Button>
@@ -140,7 +142,7 @@ const Podium = ({ rank }) => {
                 <Column style={{ width: 42, height: 42, }} />
             </Row>
             <Row style={{ justifyContent: 'center', alignItems: 'flex-end', marginHorizontal: margin.h, marginTop: 40, }}>
-                <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, paddingHorizontal: 12,}}>
+                <Column style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, paddingHorizontal: 12, }}>
                     <Image contentFit="cover" source={{ uri: rank[1].avatar }} style={{ width: 62, height: 62, marginBottom: 12, borderRadius: 100, marginTop: -40, backgroundColor: color.secundary, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
                     <Title style={{ fontSize: 24, color: color.secundary, }}>#{rank[1]?.posicao}</Title>
                     <Title style={{ fontSize: 14, }}>{rank[1]?.name.slice(0, 10)}</Title>
@@ -148,17 +150,17 @@ const Podium = ({ rank }) => {
                     <SubLabel style={{ color: color.primary, }}>{rank[1]?.TotalPontos}</SubLabel>
                     <Label style={{ color: color.primary, fontSize: 12, marginTop: -8, }}>pontos</Label>
                 </Column>
-                <Column style={{ backgroundColor: '#fff',  paddingHorizontal: 12, justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, marginHorizontal: 12, }}>
-                    <Image contentFit="cover" source={{ uri: rank[0].avatar }} style={{ width: 62, height: 62, marginBottom: 12, backgroundColor: color.primary, borderRadius: 100, marginTop: -40, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
+                <Column style={{ backgroundColor: '#fff', paddingHorizontal: 12, justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, marginHorizontal: 12, }}>
+                    <Image contentFit="cover" source={{ uri: rank[0]?.avatar }} style={{ width: 62, height: 62, marginBottom: 12, backgroundColor: color.primary, borderRadius: 100, marginTop: -40, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
                     <Image contentFit="contain" source={require('@icons/top.png')} style={{ width: 22, height: 30, marginTop: -25, marginBottom: 10, }} />
                     <Title style={{ fontSize: 24, color: color.primary, }}>#{rank[0]?.posicao}</Title>
                     <Title style={{ fontSize: 14, }}>{rank[0]?.name.slice(0, 10)}</Title>
                     <Column style={{ width: '80%', marginVertical: 5, marginHorizontal: 20, height: 1, backgroundColor: color.off, }} />
                     <SubLabel style={{ color: color.primary, }}>{rank[0]?.TotalPontos}</SubLabel>
                     <Label style={{ color: color.primary, fontSize: 12, marginTop: -8, }}>pontos</Label>
-                    <SubLabel style={{ color: color.primary, fontSize: 12, lineHeight: 12,  marginTop: 6, textAlign: 'center', }}>Campeão {'\n'}de doações</SubLabel>
+                    <SubLabel style={{ color: color.primary, fontSize: 12, lineHeight: 12, marginTop: 6, textAlign: 'center', }}>Campeão {'\n'}de doações</SubLabel>
                 </Column>
-                <Column style={{ backgroundColor: '#fff',  paddingHorizontal: 12, justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, }}>
+                <Column style={{ backgroundColor: '#fff', paddingHorizontal: 12, justifyContent: 'center', alignItems: 'center', borderRadius: 12, flexGrow: 1, paddingVertical: 10, }}>
                     <Image contentFit="cover" source={{ uri: rank[2].avatar }} style={{ width: 62, height: 62, marginBottom: 12, backgroundColor: color.blue, borderRadius: 100, marginTop: -40, alignSelf: 'center', borderWidth: 2, borderColor: '#fff', }} />
                     <Title style={{ fontSize: 24, color: color.secundary, }}>#{rank[2]?.posicao}</Title>
                     <Title style={{ fontSize: 14, }}>{rank[2]?.name.slice(0, 10)}</Title>
@@ -174,6 +176,7 @@ const Podium = ({ rank }) => {
 const PodiumMax = ({ rank }) => {
     const { color, margin, } = useContext(ThemeContext);
     const navigation = useNavigation();
+    if (rank == undefined) return <></>
     return (
         <Column style={{ marginHorizontal: margin.h, marginTop: 0, }}>
 
@@ -211,41 +214,34 @@ const PodiumMax = ({ rank }) => {
             </Row>
 
             <Row style={{ marginTop: 16, justifyContent: 'space-between', alignItems: 'center', }}>
-                               
-                                <Column style={{ justifyContent: 'center', alignItems: 'center',  }}>
-                                    <Button onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ backgroundColor: color.secundary, borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
-                                        <MaterialCommunityIcons name="clipboard-edit-outline" size={24} color="#fff" />
-                                    </Button>
-                                    <Label style={{ fontSize: 16, color: color.secundary, fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Nota fiscal</Label>
-                                </Column>
-                                <Column>
-                                    <Button onPress={() => { navigation.navigate('Account') }} style={{ backgroundColor: color.secundary, borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
-                                        <AntDesign name="user" size={24} color="#fff" />
-                                    </Button>
-                                    <Label style={{ fontSize: 16, color: color.secundary, fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Conta</Label>
-                                </Column>
-                                <Column>
-                                    <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ backgroundColor: color.secundary, borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
-                                        <Feather name="help-circle" size={24} color="#fff" />
-                                    </Button>
-                                    <Label style={{ fontSize: 16, color: color.secundary, fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Ajuda</Label>
-                                </Column>
 
-                            </Row>
+                <Column style={{ justifyContent: 'center', alignItems: 'center', }}>
+                    <Button onPress={() => { navigation.navigate('NotafiscalSend') }} style={{ backgroundColor: color.secundary, borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
+                        <MaterialCommunityIcons name="clipboard-edit-outline" size={24} color="#fff" />
+                    </Button>
+                    <Label style={{ fontSize: 16, color: color.secundary, fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Nota fiscal</Label>
+                </Column>
+                <Column>
+                    <Button onPress={() => { navigation.navigate('Account') }} style={{ backgroundColor: color.secundary, borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
+                        <AntDesign name="user" size={24} color="#fff" />
+                    </Button>
+                    <Label style={{ fontSize: 16, color: color.secundary, fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Conta</Label>
+                </Column>
+                <Column>
+                    <Button onPress={() => { navigation.navigate('AccountFAQ') }} style={{ backgroundColor: color.secundary, borderRadius: 100, padding: 16, borderWidth: 1, borderColor: "#ffffff90", }}>
+                        <Feather name="help-circle" size={24} color="#fff" />
+                    </Button>
+                    <Label style={{ fontSize: 16, color: color.secundary, fontFamily: 'Font_Medium', letterSpacing: -1, textAlign: 'center', marginTop: 5, }}>Ajuda</Label>
+                </Column>
+
+            </Row>
         </Column>
     )
 }
 
-
-
-
-/*  <Row style={{ marginHorizontal: margin.h, backgroundColor: '#EDF9FF', padding: 18, borderRadius: 12, marginVertical: 18, justifyContent: 'space-between', alignItems: 'center', }}>
-<Column style={{ justifyContent: 'center', alignItems: 'center', }}>
-<Avatar />
-<SubLabel style={{ fontSize: 14, }}>Você</SubLabel>
-<Title style={{ textAlign: 'center', width: 60, fontSize: 18, }}>Rank</Title>
-<Title style={{ textAlign: 'center', width: 100, fontSize: 18, }}>Pontos</Title>
-</Column>
-
-
-</Row>*/
+const SkeletonBody = () => {
+    return (
+        <Column>
+        </Column>
+    )
+}
