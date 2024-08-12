@@ -250,9 +250,10 @@ const SkeletonBody = () => {
                 <Column style={{width: 12, }} />
                 <Skeleton colorMode='light' width={80} height={120} radius={12} />
             </Row>
-            <Column style={{ paddingHorizontal: margin.h, marginTop: 32, justifyContent: 'center', alignItems: 'center',  }}></Column>
-            <Skeleton colorMode='light' width={120} height={40} radius={8} />
-            <Skeleton colorMode='light' width={120} height={40} radius={8} />
+            <Column style={{ paddingHorizontal: margin.h, marginTop: 32, justifyContent: 'center', alignItems: 'center',  }}>
+                <Skeleton colorMode='light' width={120} height={40} radius={8} />
+            </Column>
+                <Skeleton colorMode='light' width={width} height={40} radius={8} />
         </Column>
     )
 }
