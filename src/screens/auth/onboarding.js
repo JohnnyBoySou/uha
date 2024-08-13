@@ -19,8 +19,8 @@ export default function OnboardingScreen({ navigation, }) {
     const { color, font, margin } = useContext(ThemeContext);
     const scrollViewRef = useRef(null);
     const pages = [1, 2, 3];
-    const scrollX = React.useRef(new Animated.Value(0)).current;
-
+    const scrollX = useRef(new Animated.Value(0)).current;
+    const [verify, setverify] = useState(false);
     const modalEstabelecimento = useRef(null);
     const imgs = ['https://uha.digital/app/onboarding/1.jpg', 'https://uha.digital/app/onboarding/2.jpg', 'https://uha.digital/app/onboarding/3.jpg']
 
@@ -64,7 +64,7 @@ export default function OnboardingScreen({ navigation, }) {
                     showsHorizontalScrollIndicator={false}
                     scrollEventThrottle={64}>
                     <Column style={{ width: width, height: height, }}>
-                        <Image transition={0} contentFit='cover' source={{ uri: imgs[0] }} style={{ height: '60%', width: width, borderRadius: 32, }} />
+                        <Image transition={0} contentFit='cover' source={{ uri: imgs[0] }} style={{ height: '55%', width: width, borderRadius: 32, }} />
                         <Column style={{ height: '40%', }}>
                             <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
                                 <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Apoie ONGs de todo o Brasil.</Title>
@@ -82,7 +82,7 @@ export default function OnboardingScreen({ navigation, }) {
 
                     </Column>
                     <Column style={{ width: width, height: height, }}>
-                        <Image transition={100} contentFit='cover' source={{ uri: imgs[1] }} style={{ height: '60%', width: width, borderRadius: 32, }} />
+                        <Image transition={100} contentFit='cover' source={{ uri: imgs[1] }} style={{ height: '55%', width: width, borderRadius: 32, }} />
                         <Column style={{ height: '40%', }}>
                             <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
                                 <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Acumule pontos toda vez que ajudar.</Title>
@@ -99,7 +99,7 @@ export default function OnboardingScreen({ navigation, }) {
                         </Column>
                     </Column>
                     <Column style={{ width: width, height: height, }}>
-                        <Image transition={200} contentFit='cover' source={{ uri: imgs[2] }} style={{ height: '60%', width: width, borderRadius: 32, }} />
+                        <Image transition={200} contentFit='cover' source={{ uri: imgs[2] }} style={{ height: '55%', width: width, borderRadius: 32, }} />
                         <Column style={{ height: '40%', }}>
                             <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
                                 <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Troque pontos por serviços e produtos.</Title>
@@ -118,29 +118,26 @@ export default function OnboardingScreen({ navigation, }) {
                 </ScrollView>
             </Column>
 
-
             <BottomSheet ref={modalEstabelecimento} snapPoints={[0.1, 400]} keyboardBlurBehavior handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
                 <BottomSheetView style={{ marginHorizontal: margin.h, }}>
                     <Row style={{ justifyContent: 'space-between', alignItems: 'center', zIndex: 99, marginBottom: 20, }}>
                         <Title style={{}}>Como você deseja doar?</Title>
-                        <Button onPress={() => { modalEstabelecimento.current.close() }} style={{ width: 36, backgroundColor: color.secundary, height: 36, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        <Button onPress={() => { modalEstabelecimento.current.close(); setverify(false) }} style={{ width: 36, backgroundColor: color.secundary, height: 36, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                             <X size={18} color="#fff" />
                         </Button>
                     </Row>
-                    <SelectType />
+                    <SelectType verify={verify} setverify={setverify}/>
                 </BottomSheetView>
             </BottomSheet>
         </Main >
     )
 }
 
-const SelectType = () => {
+const SelectType = ({verify, setverify}) => {
     const { color, font, margin } = useContext(ThemeContext);
     const navigation = useNavigation()
-    const [verify, setverify] = useState(false);
     const [email, setemail] = useState();
     const [loading, setloading] = useState(false);
-
     const [focusEmail, setfocusEmail] = useState();
 
     const [success, setsuccess] = useState();
@@ -154,7 +151,6 @@ const SelectType = () => {
             const res = await verifyEstabelecimento(email)
             setsuccess(res?.message)
             const org = await createOrigin(email)
-            console.log(org)
             setTimeout(() => {
                 navigation.push('NotafiscalSendAnonimo', { origin: email, })
             }, 1000);

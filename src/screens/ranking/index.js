@@ -30,7 +30,8 @@ export default function RankingScreen() {
                 setposition(res.minhaposicaorealativa);
             } catch (error) {
                 console.log(error)
-            } finally {// setloading(false) 
+            } finally {
+                setloading(false) 
             }
         }
         fetchData();
@@ -243,7 +244,7 @@ const SkeletonBody = () => {
     const { color, margin } = useContext(ThemeContext);
     return (
         <Column>
-            <Row style={{ backgroundColor: color.primary, borderBottomLeftRadius: 32, paddingTop: 80, paddingBottom: 40, borderBottomRightRadius: 32, paddingHorizontal: margin.h, justifyContent: 'center', alignItems: 'flex-end',  }}>
+            <Row style={{ backgroundColor: color.primary, borderBottomLeftRadius: 32, paddingTop: 120, paddingBottom: 40, borderBottomRightRadius: 32, paddingHorizontal: margin.h, justifyContent: 'center', alignItems: 'flex-end',  }}>
                 <Skeleton colorMode='light' width={80} height={120} radius={12} />
                 <Column style={{width: 12, }} />
                 <Skeleton colorMode='light' width={80} height={170} radius={12} />
@@ -253,7 +254,18 @@ const SkeletonBody = () => {
             <Column style={{ paddingHorizontal: margin.h, marginTop: 32, justifyContent: 'center', alignItems: 'center',  }}>
                 <Skeleton colorMode='light' width={120} height={40} radius={8} />
             </Column>
-                <Skeleton colorMode='light' width={width} height={40} radius={8} />
+            <Column style={{ paddingHorizontal: margin.h, marginTop: 16, justifyContent: 'center', alignItems: 'center',  }}>
+                <Skeleton colorMode='light' width={320} height={60} radius={8} />
+                <Column style={{ height: 22, }} />
+                <Skeleton colorMode='light' width={320} height={60} radius={8} />
+                <Column style={{ height: 22, }} />
+                <Skeleton colorMode='light' width={320} height={60} radius={8} />
+                <Column style={{ height: 22, }} />
+                <Skeleton colorMode='light' width={320} height={60} radius={8} />
+                <Column style={{ height: 22, }} />
+                <Skeleton colorMode='light' width={320} height={60} radius={8} />
+            </Column>
         </Column>
-    )
+)
 }
+
