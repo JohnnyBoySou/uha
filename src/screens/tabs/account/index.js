@@ -32,7 +32,6 @@ export default function AccountScreen({ navigation, }) {
         fecthData();
     }, [isFocused]);
 
-    const [dark, setdark] = useState(false);
 
     return (
         <Main style={{ backgroundColor: color.background, }}>
@@ -185,14 +184,6 @@ const Configs = [
         check: null,
         screen: 'About',
         img: require('@icons/ic3.png'),
-    },
-    {
-        title: 'Enviar dúvida',
-        description: 'Registre sua pergunta',
-        icon: 'log-out',
-        check: null,
-        screen: 'Share',
-        img: require('@icons/ic7.png'),
     },
     {
         title: 'Indique e ganhe',

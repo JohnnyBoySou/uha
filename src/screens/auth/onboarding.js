@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Animated, ScrollView, Dimensions, Image, ActivityIndicator, TextInput } from 'react-native';
+import { Animated, ScrollView, Dimensions, Image, ActivityIndicator, TextInput, Platform } from 'react-native';
 import { Main, Column, Row, Title, ButtonPR, LabelSE, LabelLI, Button, Label, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 const { height, width } = Dimensions.get('window');
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
-import BottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetView, } from '@gorhom/bottom-sheet';
 import { StatusBar } from 'expo-status-bar'
 import { Mail, SquareUserRound, Store, X } from 'lucide-react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -29,6 +29,7 @@ export default function OnboardingScreen({ navigation, }) {
         modalEstabelecimento.current?.close()
     }, [isFocused])
 
+    const imgHeight = Platform.OS === 'ios' ? 300 : '55%';
     return (
         <Main style={{ backgroundColor: '#fff', }}>
             <StatusBar style="dark" translucent animated={true} />
@@ -64,7 +65,7 @@ export default function OnboardingScreen({ navigation, }) {
                     showsHorizontalScrollIndicator={false}
                     scrollEventThrottle={64}>
                     <Column style={{ width: width, height: height, }}>
-                        <Image transition={0} contentFit='cover' source={{ uri: imgs[0] }} style={{ height: '55%', width: width, borderRadius: 32, }} />
+                        <Image transition={0} contentFit='cover' source={{ uri: imgs[0] }} style={{ height: imgHeight, width: width, borderRadius: 32, }} />
                         <Column style={{ height: '40%', }}>
                             <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
                                 <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Apoie ONGs de todo o Brasil.</Title>
@@ -82,7 +83,7 @@ export default function OnboardingScreen({ navigation, }) {
 
                     </Column>
                     <Column style={{ width: width, height: height, }}>
-                        <Image transition={100} contentFit='cover' source={{ uri: imgs[1] }} style={{ height: '55%', width: width, borderRadius: 32, }} />
+                        <Image transition={100} contentFit='cover' source={{ uri: imgs[1] }} style={{ height: imgHeight, width: width, borderRadius: 32, }} />
                         <Column style={{ height: '40%', }}>
                             <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
                                 <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Acumule pontos toda vez que ajudar.</Title>
@@ -99,7 +100,7 @@ export default function OnboardingScreen({ navigation, }) {
                         </Column>
                     </Column>
                     <Column style={{ width: width, height: height, }}>
-                        <Image transition={200} contentFit='cover' source={{ uri: imgs[2] }} style={{ height: '55%', width: width, borderRadius: 32, }} />
+                        <Image transition={200} contentFit='cover' source={{ uri: imgs[2] }} style={{ height: imgHeight, width: width, borderRadius: 32, }} />
                         <Column style={{ height: '40%', }}>
                             <Column style={{ justifyContent: 'center', marginTop: 20, marginHorizontal: 28, }}>
                                 <Title style={{ fontSize: 32, color: color.secundary, textAlign: 'center', fontFamily: 'Font_Bold', lineHeight: 32, letterSpacing: -1, }}>Troque pontos por serviços e produtos.</Title>
@@ -126,14 +127,14 @@ export default function OnboardingScreen({ navigation, }) {
                             <X size={18} color="#fff" />
                         </Button>
                     </Row>
-                    <SelectType verify={verify} setverify={setverify}/>
+                    <SelectType verify={verify} setverify={setverify} />
                 </BottomSheetView>
             </BottomSheet>
         </Main >
     )
 }
 
-const SelectType = ({verify, setverify}) => {
+const SelectType = ({ verify, setverify }) => {
     const { color, font, margin } = useContext(ThemeContext);
     const navigation = useNavigation()
     const [email, setemail] = useState();
