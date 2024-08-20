@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { TouchableRipple } from 'react-native-paper';
-
+import { Platform } from 'react-native';
 
 export const Main = styled.SafeAreaView`
   flex: 1;
@@ -8,7 +8,7 @@ export const Main = styled.SafeAreaView`
 `
 
 export const Scroll = styled.ScrollView`
-  padding-top: 50px;
+  padding-top: ${Platform.OS === 'ios' ? 20 : 50}px;
   flex: 1;
 `
 
