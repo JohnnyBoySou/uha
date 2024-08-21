@@ -48,10 +48,9 @@ export default function AuthLoginScreen({ navigation, }) {
             </Row>
 
             <Column style={{ marginHorizontal: margin.h, paddingVertical: 22, }}>
-                <Title style={{ fontSize: 28, color: "#fff", lineHeight: 52, }}>{message?.title}</Title>
-                <Label style={{ color: "#fff", }}>{message?.message}</Label>
+                <Title style={{ fontSize: 28, color: "#fff", lineHeight: 52, }}>Bem-vindo!</Title>
+                <Label style={{ color: "#fff", }}>Graças a pessoas generosas como você, levamos conforto e segurança a quem mais precisa.</Label>
             </Column>
-
 
 
             <ScrollView style={{ backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingHorizontal: margin.h, paddingVertical: 20, flex: 1, }}>

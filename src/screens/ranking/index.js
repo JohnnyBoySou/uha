@@ -4,7 +4,7 @@ import { Main, Scroll, Column, Label, Title, Row, Button, SubLabel } from '@them
 import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft, UserRoundSearch } from 'lucide-react-native';
 import { MotiImage } from 'moti';
-import BottomSheet, { } from '@gorhom/bottom-sheet'
+import BottomSheet from '@gorhom/bottom-sheet'
 import { StatusBar } from 'expo-status-bar';
 import { rankList } from '@api/request/rank/rank';
 import TopSheet from '@components/topsheet';
@@ -45,16 +45,11 @@ export default function RankingScreen() {
             <Scroll style={{ marginTop: -20, }} >
                 <TopSheet valueMin={380} valueNormal={380} valueMax={600}
                     min={<Podium rank={rank} />} normal={<Podium rank={rank} />} max={<PodiumMax rank={rank} />} />
-
                 <Column style={{ height: 380, }} />
-
                 <TopRank rank={rank} />
-
                 <Column style={{ height: 100, }} />
-
             </Scroll>
-
-            <BottomSheet snapPoints={[0.2, 300]} ref={modalUser} backgroundStyle={{ backgroundColor: '#EDF9FF', }} handleIndicatorStyle={{ height: 8, width: 80, borderRadius: 100, backgroundColor: "#00A3Ff50" }} >
+            <BottomSheet snapPoints={[0.1, 300]} ref={modalUser} backgroundStyle={{ backgroundColor: '#EDF9FF', }} handleIndicatorStyle={{ height: 8, width: 80, borderRadius: 100, backgroundColor: "#00A3Ff50" }} >
                 <Column style={{ paddingHorizontal: margin.h, }}>
                     <Title style={{ marginBottom: 18, marginTop: 12, color: "#00A3FF" }}>Minha posição</Title>
                     <MyRankItem item={position} />
@@ -67,12 +62,11 @@ export default function RankingScreen() {
 
 const RankItem = ({ item }) => {
     const { color } = useContext(ThemeContext);
-    const { name, TotalPontos, posicao } = item
     return (
         <Row style={{ marginBottom: 10, paddingBottom: 10, borderBottomWidth: 0.5, borderBottomColor: color.off, }}>
-            <Title style={{ textAlign: 'center', width: 60, fontSize: 20, color: item?.posicao % 2 ? color.primary + 80 : color.primary }}>{posicao}</Title>
-            <Title style={{ width: 150, marginLeft: 24, fontSize: 14, fontFamily: 'Font_Book', }}>{name}</Title>
-            <Title style={{ textAlign: 'center', width: 100, fontSize: 16, }}>{TotalPontos}</Title>
+            <Title style={{ textAlign: 'center', width: 60, fontSize: 20, color: item?.posicao % 2 ? color.primary + 80 : color.primary }}>{item?.posicao}</Title>
+            <Title style={{ width: 150, marginLeft: 24, fontSize: 14, fontFamily: 'Font_Book', }}>{item?.name}</Title>
+            <Title style={{ textAlign: 'center', width: 100, fontSize: 16, }}>{item?.TotalPontos}</Title>
         </Row>
     )
 }
@@ -84,6 +78,7 @@ const MyRankItem = ({ item }) => {
     const minha = item?.minhaposicao
     const depois = item?.posicaodepois
 
+    if(item === undefined) return null
     return (
         <Column>
             {depois?.name &&
@@ -108,11 +103,10 @@ const MyRankItem = ({ item }) => {
 }
 
 const TopRank = ({ rank }) => {
-    const { margin } = useContext(ThemeContext);
     return (
         <Column>
             <Title style={{ textAlign: 'center', marginTop: 28, }}>Top 10</Title>
-            <Row style={{ marginHorizontal: margin.h, marginVertical: 12, }}>
+            <Row style={{ marginHorizontal: 28, marginVertical: 12, }}>
                 <Title style={{ textAlign: 'center', width: 60, fontSize: 18, }}>Rank</Title>
                 <Title style={{ width: 150, marginLeft: 24, fontSize: 18, }}>Usuário</Title>
                 <Title style={{ textAlign: 'center', width: 100, fontSize: 18, }}>Pontos</Title>
@@ -121,7 +115,7 @@ const TopRank = ({ rank }) => {
                 data={rank}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => <RankItem item={item} />}
-                style={{ marginHorizontal: margin.h, }}
+                style={{ marginHorizontal: 28, }}
             />
         </Column>
     )
