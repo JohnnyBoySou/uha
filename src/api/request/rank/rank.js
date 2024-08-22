@@ -6,7 +6,7 @@ export const rankList = async () => {
     const BASE_URL = await getBaseURL();
     const token = await getToken();
     try {
-        const response = await axios.get(`${BASE_URL}/usuarios/rank `, {
+        const response = await axios.get(`${BASE_URL}/usuarios/rank`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }

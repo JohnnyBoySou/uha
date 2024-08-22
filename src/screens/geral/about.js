@@ -20,7 +20,6 @@ export default function AboutScreen({ navigation, }) {
                     <Title style={{ fontSize: 20, lineHeight: 20,}}>Nossa Missão</Title>
                     <Label style={{ fontSize: 14, lineHeight: 16, marginVertical: 6, }}>Nascemos da urgência e da necessidade de ajudar aqueles cuja voz isolada não é ouvida. Somos um grito de guerra que enfrenta o descaso e ressoa nos corações generosos e empáticos</Label>
                    
-                   
                     <Column style={{ backgroundColor: color.primary, marginVertical: 20, borderRadius: 16, flexGrow: 1, height: 140, justifyContent: 'center', alignItems: 'center',  }}>
                         <Column style={{ width: 300, height: 300, backgroundColor: '#FFFFFF30', borderRadius: 300, justifyContent: 'center', alignItems: 'center', }}>
                         <Column style={{ width: 200, height: 200, backgroundColor: '#FFFFFF30', borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
@@ -76,13 +75,11 @@ export default function AboutScreen({ navigation, }) {
                         </Column>
                     </Column>
                    
-                    <Title style={{ fontSize: 20, lineHeight: 20,}}>Nossa Compromisso</Title>
+                    <Title style={{ fontSize: 20, lineHeight: 20,}}>Nosso Compromisso</Title>
                     <Label style={{ fontSize: 14, lineHeight: 16, marginVertical: 6, }}>Ajudar quem precisa não precisa ser chato, monótono ou público. Com nossa plataforma, você contribui do seu jeito, no seu tempo e da forma que mais lhe agrada.</Label>
-                   
                    
                     <Title style={{ fontSize: 20, lineHeight: 20,  marginTop: 20,}}>Nossa Gratidão</Title>
                     <Label style={{ fontSize: 14, lineHeight: 16, marginVertical: 6, }}>Graças a pessoas generosas como você, levamos conforto e segurança a quem precisa, estimulando uma corrente do bem. Aproveite para colecionar bons momentos com nossos parceiros e sinta-se abraçado por nós e por todos que você ajudou.</Label>
-                   
                    
                     <Title style={{ fontSize: 20, lineHeight: 20, marginTop: 20,}}>Nossa Esperança</Title>
                     <Label style={{ fontSize: 14, lineHeight: 16, marginVertical: 6, }}>Você pode mais e, juntos, podemos abraçar o Brasil. ONGs, juntem-se a nós para sonhar e realizar juntos. Que "Uha!" seja seu grito de guerra e socorro final. Vamos ecoar gratidão e sorrisos a partir de agora.</Label>
