@@ -3,13 +3,13 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 
 import * as Haptics from 'expo-haptics';
 import { TextInput, Dimensions, FlatList, Keyboard } from 'react-native';
-import { Main, Scroll, Column, Label, Title, Row, Button, ButtonPR, LabelPR, } from '@theme/global';
+import { Main, Scroll, Column, Label, Title, Row, Button, ButtonPR, LabelPR,  } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { AnimatePresence, MotiView, } from 'moti';
 
 import Avatar from '@components/avatar';
 import Header from '@components/header';
-import BottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetView, BottomSheetScrollView, } from '@gorhom/bottom-sheet';
 import Octicons from '@expo/vector-icons/Octicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { NotepadText, X, } from 'lucide-react-native';
@@ -28,8 +28,10 @@ export default function NotafiscalSendScreen({ navigation, route }) {
 
     const type = route.params?.type;
     const [notas, setNotas] = useState([]);
+
     const modalDigitNota = useRef(null);
     const modalListNotas = useRef(null);
+
     const [focusInput, setfocusInput] = useState(false);
 
     const isFocused = useIsFocused();
@@ -99,7 +101,7 @@ export default function NotafiscalSendScreen({ navigation, route }) {
 
             <CameraView
                 barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
-                style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: width, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
+                style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, position: 'absolute', top: 0, zIndex: -2, backgroundColor: '#f7f7f7' }}
                 facing="back"
                 onBarcodeScanned={(data) => {
                     if (value === data.data) return;
@@ -261,3 +263,5 @@ export default function NotafiscalSendScreen({ navigation, route }) {
         </Main>
     )
 }
+
+
