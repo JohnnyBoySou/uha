@@ -14,7 +14,7 @@ import Avatar from '@components/avatar';
 import TopSheet from '@components/topsheet';
 import { StatusBar } from 'expo-status-bar';
 import { Skeleton } from 'moti/skeleton';
-import BottomSheet, { BottomSheetScrollView, } from '@gorhom/bottom-sheet';
+import BottomSheet  from '@gorhom/bottom-sheet';
 import ExtractSingleScreen from './single';
 
 
@@ -383,12 +383,12 @@ export default function ExtractScreen({ navigation, route }) {
                 />}
 
             <BottomSheet onChange={handleAnimate} ref={modalSelect} index={0} snapPoints={[0.1, 0.98 * height]} containerStyle={{ zIndex: 99, }} handleIndicatorStyle={{ backgroundColor: "#d7d7d7", width: 80, height: 8, }}>
-                <BottomSheetScrollView showsVerticalScrollIndicator={false} style={{ marginHorizontal: margin.h, }}>
+                <ScrollView showsVerticalScrollIndicator={false} style={{ marginHorizontal: margin.h, }}>
                     <Button onPress={() => { modalSelect.current.close() }} style={{ width: 42, position: 'absolute', zIndex: 99, top: 0, right: 0, backgroundColor: color.secundary, height: 42, borderRadius: 100, justifyContent: 'center', alignItems: 'center', }}>
                         <X size={24} color="#fff" />
                     </Button>
                     {isOpen && <ExtractSingleScreen id={select?.id} type={select?.type} />}
-                </BottomSheetScrollView>
+                </ScrollView>
             </BottomSheet>
         </Main>
     )

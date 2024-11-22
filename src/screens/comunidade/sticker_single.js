@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { Rotate3D, Lock, PartyPopper } from 'lucide-react-native';
@@ -13,7 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Image } from 'expo-image'
 import { MotiView } from 'moti';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { getSingleSticker } from '@api/request/user/stickers';
 import { Skeleton } from 'moti/skeleton';
 
@@ -144,12 +144,12 @@ export default function StickerSingleScreen({ navigation, route }) {
                 <Column style={{ height: 80, }} />
             </Scroll>
             <BottomSheet snapPoints={[0.4, 220]} ref={modalSingle} handleIndicatorStyle={{ backgroundColor: "#00000030", height: 8, width: 70, }}>
-                <BottomSheetScrollView>
+                <ScrollView>
                     {selectSticker && <CardStiker item={selectSticker} />}
                     <Button onPress={() => { modalSingle.current?.close() }} style={{ borderRadius: 100, paddingVertical:8, paddingHorizontal: 16, marginTop: 15, backgroundColor: color.primary+20, alignSelf: 'center', }} >
                         <Label style={{ color: color.primary, fontFamily: 'Font_Bold', fontSize: 15, lineHeight: 16, }}>Fechar</Label>
                     </Button>
-                </BottomSheetScrollView>
+                </ScrollView>
             </BottomSheet>
         </Main>
     )

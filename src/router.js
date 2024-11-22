@@ -44,11 +44,13 @@ import NotafiscalSuccessScreen from '@screens/tabs/notafiscal/success';
 import NotafiscalErrorScreen from '@screens/tabs/notafiscal/error';
 import NotafiscalONGS from '@screens/tabs/notafiscal/ongs';
 import NotafiscalSelectScreen from '@screens/tabs/notafiscal/select';
+import NotafiscalVerifyScreen from '@screens/tabs/notafiscal/verify';
 
 import NotafiscalErrorAnonimoScreen from '@screens/tabs/notafiscal/anonimo/error_anonimo';
 import NotafiscalSendAnonimoScreen from '@screens/tabs/notafiscal/anonimo/send_anonimo';
 import NotafiscalONGSAnonimoScreen from '@screens/tabs/notafiscal/anonimo/ongs_anonimo';
 import NotafiscalSuccessAnonimoScreen from '@screens/tabs/notafiscal/anonimo/success_anonimo';
+import NotafiscalVerifyAnonimoScreen from './screens/tabs/notafiscal/anonimo/verify_anonimo';
 
 import ExtractScreen from '@screens/tabs/extract';
 import ExtractSingleScreen from '@screens/tabs/extract/single';
@@ -131,7 +133,7 @@ export default function Router() {
         routeNameRef.current = currentRouteName;
       }}
     >
-      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Async'>
+      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Onboarding'>
 
         <Stack.Screen name="Async" component={AsyncStaticScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
@@ -170,9 +172,18 @@ export default function Router() {
 
         <Stack.Screen name="PayBoleto" component={PayBoletoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
 
-        <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
-        <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+        <Stack.Group>
+          <Stack.Screen name="Notafiscal" component={NotafiscalScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+          <Stack.Screen name="NotafiscalSend" component={NotafiscalSendScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+          <Stack.Screen name="NotafiscalVerify" component={NotafiscalVerifyScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+          <Stack.Screen name="NotafiscalSelect" component={NotafiscalSelectScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+          <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+          <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+          <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+        </Stack.Group>
 
+
+        <Stack.Screen name="NotafiscalVerifyAnonimo" component={NotafiscalVerifyAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="NotafiscalSendAnonimo" component={NotafiscalSendAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="NotafiscalONGSAnonimo" component={NotafiscalONGSAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
 
@@ -180,10 +191,6 @@ export default function Router() {
         <Stack.Screen name="NotafiscalErrorAnonimo" component={NotafiscalErrorAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
 
 
-        <Stack.Screen name="NotafiscalSelect" component={NotafiscalSelectScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
-        <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
-        <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
-        <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{ ...TransitionPresets.SlideFromRightIOS }} />
 
         <Stack.Screen name="Extract" component={ExtractScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="ExtractSingle" component={ExtractSingleScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />

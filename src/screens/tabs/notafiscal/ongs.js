@@ -6,8 +6,9 @@ import Header from '@components/header';
 import { StatusBar } from 'expo-status-bar';
 import { getONGs } from '@api/request/ongs/ongs';
 import { sendNotafiscal } from '@api/request/notafiscal/nota';
-import CardOngs from '@components/cardOngs';
 import { Skeleton } from 'moti/skeleton';
+
+import CardOngs from '@components/cardOngs';
 
 const NotafiscalONGS = ({ navigation, route, }) => {
 

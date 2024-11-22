@@ -1,14 +1,26 @@
-import React, { useContext, } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, ButtonOut, ButtonPR, LabelPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft } from 'lucide-react-native';
 
 
 import SucessAnim from '@anim/sucess';
+import { excludeAllNotas } from './hook';
 
 export default function NotafiscalSuccessScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
     const status = route.params?.status;
+    const clearNotas = async () => {
+        try {
+            await excludeAllNotas();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        clearNotas();
+    }, [])
+
     return (
         <Main style={{ backgroundColor: "#fff",}}>
             <Scroll>

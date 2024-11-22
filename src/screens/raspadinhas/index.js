@@ -8,7 +8,7 @@ import { CircleCheck, CircleX, AlarmClock, Info, Trophy, CheckCheck, ShoppingCar
 import Feather from '@expo/vector-icons/Feather';
 import raspadinhas from '@data/raspadinhas/raspadinhas'
 import { MotiView } from 'moti';
-import BottomSheet, {  BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import RaspadinhasShopScreen from './shop';
 
 export default function RaspadinhasScreen({ navigation, }) {

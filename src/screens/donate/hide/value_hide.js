@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 import { Main, Scroll, Column, Label, Title, Row, Button, LabelLI, ButtonOut } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { CircleCheck, ArrowLeft, Info, Clipboard as Clip, CheckCircle, Edit, CircleDashed } from 'lucide-react-native';
@@ -7,7 +7,7 @@ import CheckBox from '@components/checkbox';
 import { MotiImage, MotiView } from 'moti';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 import { StatusBar } from 'expo-status-bar'
 import QRCode from 'react-native-qrcode-svg';
@@ -143,9 +143,9 @@ export default function DonateValueHideScreen({ navigation, route }) {
             </Scroll>
 
             <BottomSheet ref={bottomONGS} snapPoints={[0.4, 800]} backgroundStyle={{backgroundColor: '#f7f7f7'}}>
-                <BottomSheetScrollView>
+                <ScrollView>
                     <DonateONGS handleOng={handleOng} value={value} />
-                </BottomSheetScrollView>
+                </ScrollView>
             </BottomSheet>
 
         </Main>

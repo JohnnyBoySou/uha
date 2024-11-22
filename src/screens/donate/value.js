@@ -2,12 +2,12 @@ import React, { useContext, useState, useRef } from 'react';
 import { Main, Scroll, Column, Label, Title, Row, Button, LabelPR, ButtonPR } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft, Edit, CreditCard, ScrollText } from 'lucide-react-native';
-import { Dimensions } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import CheckBox from '@components/checkbox';
 import Avatar from '@components/avatar';
 import { MotiView } from 'moti';
 import { Snackbar } from 'react-native-paper';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import DonateONGS from './ongs';
 import { StatusBar } from 'expo-status-bar';
 import { Image } from 'expo-image'
@@ -101,27 +101,27 @@ export default function DonateValueScreen({ navigation, route }) {
             </Scroll>
 
             <BottomSheet ref={modalONGs} snapPoints={[0.4, 0.99 * height]} backgroundStyle={{ backgroundColor: '#fff', }} handleIndicatorStyle={{ backgroundColor: "#30303030", width: 80, height: 10, borderRadius: 100, }}>
-                <BottomSheetScrollView>
+                <ScrollView>
                     <DonateONGS handleOng={handleOng} value={valor} />
-                </BottomSheetScrollView>
+                </ScrollView>
             </BottomSheet>
 
             <BottomSheet ref={modalPix} snapPoints={[0.4, 0.99 * height]} backgroundStyle={{ backgroundColor: '#fff', }} handleIndicatorStyle={{ backgroundColor: "#30303030", width: 80, height: 10, borderRadius: 100, }}>
-                <BottomSheetScrollView>
+                <ScrollView>
                    {type == 'Pix' && <PaymentPix item={item} navigation={navigation} modalPix={modalPix} />}
-                </BottomSheetScrollView>
+                </ScrollView>
             </BottomSheet>
 
             <BottomSheet ref={modalCredit} keyboardBehavior={'fillParent'} snapPoints={[0.4, 0.99 * height]} backgroundStyle={{ backgroundColor: '#fff', }} handleIndicatorStyle={{ backgroundColor: "#30303030", width: 80, height: 10, borderRadius: 100, }}>
-                <BottomSheetScrollView>
+                <ScrollView>
                 {type == 'Credito' &&  <PaymentCredito item={item} navigation={navigation} modalCredit={modalCredit} />}
-                </BottomSheetScrollView>
+                </ScrollView>
             </BottomSheet>
 
             <BottomSheet ref={modalBoleto} keyboardBehavior={'fillParent'} snapPoints={[0.4, 0.99 * height]} backgroundStyle={{ backgroundColor: '#fff', }} handleIndicatorStyle={{ backgroundColor: "#30303030", width: 80, height: 10, borderRadius: 100, }}>
-                <BottomSheetScrollView>
+                <ScrollView>
                 {type == 'Boleto' &&  <PaymentBoleto item={item} navigation={navigation} modalBoleto={modalBoleto} />}
-                </BottomSheetScrollView>
+                </ScrollView>
             </BottomSheet>
 
             <Snackbar style={{ backgroundColor: "#fff", marginVertical: 12, marginHorizontal: margin.h, }} visible={visible} onDismiss={() => setVisible(false)} action={{ label: 'Pronto', onPress: () => setVisible(false), }}><Label>Copiado para a área de transferência</Label></Snackbar>

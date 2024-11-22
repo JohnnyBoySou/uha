@@ -1,4 +1,4 @@
-import React, { useContext, } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Main, Column, Label, Title, Row, Button, ButtonOut, Scroll } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { ArrowLeft, Info } from 'lucide-react-native';
@@ -6,11 +6,22 @@ import { ArrowLeft, Info } from 'lucide-react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MotiView } from 'moti';
 
+import { excludeAllNotas } from './hook';
 
 export default function NotafiscalErrorScreen({ navigation, route }) {
     const { color, font, margin } = useContext(ThemeContext);
-    const status  = route.params?.status
-
+    const status = route.params?.status
+    
+    const clearNotas = async () => {
+        try {
+            await excludeAllNotas();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        clearNotas();
+    }, [])
     return (
         <Main style={{ backgroundColor: "#fff", justifyContent: 'center',  }}>
 

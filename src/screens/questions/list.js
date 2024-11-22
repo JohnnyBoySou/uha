@@ -7,7 +7,7 @@ import { AnimatePresence, MotiView, useAnimationState } from 'moti';
 import { useNavigation } from '@react-navigation/native';
 
 import Header from '@components/header';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet  from '@gorhom/bottom-sheet';
 
 const { height, width } = Dimensions.get('window');
 

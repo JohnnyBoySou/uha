@@ -7,7 +7,7 @@ import { Eye, EyeOff, ArrowLeft, Lock, Mail, MapPinned, Phone, User, BookUser, G
 import CheckBox from '@components/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import Octicons from '@expo/vector-icons/Octicons';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import BottomSheet  from '@gorhom/bottom-sheet'
 import { createPreferences } from '@api/user/preferences';
 import { StatusBar } from 'expo-status-bar';
 import { getUser, registerUser } from '@api/request/user/user';
