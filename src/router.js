@@ -2,8 +2,7 @@ import React from 'react';
 import { createStackNavigator, TransitionPresets, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute, NavigationContainer, useRoute, useLinking } from '@react-navigation/native';
-import analytics from "@react-native-firebase/analytics";
-
+//import analytics from "@react-native-firebase/analytics";
 import OnboardingScreen from '@screens/auth/onboarding';
 import AuthLoginScreen from '@screens/auth/login';
 import AsyncStaticScreen from '@screens/auth/async';
@@ -45,12 +44,14 @@ import NotafiscalErrorScreen from '@screens/tabs/notafiscal/error';
 import NotafiscalONGS from '@screens/tabs/notafiscal/ongs';
 import NotafiscalSelectScreen from '@screens/tabs/notafiscal/select';
 import NotafiscalVerifyScreen from '@screens/tabs/notafiscal/verify';
+import NotafiscalListScreen from '@screens/tabs/notafiscal/list';
 
 import NotafiscalErrorAnonimoScreen from '@screens/tabs/notafiscal/anonimo/error_anonimo';
 import NotafiscalSendAnonimoScreen from '@screens/tabs/notafiscal/anonimo/send_anonimo';
 import NotafiscalONGSAnonimoScreen from '@screens/tabs/notafiscal/anonimo/ongs_anonimo';
 import NotafiscalSuccessAnonimoScreen from '@screens/tabs/notafiscal/anonimo/success_anonimo';
 import NotafiscalVerifyAnonimoScreen from './screens/tabs/notafiscal/anonimo/verify_anonimo';
+import NotafiscalListAnonimoScreen from './screens/tabs/notafiscal/anonimo/list_anonimo';
 
 import ExtractScreen from '@screens/tabs/extract';
 import ExtractSingleScreen from '@screens/tabs/extract/single';
@@ -111,12 +112,13 @@ const linking = {
 
 
 export default function Router() {
-  const routeNameRef = React.useRef();
-  const navigationRef = React.useRef();
+  //const routeNameRef = React.useRef();
+  //const navigationRef = React.useRef();
 
   return (
     <NavigationContainer linking={linking}
-      ref={navigationRef}
+    /*
+    ref={navigationRef}
       onReady={() => {
         routeNameRef.current = navigationRef.current.getCurrentRoute().name;
       }}
@@ -131,9 +133,9 @@ export default function Router() {
           });
         }
         routeNameRef.current = currentRouteName;
-      }}
+      }}*/
     >
-      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Onboarding'>
+      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='NotafiscalSend'>
 
         <Stack.Screen name="Async" component={AsyncStaticScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
@@ -180,11 +182,13 @@ export default function Router() {
           <Stack.Screen name="NotafiscalSuccess" component={NotafiscalSuccessScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
           <Stack.Screen name="NotafiscalError" component={NotafiscalErrorScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
           <Stack.Screen name="NotafiscalONGS" component={NotafiscalONGS} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+          <Stack.Screen name="NotafiscalList" component={NotafiscalListScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         </Stack.Group>
 
 
         <Stack.Screen name="NotafiscalVerifyAnonimo" component={NotafiscalVerifyAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="NotafiscalSendAnonimo" component={NotafiscalSendAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+        <Stack.Screen name="NotafiscalListAnonimo" component={NotafiscalListAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="NotafiscalONGSAnonimo" component={NotafiscalONGSAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
 
         <Stack.Screen name="NotafiscalSuccessAnonimo" component={NotafiscalSuccessAnonimoScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />

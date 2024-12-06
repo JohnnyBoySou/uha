@@ -20,12 +20,12 @@ react {
     bundleCommand = "export:embed"
 
     /* Folders */
-    //   The root of your project, i.e. where "package.json" lives. Default is '..'
-    // root = file("../")
-    //   The folder where the react-native NPM package is. Default is ../node_modules/react-native
-    // reactNativeDir = file("../node_modules/react-native")
-    //   The folder where the react-native Codegen package is. Default is ../node_modules/@react-native/codegen
-    // codegenDir = file("../node_modules/@react-native/codegen")
+     //   The root of your project, i.e. where "package.json" lives. Default is '../..'
+    // root = file("../../")
+    //   The folder where the react-native NPM package is. Default is ../../node_modules/react-native
+    // reactNativeDir = file("../../node_modules/react-native")
+    //   The folder where the react-native Codegen package is. Default is ../../node_modules/@react-native/codegen
+    // codegenDir = file("../../node_modules/@react-native/codegen")
 
     /* Variants */
     //   The list of variants to that are debuggable. For those we're going to
@@ -57,6 +57,9 @@ react {
     //
     //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
+
+    /* Autolinking */
+    autolinkLibrariesWithApp()
 }
 
 /**
@@ -88,8 +91,8 @@ android {
         applicationId 'com.engd.uha'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "15.0.0"
+        versionCode 18
+        versionName "18.0.0"
     }
     signingConfigs {
         debug {
@@ -104,7 +107,7 @@ android {
             keyAlias '84224b643f525922f5850c57fd84afb6'
             keyPassword '55dc968ea72e8c571853ddae3a2a9949'
     }
-        }
+    }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -124,7 +127,11 @@ android {
             useLegacyPackaging (findProperty('expo.useLegacyPackaging')?.toBoolean() ?: false)
         }
     }
+    androidResources {
+        ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
+    }
 }
+
 // Apply static values from `gradle.properties` to the `android.packagingOptions`
 // Accepts values in comma delimited lists, example:
 // android.packagingOptions.pickFirsts=/LICENSE,**/picasa.ini
@@ -173,9 +180,6 @@ dependencies {
         implementation jscFlavor
     }
 }
-
-apply from: new File(["node", "--print", "require.resolve('@react-native-community/cli-platform-android/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim(), "../native_modules.gradle");
-applyNativeModulesAppBuildGradle(project)
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'

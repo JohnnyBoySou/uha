@@ -13,8 +13,9 @@ import { OneSignal } from 'react-native-onesignal';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { initialize } from 'react-native-clarity';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '@hooks/firebase';
+
+//import { initializeApp } from 'firebase/app';
+//import { firebaseConfig } from '@hooks/firebase';
 
 export default function App() {
 
@@ -28,7 +29,7 @@ export default function App() {
       if (key != null) {
         OneSignal.initialize(key);
         initialize(keyClarify);
-        initializeApp(firebaseConfig);
+  //      initializeApp(firebaseConfig);
       }
       let { status } = await Notifications.getPermissionsAsync();
       if (status !== 'granted') {
@@ -55,7 +56,7 @@ export default function App() {
         setAppIsReady(true);
       } catch (e) {
         console.warn(e);
-      }
+      }n
     }
 
     loadResourcesAndDataAsync();

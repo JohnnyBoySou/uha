@@ -29,6 +29,7 @@ export default function NotafiscalSendScreen({ navigation, route }) {
     const modalDigitNota = useRef(null);
     const [focusInput, setfocusInput] = useState(false);
     const [hasPermission, setHasPermission] = useState(null);
+    const [flash, setflash] = useState(false);
 
     useEffect(() => {
         const getCameraPermission = async () => {
@@ -56,61 +57,58 @@ export default function NotafiscalSendScreen({ navigation, route }) {
                 <Header />
                 <Avatar />
             </Row>
-            <Column style={{}}>
+            <Column>
                 <CameraView
                     barcodeScannerSettings={{ barcodeTypes: ["qr"], }}
                     style={{ flex: 1, borderRadius: 12, overflow: 'hidden', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, position: 'absolute', top: -50, backgroundColor: '#f7f7f7' }}
                     facing="back"
+                    autoFocus='on'
+                    enableTorch={flash}
+                    zoom={0}
                     onBarcodeScanned={(data) => {
                         navigation.navigate('NotafiscalVerify', { nota: data.data })
                     }}>
                 </CameraView>
-                <Column>
 
-                    <Column style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: margin.h, flex: 1, marginTop: 240, }}>
-                        <Column style={{ width: 250, height: 250, justifyContent: 'space-between', marginTop: 100, }}>
-                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                <Column>
-                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', }} />
-                                </Column>
-                                <Column>
-                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', alignSelf: 'flex-end' }} />
-                                </Column>
-                            </Row>
-                            <Row style={{ justifyContent: 'space-between', alignItems: 'center', }}>
-                                <Column>
-                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', }} />
-                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                </Column>
-                                <Column>
-                                    <Column style={{ width: 6, height: 80, backgroundColor: '#fff', alignSelf: 'flex-end' }} />
-                                    <Column style={{ width: 80, height: 6, backgroundColor: '#fff', }} />
-                                </Column>
-                            </Row>
-                        </Column>
-                    </Column>
-                    <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 240, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
-                        <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua câmera para o {'\n'}QR Code da nota fiscal</Label>
-                        <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
-                        <Octicons name="question" size={22} color="#fff" />
+                <Column style={{ position: 'absolute', top: -50, left: 0, right: 0, bottom: 0, width: SCREEN_WIDTH, height: 1.1 * SCREEN_HEIGHT, zIndex: 0, }}>
+                    <Column style={{ width: SCREEN_WIDTH, height: 200, backgroundColor: '#00000080', marginBottom:-0.2, }}></Column>
+                    <Row>
+                        <Column style={{ flexGrow: 1, height: 250, backgroundColor: '#00000080', }}></Column>
+                        <Column style={{ width: 250, height: 250, }}></Column>
+                        <Column style={{ flexGrow: 1, height: 250, backgroundColor: '#00000080', }}></Column>
                     </Row>
+                    <Column style={{ width: SCREEN_WIDTH, height: 500, backgroundColor: '#00000080', }}></Column>
                 </Column>
+
+                
             </Column>
 
 
 
-            <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', justifyContent: 'space-between', bottom: 35, left: 35, }}>
-                <Button onPress={() => { navigation.navigate('NotafiscalVerify') }} style={{ borderRadius: 100, }}>
+            <MotiView from={{ opacity: 0, }} animate={{ opacity: 1, }} exit={{ opacity: 0, }} style={{ position: 'absolute', justifyContent: 'space-between', bottom: 35, left: 35, right: 35, }}>
+                <Row style={{ backgroundColor: '#ffffff40', borderRadius: 8, marginHorizontal: margin.h, marginTop: 440, marginBottom: 20, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', alignSelf: 'center', }}>
+                    <Label style={{ color: "#fff", fontSize: 15, }}>Aponte sua câmera para o {'\n'}QR Code da nota fiscal</Label>
+                    <Column style={{ width: 1, height: 30, marginHorizontal: 12, backgroundColor: "#ffffff90", }} />
+                    <Octicons name="question" size={22} color="#fff" />
+                </Row>
+                
+                <Button onPress={() => { setflash(!flash) }} style={{ borderRadius: 100, alignSelf: 'flex-start' }}>
+                    <Row style={{ alignItems: 'center', backgroundColor: '#400930', borderRadius: 100, paddingRight: 24, }}>
+                        <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.secundary, justifyContent: 'center', alignItems: 'center', }}>
+                            <MaterialCommunityIcons name={flash ? "flashlight-off" : "flashlight"} size={32} color="#FFF" />
+                        </Column>
+                        <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>{flash ? 'Desligar' : 'Ligar'} lanterna</Title>
+                    </Row>
+                </Button>
+                <Button onPress={() => { navigation.navigate('NotafiscalList') }} style={{ borderRadius: 100, marginVertical: 12,  alignSelf: 'flex-start'}}>
                     <Row style={{ alignItems: 'center', backgroundColor: "#ed18ad", borderRadius: 100, paddingRight: 24, }}>
                         <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', }}>
                             <NotepadText size={32} color="#fff" />
                         </Column>
-                        <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Notas escaneadas</Title>
+                        <Title style={{ fontSize: 18, color: '#fff', marginLeft: 12, }}>Minhas notas</Title>
                     </Row>
                 </Button>
-                <Button onPress={() => { modalDigitNota?.current?.expand() }} style={{ borderRadius: 100, marginVertical: 12, }}>
+                <Button onPress={() => { modalDigitNota?.current?.expand() }} style={{ borderRadius: 100, alignSelf: 'flex-start' }}>
                     <Row style={{ alignItems: 'center', backgroundColor: "#0f93db", borderRadius: 100, paddingRight: 24, }}>
                         <Column style={{ width: 62, height: 62, borderRadius: 100, backgroundColor: color.blue, justifyContent: 'center', alignItems: 'center', }}>
                             <MaterialCommunityIcons name="keyboard-outline" size={32} color="#fff" />

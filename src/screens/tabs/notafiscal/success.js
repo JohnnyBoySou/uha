@@ -42,11 +42,11 @@ export default function NotafiscalSuccessScreen({ navigation, route }) {
                 </Column>
 
                 <Column style={{ padding: 32, borderTopLeftRadius: 32, borderTopRightRadius: 32, justifyContent: 'center', alignItems: 'center', }}>
-                    <ButtonPR onPress={() => { navigation.navigate('NotafiscalSend', { type: 'clean' }) }} style={{ paddingHorizontal: 24, borderColor: color.primary, }}>
+                    <ButtonPR onPress={() => { navigation.navigate('NotafiscalSend', { type: 'clean' }) }} style={{ paddingHorizontal: 45, paddingVertical: 16, borderColor: color.primary, }}>
                         <LabelPR style={{ fontFamily: font.bold, }}>Nova nota fiscal</LabelPR>
                     </ButtonPR>
                     <Column style={{ height: 12, }} />
-                    <ButtonOut onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', type: 'Notas fiscais' }) }} style={{ paddingHorizontal: 24, borderColor: color.secundary, }}>
+                    <ButtonOut onPress={() => { navigation.navigate('Tabs', { screen: 'Extract', type: 'Notas fiscais' }) }} style={{ paddingHorizontal: 36, paddingVertical: 14, borderColor: color.secundary, }}>
                         <Label style={{ color: color.secundary, fontFamily: font.bold, }}>Ver minhas notas</Label>
                     </ButtonOut>
                 </Column>

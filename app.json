@@ -2,11 +2,13 @@
   "expo": {
     "name": "Uha!",
     "slug": "uha",
-    "version": "16.0.0",
+    "version": "18.0.0",
+    "runtimeVersion": "18.0.0",
     "scheme": "uha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,16 +18,14 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.engd.uha.OneSignalNotificationServiceExtension",
-      "buildNumber": "16.0.0",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
-        "NSLocationWhenInUseUsageDescription": "This app uses location services to find events near you.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location services to find events near you."
+        "NSLocationWhenInUseUsageDescription": "This app uses location services to find events near you."
       }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 16,
+      "versionCode": 18,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF26BD"
@@ -60,15 +60,6 @@
           ],
           "smallIconAccentColor": "#FF26BD"
         }
-      ],
-      [
-        "@react-native-firebase/app"
-      ],
-      [
-        "@react-native-firebase/perf"
-      ],
-      [
-        "@react-native-firebase/crashlytics"
       ],
       [
         "expo-camera",
