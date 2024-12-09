@@ -135,7 +135,7 @@ export default function Router() {
         routeNameRef.current = currentRouteName;
       }}*/
     >
-      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='NotafiscalSend'>
+      <Stack.Navigator screenOptions={{ headerShown: false, }} initialRouteName='Async'>
 
         <Stack.Screen name="Async" component={AsyncStaticScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ ...TransitionPresets.SlideFromRightIOS }} />

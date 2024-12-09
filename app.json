@@ -2,8 +2,7 @@
   "expo": {
     "name": "Uha!",
     "slug": "uha",
-    "version": "18.0.0",
-    "runtimeVersion": "18.0.0",
+    "version": "20.0.0",
     "scheme": "uha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,6 +16,7 @@
     "ios": {
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
+      "buildNumber": "20.0.0",
       "bundleIdentifier": "com.engd.uha.OneSignalNotificationServiceExtension",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
@@ -25,7 +25,7 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 18,
+      "versionCode": 20,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF26BD"
