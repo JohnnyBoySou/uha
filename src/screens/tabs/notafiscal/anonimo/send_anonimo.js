@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef, } from 'react';
 
-import { TextInput, Dimensions, Keyboard } from 'react-native';
+import { TextInput, Dimensions, Keyboard, Platform } from 'react-native';
 import { Main, Column, Label, Title, Row, Button, ButtonPR, LabelPR, } from '@theme/global';
 import { ThemeContext } from 'styled-components/native';
 import { MotiView, } from 'moti';
@@ -53,7 +53,7 @@ export default function NotafiscalSendAnonimoScreen({ navigation, route }) {
         <Main style={{ backgroundColor: "#fff", }}>
             <StatusBar style="light" translucent />
 
-            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginRight: 28, zIndex: 999, top: 50, }}>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'center', marginRight: 28, zIndex: 999, top: Platform.OS == 'ios' ? 10 : 50, }}>
                 <Header />
             </Row>
 
